@@ -9,18 +9,18 @@
         <version>7</version>
     </parent>
 
-    <groupId>com.destroystokyo.paper</groupId>
-    <artifactId>paper-parent</artifactId>
+    <groupId>com.domnian.paperdragon</groupId>
+    <artifactId>paperdragon-parent</artifactId>
     <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Paper-Parent</name>
-    <description>Parent project for all Paper modules.</description>
-    <url>https://github.com/PaperSpigot/Paper</url>
+    <name>PaperDragon-Parent</name>
+    <description>Parent project for all PaperDragon modules.</description>
+    <url>https://bitbucket.org/domnian/paperdragon</url>
 
     <modules>
-        <module>Paper-Server</module>
-        <module>Paper-API</module>
+        <module>PaperDragon-Server</module>
+        <module>PaperDragon-API</module>
     </modules>
 
     <build>
@@ -42,7 +42,8 @@
         </repository>
     </repositories>
 
-    <distributionManagement>
+    <!-- Disabled Until Domnian Nexus is Working -->
+    <!--distributionManagement>
         <repository>
             <id>destroystokyo-releases</id>
             <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
@@ -51,5 +52,5 @@
             <id>destroystokyo-snapshots</id>
             <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement-->
 </project>
