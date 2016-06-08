@@ -69,14 +69,14 @@ basedir=$(pwd)
 ) || exit 1
 # Move out of Spigot
 basedir="$1"
-cd "$basedir"
+cd "$basdir"
 
 echo "Importing MC Dev"
 
 ./scripts/importmcdev.sh "$basedir" >/dev/null 2>&1
 
 # Apply paper
-cd "$basedir"
+cd "$workdir/Paper"
 (
 	applyPatch "work/Spigot/Spigot-API" Paper-API HEAD &&
 	applyPatch "work/Spigot/Spigot-Server" Paper-Server HEAD
@@ -86,4 +86,18 @@ cd "$basedir"
     enableCommitSigningIfNeeded
 	exit 1
 ) || exit 1
-)
+# Move out of Paper
+basedir="$1"
+cd "$basedir"
+
+# Apply PaperDragon
+cd "$basedir"
+(
+	applyPatch "work/Paper/Paper-API" PaperDragon-API HEAD &&
+	applyPatch "work/Paper/Paper-Server" PaperDragon-Server HEAD
+    enableCommitSigningIfNeeded
+) || (
+	echo "Failed to apply PaperDragon Patches"
+    enableCommitSigningIfNeeded
+	exit 1
+) || exit 1

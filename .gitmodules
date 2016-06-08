@@ -10,6 +10,9 @@
 [submodule "work/Spigot"]
 	path = work/Spigot
 	url = https://hub.spigotmc.org/stash/scm/spigot/spigot.git
+[submodule "work/Paper"]
+	path = work/Paper
+	url = https://github.com/PaperMC/Paper.git
 [submodule "work/Paperclip"]
 	path = work/Paperclip
 	url = https://github.com/PaperMC/Paperclip.git
