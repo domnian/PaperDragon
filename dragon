@@ -47,6 +47,11 @@ case "$1" in
 	scripts/upstream.sh "$2" "$3"
     )
     ;;
+    "init" | "submodules")
+    (
+        git submodule update --init
+    )
+    ;;
     "r" | "root")
         cd "$basedir"
     ;;
@@ -121,6 +126,7 @@ case "$1" in
         echo "  * rb, rebuild       | Rebuild patches, can be called from anywhere."
         echo "  * p, patch          | Apply all patches to the project without building it. Can be run from anywhere."
         echo "  * up, upstream      | Foobar" 
+        echo "  * init, submodules  | Initilize the Paper Submodule" 
         echo ""
         echo " These commands require the setup command before use:"
         echo "  * r, root           | Change directory to the root of the project."
