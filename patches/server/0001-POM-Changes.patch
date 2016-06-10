@@ -1,14 +1,14 @@
-From 93bd9ea396373373ca57f0d0cf0a8c7ce83dcd41 Mon Sep 17 00:00:00 2001
+From 9edf8588ce81b3f2b2cb8f4fe5a80283f8a096de Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ pom.xml | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 34bfeb1..e2232cb 100644
+index 34bfeb1..4abd0b2 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -28,7 +28,7 @@ index 34bfeb1..e2232cb 100644
  
      <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-@@ -21,15 +21,15 @@
+@@ -21,17 +21,17 @@
      </properties>
  
      <parent>
@@ -43,10 +43,14 @@ index 34bfeb1..e2232cb 100644
      <dependencies>
          <dependency>
 -            <groupId>com.destroystokyo.paper</groupId>
+-            <artifactId>paper-api</artifactId>
+-            <version>${project.version}</version>
 +            <groupId>com.domnian.paperdragon</groupId>
-             <artifactId>paper-api</artifactId>
-             <version>${project.version}</version>
++            <artifactId>paperdragon-api</artifactId>
++            <version>1.10-R0.1-SNAPSHOT</version>
              <scope>compile</scope>
+         </dependency>
+         <dependency>
 -- 
 2.5.0
 
