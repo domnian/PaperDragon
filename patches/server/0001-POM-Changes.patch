@@ -1,0 +1,52 @@
+From 93bd9ea396373373ca57f0d0cf0a8c7ce83dcd41 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 10 Jun 2016 02:57:58 -0400
+Subject: [PATCH] POM Changes
+
+---
+ pom.xml | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/pom.xml b/pom.xml
+index 34bfeb1..e2232cb 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1,12 +1,12 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+-    <groupId>com.destroystokyo.paper</groupId>
+-    <artifactId>paper</artifactId>
++    <groupId>com.domnian.paperdragon</groupId>
++    <artifactId>paperdragon</artifactId>
+     <packaging>jar</packaging>
+     <version>1.10-R0.1-SNAPSHOT</version>
+-    <name>Paper</name>
+-    <url>https://github.com/PaperMC/Paper</url>
++    <name>PaperDragon</name>
++    <url>https://bitbucket.org/domnian/paperdragon</url>
+ 
+     <properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+@@ -21,15 +21,15 @@
+     </properties>
+ 
+     <parent>
+-        <groupId>com.destroystokyo.paper</groupId>
+-        <artifactId>paper-parent</artifactId>
++        <groupId>com.domnian.paperdragon</groupId>
++        <artifactId>paperdragon-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
+     </parent>
+ 
+     <dependencies>
+         <dependency>
+-            <groupId>com.destroystokyo.paper</groupId>
++            <groupId>com.domnian.paperdragon</groupId>
+             <artifactId>paper-api</artifactId>
+             <version>${project.version}</version>
+             <scope>compile</scope>
+-- 
+2.5.0
+

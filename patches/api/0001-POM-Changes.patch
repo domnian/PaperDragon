@@ -1,0 +1,61 @@
+From e932b9d3dec5ce40bc1c8109be2ffca0f856a696 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 10 Jun 2016 02:53:40 -0400
+Subject: [PATCH] POM Changes
+
+---
+ pom.xml | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/pom.xml b/pom.xml
+index 6558e8a..ab754bb 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -4,18 +4,18 @@
+     <modelVersion>4.0.0</modelVersion>
+ 
+     <parent>
+-        <groupId>com.destroystokyo.paper</groupId>
+-        <artifactId>paper-parent</artifactId>
++        <groupId>com.domnian.paperdragon</groupId>
++        <artifactId>paperdragon-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+     </parent>
+ 
+-    <groupId>com.destroystokyo.paper</groupId>
+-    <artifactId>paper-api</artifactId>
++    <groupId>com.domnian.paperdragon</groupId>
++    <artifactId>paperdragon-api</artifactId>
+     <version>1.10-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>Paper-API</name>
+-    <url>https://github.com/PaperSpigot/Paper</url>
++    <name>PaperDragon-API</name>
++    <url>https://bitbucket.org/domnian/paperdragon</url>
+     <description>An enhanced plugin API for Minecraft servers.</description>
+ 
+     <properties>
+@@ -26,8 +26,9 @@
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     </properties>
+ 
++    <!-- PaperDragon - We Don't Deploy (No Repo :P)-->
+     <!-- just until we get deployment to central approved -->
+-    <distributionManagement>
++    <!--distributionManagement>
+         <repository>
+             <id>destroystokyo-releases</id>
+             <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
+@@ -36,7 +37,7 @@
+             <id>destroystokyo-snapshots</id>
+             <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
+         </snapshotRepository>
+-    </distributionManagement>
++    </distributionManagement-->
+ 
+     <!-- required until fixed plexus-compiler-eclipse is deployed -->
+     <pluginRepositories>
+-- 
+2.5.0
+

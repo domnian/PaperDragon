@@ -42,7 +42,7 @@
         </repository>
     </repositories>
 
-    <!-- Disabled Until Domnian Nexus is Working -->
+    <!-- PaperDragon - We Don't Deploy (No Repo :P)-->
     <!--distributionManagement>
         <repository>
             <id>destroystokyo-releases</id>
