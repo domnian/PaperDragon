@@ -49,6 +49,7 @@ case "$1" in
     ;;
     "init" | "submodules")
     (
+	cd "$basedir"
         git submodule update --init
     )
     ;;
