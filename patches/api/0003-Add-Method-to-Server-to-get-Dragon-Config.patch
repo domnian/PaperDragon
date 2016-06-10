@@ -1,0 +1,29 @@
+From 2e3ca2f8d225b404d7c890bb89773ad5bedb8bfd Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 10 Jun 2016 11:22:21 -0400
+Subject: [PATCH] Add Method to Server to get Dragon Config
+
+---
+ src/main/java/org/bukkit/Server.java | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index edf0d04..832385f 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -991,6 +991,12 @@ public interface Server extends PluginMessageRecipient {
+             throw new UnsupportedOperationException("Not supported yet.");
+         }
+ 
++        // PaperDragon start
++        public org.bukkit.configuration.file.YamlConfiguration getDragonConfig() {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++        // PaperDragon end
++
+         /**
+          * Sends the component to the player
+          *
+-- 
+2.5.0
+
