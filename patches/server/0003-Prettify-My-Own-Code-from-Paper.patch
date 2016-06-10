@@ -1,0 +1,31 @@
+From 75625183fa8754d91d5185d7e7675ad946c41fd9 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 10 Jun 2016 04:09:02 -0400
+Subject: [PATCH] Prettify My Own Code from Paper
+
+---
+ src/main/java/org/bukkit/craftbukkit/CraftServer.java | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 28763e2..1d2eeb2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -1859,13 +1859,7 @@ public final class CraftServer implements Server {
+         ((SimplePluginManager) pluginManager).clearPermissions();
+         loadCustomPermissions();
+         for (Plugin plugin : pluginManager.getPlugins()) {
+-            plugin.getDescription().getPermissions().forEach((perm) -> {
+-                try {
+-                    pluginManager.addPermission(perm);
+-                } catch (IllegalArgumentException ex) {
+-                    getLogger().log(Level.WARNING, "Plugin " + plugin.getDescription().getFullName() + " tried to register permission '" + perm.getName() + "' but it's already registered", ex);
+-                }
+-            });
++            plugin.getDescription().getPermissions().forEach(pluginManager::addPermission); // PaperDragon
+         }
+     }
+ 
+-- 
+2.5.0
+
