@@ -23,17 +23,6 @@ bin/
 dist/
 manifest.mf
 
-work/1.*
-work/BuildData
-work/Bukkit
-work/CraftBukkit
-work/Paperclip
-work/Spigot
-work/Spigot-Server
-work/Spigot-API
-work/*.jar
-work/test-server
-
 # Mac filesystem dust
 .DS_Store/
 
@@ -48,11 +37,6 @@ work/test-server
 
 # other stuff
 
-Paper-Server
-Paper-API
-PaperSpigot-Server
-PaperSpigot-API
-Paperclip.jar
-paperclip.jar
-paperclip-*.jar
-paperclip.properties
+PaperDragon-Server
+PaperDragon-API
+mc-dev
