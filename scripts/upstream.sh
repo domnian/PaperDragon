@@ -53,6 +53,8 @@ tag Paper-API $forcetag
 tag Paper-Server $forcetag
 
 echo "$tag" > $basedir/current-paper
-pushRepo Paper-API $API_REPO $tag
-pushRepo Paper-Server $SERVER_REPO $tag
 
+if [[ "$2" == "--push" ]]; then
+	pushRepo Paper-API $API_REPO $tag
+	pushRepo Paper-Server $SERVER_REPO $tag
+fi
