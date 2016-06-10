@@ -1,52 +1,45 @@
-#!/usr/bin/env bash
+#!/bin/bash
+cd $(dirname $SOURCE)/../
+basedir=$(pwd -P)
 
-(
-set -e
-PS1="$"
-basedir="$(cd "$1" && pwd -P)"
-workdir="$basedir/work"
-minecraftversion=$(cat "$workdir/BuildData/info.json"  | grep minecraftVersion | cut -d '"' -f 4)
-decompiledir="$workdir/$minecraftversion"
-nms="$decompiledir/net/minecraft/server"
-cb="src/main/java/net/minecraft/server"
-gpgsign="$(git config commit.gpgsign || echo "false")"
+API_REPO="git@bitbucket.org:domnian/Paper-API"
+SERVER_REPO="git@bitbucket.org:domnian/Paper-Server"
 
+function cleanupPatches {
+	cd "$1"
+	for patch in *.patch; do
+		gitver=$(tail -n 2 $patch | grep -ve "^$" | tail -n 1)
+		diffs=$(git diff --staged $patch | grep -E "^(\+|\-)" | grep -Ev "(From [a-z0-9]{32,}|\-\-\- a|\+\+\+ b|.index|Date\: )")
 
-patch=$(which patch 2>/dev/null)
-if [ "x$patch" == "x" ]; then
-    patch="$basedir/hctap.exe"
-fi
+		testver=$(echo "$diffs" | tail -n 2 | grep -ve "^$" | tail -n 1 | grep "$gitver")
+		if [ "x$testver" != "x" ]; then
+			diffs=$(echo "$diffs" | head -n -2)
+		fi
 
-function enableCommitSigningIfNeeded {
-    if [[ "$gpgsign" == "true" ]]; then
-        git config commit.gpgsign true
-    fi
+		if [ "x$diffs" == "x" ] ; then
+			git reset HEAD $patch >/dev/null
+			git checkout -- $patch >/dev/null
+		fi
+	done
 }
 
-echo "Applying CraftBukkit patches to NMS..."
-cd "$workdir/CraftBukkit"
-git checkout -B patched HEAD >/dev/null 2>&1
-rm -rf "$cb"
-mkdir -p "$cb"
-for file in $(ls nms-patches)
-do
-    patchFile="nms-patches/$file"
-    file="$(echo "$file" | cut -d. -f1).java"
+function pushRepo {
+	echo "Pushing - $1 ($3) to $2"
+	(
+		cd "$1"
+		git remote rm dom-push > /dev/null 2>&1
+		git remote add dom-push $2 >/dev/null 2>&1
+		git push dom-push $3 -f
+	)
+}
 
-    echo "Patching $file < $patchFile"
-    set +e
-    sed -i 's/\r//' "$nms/$file" > /dev/null
-    set -e
+function basedir {
+	cd "$basedir"
+}
 
-    cp "$nms/$file" "$cb/$file"
-    "$patch" -s -d src/main/java/ "net/minecraft/server/$file" < "$patchFile"
-done
-
-git add src >/dev/null 2>&1
-# We don't need to sign an automated commit
-# All it does is make you input your key passphrase mid-patch
-git config commit.gpgsign false
-git commit -m "CraftBukkit $ $(date)" >/dev/null 2>&1
-enableCommitSigningIfNeeded
-git checkout -f HEAD^ >/dev/null 2>&1
-)
+function gethead {
+	(
+		cd "$1"
+		git log -1 --oneline
+	)
+}

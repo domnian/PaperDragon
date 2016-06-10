@@ -1,21 +1,26 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-(
-set -e
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+	SOURCE="$(readlink "$SOURCE")"
+	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+. $(dirname $SOURCE)/init.sh
+
+workdir=$basedir/Paper/work
+minecraftversion=$(cat $basedir/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
+decompiledir=$workdir/$minecraftversion
+
 nms="net/minecraft/server"
 export MODLOG=""
-PS1="$"
-basedir="$(cd "$1" && pwd -P)"
-
-workdir="$basedir/work"
-minecraftversion=$(cat "$workdir/BuildData/info.json"  | grep minecraftVersion | cut -d '"' -f 4)
-decompiledir="$workdir/$minecraftversion"
+cd $basedir
 
 export importedmcdev=""
 function import {
 	export importedmcdev="$importedmcdev $1"
 	file="${1}.java"
-	target="$workdir/Spigot/Spigot-Server/src/main/java/$nms/$file"
+	target="$basedir/Paper/Paper-Server/src/main/java/$nms/$file"
 	base="$decompiledir/$nms/$file"
 
 	if [[ ! -f "$target" ]]; then
@@ -23,62 +28,39 @@ function import {
 		echo "Copying $base to $target"
 		cp "$base" "$target"
 	else
-		echo "UN-NEEDED IMPORT: $file"
+		echo "UN-NEEDED IMPORT STATEMENT: $file"
 	fi
 }
 
 (
-	cd "$workdir/Spigot/Spigot-Server/"
+	cd Paper/Paper-Server/
 	lastlog=$(git log -1 --oneline)
-	if [[ "$lastlog" = *"mc-dev Imports"* ]]; then
+	if [[ "$lastlog" = *"PD-Extra mc-dev Imports"* ]]; then
 		git reset --hard HEAD^
 	fi
 )
 
-import BaseBlockPosition
-import BiomeBase
-import BiomeMesa
-import BlockChest
-import BlockFalling
-import BlockFluids
-import BlockFurnace
-import BlockIceFrost
-import BlockPosition
-import ChunkCache
-import ChunkProviderFlat
-import ChunkProviderGenerate
-import ChunkProviderHell
-import CommandAbstract
-import CommandScoreboard
-import CommandWhitelist
-import DataBits
-import DataConverterMaterialId
-import EULA
-import EntitySquid
-import EntityWaterAnimal
-import FileIOThread
-import ItemBlock
-import NavigationAbstract
-import NBTTagCompound
-import NBTTagList
-import PersistentScoreboard
-import PacketPlayInResourcePackStatus
-import PacketPlayInUseEntity
-import PacketPlayOutPlayerListHeaderFooter
-import PacketPlayOutScoreboardTeam
-import PacketPlayOutTitle
-import PacketPlayOutUpdateTime
-import PathfinderAbstract
-import PathfinderGoalFloat
-import PathfinderWater
-import PersistentVillage
-import RemoteControlListener
-import TileEntityEnderChest
-import TileEntityLootable
-import WorldProvider
+import BlockFlowerPot
+import BlockSponge
+import CommandGive
+import CommandStop
+import EnchantmentManager
+import EntityBat
+import EntityEnderSignal
+import EntityMinecartHopper
+import GameProfileSerializer
+import IHopper
+import ItemBookAndQuill
+import PacketPlayOutTileEntityData
+import PathfinderGoalArrowAttack
+import PathfinderGoalInteractVillagers
+import PathfinderGoalSelector
+import TileEntityLightDetector
 
-cd "$workdir/Spigot/Spigot-Server/"
-rm -rf nms-patches applyPatches.sh makePatches.sh >/dev/null 2>&1
-git add . -A >/dev/null 2>&1
-echo -e "mc-dev Imports\n\n$MODLOG" | git commit . -F -
+
+(
+	cd Paper/Paper-Server/
+	rm -rf nms-patches
+	git add src -A
+	echo -e "PD-Extra mc-dev Imports\n\n$MODLOG" | git commit src -F -
 )

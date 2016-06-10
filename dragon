@@ -31,48 +31,21 @@ case "$1" in
     (
         set -e
         cd "$basedir"
-        scripts/rebuildPatches.sh "$basedir"
+        scripts/rebuildpatches.sh "$basedir"
     )
     ;;
-    "p" | "patch")
+    "p" | "patch" | "apply")
     (
         set -e
         cd "$basedir"
-        scripts/build.sh "$basedir"
+	scripts/apply.sh "$basedir"
     )
     ;;
-    "j" | "jar")
-    (
-        set -e
-        cd "$basedir"
-        scripts/build.sh "$basedir" "--jar"
-    )
-    ;;
-    "make")
-    (
-        if [[ "$2" = "bacon" ]] ; then
-            set -e
-            cd "$basedir"
-            scripts/build.sh "$basedir" "--jar"
-        fi
-    )
-    ;;
-    "m" | "mcdev")
-    (
-        set -e
-        cd "$basedir"
-        scripts/makemcdevsrc.sh "$basedir"
-    )
-    ;;
-    "t" | "test" | "testserver")
+    "up" | "upstream")
     (
         cd "$basedir"
-        shift
-        scripts/testServer.sh "$basedir" "$@"
+	scripts/upstream.sh "$2"
     )
-    ;;
-    "td" | "testdir")
-        cd "${PAPER_TEST_DIR:-$basedir/work/test-server}"
     ;;
     "r" | "root")
         cd "$basedir"
@@ -147,15 +120,12 @@ case "$1" in
         echo " Normal commands:"
         echo "  * rb, rebuild       | Rebuild patches, can be called from anywhere."
         echo "  * p, patch          | Apply all patches to the project without building it. Can be run from anywhere."
-        echo "  * j, jar            | Apply all patches and build the project, paperclip.jar will be output. Can be run from anywhere."
-        echo "  * m, mcdev          | Setup decompiled sources for non-modified NMS files to be imported into an IDE. Can be run from anywhere."
-        echo "  * t, testserver     | Run the test server with the set of plugins Paper uses as a basis for server tests."
+        echo "  * up, upstream      | Foobar" 
         echo ""
         echo " These commands require the setup command before use:"
         echo "  * r, root           | Change directory to the root of the project."
-        echo "  * a. api            | Move to the Paper-API directory."
-        echo "  * s, server         | Move to the Paper-Server directory."
-        echo "  * td, testdirectory | Move to the test-server directory."
+        echo "  * a. api            | Move to the PaperDragon-API directory."
+        echo "  * s, server         | Move to the PaperDragon-Server directory."
         echo "  * e, edit           | Use to edit a specific patch, give it the argument \"server\" or \"api\""
         echo "                      | respectively to edit the correct project. Use the argument \"continue\" after"
         echo "                      | the changes have been made to finish and rebuild patches. Can be called from anywhere."
