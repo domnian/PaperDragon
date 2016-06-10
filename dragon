@@ -53,6 +53,12 @@ case "$1" in
         git submodule update --init
     )
     ;;
+    "push")
+    (
+        cd "$basedir"
+        scripts/push.sh
+    )
+    ;;
     "r" | "root")
         cd "$basedir"
     ;;

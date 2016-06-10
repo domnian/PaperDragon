@@ -39,5 +39,3 @@ function savePatches {
 
 savePatches PaperDragon-API api
 savePatches PaperDragon-Server server
-
-$basedir/scripts/push.sh

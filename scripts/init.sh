@@ -2,8 +2,12 @@
 cd $(dirname $SOURCE)/../
 basedir=$(pwd -P)
 
-API_REPO="git@bitbucket.org:domnian/Paper-API"
-SERVER_REPO="git@bitbucket.org:domnian/Paper-Server"
+## CHANGE THESE TO YOUR REPOS
+API_REPO="git@bitbucket.org:domnian/PaperDragon-API"
+SERVER_REPO="git@bitbucket.org:domnian/PaperDragon-Server"
+PAPERAPI_REPO="git@bitbucket.org:domnian/Paper-API"
+PAPERSERVER_REPO="git@bitbucket.org:domnian/Paper-Server"
+MCDEV_REPO="git@bitbucket.org:domnian/mc-dev"
 
 function cleanupPatches {
 	cd "$1"
@@ -27,9 +31,9 @@ function pushRepo {
 	echo "Pushing - $1 ($3) to $2"
 	(
 		cd "$1"
-		git remote rm dom-push > /dev/null 2>&1
-		git remote add dom-push $2 >/dev/null 2>&1
-		git push dom-push $3 -f
+		git remote rm pd-push > /dev/null 2>&1
+		git remote add pd-push $2 >/dev/null 2>&1
+		git push pd-push $3 -f
 	)
 }
 

@@ -8,5 +8,8 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 . $(dirname $SOURCE)/init.sh
 
-pushRepo PaperDragon-API git@bitbucket.org:domnian/PaperDragon-API master
-pushRepo PaperDragon-Server git@bitbucket.org:domnian/PaperDragon-Server master
+paperVer=$(cat current-paper)
+
+pushRepo PaperDragon-API $API_REPO master
+pushRepo PaperDragon-Server $SERVER_REPO master
+pushRepo mc-dev $MCDEV_REPO $paperVer

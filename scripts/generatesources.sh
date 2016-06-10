@@ -36,4 +36,3 @@ cd $basedir/mc-dev
 git add . -A
 git commit . -m "mc-dev"
 git tag -a "$paperVer" -m "$paperVer" 2>/dev/null
-pushRepo . git@bitbucket.org:domnian/mc-dev $paperVer
