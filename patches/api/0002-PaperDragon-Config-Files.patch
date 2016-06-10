@@ -1,7 +1,7 @@
-From 2e3ca2f8d225b404d7c890bb89773ad5bedb8bfd Mon Sep 17 00:00:00 2001
+From ffe01ba251a544fc7e1310b2432a9cf6c9617bde Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 11:22:21 -0400
-Subject: [PATCH] Add Method to Server to get Dragon Config
+Subject: [PATCH] PaperDragon Config Files
 
 ---
  src/main/java/org/bukkit/Server.java | 6 ++++++
