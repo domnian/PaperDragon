@@ -18,12 +18,12 @@ pushRepo mc-dev $MCDEV_REPO $paperVer
 # Push Parent to Two Remotes
 function pushBitbucket {
   cd "$basedir"
-  git push bb-push master
+  git push bb-push master -f
 }
 
 function pushGithub {
   cd "$basedir"
-  git push gh-push master
+  git push gh-push master -f
 }
 
 pushBitbucket
