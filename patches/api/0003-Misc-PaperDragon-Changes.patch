@@ -1,0 +1,148 @@
+From 4212f87c2b163fd176518393eb71adefaac5f417 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 10 Jun 2016 04:08:14 -0400
+Subject: [PATCH] Misc PaperDragon Changes
+
+---
+ .../bukkit/command/defaults/VersionCommand.java    | 75 ++++++++++++++++++----
+ .../org/bukkit/plugin/SimplePluginManager.java     |  5 +-
+ 2 files changed, 65 insertions(+), 15 deletions(-)
+
+diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+index 6d32e1d..5b69376 100644
+--- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+@@ -1,9 +1,8 @@
+ package org.bukkit.command.defaults;
+ 
+ import com.google.common.base.Charsets;
+-import java.util.ArrayList;
+-import java.util.Arrays;
+-import java.util.List;
++
++import java.util.*;
+ 
+ import org.apache.commons.lang.Validate;
+ import org.bukkit.Bukkit;
+@@ -19,8 +18,6 @@ import java.io.BufferedReader;
+ import java.io.IOException;
+ import java.net.URL;
+ import java.net.URLEncoder;
+-import java.util.HashSet;
+-import java.util.Set;
+ import java.util.concurrent.locks.ReentrantLock;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+@@ -174,13 +171,7 @@ public class VersionCommand extends BukkitCommand {
+             sender.sendMessage("Checking version, please wait...");
+             if (!versionTaskStarted) {
+                 versionTaskStarted = true;
+-                new Thread(new Runnable() {
+-
+-                    @Override
+-                    public void run() {
+-                        obtainVersion();
+-                    }
+-                }).start();
++                new Thread(this::obtainVersion).start(); // PaperDragon
+             }
+         } finally {
+             versionLock.unlock();
+@@ -191,7 +182,25 @@ public class VersionCommand extends BukkitCommand {
+     private void obtainVersion() {
+         String version = Bukkit.getVersion();
+         if (version == null) version = "Custom";
+-        if (version.startsWith("git-Paper-")) {
++        // PaperDragon start
++        if (version.startsWith("git-PaperDragon-")) {
++            String[] parts = version.substring("git-PaperDragon-".length()).split("[-\\s]");
++            int distance = getDistance(null, parts[0]);
++            switch (distance) {
++                case -1:
++                    setVersionMessage("Error obtaining version information");
++                    break;
++                case 0:
++                    setVersionMessage("You are running the latest version");
++                    break;
++                case -2:
++                    setVersionMessage("Unknown version");
++                    break;
++                default:
++                    setVersionMessage("You are " + distance + " version(s) behind");
++            }
++        } else if (version.startsWith("git-Paper-")) {
++            // PaperDragon end
+             String[] parts = version.substring("git-Paper-".length()).split("[-\\s]");
+             int distance = getDistance(null, parts[0]);
+             switch (distance) {
+@@ -248,7 +257,8 @@ public class VersionCommand extends BukkitCommand {
+             return getFromJenkins(currentVer);
+         } catch (NumberFormatException ex) {
+             verInfo = verInfo.replace("\"", "");
+-            return getFromRepo("PaperMC/Paper", verInfo);
++            // return getFromRepo("PaperMC/Paper", verInfo);
++            return getFromBitbucket("domnian/PaperDragon", verInfo);
+         }
+             /*
+             BufferedReader reader = Resources.asCharSource(
+@@ -318,4 +328,41 @@ public class VersionCommand extends BukkitCommand {
+         }
+     }
+     // Paper end
++
++    // PaperDragon start
++    private static int getFromBitbucket(String repo, String hash) {
++        try {
++            HttpURLConnection connection = (HttpURLConnection) new URL("https://bitbucket.org/" + repo + "/branches/compare/" + BRANCH + "%0D" + hash).openConnection();
++            connection.connect();
++            if (connection.getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) return -2; // Unknown commit
++            try (
++                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charsets.UTF_8))
++            ) {
++                Scanner sc = new Scanner(reader).useDelimiter("<tr class=\"iterable-item\" id=\"chg_.\" data-module=\"commitstatus\\/status-dialog\">");
++                System.out.println("Response from " + connection.getURL().toString() + ":"); // PaperDragon - DEBUG
++                while (sc.hasNextLine()) {
++                    System.out.println(sc.nextLine()); // PaperDragon - DEBUG
++                }
++//                JSONObject obj = (JSONObject) new JSONParser().parse(reader);
++//                String status = (String) obj.get("status");
++//                switch (status) {
++//                    case "identical":
++//                        return 0;
++//                    case "behind":
++//                        return ((Number) obj.get("behind_by")).intValue();
++//                    default:
++//                        return -1;
++//                }
++            } catch (NumberFormatException e) {
++                e.printStackTrace();
++                return -1;
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++            return -1;
++        }
++        return -1;
++    }
++    // PaperDragon end
++
+ }
+diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
+index e988a7c..ecff3d6 100644
+--- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
++++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
+@@ -618,7 +618,10 @@ public final class SimplePluginManager implements PluginManager {
+         String name = perm.getName().toLowerCase();
+ 
+         if (permissions.containsKey(name)) {
+-            throw new IllegalArgumentException("The permission " + name + " is already defined!");
++            // PaperDragon start - Don't Throw an IAE, just Print the Warning
++            //throw new IllegalArgumentException("The permission " + name + " is already defined!");
++            org.bukkit.Bukkit.getLogger().log(Level.WARNING, "The Permission " + name + " is already defined!");
++            // PaperDragon end
+         }
+ 
+         permissions.put(name, perm);
+-- 
+2.5.0
+

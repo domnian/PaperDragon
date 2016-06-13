@@ -1,16 +1,25 @@
-From d19743053b65327ed4eac1801ebef421c8b4f96e Mon Sep 17 00:00:00 2001
+From 69cd7f2066b13b6a249f4c4350fe4173d9177544 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
-Subject: [PATCH] Prettify My Own Code from Paper
+Subject: [PATCH] Misc PaperDragon Changes
 
 ---
- src/main/java/org/bukkit/craftbukkit/CraftServer.java | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ src/main/java/org/bukkit/craftbukkit/CraftServer.java | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e57f922..fd2ceaf 100644
+index e57f922..46113e0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -126,7 +126,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
+ 
+ public final class CraftServer implements Server {
+     private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
+-    private final String serverName = "Paper";
++    private final String serverName = "PaperDragon"; // PaperDragon - We are PaperDragon
+     private final String serverVersion;
+     private final String bukkitVersion = Versioning.getBukkitVersion();
+     private final Logger logger = Logger.getLogger("Minecraft");
 @@ -1862,13 +1862,7 @@ public final class CraftServer implements Server {
          ((SimplePluginManager) pluginManager).clearPermissions();
          loadCustomPermissions();

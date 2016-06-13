@@ -1,11 +1,12 @@
-From 9edf8588ce81b3f2b2cb8f4fe5a80283f8a096de Mon Sep 17 00:00:00 2001
+From 2a692473fa7de9d804eb1ffe355c59328e5232cd Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ pom.xml                                                | 18 +++++++++---------
+ .../java/org/bukkit/craftbukkit/util/Versioning.java   |  2 +-
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
 index 34bfeb1..4abd0b2 100644
@@ -51,6 +52,19 @@ index 34bfeb1..4abd0b2 100644
              <scope>compile</scope>
          </dependency>
          <dependency>
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+index 674096c..50cd5f9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+@@ -11,7 +11,7 @@ public final class Versioning {
+     public static String getBukkitVersion() {
+         String result = "Unknown-Version";
+ 
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.destroystokyo.paper/paper-api/pom.properties");
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.domnian.paperdragon/paperdragon-api/pom.properties");
+         Properties properties = new Properties();
+ 
+         if (stream != null) {
 -- 
 2.5.0
 
