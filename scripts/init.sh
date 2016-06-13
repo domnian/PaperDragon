@@ -3,7 +3,6 @@ cd $(dirname $SOURCE)/../
 basedir=$(pwd -P)
 
 ## CHANGE THESE TO YOUR REPOS
-PARENT_REPO="git@bitbucket.org:domnian/PaperDragon"
 API_REPO="git@bitbucket.org:domnian/PaperDragon-API"
 SERVER_REPO="git@bitbucket.org:domnian/PaperDragon-Server"
 PAPERAPI_REPO="git@bitbucket.org:domnian/Paper-API"
