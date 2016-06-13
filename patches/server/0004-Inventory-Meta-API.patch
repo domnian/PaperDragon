@@ -1,4 +1,4 @@
-From 4935975fcb6275220fcf9be29cf08d239fb8a3e7 Mon Sep 17 00:00:00 2001
+From 72d0f81ff5a46decad95d3d6ea99b89e60baa8f9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:05:05 -0400
 Subject: [PATCH] Inventory Meta API
@@ -9,10 +9,10 @@ Subject: [PATCH] Inventory Meta API
  2 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 6a54106..480a84b 100644
+index 4424157..a48058a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -870,6 +870,11 @@ public class CraftEventFactory {
+@@ -872,6 +872,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView());
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
