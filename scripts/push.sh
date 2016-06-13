@@ -14,4 +14,17 @@ paperVer=$(cat current-paper)
 pushRepo PaperDragon-API $API_REPO master
 pushRepo PaperDragon-Server $SERVER_REPO master
 pushRepo mc-dev $MCDEV_REPO $paperVer
-pushRepo $basedir $PARENT_REPO master
+
+# Push Parent to Two Remotes
+function pushBitbucket {
+  cd "$basedir"
+  git push bb-push master
+}
+
+function pushGithub {
+  cd "$basedir"
+  git push gh-push master
+}
+
+pushBitbucket
+pushGithub
