@@ -1,12 +1,11 @@
-From 84a024237cb6d04115797b5778e20b9f9851a2c5 Mon Sep 17 00:00:00 2001
+From 3ee15c2a0afc7dece29e53fce7b49fb9835dc128 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:08:14 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
  .../bukkit/command/defaults/VersionCommand.java    | 37 ++++++++++++++--------
- .../org/bukkit/plugin/SimplePluginManager.java     |  5 ++-
- 2 files changed, 27 insertions(+), 15 deletions(-)
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 index 6d32e1d..a497a8b 100644
@@ -84,22 +83,6 @@ index 6d32e1d..a497a8b 100644
          }
              /*
              BufferedReader reader = Resources.asCharSource(
-diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index e988a7c..ecff3d6 100644
---- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-+++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -618,7 +618,10 @@ public final class SimplePluginManager implements PluginManager {
-         String name = perm.getName().toLowerCase();
- 
-         if (permissions.containsKey(name)) {
--            throw new IllegalArgumentException("The permission " + name + " is already defined!");
-+            // PaperDragon start - Don't Throw an IAE, just Print the Warning
-+            //throw new IllegalArgumentException("The permission " + name + " is already defined!");
-+            org.bukkit.Bukkit.getLogger().log(Level.WARNING, "The Permission " + name + " is already defined!");
-+            // PaperDragon end
-         }
- 
-         permissions.put(name, perm);
 -- 
 2.5.0
 
