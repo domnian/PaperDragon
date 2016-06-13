@@ -60,6 +60,15 @@ case "$1" in
         scripts/push.sh
     )
     ;;
+    "nuke" | "reset")
+    (
+        cd "$basedir"
+	rm Paper -Rf
+	rm PaperDragon-Server -Rf
+	rm PaperDragon-API -Rf
+	rm mc-dev -rf
+    )
+    ;;
     "r" | "root")
         cd "$basedir"
     ;;
@@ -132,9 +141,11 @@ case "$1" in
         echo ""
         echo " Normal commands:"
         echo "  * rb, rebuild       | Rebuild patches, can be called from anywhere."
-        echo "  * p, patch          | Apply all patches to the project without building it. Can be run from anywhere."
-        echo "  * up, upstream      | Foobar" 
-        echo "  * init, submodules  | Initilize the Paper Submodule" 
+        echo "  * p, patch, apply   | Apply all patches to the project without building it. Can be run from anywhere."
+        echo "  * up, upstream      | Update the Paper Submodule" 
+        echo "  * init, submodules  | Initilize the Paper Submodule"
+	echo "  * push              | Push the project to the Remote"
+	echo "  * nuke, reset       | Reset the Entire Project - WARNING: THIS WILL DELETE EVERYTHING!"
         echo ""
         echo " These commands require the setup command before use:"
         echo "  * r, root           | Change directory to the root of the project."
