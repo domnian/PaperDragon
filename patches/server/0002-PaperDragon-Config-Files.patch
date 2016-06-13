@@ -1,4 +1,4 @@
-From c7287c55b45384fa7f78deba07f940ff7faaa0d0 Mon Sep 17 00:00:00 2001
+From eb445f6606662671206ef375f3916ec63cfe68de Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -16,7 +16,7 @@ Subject: [PATCH] PaperDragon Config Files
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 new file mode 100644
-index 0000000..6b49028
+index 0000000..6ef5dd6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -0,0 +1,161 @@
@@ -77,7 +77,7 @@ index 0000000..6b49028
 +
 +    public static void registerCommands() {
 +        for (Map.Entry<String, Command> entry : commands.entrySet()) {
-+            MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "Paper", entry.getValue());
++            MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "PaperDragon", entry.getValue());
 +        }
 +    }
 +
