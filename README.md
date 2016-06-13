@@ -7,7 +7,7 @@ Personal fork of the High performance Spigot fork known as Paper
 
 Documentation
 ------
-Access the PaperDragon docs here: ** Comning Soon **
+Access the PaperDragon docs here: ** Coming Soon **
 
 How To (Compiling Jar From Source)
 ------
