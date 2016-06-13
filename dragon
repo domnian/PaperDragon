@@ -43,6 +43,7 @@ case "$1" in
     ;;
     "up" | "upstream")
     (
+	set -e
         cd "$basedir"
 	scripts/upstream.sh "$2" "$3"
     )
