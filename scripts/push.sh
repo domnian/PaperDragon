@@ -6,6 +6,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
+basedir="../"
 . $(dirname $SOURCE)/init.sh
 
 paperVer=$(cat current-paper)
@@ -13,3 +14,4 @@ paperVer=$(cat current-paper)
 pushRepo PaperDragon-API $API_REPO master
 pushRepo PaperDragon-Server $SERVER_REPO master
 pushRepo mc-dev $MCDEV_REPO $paperVer
+pushRepo $basedir $PARENT_REPO master
