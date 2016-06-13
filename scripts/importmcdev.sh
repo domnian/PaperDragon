@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# No Imports as of Yet
+echo "There are nothing to import from mc-dev.. skipping"
+exit
+
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
 	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -39,24 +43,6 @@ function import {
 		git reset --hard HEAD^
 	fi
 )
-
-import BlockFlowerPot
-import BlockSponge
-import CommandGive
-import CommandStop
-import EnchantmentManager
-import EntityBat
-import EntityEnderSignal
-import EntityMinecartHopper
-import GameProfileSerializer
-import IHopper
-import ItemBookAndQuill
-import PacketPlayOutTileEntityData
-import PathfinderGoalArrowAttack
-import PathfinderGoalInteractVillagers
-import PathfinderGoalSelector
-import TileEntityLightDetector
-
 
 (
 	cd Paper/Paper-Server/
