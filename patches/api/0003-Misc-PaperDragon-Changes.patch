@@ -1,15 +1,15 @@
-From 4212f87c2b163fd176518393eb71adefaac5f417 Mon Sep 17 00:00:00 2001
+From 84a024237cb6d04115797b5778e20b9f9851a2c5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:08:14 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
- .../bukkit/command/defaults/VersionCommand.java    | 75 ++++++++++++++++++----
- .../org/bukkit/plugin/SimplePluginManager.java     |  5 +-
- 2 files changed, 65 insertions(+), 15 deletions(-)
+ .../bukkit/command/defaults/VersionCommand.java    | 37 ++++++++++++++--------
+ .../org/bukkit/plugin/SimplePluginManager.java     |  5 ++-
+ 2 files changed, 27 insertions(+), 15 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index 6d32e1d..5b69376 100644
+index 6d32e1d..a497a8b 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -1,9 +1,8 @@
@@ -75,58 +75,15 @@ index 6d32e1d..5b69376 100644
              String[] parts = version.substring("git-Paper-".length()).split("[-\\s]");
              int distance = getDistance(null, parts[0]);
              switch (distance) {
-@@ -248,7 +257,8 @@ public class VersionCommand extends BukkitCommand {
+@@ -248,7 +257,7 @@ public class VersionCommand extends BukkitCommand {
              return getFromJenkins(currentVer);
          } catch (NumberFormatException ex) {
              verInfo = verInfo.replace("\"", "");
 -            return getFromRepo("PaperMC/Paper", verInfo);
-+            // return getFromRepo("PaperMC/Paper", verInfo);
-+            return getFromBitbucket("domnian/PaperDragon", verInfo);
++            return getFromRepo("DomnianMC/PaperDragon", verInfo); // PaperDragon - Fetch Version from Our Repo
          }
              /*
              BufferedReader reader = Resources.asCharSource(
-@@ -318,4 +328,41 @@ public class VersionCommand extends BukkitCommand {
-         }
-     }
-     // Paper end
-+
-+    // PaperDragon start
-+    private static int getFromBitbucket(String repo, String hash) {
-+        try {
-+            HttpURLConnection connection = (HttpURLConnection) new URL("https://bitbucket.org/" + repo + "/branches/compare/" + BRANCH + "%0D" + hash).openConnection();
-+            connection.connect();
-+            if (connection.getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) return -2; // Unknown commit
-+            try (
-+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charsets.UTF_8))
-+            ) {
-+                Scanner sc = new Scanner(reader).useDelimiter("<tr class=\"iterable-item\" id=\"chg_.\" data-module=\"commitstatus\\/status-dialog\">");
-+                System.out.println("Response from " + connection.getURL().toString() + ":"); // PaperDragon - DEBUG
-+                while (sc.hasNextLine()) {
-+                    System.out.println(sc.nextLine()); // PaperDragon - DEBUG
-+                }
-+//                JSONObject obj = (JSONObject) new JSONParser().parse(reader);
-+//                String status = (String) obj.get("status");
-+//                switch (status) {
-+//                    case "identical":
-+//                        return 0;
-+//                    case "behind":
-+//                        return ((Number) obj.get("behind_by")).intValue();
-+//                    default:
-+//                        return -1;
-+//                }
-+            } catch (NumberFormatException e) {
-+                e.printStackTrace();
-+                return -1;
-+            }
-+        } catch (IOException e) {
-+            e.printStackTrace();
-+            return -1;
-+        }
-+        return -1;
-+    }
-+    // PaperDragon end
-+
- }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 index e988a7c..ecff3d6 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
