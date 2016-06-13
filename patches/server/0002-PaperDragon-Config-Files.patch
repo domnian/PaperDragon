@@ -1,4 +1,4 @@
-From eb445f6606662671206ef375f3916ec63cfe68de Mon Sep 17 00:00:00 2001
+From 183e21690735429589eac8c64e005ab18c5ba029 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -8,9 +8,9 @@ Subject: [PATCH] PaperDragon Config Files
  .../com/domnian/paperdragon/DragonWorldConfig.java |  79 ++++++++++
  .../java/net/minecraft/server/DedicatedServer.java |   4 +
  src/main/java/net/minecraft/server/World.java      |   2 +
- .../java/org/bukkit/craftbukkit/CraftServer.java   |   5 +
+ .../java/org/bukkit/craftbukkit/CraftServer.java   |   6 +
  src/main/java/org/bukkit/craftbukkit/Main.java     |   8 +
- 6 files changed, 259 insertions(+)
+ 6 files changed, 260 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonConfig.java
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 
@@ -295,7 +295,7 @@ index 9f4b823..41c7689 100644
      public static boolean haveWeSilencedAPhysicsCrash;
      public static String blockLocation;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8202800..e57f922 100644
+index 8202800..c8b8384 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -713,6 +713,7 @@ public final class CraftServer implements Server {
@@ -314,7 +314,15 @@ index 8202800..e57f922 100644
          }
  
          // Paper start
-@@ -1827,6 +1829,9 @@ public final class CraftServer implements Server {
+@@ -744,6 +746,7 @@ public final class CraftServer implements Server {
+         resetRecipes();
+         org.spigotmc.SpigotConfig.registerCommands(); // Spigot
+         com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
++        com.domnian.paperdragon.DragonConfig.registerCommands(); // PaperDragon
+ 
+         overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
+ 
+@@ -1827,6 +1830,9 @@ public final class CraftServer implements Server {
          }
  
          @Override
