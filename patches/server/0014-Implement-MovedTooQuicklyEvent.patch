@@ -1,0 +1,32 @@
+From b0b4fcd2a579fc3dbb3b1d1ebd1a6efd44acc1ee Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 28 Sep 2013 22:01:47 -0400
+Subject: [PATCH] Implement MovedTooQuicklyEvent
+
+also make creative immune to this event
+---
+ src/main/java/net/minecraft/server/PlayerConnection.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index 347f0c9..92ecfab 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -522,11 +522,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                         if (!this.player.K() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cG())) {
+                             float f2 = this.player.cG() ? 300.0F : 100.0F;
+ 
+-                            if (d11 - d10 > Math.max(100, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot
++                            if (d11 - d10 > Math.max(100, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R())) { // Spigot // PaperDragon - Import Patch From EMC - remove name check for SP
++                                if (new com.domnian.paperdragon.event.MovedTooQuicklyEvent(d10, getPlayer()).callEvent()) { // PaperDragon - Import Patch From EMC
+                         // CraftBukkit end
+                                 PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", new Object[] { this.player.getName(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9)});
+                                 this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
+                                 return;
++                                } // PaperDragon - Import Patch From EMC
+                             }
+                         }
+ 
+-- 
+2.5.0
+
