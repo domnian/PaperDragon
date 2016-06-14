@@ -1,0 +1,24 @@
+From 063a969ad37ef953b9eaa803409e391067691f83 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 17 May 2015 19:11:01 -0400
+Subject: [PATCH] Don't break Hanging Entities if neighbor chunks unloaded
+
+---
+ src/main/java/net/minecraft/server/EntityHanging.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/net/minecraft/server/EntityHanging.java b/src/main/java/net/minecraft/server/EntityHanging.java
+index 3901204..c1ba945 100644
+--- a/src/main/java/net/minecraft/server/EntityHanging.java
++++ b/src/main/java/net/minecraft/server/EntityHanging.java
+@@ -128,6 +128,7 @@ public abstract class EntityHanging extends Entity {
+     }
+ 
+     public boolean survives() {
++        if (!world.getChunkAt((int) locX >> 4, (int) locZ >> 4).areNeighborsLoaded(1)) return true; // PaperDragon - Import Patch From EMC
+         if (!this.world.getCubes(this, this.getBoundingBox()).isEmpty()) {
+             return false;
+         } else {
+-- 
+2.5.0
+
