@@ -1,0 +1,31 @@
+From 7ae96b49d918a525a038326fa11a062f2f9bfe4d Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 22 Aug 2015 22:15:58 -0400
+Subject: [PATCH] Action Bar API
+
+---
+ src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 3f871a7..2be9aea 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -146,6 +146,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+             getHandle().playerConnection.sendPacket(new PacketPlayOutChat(component));
+         }
+     }
++    // PaperDragon start - Import Patch From EMC
++    @Override
++    public void sendActionBar(String message) {
++        if (getHandle().playerConnection == null || message == null || message.isEmpty()) return;
++
++        getHandle().playerConnection.sendPacket(new PacketPlayOutChat(net.minecraft.server.MCUtil.cmpFromMessage(message), (byte) 2));
++    }
++    // PaperDragon end
+ 
+     @Override
+     public void sendMessage(String message) {
+-- 
+2.5.0
+
