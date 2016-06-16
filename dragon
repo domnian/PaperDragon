@@ -48,12 +48,6 @@ case "$1" in
 	scripts/upstream.sh "$2" "$3"
     )
     ;;
-    "init" | "submodules")
-    (
-	cd "$basedir"
-        git submodule update --init
-    )
-    ;;
     "push")
     (
         cd "$basedir"
