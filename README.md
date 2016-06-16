@@ -1,4 +1,4 @@
-PaperDragon [![CI Status](http://ci.destroystokyo.com/buildStatus/icon?job=PaperSpigot)](http://ci.destroystokyo.com/job/PaperSpigot/)
+PaperDragon [![Build Status](https://ci.domnian.com/view/PaperDragon/job/PaperDragon/badge/icon)](https://ci.domnian.com/view/PaperDragon/job/PaperDragon/)
 ===========
 
 Personal fork of the High performance Spigot fork known as Paper
