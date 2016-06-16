@@ -40,6 +40,9 @@ function import {
 	fi
 )
 
+import PacketPlayOutMapChunk
+import PacketPlayOutTileEntityData
+
 (
 	cd Paper/Paper-Server/
 	rm -rf nms-patches
