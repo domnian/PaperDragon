@@ -9,13 +9,11 @@ done
 . $(dirname $SOURCE)/init.sh
 
 if [[ "$1" == up* ]]; then
-
-	(
-		git submodule update --init
-		cd "$basedir/Paper/"
-		git fetch && git reset --hard origin/master
-		cd ../
-		git add Paper
+    (
+        cd "$basedir/Paper/"
+        git fetch && git reset --hard origin/master
+        cd ../
+        git add Paper
     )
 fi
 

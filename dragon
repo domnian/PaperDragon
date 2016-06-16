@@ -38,14 +38,15 @@ case "$1" in
     (
         set -e
         cd "$basedir"
-	scripts/apply.sh "$basedir"
+        scripts/apply.sh "$basedir"
     )
     ;;
     "up" | "upstream")
     (
-	set -e
+        set -e
         cd "$basedir"
-	scripts/upstream.sh "$2" "$3"
+        git submodule update --init
+        scripts/upstream.sh "$2" "$3"
     )
     ;;
     "push")
@@ -57,9 +58,9 @@ case "$1" in
     "nuke" | "reset")
     (
         cd "$basedir"
-	rm Paper -Rf
-	rm PaperDragon-Server -Rf
-	rm PaperDragon-API -Rf
+        rm Paper -Rf
+        rm PaperDragon-Server -Rf
+        rm PaperDragon-API -Rf
     )
     ;;
     "ci" | "jenkins")
@@ -68,6 +69,7 @@ case "$1" in
         rm Paper -Rf
         rm PaperDragon-Server -Rf
         rm PaperDragon-API -Rf
+        git submodule update --init
         scripts/upstream.sh
         scripts/apply.sh
     )
