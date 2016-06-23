@@ -1,4 +1,4 @@
-From ccf13e7746d5eb49b546c42a2a4105aca77f7321 Mon Sep 17 00:00:00 2001
+From f1e237ea42ef1045a3980716d793374bff36b085 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -74,7 +74,7 @@ index 0000000..9791ab1
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 46cae10..7c3e2b3 100644
+index e777f93..4f49fd6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -44,6 +44,7 @@ public abstract class Entity implements ICommandListener {
@@ -143,10 +143,10 @@ index 0000000..2b8b266
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8dd843f..e0c4af5 100644
+index 82ba798..cfd864c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1705,6 +1705,7 @@ public abstract class World implements IBlockAccess {
+@@ -1715,6 +1715,7 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          boolean flag1 = true;
  

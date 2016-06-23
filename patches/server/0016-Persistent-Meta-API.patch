@@ -1,4 +1,4 @@
-From 2c2ac033d66dc6eedfc019cc2de0d4f3c889b281 Mon Sep 17 00:00:00 2001
+From 295315c08a95f9a35d2cd38f48383ba134deae86 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent Meta API
@@ -453,10 +453,10 @@ index 0000000..f8ea9d2
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 774077e..eed354d 100644
+index 30c3d6c..1f951e3 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -112,6 +112,7 @@ public class Chunk {
+@@ -113,6 +113,7 @@ public class Chunk {
  
      public org.bukkit.Chunk bukkitChunk;
      public boolean mustSave;
@@ -465,10 +465,10 @@ index 774077e..eed354d 100644
  
      public Chunk(World world, ChunkSnapshot chunksnapshot, int i, int j) {
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index facc97b..f25b868 100644
+index 584a77d..c2dc873 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -259,6 +259,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -260,6 +260,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
      private void a(Chunk chunk, World world, NBTTagCompound nbttagcompound) {
          nbttagcompound.setInt("xPos", chunk.locX);
          nbttagcompound.setInt("zPos", chunk.locZ);
@@ -476,7 +476,7 @@ index facc97b..f25b868 100644
          nbttagcompound.setLong("LastUpdate", world.getTime());
          nbttagcompound.setIntArray("HeightMap", chunk.r());
          nbttagcompound.setBoolean("TerrainPopulated", chunk.isDone());
-@@ -365,6 +366,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -366,6 +367,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          Chunk chunk = new Chunk(world, i, j);
  
          chunk.a(nbttagcompound.getIntArray("HeightMap"));
@@ -485,7 +485,7 @@ index facc97b..f25b868 100644
          chunk.e(nbttagcompound.getBoolean("LightPopulated"));
          chunk.c(nbttagcompound.getLong("InhabitedTime"));
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9a08388..46cae10 100644
+index 93f9eab..e777f93 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -43,6 +43,7 @@ import org.bukkit.plugin.PluginManager;
@@ -496,7 +496,7 @@ index 9a08388..46cae10 100644
      private static final int CURRENT_LEVEL = 2;
      public static Random SHARED_RANDOM = new Random(); // Paper
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
-@@ -1324,6 +1325,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1349,6 +1350,7 @@ public abstract class Entity implements ICommandListener {
                  this.yaw = 0;
              }
  
@@ -504,7 +504,7 @@ index 9a08388..46cae10 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1425,6 +1427,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1450,6 +1452,7 @@ public abstract class Entity implements ICommandListener {
              this.motX = nbttaglist1.e(0);
              this.motY = nbttaglist1.e(1);
              this.motZ = nbttaglist1.e(2);
@@ -965,10 +965,10 @@ index b30c97e..93fb0ef 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index cd39fe5..598ab6d 100644
+index f4c84bf..a69186a 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -50,6 +50,7 @@ public abstract class TileEntity {
+@@ -51,6 +51,7 @@ public abstract class TileEntity {
      }
  
      public void a(NBTTagCompound nbttagcompound) {
@@ -976,7 +976,7 @@ index cd39fe5..598ab6d 100644
          this.position = new BlockPosition(nbttagcompound.getInt("x"), nbttagcompound.getInt("y"), nbttagcompound.getInt("z"));
      }
  
-@@ -63,6 +64,7 @@ public abstract class TileEntity {
+@@ -64,6 +65,7 @@ public abstract class TileEntity {
          if (s == null) {
              throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
          } else {
@@ -984,7 +984,7 @@ index cd39fe5..598ab6d 100644
              nbttagcompound.setString("id", s);
              nbttagcompound.setInt("x", this.position.getX());
              nbttagcompound.setInt("y", this.position.getY());
-@@ -269,6 +271,7 @@ public abstract class TileEntity {
+@@ -270,6 +272,7 @@ public abstract class TileEntity {
          a(TileEntityCommand.class, "Control");
      }
  
@@ -993,7 +993,7 @@ index cd39fe5..598ab6d 100644
      public InventoryHolder getOwner() {
          if (world == null) return null;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f473123..8dd843f 100644
+index 03fdb24..82ba798 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -418,6 +418,7 @@ public abstract class World implements IBlockAccess {

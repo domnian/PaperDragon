@@ -1,4 +1,4 @@
-From b0b4fcd2a579fc3dbb3b1d1ebd1a6efd44acc1ee Mon Sep 17 00:00:00 2001
+From a5f8a5a6d6358f23281ef48240a99287120261de Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Sep 2013 22:01:47 -0400
 Subject: [PATCH] Implement MovedTooQuicklyEvent
@@ -9,10 +9,10 @@ also make creative immune to this event
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 347f0c9..92ecfab 100644
+index 390528c..cd063d1 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -522,11 +522,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -525,11 +525,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                          if (!this.player.K() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cG())) {
                              float f2 = this.player.cG() ? 300.0F : 100.0F;
  
