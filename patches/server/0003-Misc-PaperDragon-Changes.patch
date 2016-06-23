@@ -1,14 +1,28 @@
-From 978786c385f562e9f7b346ff60a40403679bd7ca Mon Sep 17 00:00:00 2001
+From 5d0420a2a026a96f04a889015dc809e5168f7046 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
+ src/main/java/net/minecraft/server/EULA.java            | 2 +-
  src/main/java/net/minecraft/server/MinecraftServer.java | 2 +-
  src/main/java/org/bukkit/craftbukkit/CraftServer.java   | 2 +-
  src/main/java/org/spigotmc/WatchdogThread.java          | 8 ++++----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/src/main/java/net/minecraft/server/EULA.java b/src/main/java/net/minecraft/server/EULA.java
+index ebbc1fc..60a072f 100644
+--- a/src/main/java/net/minecraft/server/EULA.java
++++ b/src/main/java/net/minecraft/server/EULA.java
+@@ -52,7 +52,7 @@ public class EULA {
+             fileoutputstream = new FileOutputStream(this.b);
+             properties.setProperty("eula", "false");
+             properties.store(fileoutputstream, "By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula)." +
+-                    "\nand also agreeing that tacos are tasty.");  // Paper - fix lag
++                    "\nand also agreeing that tacos are tasty.\nand also agreeing that dragons are awesome!");  // Paper - fix lag // PaperDragon - 4000 TPS
+         } catch (Exception exception) {
+             EULA.a.warn("Failed to save {}", new Object[] { this.b, exception});
+         } finally {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index 19757c5..a42f63b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
