@@ -40,7 +40,6 @@ function import {
 	fi
 )
 
-import DefinedStructure
 import PacketPlayOutMapChunk
 import PacketPlayOutTileEntityData
 
