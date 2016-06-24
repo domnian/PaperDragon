@@ -1,0 +1,39 @@
+From 62898222570f0a3993089d7e9d7fa5600160cf7f Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 23 Jun 2016 22:22:09 -0400
+Subject: [PATCH] User Object API
+
+Allow Plugins to Store User Objects on the Player
+
+Inspired by https://url.domnian.com/emcuserapi
+---
+ src/main/java/org/bukkit/entity/Player.java | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index be224b4..4605f95 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -19,6 +19,7 @@ import org.bukkit.WeatherType;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.conversations.Conversable;
+ import org.bukkit.map.MapView;
++import org.bukkit.plugin.Plugin;
+ import org.bukkit.plugin.messaging.PluginMessageRecipient;
+ import org.bukkit.scoreboard.Scoreboard;
+ 
+@@ -1623,4 +1624,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+     // Spigot end
+ 
+     public void sendActionBar(String message); // PaperDragon - Import Patch From EMC
++
++    // PaperDragon start - User Object API
++    public void setUserObject(Plugin owner, Object object);
++
++    public <T> T getUserObject(Plugin owner);
++    // PaperDragon end
++
+ }
+-- 
+2.5.0
+
