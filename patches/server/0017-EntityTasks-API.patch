@@ -1,4 +1,4 @@
-From f1e237ea42ef1045a3980716d793374bff36b085 Mon Sep 17 00:00:00 2001
+From 6f9c2e0eba472fd1f476ddad57239596da09d16f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -143,10 +143,10 @@ index 0000000..2b8b266
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 82ba798..cfd864c 100644
+index 4e38334..839454a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1715,6 +1715,7 @@ public abstract class World implements IBlockAccess {
+@@ -1722,6 +1722,7 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          boolean flag1 = true;
  
@@ -155,7 +155,7 @@ index 82ba798..cfd864c 100644
          if (flag && !org.spigotmc.ActivationRange.checkIfActive(entity)) {
              entity.ticksLived++;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a282fbd..f199767 100644
+index fd56ef9..7bc8be7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -774,6 +774,7 @@ public final class CraftServer implements Server {

@@ -1,4 +1,4 @@
-From 5d0420a2a026a96f04a889015dc809e5168f7046 Mon Sep 17 00:00:00 2001
+From c8416b7223f247e1522cdde97d40e3fe2ccccd5b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -24,10 +24,10 @@ index ebbc1fc..60a072f 100644
              EULA.a.warn("Failed to save {}", new Object[] { this.b, exception});
          } finally {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 19757c5..a42f63b 100644
+index f47db39..de24615 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1094,7 +1094,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -1093,7 +1093,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      }
  
      public String getServerModName() {
@@ -37,7 +37,7 @@ index 19757c5..a42f63b 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c8b8384..a282fbd 100644
+index 206868a..fd56ef9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -126,7 +126,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
