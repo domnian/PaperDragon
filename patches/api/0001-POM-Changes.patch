@@ -1,14 +1,14 @@
-From e149074db3b65f658edf0f8e4cdaf27210c535a2 Mon Sep 17 00:00:00 2001
+From 6a3dcdd380d2b2983d93fb851472fe6c5b610ed5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ pom.xml | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 67807c1..fe2e6fd 100644
+index 67807c1..19555d3 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -36,26 +36,28 @@ index 67807c1..fe2e6fd 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -26,8 +26,9 @@
+@@ -26,15 +26,16 @@
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      </properties>
  
-+    <!-- PaperDragon - We Don't Deploy (No Repo :P)-->
-     <!-- just until we get deployment to central approved -->
--    <distributionManagement>
-+    <!--distributionManagement>
+-    <!-- just until we get deployment to central approved -->
+     <distributionManagement>
          <repository>
-             <id>destroystokyo-releases</id>
-             <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
-@@ -36,7 +37,7 @@
-             <id>destroystokyo-snapshots</id>
-             <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
+-            <id>destroystokyo-releases</id>
+-            <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
++            <id>domnian-rel</id>
++            <name>Domnian Releases</name>
++            <url>https://repo.domnian.com/content/repositories/releases/</url>
+         </repository>
+         <snapshotRepository>
+-            <id>destroystokyo-snapshots</id>
+-            <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
++            <id>domnian-snap</id>
++            <name>Domnian Snapshots</name>
++            <url>https://repo.domnian.com/content/repositories/snapshots/</url>
          </snapshotRepository>
--    </distributionManagement>
-+    </distributionManagement-->
+     </distributionManagement>
  
-     <!-- required until fixed plexus-compiler-eclipse is deployed -->
-     <pluginRepositories>
 -- 
 2.5.0
 

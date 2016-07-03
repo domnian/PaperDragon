@@ -19,8 +19,8 @@
     <url>https://bitbucket.org/domnian/paperdragon</url>
 
     <modules>
-        <module>PaperDragon-Server</module>
         <module>PaperDragon-API</module>
+        <module>PaperDragon-Server</module>
     </modules>
 
     <build>
@@ -42,15 +42,16 @@
         </repository>
     </repositories>
 
-    <!-- PaperDragon - We Don't Deploy (No Repo :P)-->
-    <!--distributionManagement>
+    <distributionManagement>
         <repository>
-            <id>destroystokyo-releases</id>
-            <url>https://repo.destroystokyo.com/content/repositories/releases/</url>
+            <id>domnian-rel</id>
+            <name>Domnian Releases</name>
+            <url>https://repo.domnian.com/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>destroystokyo-snapshots</id>
-            <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
+            <id>domnian-snap</id>
+            <name>Domnian Snapshots</name>
+            <url>https://repo.domnian.com/content/repositories/snapshots/</url>
         </snapshotRepository>
-    </distributionManagement-->
+    </distributionManagement>
 </project>
