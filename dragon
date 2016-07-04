@@ -96,7 +96,7 @@ case "$1" in
         rm Paper -Rf
         rm PaperDragon-Server -Rf
         rm PaperDragon-API -Rf
-        rm mc-dev -RF
+        rm mc-dev -Rf
     )
     ;;
     "r" | "root")
