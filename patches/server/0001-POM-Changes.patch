@@ -1,15 +1,15 @@
-From 149f3f9281a0786a9454077eb4d7a340ea1e46fe Mon Sep 17 00:00:00 2001
+From e87e21921037bec0968751178e637670c808fe31 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml                                            | 41 ++++++++++++++++------
+ pom.xml                                            | 50 +++++++++++++++++-----
  .../org/bukkit/craftbukkit/util/Versioning.java    |  2 +-
- 2 files changed, 31 insertions(+), 12 deletions(-)
+ 2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 63aaa7a..84b8739 100644
+index 63aaa7a..4a967c6 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -96,6 +96,22 @@ index 63aaa7a..84b8739 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
+@@ -222,6 +241,15 @@
+                     </excludes>
+                 </configuration>
+             </plugin>
++            <!-- PaperDragon - DO NOT DEPLOY SERVER! -->
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-deploy-plugin</artifactId>
++                <version>2.4</version>
++                <configuration>
++                    <skip>true</skip>
++                </configuration>
++           </plugin>
+         </plugins>
+     </build>
+ </project>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 index 674096c..50cd5f9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
