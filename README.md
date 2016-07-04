@@ -1,7 +1,9 @@
 PaperDragon [![Build Status](https://ci.domnian.com/view/PaperDragon/job/PaperDragon/badge/icon)](https://ci.domnian.com/view/PaperDragon/job/PaperDragon/)
 ===========
 
-Personal fork of the High performance Spigot fork known as Paper
+Personal fork of the High performance Spigot fork known as Paper.
+
+Please keep in mind, this is only a side-project of mine. I'll do my best to keep it up to date.
 
 [IRC Support and Project Discussion](https://irc.domnian.com/?ch=paperdragon)
 
