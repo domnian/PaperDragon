@@ -74,6 +74,23 @@ case "$1" in
         scripts/apply.sh
     )
     ;;
+    "jar" | "j")
+    (
+        set -e
+        cd "$basedir"
+        git submodule update --init
+        scripts/upstream.sh "$2" "$3"
+        scripts/apply.sh
+        mvn clean install
+        scripts/paperclip.sh "$basedir"
+    )
+    ;;
+    "cipost" | "clip" | "origami")
+    (
+        cd "$basedir"
+        scripts/paperclip.sh "$basedir"
+    )
+    ;;
     "r" | "root")
         cd "$basedir"
     ;;
