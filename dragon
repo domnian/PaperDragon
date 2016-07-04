@@ -85,10 +85,18 @@ case "$1" in
         scripts/paperclip.sh "$basedir"
     )
     ;;
-    "cipost" | "clip" | "origami")
+    "clip" | "origami")
     (
         cd "$basedir"
         scripts/paperclip.sh "$basedir"
+    )
+    ;;
+    "nukeall" | "cinuke")
+    (
+        rm Paper -Rf
+        rm PaperDragon-Server -Rf
+        rm PaperDragon-API -Rf
+        rm mc-dev -RF
     )
     ;;
     "r" | "root")
