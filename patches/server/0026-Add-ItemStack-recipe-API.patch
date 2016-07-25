@@ -1,4 +1,4 @@
-From 0ecc4df2441b2db534571a7e051ab71adbe1ad68 Mon Sep 17 00:00:00 2001
+From 5d6abc6642b5cb98b52e8e234ee743d16c786ecf Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:38:19 -0400
 Subject: [PATCH] Add ItemStack recipe API
@@ -133,5 +133,5 @@ index 53479c7..b439e06 100644
          }
          CraftingManager.getInstance().registerShapelessRecipe(CraftItemStack.asNMSCopy(this.getResult()), data);
 -- 
-1.9.1
+2.5.0
 

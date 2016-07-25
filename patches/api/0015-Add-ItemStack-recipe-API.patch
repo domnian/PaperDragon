@@ -1,4 +1,4 @@
-From 4470a8ccf7ef23f1e66b0c0240bcc0df060dbf97 Mon Sep 17 00:00:00 2001
+From 219587f84daef7248ee28761252554d5370a6441 Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:38:19 -0400
 Subject: [PATCH] Add ItemStack recipe API
@@ -67,5 +67,5 @@ index a718086..0507da5 100644
      /**
       * Removes an ingredient from the list. If the ingredient occurs multiple
 -- 
-1.9.1
+2.5.0
 

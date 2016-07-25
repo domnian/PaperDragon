@@ -1,4 +1,4 @@
-From 769c92aff876bcfecdd80d68a72888db7ac73120 Mon Sep 17 00:00:00 2001
+From 2cbc0221ac88782854683f271a913ace150d6a9e Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:34:27 -0400
 Subject: [PATCH] ItemStack isSimiliar ability to skip durability check
@@ -35,5 +35,5 @@ index d9cff5b..e87e8ec 100644
  
      @Override
 -- 
-1.9.1
+2.5.0
 

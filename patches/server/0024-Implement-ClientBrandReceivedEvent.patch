@@ -1,4 +1,4 @@
-From 825434b8151c24bde862789b6171e38a4f2f31c3 Mon Sep 17 00:00:00 2001
+From 4301a2f1f7d5fc620ec1b862b36332b2e34b977e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 24 Jul 2016 23:01:47 -0400
 Subject: [PATCH] Implement ClientBrandReceivedEvent
@@ -23,7 +23,7 @@ index 911582e..ac85a44 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4fd7eda..45b311e 100644
+index 4fd7eda..eae387d 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -2215,6 +2215,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -34,7 +34,7 @@ index 4fd7eda..45b311e 100644
 +        if("MC|Brand".equals(s) && com.domnian.paperdragon.DragonConfig.clientBrandEvent) {
 +            packetdataserializer = packetplayincustompayload.b();
 +            String brand = new String(packetdataserializer.a());
-+            new com.domnian.paperdragon.event.ClientBrandReceivedEvent(this.player.getBukkitEntity(), brand);
++            new com.domnian.paperdragon.event.ClientBrandReceivedEvent(this.player.getBukkitEntity(), brand).callEvent();
 +        } else
 +        // PaperDragon end
          if ("MC|BEdit".equals(s)) {
