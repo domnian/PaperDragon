@@ -108,6 +108,9 @@ case "$1" in
     "s" | "server")
         cd "$basedir/PaperDragon-Server"
     ;;
+    "d" | "docs")
+	cd "$basedir/PaperDragon-Docs"
+    ;;
     "e" | "edit")
         case "$2" in
             "s" | "server")

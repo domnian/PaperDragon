@@ -7,9 +7,8 @@ Please keep in mind, this is only a side-project of mine. I'll do my best to kee
 
 [IRC Support and Project Discussion](https://irc.domnian.com/?ch=paperdragon)
 
-Documentation
+[Documentation](http://paperdragon.rtfd.io/en/1.10) [![Documentation Status](https://readthedocs.org/projects/paperdragon/badge/?version=1.10)](http://paperdragon.readthedocs.io/en/1.10/?badge=1.10)
 ------
-Access the PaperDragon docs here: ** Coming Soon **
 
 How To (Compiling Jar From Source)
 ------

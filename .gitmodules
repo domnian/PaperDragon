@@ -2,3 +2,6 @@
 	path = Paper
 	url = https://github.com/PaperMC/Paper.git
 	branch = master
+[submodule "PaperDragon-Docs"]
+	path = PaperDragon-Docs
+	url = https://github.com/domnian/PaperDragon-Docs.git
