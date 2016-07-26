@@ -42,6 +42,9 @@ function import {
 
 import PacketPlayOutMapChunk
 import PacketPlayOutTileEntityData
+import EntityEnderSignal
+import PathfinderGoalArrowAttack
+import PathfinderGoalSelector
 
 (
 	cd Paper/Paper-Server/
