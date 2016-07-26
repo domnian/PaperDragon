@@ -1,0 +1,26 @@
+From 0c28bd4fa5818027fa044fe7c40cbc12c2c9c88c Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 11 Sep 2014 21:04:59 -0400
+Subject: [PATCH] Add API to pass a prepare callback before entity is added to
+ world
+
+---
+ src/main/java/org/bukkit/World.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
+index f970b6b..950ad52 100644
+--- a/src/main/java/org/bukkit/World.java
++++ b/src/main/java/org/bukkit/World.java
+@@ -437,6 +437,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
+      */
+     public Entity spawnEntity(Location loc, EntityType type);
+     public Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason); // PaperDragon - Import Patch From EMC
++    public Entity spawnEntity(Location loc, EntityType type, com.google.common.base.Predicate<Entity> prepare); // PaperDragon - Import Patch From EMC
++    public Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason, com.google.common.base.Predicate<Entity> prepare); // PaperDragon - Import Patch From EMC
+ 
+     /**
+      * Strikes lightning at the given {@link Location}
+-- 
+2.5.0
+
