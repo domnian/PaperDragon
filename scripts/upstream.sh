@@ -11,7 +11,7 @@ done
 if [[ "$1" == up* ]]; then
     (
         cd "$basedir/Paper/"
-        git fetch && git reset --hard origin/master
+       git fetch && git reset --hard origin/master
         cd ../
         git add Paper
     )
@@ -29,7 +29,7 @@ scripts/generatesources.sh
 cd Paper/
 
 version=$(echo -e "Paper: $paperVer\nmc-dev:$importedmcdev")
-tag="upstream-$(echo -e $version | shasum | awk '{print $1}')"
+tag="upstream-$(echo -e $version | md5sum | awk '{print $1}')"
 
 function tag {
 (
