@@ -1,4 +1,4 @@
-From 9fe3e568f66fb0087b6f7eddbb8d5d75eae8a946 Mon Sep 17 00:00:00 2001
+From 60e89da6aae089737efe56b94fdedeb2e499d6a9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 21:10:16 -0400
 Subject: [PATCH] Add force to spawn reasons
@@ -8,10 +8,10 @@ Subject: [PATCH] Add force to spawn reasons
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
-index ccf6d28..272c74d 100644
+index ad16c83..88c7405 100644
 --- a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
-@@ -142,6 +142,7 @@ public class CreatureSpawnEvent extends EntitySpawnEvent {
+@@ -146,6 +146,7 @@ public class CreatureSpawnEvent extends EntitySpawnEvent {
           * When a creature is spawned by plugins
           */
          CUSTOM,

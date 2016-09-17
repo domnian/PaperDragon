@@ -1,4 +1,4 @@
-From 5f850e56eb9d731d42b4e96a3566340c13468d7c Mon Sep 17 00:00:00 2001
+From f01dcf58065c9acf4d76bc9240726f1655d8735e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 4 Apr 2014 23:50:33 -0400
 Subject: [PATCH] World.getNearbyEntities Improvements
@@ -9,10 +9,10 @@ Improves the getNearbyEntities API
  1 file changed, 3 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index d16facb..93e8f3f 100644
+index ce92fef..f523c42 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -497,6 +497,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -502,6 +502,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
       *     match one or more of the given classes/interfaces
       */
      public Collection<Entity> getEntitiesByClasses(Class<?>... classes);
