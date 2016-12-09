@@ -1,4 +1,4 @@
-From 62898222570f0a3993089d7e9d7fa5600160cf7f Mon Sep 17 00:00:00 2001
+From 4019c2346f0deaaa253f8937cb2ace76881ade9a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 23 Jun 2016 22:22:09 -0400
 Subject: [PATCH] User Object API
@@ -11,7 +11,7 @@ Inspired by https://url.domnian.com/emcuserapi
  1 file changed, 8 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index be224b4..4605f95 100644
+index 95ad474..ffaf58a 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -19,6 +19,7 @@ import org.bukkit.WeatherType;
@@ -22,7 +22,7 @@ index be224b4..4605f95 100644
  import org.bukkit.plugin.messaging.PluginMessageRecipient;
  import org.bukkit.scoreboard.Scoreboard;
  
-@@ -1623,4 +1624,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1624,4 +1625,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      // Spigot end
  
      public void sendActionBar(String message); // PaperDragon - Import Patch From EMC
@@ -35,5 +35,5 @@ index be224b4..4605f95 100644
 +
  }
 -- 
-2.5.0
+2.10.2
 

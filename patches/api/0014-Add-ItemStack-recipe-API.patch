@@ -1,0 +1,71 @@
+From ad8a71b0354a1ff88eab40f6df4c1ce838a683f8 Mon Sep 17 00:00:00 2001
+From: GreenMeanie <GreenMeanieMC@gmail.com>
+Date: Sun, 24 Jul 2016 19:38:19 -0400
+Subject: [PATCH] Add ItemStack recipe API
+
+Allows using custom items in Crafting Recipes
+---
+ .../java/org/bukkit/inventory/ShapedRecipe.java    |  9 ++++++++
+ .../java/org/bukkit/inventory/ShapelessRecipe.java | 26 ++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/inventory/ShapedRecipe.java b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
+index 2796473..193eec7 100644
+--- a/src/main/java/org/bukkit/inventory/ShapedRecipe.java
++++ b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
+@@ -111,6 +111,15 @@ public class ShapedRecipe implements Recipe {
+         return this;
+     }
+ 
++    // PaperDragon start - Import Patch From EMC
++    public ShapedRecipe setIngredient(char key, ItemStack item) {
++        Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
++
++        ingredients.put(key, item);
++        return this;
++    }
++    // PaperDragon end
++
+     /**
+      * Get a copy of the ingredients map.
+      *
+diff --git a/src/main/java/org/bukkit/inventory/ShapelessRecipe.java b/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
+index a718086..0507da5 100644
+--- a/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
++++ b/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
+@@ -112,6 +112,32 @@ public class ShapelessRecipe implements Recipe {
+         }
+         return this;
+     }
++    // PaperDragon start - Import Patch From EMC
++    public ShapelessRecipe addIngredient(ItemStack item) {
++        return addIngredient(1, item);
++    }
++    public ShapelessRecipe addIngredient(int count, ItemStack item) {
++        Validate.isTrue(ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
++        while (count-- > 0) {
++            ingredients.add(item);
++        }
++        return this;
++    }
++    public ShapelessRecipe removeIngredient(ItemStack item) {
++        return removeIngredient(1, item);
++    }
++    public ShapelessRecipe removeIngredient(int count, ItemStack item) {
++        Iterator<ItemStack> iterator = ingredients.iterator();
++        while (count > 0 && iterator.hasNext()) {
++            ItemStack stack = iterator.next();
++            if (stack.isSimilar(item)) {
++                iterator.remove();
++                count--;
++            }
++        }
++        return this;
++    }
++    // PaperDragon end
+ 
+     /**
+      * Removes an ingredient from the list. If the ingredient occurs multiple
+-- 
+2.10.2
+

@@ -1,4 +1,4 @@
-From 59993fa9362a975b15bf4cda8ccf0581667ecdc8 Mon Sep 17 00:00:00 2001
+From 42ef0f235ef6928b3c1eefac66a39c88e8ef3798 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Aug 2015 22:10:11 -0400
 Subject: [PATCH] Action Bar API
@@ -8,10 +8,10 @@ Subject: [PATCH] Action Bar API
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 1498349..be224b4 100644
+index cc3e576..95ad474 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1621,4 +1621,6 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1622,4 +1622,6 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
  
      Spigot spigot();
      // Spigot end
@@ -19,5 +19,5 @@ index 1498349..be224b4 100644
 +    public void sendActionBar(String message); // PaperDragon - Import Patch From EMC
  }
 -- 
-2.5.0
+2.10.2
 

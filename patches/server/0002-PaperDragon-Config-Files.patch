@@ -1,4 +1,4 @@
-From 81ff46b76b793261b476756cbbbfa7bdb4bb401a Mon Sep 17 00:00:00 2001
+From 23cb84c231f10c15e346e6e6048ad4cbc61b8850 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -267,10 +267,10 @@ index 0000000..2a180d5
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index a2bd64b..50f2409 100644
+index e70d5c5..bef3c5a 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -185,6 +185,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -186,6 +186,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              com.destroystokyo.paper.PaperConfig.init((File) options.valueOf("paper-settings"));
              com.destroystokyo.paper.PaperConfig.registerCommands();
              // Paper end
@@ -282,7 +282,7 @@ index a2bd64b..50f2409 100644
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 383eef2..eaf186f 100644
+index 9eaab84..88f1a94 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -137,6 +137,8 @@ public abstract class World implements IBlockAccess {
@@ -303,10 +303,10 @@ index 383eef2..eaf186f 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7f1caa8..d4084e7 100644
+index 4fb9c5e..b8f21a3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -713,6 +713,7 @@ public final class CraftServer implements Server {
+@@ -720,6 +720,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
@@ -314,7 +314,7 @@ index 7f1caa8..d4084e7 100644
          for (WorldServer world : console.worlds) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -729,6 +730,7 @@ public final class CraftServer implements Server {
+@@ -736,6 +737,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -322,7 +322,7 @@ index 7f1caa8..d4084e7 100644
          }
  
          // Paper start
-@@ -744,6 +746,7 @@ public final class CraftServer implements Server {
+@@ -751,6 +753,7 @@ public final class CraftServer implements Server {
          resetRecipes();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -330,7 +330,7 @@ index 7f1caa8..d4084e7 100644
  
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
  
-@@ -1826,6 +1829,13 @@ public final class CraftServer implements Server {
+@@ -1810,6 +1813,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -364,5 +364,5 @@ index 2aad1e8..01aff6c 100644
          };
  
 -- 
-2.5.0
+2.10.2
 
