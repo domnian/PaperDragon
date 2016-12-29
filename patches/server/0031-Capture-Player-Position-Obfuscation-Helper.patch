@@ -1,0 +1,24 @@
+From 5c72318e15fcaf5ee5927a77568ac9d2232cad00 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 29 Dec 2016 00:55:50 -0500
+Subject: [PATCH] Capture Player Position Obfuscation Helper
+
+---
+ src/main/java/net/minecraft/server/PlayerConnection.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index 01dc27f8..78bf1a04 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -204,6 +204,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+ 
+     }
+ 
++    public void captureCurrentPosition() { this.d(); } // PaperDragon - OBF HELPER
+     public void d() { // PAIL: syncPosition, private->public
+         this.l = this.player.locX;
+         this.m = this.player.locY;
+-- 
+2.11.0
+
