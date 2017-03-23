@@ -1,0 +1,39 @@
+From 6f02d9adb0876f48b759299be3be36f0b236de71 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 4 Dec 2016 01:19:32 -0500
+Subject: [PATCH] ServerReloadEvent
+
+---
+ .../paperdragon/events/ServerReloadEvent.java        | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
+new file mode 100644
+index 00000000..7fb07128
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
+@@ -0,0 +1,20 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.event.Event;
++import org.bukkit.event.HandlerList;
++
++public class ServerReloadEvent extends Event {
++
++    public ServerReloadEvent() {
++    }
++
++    private static final HandlerList handlers = new HandlerList();
++
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++}
+-- 
+2.11.0
+

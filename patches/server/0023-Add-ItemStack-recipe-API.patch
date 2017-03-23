@@ -1,43 +1,21 @@
-From bf5ce497f89b516cb24705ef01c7148765fb9417 Mon Sep 17 00:00:00 2001
-From: GreenMeanie <GreenMeanieMC@gmail.com>
-Date: Sun, 24 Jul 2016 19:38:19 -0400
+From 7be7d1cf7bf2d8c8ab5ae54bacbadd8867f82858 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 28 Jan 2014 21:04:24 -0500
 Subject: [PATCH] Add ItemStack recipe API
 
 Allows using custom items in Crafting Recipes
 ---
- src/main/java/net/minecraft/server/ItemStack.java              | 10 +++++++++-
- src/main/java/net/minecraft/server/ShapedRecipes.java          |  9 ++++++++-
- src/main/java/net/minecraft/server/ShapelessRecipes.java       |  5 ++++-
- .../org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java    |  5 +++--
- .../org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java |  5 +++--
- 5 files changed, 27 insertions(+), 7 deletions(-)
+ src/main/java/net/minecraft/server/ShapedRecipes.java            | 9 ++++++++-
+ src/main/java/net/minecraft/server/ShapelessRecipes.java         | 5 ++++-
+ .../java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java | 5 +++--
+ .../org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java   | 5 +++--
+ 4 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 1b6ef54..de7fdbe 100644
---- a/src/main/java/net/minecraft/server/ItemStack.java
-+++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -20,7 +20,15 @@ import org.bukkit.event.world.StructureGrowEvent;
- // CraftBukkit end
- 
- public final class ItemStack {
--
-+    // PaperDragon start - Import Patch From EMC
-+    org.bukkit.inventory.ItemStack bukkitStack = null;
-+    public org.bukkit.inventory.ItemStack getBukkitStack() {
-+        if (bukkitStack == null) {
-+            bukkitStack = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
-+        }
-+        return bukkitStack;
-+    }
-+    // PaperDragon end
-     public static final DecimalFormat a = new DecimalFormat("#.##");
-     public int count;
-     public int c;
 diff --git a/src/main/java/net/minecraft/server/ShapedRecipes.java b/src/main/java/net/minecraft/server/ShapedRecipes.java
-index f8b2dc6..0fd8a94 100644
+index 3d511dffb..666093013 100644
 --- a/src/main/java/net/minecraft/server/ShapedRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapedRecipes.java
-@@ -69,7 +69,8 @@ public class ShapedRecipes implements IRecipe {
+@@ -75,7 +75,8 @@ public class ShapedRecipes implements IRecipe {
          char c = 'a';
          for (ItemStack stack : this.items) {
              if (stack != null) {
@@ -47,11 +25,11 @@ index f8b2dc6..0fd8a94 100644
              }
              c++;
          }
-@@ -141,6 +142,12 @@ public class ShapedRecipes implements IRecipe {
+@@ -146,6 +147,12 @@ public class ShapedRecipes implements IRecipe {
                      if (itemstack.getData() != 32767 && itemstack.getData() != itemstack1.getData()) {
                          return false;
                      }
-+                    // PaperDragon start - Import Patch From EMC
++                    // PaperDragon start
 +                    // 32767 is some magic code for "don't care what the durability of the block is"
 +                    if (!itemstack.getBukkitStack().isSimilar(itemstack1.getBukkitStack(), itemstack.getData() == 32767)) {
 +                        return false;
@@ -61,10 +39,10 @@ index f8b2dc6..0fd8a94 100644
              }
          }
 diff --git a/src/main/java/net/minecraft/server/ShapelessRecipes.java b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-index 2a866e2..1f31bec 100644
+index e234a7496..1c0f60b06 100644
 --- a/src/main/java/net/minecraft/server/ShapelessRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-@@ -28,7 +28,8 @@ public class ShapelessRecipes implements IRecipe {
+@@ -27,7 +27,8 @@ public class ShapelessRecipes implements IRecipe {
          CraftShapelessRecipe recipe = new CraftShapelessRecipe(result, this);
          for (ItemStack stack : (List<ItemStack>) this.ingredients) {
              if (stack != null) {
@@ -74,7 +52,7 @@ index 2a866e2..1f31bec 100644
              }
          }
          return recipe;
-@@ -65,9 +66,11 @@ public class ShapelessRecipes implements IRecipe {
+@@ -63,9 +64,11 @@ public class ShapelessRecipes implements IRecipe {
                      boolean flag = false;
                      Iterator iterator = arraylist.iterator();
  
@@ -87,7 +65,7 @@ index 2a866e2..1f31bec 100644
                              flag = true;
                              arraylist.remove(itemstack1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
-index baea759..185e228 100644
+index baea75977..185e228d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
 @@ -33,7 +33,7 @@ public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
@@ -110,7 +88,7 @@ index baea759..185e228 100644
          }
          CraftingManager.getInstance().registerShapedRecipe(CraftItemStack.asNMSCopy(this.getResult()), data);
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-index 53479c7..b439e06 100644
+index 53479c72c..b439e0682 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 @@ -28,7 +28,7 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
@@ -133,5 +111,5 @@ index 53479c7..b439e06 100644
          }
          CraftingManager.getInstance().registerShapelessRecipe(CraftItemStack.asNMSCopy(this.getResult()), data);
 -- 
-2.10.2
+2.11.0
 

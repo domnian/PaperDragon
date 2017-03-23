@@ -1,0 +1,31 @@
+From 394a74a9a1d720043a6faa55a0de60ca8048060f Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 23 Jun 2016 22:22:09 -0400
+Subject: [PATCH] User Object API
+
+Allow Plugins to Store User Objects on the Player
+
+Inspired by https://url.domnian.com/emcuserapi
+---
+ src/main/java/org/bukkit/entity/Player.java | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index 29a8ec09..7da92352 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1750,4 +1750,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+ 
+     Spigot spigot();
+     // Spigot end
++    
++    // PaperDragon start - User Object API
++    public void setUserObject(org.bukkit.plugin.Plugin owner, Object object);
++
++    public <T> T getUserObject(org.bukkit.plugin.Plugin owner);
++    // PaperDragon end
++
+ }
+-- 
+2.11.0
+

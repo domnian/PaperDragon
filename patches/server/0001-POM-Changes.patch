@@ -1,4 +1,4 @@
-From e87e21921037bec0968751178e637670c808fe31 Mon Sep 17 00:00:00 2001
+From 4b110de5706b50f7d483b36650c3289d3e6a5530 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 63aaa7a..4a967c6 100644
+index 8d1e8680b..2e5fdd141 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -21,7 +21,7 @@ index 63aaa7a..4a967c6 100644
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon</artifactId>
      <packaging>jar</packaging>
-     <version>1.10.2-R0.1-SNAPSHOT</version>
+     <version>1.11.2-R0.1-SNAPSHOT</version>
 -    <name>Paper</name>
 -    <url>https://github.com/PaperMC/Paper</url>
 +    <name>PaperDragon</name>
@@ -29,7 +29,7 @@ index 63aaa7a..4a967c6 100644
  
      <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-@@ -21,17 +21,17 @@
+@@ -22,17 +22,17 @@
      </properties>
  
      <parent>
@@ -48,11 +48,11 @@ index 63aaa7a..4a967c6 100644
 -            <version>${project.version}</version>
 +            <groupId>com.domnian.paperdragon</groupId>
 +            <artifactId>paperdragon-api</artifactId>
-+            <version>1.10.2-R0.1-SNAPSHOT</version>
++            <version>${minecraft.version}-R0.1-SNAPSHOT</version>
              <scope>compile</scope>
          </dependency>
          <dependency>
-@@ -41,6 +41,25 @@
+@@ -42,6 +42,25 @@
              <scope>compile</scope>
          </dependency>
          <dependency>
@@ -78,7 +78,7 @@ index 63aaa7a..4a967c6 100644
              <groupId>net.sf.jopt-simple</groupId>
              <artifactId>jopt-simple</artifactId>
              <version>4.9</version>
-@@ -100,7 +119,7 @@
+@@ -101,7 +120,7 @@
  
      <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
      <build>
@@ -87,7 +87,7 @@ index 63aaa7a..4a967c6 100644
          <defaultGoal>clean install</defaultGoal> <!-- Paper -->
          <plugins>
              <plugin>
-@@ -108,7 +127,7 @@
+@@ -109,7 +128,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
@@ -96,7 +96,7 @@ index 63aaa7a..4a967c6 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
-@@ -222,6 +241,15 @@
+@@ -228,6 +247,15 @@
                      </excludes>
                  </configuration>
              </plugin>
@@ -113,7 +113,7 @@ index 63aaa7a..4a967c6 100644
      </build>
  </project>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 674096c..50cd5f9 100644
+index 674096cab..50cd5f9ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -126,5 +126,5 @@ index 674096c..50cd5f9 100644
  
          if (stream != null) {
 -- 
-2.5.0
+2.11.0
 

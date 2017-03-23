@@ -1,0 +1,138 @@
+From aea9199425190eaecc523a4caa62d8cc85e02295 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 3 Dec 2016 22:21:28 -0500
+Subject: [PATCH] Dragon API
+
+---
+ .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 27 ++++++++++++++++
+ .../domnian/paperdragon/api/CraftDAPI_Misc.java    | 27 ++++++++++++++++
+ .../domnian/paperdragon/api/CraftDragonAPI.java    | 36 ++++++++++++++++++++++
+ .../java/org/bukkit/craftbukkit/CraftServer.java   |  1 +
+ 4 files changed, 91 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+new file mode 100644
+index 000000000..d5c638104
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -0,0 +1,27 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api;
++
++public class CraftDAPI_Entity implements DAPI_Entity {
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+new file mode 100644
+index 000000000..ab3428a68
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -0,0 +1,27 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api;
++
++public class CraftDAPI_Misc implements DAPI_Misc {
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
+new file mode 100644
+index 000000000..21bd42ff9
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
+@@ -0,0 +1,36 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api;
++
++public final class CraftDragonAPI extends DragonAPI {
++
++    private CraftDragonAPI() {}
++
++    public static final DragonAPI instance = new CraftDragonAPI();
++    static {
++        entity = new CraftDAPI_Entity();
++        misc = new CraftDAPI_Misc();
++    }
++
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 5af6e6a1b..211d3d681 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -180,6 +180,7 @@ public final class CraftServer implements Server {
+     }
+ 
+     static {
++        com.domnian.paperdragon.api.DragonAPI api = com.domnian.paperdragon.api.CraftDragonAPI.instance; // PaperDragon - Dragon API - Force load at server start
+         ConfigurationSerialization.registerClass(CraftOfflinePlayer.class);
+         CraftItemFactory.instance();
+     }
+-- 
+2.11.0
+

@@ -1,0 +1,24 @@
+From 7539d7d1e2fcf19cd13de8b6d103966bba9a7aae Mon Sep 17 00:00:00 2001
+From: GreenMeanie <GreenMeanieMC@gmail.com>
+Date: Sun, 24 Jul 2016 20:07:13 -0400
+Subject: [PATCH] Location.isChunkLoaded API
+
+---
+ src/main/java/org/bukkit/Location.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/org/bukkit/Location.java b/src/main/java/org/bukkit/Location.java
+index e7af316d..6250ec96 100644
+--- a/src/main/java/org/bukkit/Location.java
++++ b/src/main/java/org/bukkit/Location.java
+@@ -487,6 +487,7 @@ public class Location implements Cloneable, ConfigurationSerializable {
+         return this;
+     }
+ 
++    public boolean isChunkLoaded() { return world.isChunkLoaded(locToBlock(x) >> 4, locToBlock(z) >> 4); } // PaperDragon
+     @Override
+     public boolean equals(Object obj) {
+         if (obj == null) {
+-- 
+2.11.0
+
