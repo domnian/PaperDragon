@@ -1,4 +1,4 @@
-From 14edd2ce81f2e42d463432bfa95bafdc103f657a Mon Sep 17 00:00:00 2001
+From 5bbfe3cf13e06acdb01e2fdbacc72d6fcff522ce Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Dec 2013 23:21:21 -0500
 Subject: [PATCH] Improved BungeeCord support
@@ -67,7 +67,7 @@ index be14c0b25..f3426348d 100644
      private PacketListener m;
      private IChatBaseComponent n;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e81122bdb..eb073dd04 100644
+index ba51303b2..a762d999a 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
@@ -78,7 +78,7 @@ index e81122bdb..eb073dd04 100644
  import java.util.HashMap;
  import java.util.HashSet;
  import java.util.List;
-@@ -223,6 +224,7 @@ public class SpigotConfig
+@@ -226,6 +227,7 @@ public class SpigotConfig
      }
  
      public static boolean bungee;
@@ -86,7 +86,7 @@ index e81122bdb..eb073dd04 100644
      private static void bungee() {
          if ( version < 4 )
          {
-@@ -230,6 +232,7 @@ public class SpigotConfig
+@@ -233,6 +235,7 @@ public class SpigotConfig
              System.out.println( "Oudated config, disabling BungeeCord support!" );
          }
          bungee = getBoolean( "settings.bungeecord", false );

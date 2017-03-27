@@ -1,4 +1,4 @@
-From 29bb6b7b1623a493f0045339e805d4319c520598 Mon Sep 17 00:00:00 2001
+From 2eeb894ab8a8f55e1899634f2f21be18e4c25811 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:12:56 -0500
 Subject: [PATCH] MinecraftKey API
@@ -33,7 +33,7 @@ index 6dad3f51d..5bcbf389b 100644
 +
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 211d3d681..81c26e7e5 100644
+index 9efb409ad..456a8eef7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -21,6 +21,7 @@ import java.util.logging.Level;
@@ -52,9 +52,9 @@ index 211d3d681..81c26e7e5 100644
      private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
      private final String serverName = "PaperDragon"; // PaperDragon - We are PaperDragon
      private final String serverVersion;
-@@ -1869,5 +1871,10 @@ public final class CraftServer implements Server {
-         commandsConfiguration = YamlConfiguration.loadConfiguration(getCommandsConfigFile());
+@@ -1878,5 +1880,10 @@ public final class CraftServer implements Server {
          commandMap.registerServerAliases();
+         return true;
      }
 +
 +    @Override

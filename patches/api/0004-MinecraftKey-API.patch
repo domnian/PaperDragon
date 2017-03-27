@@ -1,4 +1,4 @@
-From c975823574e038d2e9e2a470d7a9051003031a5e Mon Sep 17 00:00:00 2001
+From acd7f3a0daaa2e5790e46c796549348cabe03d70 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:07:55 -0500
 Subject: [PATCH] MinecraftKey API
@@ -56,7 +56,7 @@ index 00000000..cc296cc7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 22555512..44bb2291 100644
+index 1f663fa1..a4cd8e47 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -44,10 +44,22 @@ import org.bukkit.generator.ChunkGenerator;
@@ -83,7 +83,7 @@ index 22555512..44bb2291 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 4e3ea0a0..0edc9539 100644
+index 0b694131..69ace701 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -45,6 +45,8 @@ import org.bukkit.generator.ChunkGenerator;
@@ -98,7 +98,7 @@ index 4e3ea0a0..0edc9539 100644
 @@ -1035,4 +1037,23 @@ public interface Server extends PluginMessageRecipient {
      void reloadPermissions(); // Paper
  
-     void reloadCommandAliases(); // Paper
+     boolean reloadCommandAliases(); // Paper
 +
 +    // Paper start - Minecraft Key
 +    /**

@@ -1,4 +1,4 @@
-From 65ee8585865cae2a1ec2a56fa726313b4675d06f Mon Sep 17 00:00:00 2001
+From 70966174ee90fef3279005f955de3a9ee2d96797 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -168,7 +168,7 @@ index a10964b5b..5b621654a 100644
          chunk.e(nbttagcompound.getBoolean("LightPopulated"));
          chunk.c(nbttagcompound.getLong("InhabitedTime"));
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 385329774..a9265af53 100644
+index cfeff7c48..e843e7cee 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -45,6 +45,7 @@ import org.bukkit.plugin.PluginManager;
@@ -179,7 +179,7 @@ index 385329774..a9265af53 100644
      private static final int CURRENT_LEVEL = 2;
      public static Random SHARED_RANDOM = new Random(); // Paper
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
-@@ -1441,6 +1442,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1489,6 +1490,7 @@ public abstract class Entity implements ICommandListener {
                  this.yaw = 0;
              }
  
@@ -187,7 +187,7 @@ index 385329774..a9265af53 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1542,6 +1544,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1590,6 +1592,7 @@ public abstract class Entity implements ICommandListener {
              this.motX = nbttaglist1.e(0);
              this.motY = nbttaglist1.e(1);
              this.motZ = nbttaglist1.e(2);
@@ -722,7 +722,7 @@ index e6b79a571..e250d0eb2 100644
      public InventoryHolder getOwner() {
          if (world == null) return null;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 38d6b5f20..cfbcfcde5 100644
+index a9b946bb6..159af91d6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -423,6 +423,7 @@ public abstract class World implements IBlockAccess {
@@ -763,7 +763,7 @@ index 477e4567d..93c0478f0 100644
  
      public long getSeed() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 81c26e7e5..895a29d2f 100644
+index 456a8eef7..50f028709 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -787,6 +787,7 @@ public final class CraftServer implements Server {

@@ -1,4 +1,4 @@
-From 7db31e6f151a7c8f2c86613a23d86e0994df68f1 Mon Sep 17 00:00:00 2001
+From 2362102d0883fcfec4fadd338d53166805aa15da Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -369,7 +369,7 @@ index 000000000..ac1f1a4dd
 +    
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a9265af53..51b571303 100644
+index e843e7cee..c82b1ff4a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -129,7 +129,9 @@ public abstract class Entity implements ICommandListener {
@@ -391,15 +391,15 @@ index a9265af53..51b571303 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -332,6 +335,7 @@ public abstract class Entity implements ICommandListener {
-     }
+@@ -377,6 +380,7 @@ public abstract class Entity implements ICommandListener {
+     // CraftBukkit end
  
      public void U() {
 +        if (isDisabled) { return; } // PaperDragon - Entity AI API
          this.world.methodProfiler.a("entityBaseTick");
          if (this.isPassenger() && this.bB().dead) {
              this.stopRiding();
-@@ -513,6 +517,7 @@ public abstract class Entity implements ICommandListener {
+@@ -561,6 +565,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -407,7 +407,7 @@ index a9265af53..51b571303 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -1196,6 +1201,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1244,6 +1249,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -415,7 +415,7 @@ index a9265af53..51b571303 100644
          this.locX = MathHelper.a(d0, -3.0E7D, 3.0E7D);
          this.locY = d1;
          this.locZ = MathHelper.a(d2, -3.0E7D, 3.0E7D);
-@@ -1226,6 +1232,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1274,6 +1280,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -423,7 +423,7 @@ index a9265af53..51b571303 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -1289,6 +1296,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1337,6 +1344,7 @@ public abstract class Entity implements ICommandListener {
      public void d(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -431,7 +431,7 @@ index a9265af53..51b571303 100644
          if (!this.x(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX - this.locX;
-@@ -1330,6 +1338,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1378,6 +1386,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void addVelocity(double d0, double d1, double d2) {
@@ -439,7 +439,7 @@ index a9265af53..51b571303 100644
          this.motX += d0;
          this.motY += d1;
          this.motZ += d2;
-@@ -1341,6 +1350,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1389,6 +1398,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -447,7 +447,7 @@ index a9265af53..51b571303 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2236,7 +2246,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2284,7 +2294,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -622,7 +622,7 @@ index c15961602..62b006123 100644
          public boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index cfbcfcde5..98bf7e721 100644
+index 159af91d6..2843f2b2b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1735,7 +1735,7 @@ public abstract class World implements IBlockAccess {

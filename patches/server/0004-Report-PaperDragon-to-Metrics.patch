@@ -1,25 +1,25 @@
-From 3ae460762f3b5528bf36f25a170ae5a09c4bee60 Mon Sep 17 00:00:00 2001
+From b103086855873263d92eb119c38f4f5ec618a6d3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jun 2016 02:36:10 -0400
 Subject: [PATCH] Report PaperDragon to Metrics
 
 ---
- src/main/java/org/spigotmc/Metrics.java | 2 +-
+ src/main/java/com/destroystokyo/paper/Metrics.java | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/main/java/org/spigotmc/Metrics.java b/src/main/java/org/spigotmc/Metrics.java
-index 680283ce0..714ef74a6 100644
---- a/src/main/java/org/spigotmc/Metrics.java
-+++ b/src/main/java/org/spigotmc/Metrics.java
-@@ -344,7 +344,7 @@ public class Metrics {
-      */
-     private void postPlugin(final boolean isPing) throws IOException {
-         // Server software specific section
--        String pluginName = "PaperSpigot"; // Paper - Keep old name for legacy data
+diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
+index 585260697..807688ee2 100644
+--- a/src/main/java/com/destroystokyo/paper/Metrics.java
++++ b/src/main/java/com/destroystokyo/paper/Metrics.java
+@@ -139,7 +139,7 @@ class Metrics {
+     public JSONObject getPluginData() {
+         JSONObject data = new JSONObject();
+ 
+-        String pluginName = "Paper";
 +        String pluginName = "PaperDragon"; // PaperDragon - Report PaperDragon to Metrics
-         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
          String pluginVersion = (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown";
-         String serverVersion = Bukkit.getVersion();
+ 
+         data.put("pluginName", pluginName); // Append the name of the plugin
 -- 
 2.11.0
 

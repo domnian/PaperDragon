@@ -1,4 +1,4 @@
-From d5a790cc6641bf0bd2cb87465c16ecd5e06fb62e Mon Sep 17 00:00:00 2001
+From 1e0b5ea3b033423bc1d362a48ca05653763043d4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -24,10 +24,10 @@ index 857ae9dc6..a7600bb44 100644
                  if (entity != null) {
                      entity.portalCooldown = entity.aE();
 diff --git a/src/main/java/net/minecraft/server/DispenserRegistry.java b/src/main/java/net/minecraft/server/DispenserRegistry.java
-index fcc3d10a0..d2c935a6d 100644
+index bec623c4d..2f38af52f 100644
 --- a/src/main/java/net/minecraft/server/DispenserRegistry.java
 +++ b/src/main/java/net/minecraft/server/DispenserRegistry.java
-@@ -142,7 +142,7 @@ public class DispenserRegistry {
+@@ -146,7 +146,7 @@ public class DispenserRegistry {
  
                  itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
  

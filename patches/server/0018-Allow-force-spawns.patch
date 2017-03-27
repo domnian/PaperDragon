@@ -1,4 +1,4 @@
-From 1016941de1ca2a038618a4635a29bad5d44f758e Mon Sep 17 00:00:00 2001
+From 03d0566224e5abc15c3c2f9a9c06187af17f568d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -12,10 +12,10 @@ Force some cases where plugins should not be allowed to block it.
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 51b571303..983139efd 100644
+index c82b1ff4a..7b3351e18 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2406,7 +2406,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2441,7 +2441,7 @@ public abstract class Entity implements ICommandListener {
                  boolean flag = entity.attachedToPlayer;
  
                  entity.attachedToPlayer = true;
@@ -25,7 +25,7 @@ index 51b571303..983139efd 100644
                  worldserver1.entityJoinedWorld(entity, false);
                  // CraftBukkit start - Forward the CraftEntity to the new entity
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 2d8717f4c..54a9e9866 100644
+index a9d59bbf5..af34fe017 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -980,7 +980,7 @@ public abstract class PlayerList {
@@ -38,7 +38,7 @@ index 2d8717f4c..54a9e9866 100644
              }
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 98bf7e721..dc5206058 100644
+index 2843f2b2b..03636001e 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1159,14 +1159,14 @@ public abstract class World implements IBlockAccess {

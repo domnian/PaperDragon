@@ -1,4 +1,4 @@
-From a2e0875510d4e953d8ade544050db3dfcc779b29 Mon Sep 17 00:00:00 2001
+From 672da41eb8432f89b2718967870cc461352ebaaa Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 19:16:19 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -8,10 +8,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
  1 file changed, 8 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 895a29d2f..d111b14a4 100644
+index 50f028709..8f604f0aa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1878,4 +1878,12 @@ public final class CraftServer implements Server {
+@@ -1887,4 +1887,12 @@ public final class CraftServer implements Server {
          return new net.minecraft.server.MinecraftKey(group, name);
      }
      // Paper end
