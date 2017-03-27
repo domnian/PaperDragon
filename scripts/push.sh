@@ -18,5 +18,4 @@ pushRepo mc-dev $MCDEV_REPO $paperVer
 # Push Parent to Three Remotes
 cd "$basedir"
 git push origin master -f
-git push bb-push master -f
-git push gh-push master -f
+git push pd-push master -f
