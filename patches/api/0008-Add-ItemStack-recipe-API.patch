@@ -1,4 +1,4 @@
-From 74f97845b84be7d0037bc5a3e4883cf35541cb67 Mon Sep 17 00:00:00 2001
+From d0d937a60cc9da5f07a44074d2300c4a162c59c4 Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:38:19 -0400
 Subject: [PATCH] Add ItemStack recipe API
@@ -10,10 +10,10 @@ Allows using custom items in Crafting Recipes
  2 files changed, 35 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/inventory/ShapedRecipe.java b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
-index 2796473d..193eec72 100644
+index f3532589..ca55e0c1 100644
 --- a/src/main/java/org/bukkit/inventory/ShapedRecipe.java
 +++ b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
-@@ -111,6 +111,15 @@ public class ShapedRecipe implements Recipe {
+@@ -115,6 +115,15 @@ public class ShapedRecipe implements Recipe {
          return this;
      }
  

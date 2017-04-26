@@ -1,4 +1,4 @@
-From 6b9d67e265babd104b346422d936554675efb35e Mon Sep 17 00:00:00 2001
+From 1702ff94712aef85adf23fe2e94985f32c5a4df0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jun 2015 23:51:20 -0400
 Subject: [PATCH] getTick API
@@ -8,10 +8,10 @@ Subject: [PATCH] getTick API
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d111b14a4..495ad0373 100644
+index 2cab5c3ca..561128cbf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1789,6 +1789,7 @@ public final class CraftServer implements Server {
+@@ -1793,6 +1793,7 @@ public final class CraftServer implements Server {
  
      private final Spigot spigot = new Spigot()
      {

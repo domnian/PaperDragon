@@ -1,4 +1,4 @@
-From 394a74a9a1d720043a6faa55a0de60ca8048060f Mon Sep 17 00:00:00 2001
+From 5a0f1cfd78ea5ae1ac08472145dde7a705fe7b1a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 23 Jun 2016 22:22:09 -0400
 Subject: [PATCH] User Object API
@@ -11,10 +11,10 @@ Inspired by https://url.domnian.com/emcuserapi
  1 file changed, 7 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 29a8ec09..7da92352 100644
+index 2c166a8c..3124b702 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1750,4 +1750,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1756,4 +1756,11 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
  
      Spigot spigot();
      // Spigot end

@@ -1,4 +1,4 @@
-From 87197630bae0b0f22428d38e4c5a515f8bcff392 Mon Sep 17 00:00:00 2001
+From 3c20beef538794de399bde3c44f0b7ef6e314a05 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -282,7 +282,7 @@ index e6819139f..535532676 100644
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index fa251672d..38d6b5f20 100644
+index 2028cf81e..a9b946bb6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -136,6 +136,8 @@ public abstract class World implements IBlockAccess {
@@ -303,7 +303,7 @@ index fa251672d..38d6b5f20 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 31c9a66b6..b49c4a6e5 100644
+index 326196ce4..54a7eb75b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -723,6 +723,7 @@ public final class CraftServer implements Server {
@@ -330,7 +330,7 @@ index 31c9a66b6..b49c4a6e5 100644
  
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
  
-@@ -1808,6 +1811,13 @@ public final class CraftServer implements Server {
+@@ -1812,6 +1815,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  

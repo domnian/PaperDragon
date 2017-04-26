@@ -1,4 +1,4 @@
-From 70966174ee90fef3279005f955de3a9ee2d96797 Mon Sep 17 00:00:00 2001
+From b8bdd7f0ab2799345bf90729444e5aed35075954 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -763,7 +763,7 @@ index 477e4567d..93c0478f0 100644
  
      public long getSeed() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 456a8eef7..50f028709 100644
+index 5d77cfa40..4d752e94d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -787,6 +787,7 @@ public final class CraftServer implements Server {
@@ -775,7 +775,7 @@ index 456a8eef7..50f028709 100644
          enablePlugins(PluginLoadOrder.STARTUP);
          enablePlugins(PluginLoadOrder.POSTWORLD);
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
-index 09fddf4ac..9c75ba983 100644
+index 5d83155a1..8680f3194 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
 @@ -1,6 +1,7 @@
@@ -786,7 +786,7 @@ index 09fddf4ac..9c75ba983 100644
  import org.bukkit.Location;
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockFace;
-@@ -288,4 +289,11 @@ public class CraftBlockState implements BlockState {
+@@ -290,4 +291,11 @@ public class CraftBlockState implements BlockState {
              throw new IllegalStateException("The blockState must be placed to call this method");
          }
      }
@@ -830,7 +830,7 @@ index 59942d9cb..7a907df03 100644
  
      public static void handleEditBookEvent(EntityPlayer player, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index 89e47bb35..d60526985 100644
+index 4866d1aee..81bd602c3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 @@ -28,7 +28,16 @@ import org.bukkit.Material;

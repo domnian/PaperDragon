@@ -1,25 +1,34 @@
-From b103086855873263d92eb119c38f4f5ec618a6d3 Mon Sep 17 00:00:00 2001
+From 66e321e583e5e919e6330dcb7aa73d0b8b3afa26 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jun 2016 02:36:10 -0400
 Subject: [PATCH] Report PaperDragon to Metrics
 
 ---
- src/main/java/com/destroystokyo/paper/Metrics.java | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/main/java/com/destroystokyo/paper/Metrics.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 585260697..807688ee2 100644
+index 9389f9a8c..068b31a2b 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
-@@ -139,7 +139,7 @@ class Metrics {
-     public JSONObject getPluginData() {
-         JSONObject data = new JSONObject();
+@@ -576,7 +576,7 @@ public class Metrics {
+             boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
+             // Only start Metrics, if it's enabled in the config
+             if (config.getBoolean("enabled", true)) {
+-                Metrics metrics = new Metrics("Paper", serverUUID, logFailedRequests, Bukkit.getLogger());
++                Metrics metrics = new Metrics("PaperDragon", serverUUID, logFailedRequests, Bukkit.getLogger());
  
--        String pluginName = "Paper";
-+        String pluginName = "PaperDragon"; // PaperDragon - Report PaperDragon to Metrics
-         String pluginVersion = (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown";
+                 metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
+                     String minecraftVersion = Bukkit.getVersion();
+@@ -586,7 +586,7 @@ public class Metrics {
  
-         data.put("pluginName", pluginName); // Append the name of the plugin
+                 metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
+                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
+-                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
++                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
+ 
+                 metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
+                     Map<String, Map<String, Integer>> map = new HashMap<>();
 -- 
 2.11.0
 
