@@ -47,14 +47,14 @@
 
     <distributionManagement>
         <repository>
-            <id>domnian-rel</id>
-            <name>Domnian Releases</name>
-            <url>https://repo.domnian.com/content/repositories/releases/</url>
+            <id>domnian-private</id>
+            <name>Domnian Local Network Releases</name>
+            <url>http://192.168.1.6:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>domnian-snap</id>
-            <name>Domnian Snapshots</name>
-            <url>https://repo.domnian.com/content/repositories/snapshots/</url>
+            <id>domnian-private-snap</id>
+            <name>Domnian Local Network Snapshots</name>
+            <url>http://192.168.1.6:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
