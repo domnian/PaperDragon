@@ -1,18 +1,18 @@
-From b190f170c976884399337b8f364ea883cdd1eeb4 Mon Sep 17 00:00:00 2001
+From 900afec6f4ab584b354c95fbe38d35b91075ccc9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:01:08 -0500
-Subject: [PATCH] AchievementBroadcastEvent
+Subject: [PATCH] AdvancementBroadcastEvent
 
 ---
- .../events/AchievementBroadcastEvent.java          | 60 ++++++++++++++++++++++
+ .../events/AdvancementBroadcastEvent.java          | 60 ++++++++++++++++++++++
  1 file changed, 60 insertions(+)
- create mode 100644 src/main/java/com/domnian/paperdragon/events/AchievementBroadcastEvent.java
+ create mode 100644 src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 
-diff --git a/src/main/java/com/domnian/paperdragon/events/AchievementBroadcastEvent.java b/src/main/java/com/domnian/paperdragon/events/AchievementBroadcastEvent.java
+diff --git a/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 new file mode 100644
-index 00000000..7b0005d8
+index 00000000..2dd54817
 --- /dev/null
-+++ b/src/main/java/com/domnian/paperdragon/events/AchievementBroadcastEvent.java
++++ b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 @@ -0,0 +1,60 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
@@ -46,7 +46,7 @@ index 00000000..7b0005d8
 +import java.util.ArrayList;
 +import java.util.List;
 +
-+public class AchievementBroadcastEvent extends Event {
++public class AdvancementBroadcastEvent extends Event {
 +    final Player player;
 +    List<Player> receivers = new ArrayList<Player>();
 +
@@ -64,7 +64,7 @@ index 00000000..7b0005d8
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
-+    public AchievementBroadcastEvent(Player player) {this.player = player;}
++    public AdvancementBroadcastEvent(Player player) {this.player = player;}
 +
 +    public HandlerList getHandlers() {
 +        return handlers;

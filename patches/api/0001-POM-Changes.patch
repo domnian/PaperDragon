@@ -1,4 +1,4 @@
-From 4b9c386b723d3fdb75a9c6c167fb8970a33e74ed Mon Sep 17 00:00:00 2001
+From df40c95f1dea83339370d6f9edf6caf9c48c097b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
@@ -8,7 +8,7 @@ Subject: [PATCH] POM Changes
  1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index f5f62b44..0967297e 100644
+index 862910e0..b2656d4b 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -26,7 +26,7 @@ index f5f62b44..0967297e 100644
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.11.2-R0.1-SNAPSHOT</version>
+     <version>1.12-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -36,7 +36,7 @@ index f5f62b44..0967297e 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -26,15 +26,16 @@
+@@ -25,15 +25,16 @@
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      </properties>
  

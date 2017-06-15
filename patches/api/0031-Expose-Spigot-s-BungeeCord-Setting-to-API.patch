@@ -1,4 +1,4 @@
-From a94d0ab45db5b596c080dda4f99feae2a70d0d09 Mon Sep 17 00:00:00 2001
+From 10bce326e86295de49af2c117cf95f2b16efc5b6 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -9,10 +9,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
  2 files changed, 16 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 44bb2291..9813d55e 100644
+index 7fdb7927..f07e09dd 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1219,4 +1219,13 @@ public final class Bukkit {
+@@ -1234,4 +1234,13 @@ public final class Bukkit {
      {
          return server.spigot();
      }
@@ -27,10 +27,10 @@ index 44bb2291..9813d55e 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index beff867c..65247a84 100644
+index 6f0b1f6e..883b1f95 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1057,4 +1057,11 @@ public interface Server extends PluginMessageRecipient {
+@@ -1068,4 +1068,11 @@ public interface Server extends PluginMessageRecipient {
       */
      com.destroystokyo.paper.MinecraftKey createKey(@Nonnull String group, @Nonnull String name);
      // Paper end

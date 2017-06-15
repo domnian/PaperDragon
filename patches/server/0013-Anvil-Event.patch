@@ -1,4 +1,4 @@
-From 24a042692a8ad6ae7a50b713dba8d03958118219 Mon Sep 17 00:00:00 2001
+From 58f70bd3c65f5274b67be0f6abbcaf33bb5da313 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 31 Dec 2012 01:25:46 -0500
 Subject: [PATCH] Anvil Event
@@ -9,7 +9,7 @@ Fire an event for anvil usage, remove cap from server, send level to client
  1 file changed, 14 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ContainerAnvil.java b/src/main/java/net/minecraft/server/ContainerAnvil.java
-index 8f89ce0d1..aedb6a62d 100644
+index 0d32f16f..4014725f 100644
 --- a/src/main/java/net/minecraft/server/ContainerAnvil.java
 +++ b/src/main/java/net/minecraft/server/ContainerAnvil.java
 @@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
@@ -23,8 +23,8 @@ index 8f89ce0d1..aedb6a62d 100644
  import org.bukkit.craftbukkit.inventory.CraftInventoryView;
  // CraftBukkit end
  
-@@ -285,6 +289,16 @@ public class ContainerAnvil extends Container {
-             if (this.a >= 40 && !this.m.abilities.canInstantlyBuild) {
+@@ -276,6 +280,16 @@ public class ContainerAnvil extends Container {
+             if (this.levelCost >= 40 && !this.m.abilities.canInstantlyBuild) {
                  itemstack1 = ItemStack.a;
              }
 +            // PaperDragon start

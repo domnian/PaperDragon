@@ -1,4 +1,4 @@
-From 5bbfe3cf13e06acdb01e2fdbacc72d6fcff522ce Mon Sep 17 00:00:00 2001
+From 9e2061c875311c3fc79e387e71d1ef18c165ff63 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Dec 2013 23:21:21 -0500
 Subject: [PATCH] Improved BungeeCord support
@@ -13,7 +13,7 @@ Allow online-mode to be set to true, and skip online-mode for bungee IP's
  4 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index f02263c34..31a00477b 100644
+index 1cf64c5b..03ee6e5a 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -73,7 +73,8 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -39,13 +39,13 @@ index f02263c34..31a00477b 100644
 -                    } else
 +                    } else if (false) // PaperDragon
                      {
-                         chatcomponenttext = new ChatComponentText("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
-                         this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
+                         chatmessage = new ChatMessage("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
+                         this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 350ec0323..08e69ceac 100644
+index 2158fcd3..60ac1e1c 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -167,7 +167,7 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -179,7 +179,7 @@ public class LoginListener implements PacketLoginInListener, ITickable {
      public void a(PacketLoginInStart packetlogininstart) {
          Validate.validState(this.g == LoginListener.EnumProtocolState.HELLO, "Unexpected hello packet", new Object[0]);
          this.i = packetlogininstart.a();
@@ -55,7 +55,7 @@ index 350ec0323..08e69ceac 100644
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.O().getPublic(), this.e));
          } else {
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index be14c0b25..f3426348d 100644
+index 89743d2b..e296cc0c 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -70,6 +70,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -67,7 +67,7 @@ index be14c0b25..f3426348d 100644
      private PacketListener m;
      private IChatBaseComponent n;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index ba51303b2..a762d999a 100644
+index 9ce3e136..8ed207cf 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
@@ -78,7 +78,7 @@ index ba51303b2..a762d999a 100644
  import java.util.HashMap;
  import java.util.HashSet;
  import java.util.List;
-@@ -226,6 +227,7 @@ public class SpigotConfig
+@@ -227,6 +228,7 @@ public class SpigotConfig
      }
  
      public static boolean bungee;
@@ -86,7 +86,7 @@ index ba51303b2..a762d999a 100644
      private static void bungee() {
          if ( version < 4 )
          {
-@@ -233,6 +235,7 @@ public class SpigotConfig
+@@ -234,6 +236,7 @@ public class SpigotConfig
              System.out.println( "Oudated config, disabling BungeeCord support!" );
          }
          bungee = getBoolean( "settings.bungeecord", false );

@@ -1,4 +1,4 @@
-From acd7f3a0daaa2e5790e46c796549348cabe03d70 Mon Sep 17 00:00:00 2001
+From a6f6db367f18eda5eb4b989472d28724037e89e7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:07:55 -0500
 Subject: [PATCH] MinecraftKey API
@@ -6,8 +6,8 @@ Subject: [PATCH] MinecraftKey API
 ---
  .../java/com/destroystokyo/paper/MinecraftKey.java | 38 ++++++++++++++++++++++
  src/main/java/org/bukkit/Bukkit.java               | 12 +++++++
- src/main/java/org/bukkit/Server.java               | 21 ++++++++++++
- 3 files changed, 71 insertions(+)
+ src/main/java/org/bukkit/Server.java               | 19 +++++++++++
+ 3 files changed, 69 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/MinecraftKey.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/MinecraftKey.java b/src/main/java/com/destroystokyo/paper/MinecraftKey.java
@@ -56,7 +56,7 @@ index 00000000..cc296cc7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 1f663fa1..a4cd8e47 100644
+index 4f27b9f2..7fdb7927 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -44,10 +44,22 @@ import org.bukkit.generator.ChunkGenerator;
@@ -83,24 +83,23 @@ index 1f663fa1..a4cd8e47 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 0b694131..69ace701 100644
+index ee39bca1..11531f25 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -45,6 +45,8 @@ import org.bukkit.generator.ChunkGenerator;
  import org.bukkit.inventory.ItemFactory;
  import org.bukkit.inventory.meta.ItemMeta;
  
-+import javax.annotation.Nonnull;
++import javax.annotation.Nonnull; // PaperDragon
 +
  /**
   * Represents a server implementation.
   */
-@@ -1035,4 +1037,23 @@ public interface Server extends PluginMessageRecipient {
-     void reloadPermissions(); // Paper
- 
-     boolean reloadCommandAliases(); // Paper
+@@ -1047,5 +1049,22 @@ public interface Server extends PluginMessageRecipient {
+      * @return true if player names should be suggested
+      */
+     boolean suggestPlayerNamesWhenNullTabCompletions();
 +
-+    // Paper start - Minecraft Key
 +    /**
 +     * @see com.destroystokyo.paper.MinecraftKey#create(String)
 +     * @param name
@@ -117,7 +116,7 @@ index 0b694131..69ace701 100644
 +     * @return
 +     */
 +    com.destroystokyo.paper.MinecraftKey createKey(@Nonnull String group, @Nonnull String name);
-+    // Paper end
+     // Paper end
  }
 -- 
 2.11.0

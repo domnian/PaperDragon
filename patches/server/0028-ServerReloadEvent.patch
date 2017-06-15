@@ -1,4 +1,4 @@
-From a948f3483e7e367a15337bff4b84171f7a1f2d7c Mon Sep 17 00:00:00 2001
+From 0e8e892386447065533b0a4397fa5a0433dab6aa Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 25 Jun 2015 21:00:09 -0400
 Subject: [PATCH] ServerReloadEvent
@@ -8,10 +8,10 @@ Subject: [PATCH] ServerReloadEvent
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 495ad0373..c96c752c4 100644
+index b4f9b765..bbfd72b0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -686,6 +686,7 @@ public final class CraftServer implements Server {
+@@ -681,6 +681,7 @@ public final class CraftServer implements Server {
  
      @Override
      public void reload() {

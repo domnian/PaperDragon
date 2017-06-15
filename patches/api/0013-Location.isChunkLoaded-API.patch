@@ -1,4 +1,4 @@
-From 7539d7d1e2fcf19cd13de8b6d103966bba9a7aae Mon Sep 17 00:00:00 2001
+From 08b2cd3c437f3a1178ff9d7a1995913ba4a1f253 Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 20:07:13 -0400
 Subject: [PATCH] Location.isChunkLoaded API
@@ -8,10 +8,10 @@ Subject: [PATCH] Location.isChunkLoaded API
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/Location.java b/src/main/java/org/bukkit/Location.java
-index e7af316d..6250ec96 100644
+index 5c5b3ba5..6d94030a 100644
 --- a/src/main/java/org/bukkit/Location.java
 +++ b/src/main/java/org/bukkit/Location.java
-@@ -487,6 +487,7 @@ public class Location implements Cloneable, ConfigurationSerializable {
+@@ -486,6 +486,7 @@ public class Location implements Cloneable, ConfigurationSerializable {
          return this;
      }
  

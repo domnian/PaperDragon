@@ -1,4 +1,4 @@
-From 805051cc085ad9dac5b3ab7f7a382cca0d7a59eb Mon Sep 17 00:00:00 2001
+From 046f709fbc82367c3ec1b18c9b2c10a880ae1c07 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 May 2015 13:38:54 -0400
 Subject: [PATCH] Implement SpongeAbsorbEvent
@@ -9,7 +9,7 @@ Subject: [PATCH] Implement SpongeAbsorbEvent
  2 files changed, 20 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
-index ee6012e49..24cc29dac 100644
+index ee6012e4..24cc29da 100644
 --- a/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 @@ -1,10 +1,15 @@
@@ -44,7 +44,7 @@ index ee6012e49..24cc29dac 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/BlockSponge.java b/src/main/java/net/minecraft/server/BlockSponge.java
-index 87b515683..8dc1cdbbd 100644
+index c21ede3b..9be62f77 100644
 --- a/src/main/java/net/minecraft/server/BlockSponge.java
 +++ b/src/main/java/net/minecraft/server/BlockSponge.java
 @@ -62,6 +62,11 @@ public class BlockSponge extends Block {

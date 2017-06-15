@@ -1,4 +1,4 @@
-From d83ef106a3c9208144dcaa2b1b70a18de21880f5 Mon Sep 17 00:00:00 2001
+From 697da3a59050e85f19e4d6fd38a690fab269068d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:35:55 -0500
 Subject: [PATCH] ShulkerBox API
@@ -41,10 +41,10 @@ index f35c91b6..d80840bf 100644
 +    
  }
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index a4a64b1d..b860eb63 100644
+index 86489593..0b6ebeca 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
-@@ -1332,4 +1332,27 @@ public enum Material {
+@@ -1388,4 +1388,27 @@ public enum Material {
                  return false;
          }
      }

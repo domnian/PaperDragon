@@ -1,4 +1,4 @@
-From c0c146ed7c7a0877459846d8dab1c2379ff6ac9f Mon Sep 17 00:00:00 2001
+From 28c8097a8496f8c02d24ce67199f47819533f523 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -969,10 +969,10 @@ index 866a73d9..7417574b 100644
 +    boolean isTileEntity(); // EMC
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index c0b7426d..eef18f9f 100644
+index c86c1c5f..7c8cb38f 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -188,6 +188,7 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -189,6 +189,7 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
       */
      public Server getServer();
  

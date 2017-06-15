@@ -1,4 +1,4 @@
-From 9b1239b4a1d853d3fda3728831d789f388798125 Mon Sep 17 00:00:00 2001
+From da38feec318e8d43944bcfde492d54a1f1d0e11a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -11,7 +11,7 @@ Subject: [PATCH] Misc PaperDragon Changes
  4 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EULA.java b/src/main/java/net/minecraft/server/EULA.java
-index ebbc1fcaf..60a072fa7 100644
+index 3623751b..902a78b6 100644
 --- a/src/main/java/net/minecraft/server/EULA.java
 +++ b/src/main/java/net/minecraft/server/EULA.java
 @@ -52,7 +52,7 @@ public class EULA {
@@ -21,13 +21,13 @@ index ebbc1fcaf..60a072fa7 100644
 -                    "\nand also agreeing that tacos are tasty.");  // Paper - fix lag
 +                    "\nand also agreeing that tacos are tasty.\nand also agreeing that dragons are awesome!");  // Paper - fix lag // PaperDragon - 4000 TPS
          } catch (Exception exception) {
-             EULA.a.warn("Failed to save {}", new Object[] { this.b, exception});
+             EULA.a.warn("Failed to save {}", this.b, exception);
          } finally {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 044ae22d4..9af0a09a6 100644
+index 8ca8fdce..b12e099f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1127,7 +1127,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -1143,7 +1143,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
      }
  
      public String getServerModName() {
@@ -37,7 +37,7 @@ index 044ae22d4..9af0a09a6 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b49c4a6e5..5af6e6a1b 100644
+index 99fb79e6..94f1cc67 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -135,7 +135,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
@@ -50,7 +50,7 @@ index b49c4a6e5..5af6e6a1b 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index cb1fcf0f4..230e00147 100644
+index cb1fcf0f..230e0014 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -19,7 +19,7 @@ public class WatchdogThread extends Thread

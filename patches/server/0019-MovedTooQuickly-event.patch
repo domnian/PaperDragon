@@ -1,4 +1,4 @@
-From cbc610647e8e9f0b12f1d85235424571b1f18b09 Mon Sep 17 00:00:00 2001
+From ce15e4664fc59a47d78aff717775b280032b200e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Sep 2013 22:01:47 -0400
 Subject: [PATCH] MovedTooQuickly event
@@ -9,16 +9,16 @@ also make creative immune to this event
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 0e2f43b96..0563dd1dc 100644
+index bcb09b8f..0f3a1383 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -533,10 +533,12 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
-                                 float f2 = this.player.cH() ? 300.0F : 100.0F;
+@@ -564,10 +564,12 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                                 float f2 = this.player.cP() ? 300.0F : 100.0F;
  
                                  if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot
 +                                if (new com.domnian.paperdragon.events.MovedTooQuicklyEvent(d10, getPlayer()).callEvent()) { // PaperDragon
                                  // CraftBukkit end
-                                     PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", new Object[] { this.player.getName(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9)});
+                                     PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getName(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9));
                                      this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
                                      return;
 +                                } // PaperDragon

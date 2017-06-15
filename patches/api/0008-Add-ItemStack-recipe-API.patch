@@ -1,4 +1,4 @@
-From d0d937a60cc9da5f07a44074d2300c4a162c59c4 Mon Sep 17 00:00:00 2001
+From 401d4a71612fe7d0beb3b3e7b15395b5f0e2302e Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:38:19 -0400
 Subject: [PATCH] Add ItemStack recipe API
@@ -10,10 +10,10 @@ Allows using custom items in Crafting Recipes
  2 files changed, 35 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/inventory/ShapedRecipe.java b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
-index f3532589..ca55e0c1 100644
+index d9af7155..63d99418 100644
 --- a/src/main/java/org/bukkit/inventory/ShapedRecipe.java
 +++ b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
-@@ -115,6 +115,15 @@ public class ShapedRecipe implements Recipe {
+@@ -129,6 +129,15 @@ public class ShapedRecipe implements Recipe, Keyed {
          return this;
      }
  
@@ -30,10 +30,10 @@ index f3532589..ca55e0c1 100644
       * Get a copy of the ingredients map.
       *
 diff --git a/src/main/java/org/bukkit/inventory/ShapelessRecipe.java b/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
-index a7180860..0507da5e 100644
+index ca5c09b8..3e84864e 100644
 --- a/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
 +++ b/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
-@@ -112,6 +112,32 @@ public class ShapelessRecipe implements Recipe {
+@@ -123,6 +123,32 @@ public class ShapelessRecipe implements Recipe, Keyed {
          }
          return this;
      }

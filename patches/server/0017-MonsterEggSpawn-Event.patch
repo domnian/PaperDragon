@@ -1,4 +1,4 @@
-From 1e0b5ea3b033423bc1d362a48ca05653763043d4 Mon Sep 17 00:00:00 2001
+From 9abfd71131c528b57ed8c0d6f89ef19f42ff03dc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -11,23 +11,23 @@ Get the itemstack used to spawn an entity
  3 files changed, 41 insertions(+), 8 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
-index 857ae9dc6..a7600bb44 100644
+index 41566872..5070cdb7 100644
 --- a/src/main/java/net/minecraft/server/BlockPortal.java
 +++ b/src/main/java/net/minecraft/server/BlockPortal.java
 @@ -47,7 +47,7 @@ public class BlockPortal extends BlockHalfTransparent {
  
-             if (i > 0 && !world.getType(blockposition1.up()).m()) {
+             if (i > 0 && !world.getType(blockposition1.up()).l()) {
                  // CraftBukkit - set spawn reason to NETHER_PORTAL
 -                Entity entity = ItemMonsterEgg.spawnCreature(world, EntityTypes.getName(EntityPigZombie.class), (double) blockposition1.getX() + 0.5D, (double) blockposition1.getY() + 1.1D, (double) blockposition1.getZ() + 0.5D, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.NETHER_PORTAL);
 +                Entity entity = ItemMonsterEgg.spawnCreature(world, EntityTypes.getName(EntityPigZombie.class), (double) blockposition1.getX() + 0.5D, (double) blockposition1.getY() + 1.1D, (double) blockposition1.getZ() + 0.5D, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.NETHER_PORTAL); // PaperDragon
  
                  if (entity != null) {
-                     entity.portalCooldown = entity.aE();
+                     entity.portalCooldown = entity.aM();
 diff --git a/src/main/java/net/minecraft/server/DispenserRegistry.java b/src/main/java/net/minecraft/server/DispenserRegistry.java
-index bec623c4d..2f38af52f 100644
+index ceccc992..8128d034 100644
 --- a/src/main/java/net/minecraft/server/DispenserRegistry.java
 +++ b/src/main/java/net/minecraft/server/DispenserRegistry.java
-@@ -146,7 +146,7 @@ public class DispenserRegistry {
+@@ -148,7 +148,7 @@ public class DispenserRegistry {
  
                  itemstack1 = CraftItemStack.asNMSCopy(event.getItem());
  
@@ -37,7 +37,7 @@ index bec623c4d..2f38af52f 100644
                  if (entity instanceof EntityLiving && itemstack.hasName()) {
                      entity.setCustomName(itemstack.getName());
 diff --git a/src/main/java/net/minecraft/server/ItemMonsterEgg.java b/src/main/java/net/minecraft/server/ItemMonsterEgg.java
-index f914ad417..361f7a533 100644
+index 643bc41c..82187c74 100644
 --- a/src/main/java/net/minecraft/server/ItemMonsterEgg.java
 +++ b/src/main/java/net/minecraft/server/ItemMonsterEgg.java
 @@ -4,6 +4,7 @@ import java.util.Iterator;
