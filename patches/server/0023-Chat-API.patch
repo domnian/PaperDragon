@@ -1,4 +1,4 @@
-From 2024e3a0fd621d539caa383119b440e8d0e18f40 Mon Sep 17 00:00:00 2001
+From ae76986e2a6d09eb05de64a9d0f1a21418d75ba2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -7,9 +7,9 @@ Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pl
 But did a lot of bug fixing and improving upon it, and designing into the Dragon API
 ---
  .../domnian/paperdragon/api/CraftDragonAPI.java    |   2 +
- .../paperdragon/api/FancifulChatAPIImpl.java       | 269 +++++++++++++++++++++
+ .../paperdragon/api/FancifulChatAPIImpl.java       | 270 +++++++++++++++++++++
  .../paperdragon/api/chat/CraftDAPI_Chat.java       |  40 +++
- 3 files changed, 311 insertions(+)
+ 3 files changed, 312 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 
@@ -35,10 +35,10 @@ index 6d0b8153..7afe9863 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 new file mode 100644
-index 00000000..a3a658ee
+index 00000000..0e78d884
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
-@@ -0,0 +1,269 @@
+@@ -0,0 +1,270 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -262,10 +262,11 @@ index 00000000..a3a658ee
 +                }
 +                if (hoverActionName != null) {
 +                    final ChatComponentText hover = new ChatComponentText(hoverActionData);
-+                    if (hoverActionName.equals("show_achievement")) {
++                    // TODO Find the replacement to this hover action for Advancements
++                    /* if (hoverActionName.equals("show_achievement")) {
 +                        component.getChatModifier().setChatHoverable(
 +                            new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ACHIEVEMENT, hover));
-+                    } else if (hoverActionName.equals("show_item")) {
++                    } else */if (hoverActionName.equals("show_item")) {
 +                        component.getChatModifier().setChatHoverable(
 +                            new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ITEM, hover));
 +                    } else if (hoverActionName.equals("show_text")) {

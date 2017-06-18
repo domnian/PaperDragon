@@ -1,4 +1,4 @@
-From 58f70bd3c65f5274b67be0f6abbcaf33bb5da313 Mon Sep 17 00:00:00 2001
+From 31e9d70445d7d5a2a7d86f1a46189dca1c310e2b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 31 Dec 2012 01:25:46 -0500
 Subject: [PATCH] Anvil Event
@@ -9,7 +9,7 @@ Fire an event for anvil usage, remove cap from server, send level to client
  1 file changed, 14 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ContainerAnvil.java b/src/main/java/net/minecraft/server/ContainerAnvil.java
-index 0d32f16f..4014725f 100644
+index 0d32f16f..10711902 100644
 --- a/src/main/java/net/minecraft/server/ContainerAnvil.java
 +++ b/src/main/java/net/minecraft/server/ContainerAnvil.java
 @@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
@@ -28,13 +28,13 @@ index 0d32f16f..4014725f 100644
                  itemstack1 = ItemStack.a;
              }
 +            // PaperDragon start
-+            AnvilEvent event = new AnvilEvent((Player) player.player.getBukkitEntity(), CraftItemStack.asBukkitCopy(itemstack), CraftItemStack.asBukkitCopy(itemstack2), CraftItemStack.asBukkitCopy(itemstack1), this.a);
++            AnvilEvent event = new AnvilEvent((Player) player.player.getBukkitEntity(), CraftItemStack.asBukkitCopy(itemstack), CraftItemStack.asBukkitCopy(itemstack2), CraftItemStack.asBukkitCopy(itemstack1), this.levelCost);
 +            Bukkit.getPluginManager().callEvent(event);
 +            if (event.isCancelled()) {
 +                itemstack1 = ItemStack.NULL_ITEM;
 +            } else {
 +                itemstack1 = CraftItemStack.asNMSCopy(event.getResult());
-+                this.a = event.getCost();
++                this.levelCost = event.getCost();
 +            }
 +            // PaperDragon end
  
