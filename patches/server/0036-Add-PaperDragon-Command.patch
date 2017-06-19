@@ -1,0 +1,81 @@
+From 03462f3216987b67002b54ff8398db8eece2d87b Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 19 Jun 2017 00:28:41 -0400
+Subject: [PATCH] Add PaperDragon Command
+
+---
+ .../java/com/domnian/paperdragon/DragonConfig.java |  2 ++
+ .../domnian/paperdragon/PaperDragonCommand.java    | 42 ++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+index 01ad76f5..a7170bef 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+@@ -1,5 +1,6 @@
+ package com.domnian.paperdragon;
+ 
++import com.destroystokyo.paper.PaperCommand;
+ import com.google.common.base.Throwables;
+ import net.minecraft.server.MinecraftServer;
+ import org.bukkit.Bukkit;
+@@ -47,6 +48,7 @@ public class DragonConfig {
+         config.options().copyDefaults(true);
+ 
+         commands = new HashMap<>();
++        commands.put("paperdragon", new PaperDragonCommand("paperdragon"));
+ 
+         version = getInt("config-version", 1);
+         set("config-version", 1);
+diff --git a/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
+new file mode 100644
+index 00000000..a88d44d5
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
+@@ -0,0 +1,42 @@
++package com.domnian.paperdragon;
++
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.WorldServer;
++import org.bukkit.ChatColor;
++import org.bukkit.command.Command;
++import org.bukkit.command.CommandSender;
++
++import java.io.File;
++
++public class PaperDragonCommand extends Command {
++
++    public PaperDragonCommand(String name) {
++        super(name);
++        this.description = "PaperDragon-Related Commands";
++        this.usageMessage = "/paperdragon [metrics|stats]";
++        this.setPermission("bukkit.command.paperdragon");
++    }
++
++    @Override
++    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
++        if (!testPermission(sender)) return true;
++
++        if (args.length != 1) {
++            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
++            return false;
++        }
++
++        switch (args[0]) {
++            case "metrics":
++            case "stats": {
++                sender.sendMessage(ChatColor.GREEN + "PaperDragon Metrics: " + ChatColor.AQUA + ChatColor.UNDERLINE + "https://bstats.org/plugin/server-implementation/PaperDragon");
++                break;
++            }
++            default: {
++                sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
++            }
++        }
++
++        return true;
++    }
++}
+-- 
+2.11.0
+
