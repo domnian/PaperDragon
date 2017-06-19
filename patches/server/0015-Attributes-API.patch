@@ -1,4 +1,4 @@
-From 7f21153f9f0dd6ece269a8b5dd7ff80aab808494 Mon Sep 17 00:00:00 2001
+From 2bc0f80e20f3bb71b3add25c47596dd73c7634d6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
@@ -7,14 +7,14 @@ Subject: [PATCH] Attributes API
  .../domnian/paperdragon/api/CraftDragonAPI.java    |   2 +
  .../api/attributes/CraftDAPI_Attributes.java       | 130 +++++++++++++++++++++
  .../net/minecraft/server/AttributeInstance.java    |   4 +-
- .../net/minecraft/server/AttributeMapBase.java     |   2 +-
+ .../net/minecraft/server/AttributeMapBase.java     |  82 +++++++++++++
  .../net/minecraft/server/AttributesAccessor.java   |  47 ++++++++
  .../net/minecraft/server/EntityInsentient.java     |   1 +
  .../java/net/minecraft/server/EntityLiving.java    |   1 +
  .../net/minecraft/server/GenericAttributes.java    |   1 +
  .../net/minecraft/server/PathfinderGoalTarget.java |   2 +-
  .../craftbukkit/inventory/CraftItemStack.java      |   2 +-
- 10 files changed, 187 insertions(+), 5 deletions(-)
+ 10 files changed, 268 insertions(+), 4 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/CraftDAPI_Attributes.java
  create mode 100644 src/main/java/net/minecraft/server/AttributesAccessor.java
 
@@ -197,18 +197,93 @@ index be179ba2..d9445ba4 100644
      @Nullable
      AttributeModifier a(UUID uuid);
 diff --git a/src/main/java/net/minecraft/server/AttributeMapBase.java b/src/main/java/net/minecraft/server/AttributeMapBase.java
-index e541672b..4c869b08 100644
+index e69de29b..8ea34a8d 100644
 --- a/src/main/java/net/minecraft/server/AttributeMapBase.java
 +++ b/src/main/java/net/minecraft/server/AttributeMapBase.java
-@@ -26,7 +26,7 @@ public abstract class AttributeMapBase {
-         return (AttributeInstance) this.b.get(s);
-     }
- 
--    public AttributeInstance b(IAttribute iattribute) {
+@@ -0,0 +1,82 @@
++package net.minecraft.server;
++
++import com.google.common.collect.HashMultimap;
++import com.google.common.collect.Maps;
++import com.google.common.collect.Multimap;
++import java.util.Collection;
++import java.util.Iterator;
++import java.util.Map;
++import java.util.Map.Entry;
++import javax.annotation.Nullable;
++
++public abstract class AttributeMapBase {
++
++    protected final Map<IAttribute, AttributeInstance> a = Maps.newHashMap();
++    protected final Map<String, AttributeInstance> b = new InsensitiveStringMap();
++    protected final Multimap<IAttribute, IAttribute> c = HashMultimap.create();
++
++    public AttributeMapBase() {}
++
++    public AttributeInstance a(IAttribute iattribute) {
++        return (AttributeInstance) this.a.get(iattribute);
++    }
++
++    @Nullable
++    public AttributeInstance a(String s) {
++        return (AttributeInstance) this.b.get(s);
++    }
++
 +    public AttributeInstance registerAttribute(IAttribute attr) { return b(attr); } public AttributeInstance b(IAttribute iattribute) { // PaperDragon - OBF HELPER
-         if (this.b.containsKey(iattribute.getName())) {
-             throw new IllegalArgumentException("Attribute is already registered!");
-         } else {
++        if (this.b.containsKey(iattribute.getName())) {
++            throw new IllegalArgumentException("Attribute is already registered!");
++        } else {
++            AttributeInstance attributeinstance = this.c(iattribute);
++
++            this.b.put(iattribute.getName(), attributeinstance);
++            this.a.put(iattribute, attributeinstance);
++
++            for (IAttribute iattribute1 = iattribute.d(); iattribute1 != null; iattribute1 = iattribute1.d()) {
++                this.c.put(iattribute1, iattribute);
++            }
++
++            return attributeinstance;
++        }
++    }
++
++    protected abstract AttributeInstance c(IAttribute iattribute);
++
++    public Collection<AttributeInstance> a() {
++        return this.b.values();
++    }
++
++    public void a(AttributeInstance attributeinstance) {}
++
++    public void a(Multimap<String, AttributeModifier> multimap) {
++        Iterator iterator = multimap.entries().iterator();
++
++        while (iterator.hasNext()) {
++            Entry entry = (Entry) iterator.next();
++            AttributeInstance attributeinstance = this.a((String) entry.getKey());
++
++            if (attributeinstance != null) {
++                attributeinstance.c((AttributeModifier) entry.getValue());
++            }
++        }
++
++    }
++
++    public void b(Multimap<String, AttributeModifier> multimap) {
++        Iterator iterator = multimap.entries().iterator();
++
++        while (iterator.hasNext()) {
++            Entry entry = (Entry) iterator.next();
++            AttributeInstance attributeinstance = this.a((String) entry.getKey());
++
++            if (attributeinstance != null) {
++                attributeinstance.c((AttributeModifier) entry.getValue());
++                attributeinstance.b((AttributeModifier) entry.getValue());
++            }
++        }
++
++    }
++}
+\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/AttributesAccessor.java b/src/main/java/net/minecraft/server/AttributesAccessor.java
 new file mode 100644
 index 00000000..6945b8b5

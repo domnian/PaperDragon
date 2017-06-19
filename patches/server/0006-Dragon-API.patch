@@ -1,4 +1,4 @@
-From aea9199425190eaecc523a4caa62d8cc85e02295 Mon Sep 17 00:00:00 2001
+From 88a4053b205f0ebc78b50ba542875a843a0ad974 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:21:28 -0500
 Subject: [PATCH] Dragon API
@@ -15,7 +15,7 @@ Subject: [PATCH] Dragon API
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 new file mode 100644
-index 000000000..d5c638104
+index 00000000..d5c63810
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -0,0 +1,27 @@
@@ -48,7 +48,7 @@ index 000000000..d5c638104
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 new file mode 100644
-index 000000000..ab3428a68
+index 00000000..ab3428a6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -0,0 +1,27 @@
@@ -81,7 +81,7 @@ index 000000000..ab3428a68
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 new file mode 100644
-index 000000000..21bd42ff9
+index 00000000..21bd42ff
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -0,0 +1,36 @@
@@ -122,10 +122,10 @@ index 000000000..21bd42ff9
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5af6e6a1b..211d3d681 100644
+index 60b041d7..ca8d7d9a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -180,6 +180,7 @@ public final class CraftServer implements Server {
+@@ -181,6 +181,7 @@ public final class CraftServer implements Server {
      }
  
      static {

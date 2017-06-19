@@ -1,4 +1,4 @@
-From e3df601f1f96e42ec4130bdb62706ea8fb119cd0 Mon Sep 17 00:00:00 2001
+From 48733583e665ba303fea043258f3ace213481c85 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:12:56 -0500
 Subject: [PATCH] MinecraftKey API
@@ -50,10 +50,10 @@ index b6ef8c0b..b9ef260e 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d089b622..ea5d9766 100644
+index ca8d7d9a..0ac68ccf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1890,6 +1890,11 @@ public final class CraftServer implements Server {
+@@ -1897,6 +1897,11 @@ public final class CraftServer implements Server {
      }
  
      @Override

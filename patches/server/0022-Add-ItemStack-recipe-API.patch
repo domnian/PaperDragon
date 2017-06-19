@@ -1,4 +1,4 @@
-From e26cd63080d135575a20122bc7848153dd999f04 Mon Sep 17 00:00:00 2001
+From 5b4374ede08053d4ff79c53d12340006f17d277a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 28 Jan 2014 21:04:24 -0500
 Subject: [PATCH] Add ItemStack recipe API
@@ -33,15 +33,15 @@ index 81ba15b1..bb7078f3 100644
      public static final ItemStack a = new ItemStack((Item) null);public static final ItemStack NULL_ITEM = a; // PaperDragon
      public static final DecimalFormat b = new DecimalFormat("#.##");
 diff --git a/src/main/java/net/minecraft/server/ShapedRecipes.java b/src/main/java/net/minecraft/server/ShapedRecipes.java
-index caedde30..dfb42689 100644
+index 91d090d3..cf107ec8 100644
 --- a/src/main/java/net/minecraft/server/ShapedRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapedRecipes.java
 @@ -92,7 +92,8 @@ public class ShapedRecipes implements IRecipe {
          for (RecipeItemStack list : this.items) {
              if (list != null && list.choices.length > 0) {
                  net.minecraft.server.ItemStack stack = list.choices[0];
--                recipe.setIngredient(c, org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), stack.getData());
-+                //recipe.setIngredient(c, org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), stack.getData()); // PaperDragon
+-                recipe.setIngredient(c, org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), (list.choices.length) > 1 ? 32767 : stack.getData());
++                //recipe.setIngredient(c, org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), (list.choices.length) > 1 ? 32767 : stack.getData()); // PaperDragon
 +                recipe.setIngredient(c, stack.getBukkitStack()); // PaperDragon
              }
              c++;
@@ -57,15 +57,15 @@ index caedde30..dfb42689 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/ShapelessRecipes.java b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-index 376cc60e..002d8f75 100644
+index 81066342..a27f64bf 100644
 --- a/src/main/java/net/minecraft/server/ShapelessRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapelessRecipes.java
 @@ -39,7 +39,8 @@ public class ShapelessRecipes implements IRecipe {
          for (RecipeItemStack list : this.ingredients) {
              if (list != null) {
                  net.minecraft.server.ItemStack stack = list.choices[0];
--                recipe.addIngredient(org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), stack.getData());
-+                //recipe.addIngredient(org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), stack.getData()); // PaperDragon
+-                recipe.addIngredient(org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), (list.choices.length) > 1 ? 32767 : stack.getData());
++                //recipe.addIngredient(org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(stack.getItem()), (list.choices.length) > 1 ? 32767 : stack.getData()); // PaperDragon
 +                recipe.addIngredient(stack.getBukkitStack()); // PaperDragon
              }
          }
