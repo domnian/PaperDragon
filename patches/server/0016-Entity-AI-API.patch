@@ -1,4 +1,4 @@
-From ce32a2d0e39304e19e5ec384b2c12b4f9abe0e06 Mon Sep 17 00:00:00 2001
+From 4d7b63002aebbcf9ab11f26cb4171c85ada463cf Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -369,7 +369,7 @@ index 00000000..ac1f1a4d
 +    
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a01b6ee8..a1c11ff3 100644
+index 1621139e..26d9a6e7 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -130,7 +130,9 @@ public abstract class Entity implements ICommandListener {
@@ -383,7 +383,7 @@ index a01b6ee8..a1c11ff3 100644
      protected DataWatcher datawatcher;
      protected static final DataWatcherObject<Byte> Z = DataWatcher.a(Entity.class, DataWatcherRegistry.a);
      private static final DataWatcherObject<Integer> aA = DataWatcher.a(Entity.class, DataWatcherRegistry.b);
-@@ -316,6 +318,7 @@ public abstract class Entity implements ICommandListener {
+@@ -317,6 +319,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setPosition(double d0, double d1, double d2) {
@@ -391,7 +391,7 @@ index a01b6ee8..a1c11ff3 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -379,6 +382,7 @@ public abstract class Entity implements ICommandListener {
+@@ -380,6 +383,7 @@ public abstract class Entity implements ICommandListener {
      // CraftBukkit end
  
      public void Y() {
@@ -399,7 +399,7 @@ index a01b6ee8..a1c11ff3 100644
          this.world.methodProfiler.a("entityBaseTick");
          if (this.isPassenger() && this.bJ().dead) {
              this.stopRiding();
-@@ -563,6 +567,7 @@ public abstract class Entity implements ICommandListener {
+@@ -564,6 +568,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -407,7 +407,7 @@ index a01b6ee8..a1c11ff3 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -1264,6 +1269,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1265,6 +1270,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -415,7 +415,7 @@ index a01b6ee8..a1c11ff3 100644
          this.locX = MathHelper.a(d0, -3.0E7D, 3.0E7D);
          this.locY = d1;
          this.locZ = MathHelper.a(d2, -3.0E7D, 3.0E7D);
-@@ -1294,6 +1300,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1295,6 +1301,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -423,7 +423,7 @@ index a01b6ee8..a1c11ff3 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -1351,6 +1358,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1352,6 +1359,7 @@ public abstract class Entity implements ICommandListener {
      public void d(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -431,7 +431,7 @@ index a01b6ee8..a1c11ff3 100644
          if (!this.x(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX - this.locX;
-@@ -1387,6 +1395,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1388,6 +1396,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void f(double d0, double d1, double d2) {
@@ -439,7 +439,7 @@ index a01b6ee8..a1c11ff3 100644
          this.motX += d0;
          this.motY += d1;
          this.motZ += d2;
-@@ -1398,6 +1407,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1399,6 +1408,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -447,7 +447,7 @@ index a01b6ee8..a1c11ff3 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2299,7 +2309,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2306,7 +2316,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -522,7 +522,7 @@ index 00000000..d0ee7f30
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 21a7a3a1..bb6dbbf4 100644
+index ed3d7ce5..5f700fdc 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -19,6 +19,7 @@ public class EntityItem extends Entity implements HopperPusher {
@@ -622,10 +622,10 @@ index c1596160..62b00612 100644
          public boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ebe7a982..da12fea7 100644
+index dbcc9f58..80de4930 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1743,7 +1743,7 @@ public abstract class World implements IBlockAccess {
+@@ -1744,7 +1744,7 @@ public abstract class World implements IBlockAccess {
          entity.O = entity.locZ;
          entity.lastYaw = entity.yaw;
          entity.lastPitch = entity.pitch;

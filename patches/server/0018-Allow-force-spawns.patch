@@ -1,4 +1,4 @@
-From 9304a372225d480a62c8083051fd91fb5fb0d81f Mon Sep 17 00:00:00 2001
+From 6538b662b0eb69177848a24dfede84cb1a3644d2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -12,10 +12,10 @@ Force some cases where plugins should not be allowed to block it.
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a1c11ff3..472b3817 100644
+index 26d9a6e7..cd414bb5 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2456,7 +2456,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2463,7 +2463,7 @@ public abstract class Entity implements ICommandListener {
                  boolean flag = entity.attachedToPlayer;
  
                  entity.attachedToPlayer = true;
@@ -25,10 +25,10 @@ index a1c11ff3..472b3817 100644
                  worldserver1.entityJoinedWorld(entity, false);
                  // CraftBukkit start - Forward the CraftEntity to the new entity
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index ed0a749e..8972fde1 100644
+index c47e05c1..44474cd2 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -1004,7 +1004,7 @@ public abstract class PlayerList {
+@@ -1010,7 +1010,7 @@ public abstract class PlayerList {
                          entity.getBukkitEntity().setVelocity(velocity);
                      }
                  }
@@ -38,7 +38,7 @@ index ed0a749e..8972fde1 100644
              }
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index da12fea7..d3b14e38 100644
+index 80de4930..a89bd19a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1162,14 +1162,14 @@ public abstract class World implements IBlockAccess {

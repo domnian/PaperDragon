@@ -1,4 +1,4 @@
-From 49da771002188072096aa9c0d8d1472e45b4516c Mon Sep 17 00:00:00 2001
+From cf036a60af44bc4ffe6a2f7e3f484abf392f8a53 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 0ae2c9c6..ddeabb6b 100644
+index 420a47d9..55891ed8 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -29,7 +29,7 @@ index 0ae2c9c6..ddeabb6b 100644
  
      <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-@@ -21,17 +21,17 @@
+@@ -21,8 +21,8 @@
      </properties>
  
      <parent>
@@ -40,8 +40,9 @@ index 0ae2c9c6..ddeabb6b 100644
          <version>dev-SNAPSHOT</version>
          <relativePath>../pom.xml</relativePath>
      </parent>
- 
-     <dependencies>
+@@ -36,9 +36,9 @@
+             <scope>compile</scope>
+         </dependency>
          <dependency>
 -            <groupId>com.destroystokyo.paper</groupId>
 -            <artifactId>paper-api</artifactId>
@@ -52,7 +53,7 @@ index 0ae2c9c6..ddeabb6b 100644
              <scope>compile</scope>
          </dependency>
          <dependency>
-@@ -41,6 +41,25 @@
+@@ -48,6 +48,25 @@
              <scope>compile</scope>
          </dependency>
          <dependency>
@@ -78,7 +79,7 @@ index 0ae2c9c6..ddeabb6b 100644
              <groupId>net.sf.jopt-simple</groupId>
              <artifactId>jopt-simple</artifactId>
              <version>5.0.3</version>
-@@ -120,7 +139,7 @@
+@@ -128,7 +147,7 @@
  
      <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
      <build>
@@ -87,7 +88,7 @@ index 0ae2c9c6..ddeabb6b 100644
          <defaultGoal>clean install</defaultGoal> <!-- Paper -->
          <plugins>
              <plugin>
-@@ -128,7 +147,7 @@
+@@ -136,7 +155,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
@@ -96,7 +97,7 @@ index 0ae2c9c6..ddeabb6b 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
-@@ -272,6 +291,15 @@
+@@ -279,6 +298,15 @@
                      </excludes>
                  </configuration>
              </plugin>
