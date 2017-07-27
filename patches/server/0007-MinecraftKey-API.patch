@@ -1,4 +1,4 @@
-From 2e81b16c515b42a0f0f9f5c64d465985b9cbf98d Mon Sep 17 00:00:00 2001
+From 85d5e50db0bb26858f07b7e2d525067a2b4afa46 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:12:56 -0500
 Subject: [PATCH] MinecraftKey API
@@ -9,7 +9,7 @@ Subject: [PATCH] MinecraftKey API
  2 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftKey.java b/src/main/java/net/minecraft/server/MinecraftKey.java
-index b6ef8c0b..b9ef260e 100644
+index b6ef8c0b6..b9ef260eb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftKey.java
 +++ b/src/main/java/net/minecraft/server/MinecraftKey.java
 @@ -12,10 +12,10 @@ import java.util.Locale;
@@ -50,10 +50,10 @@ index b6ef8c0b..b9ef260e 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e27d31b9..6601c594 100644
+index 6d5da299e..4d0e708fe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1917,6 +1917,11 @@ public final class CraftServer implements Server {
+@@ -1915,6 +1915,11 @@ public final class CraftServer implements Server {
      }
  
      @Override
