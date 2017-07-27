@@ -1,4 +1,4 @@
-From 0a70c89b535c036a95c9d966e30314d804112e46 Mon Sep 17 00:00:00 2001
+From deb22fe9c013f18e436b40778e74b15b4c09494c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:36:31 -0500
 Subject: [PATCH] ShulkerBox API
@@ -8,7 +8,7 @@ Subject: [PATCH] ShulkerBox API
  1 file changed, 94 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index ab3428a6..17c3191d 100644
+index ab3428a68..17c3191d4 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -1,4 +1,5 @@

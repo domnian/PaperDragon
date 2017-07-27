@@ -1,4 +1,4 @@
-From 03462f3216987b67002b54ff8398db8eece2d87b Mon Sep 17 00:00:00 2001
+From ef13b60d6c40cfc6a780173418a9fe16d27c259f Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Jun 2017 00:28:41 -0400
 Subject: [PATCH] Add PaperDragon Command
@@ -10,7 +10,7 @@ Subject: [PATCH] Add PaperDragon Command
  create mode 100644 src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 01ad76f5..a7170bef 100644
+index 01ad76f54..a7170bef5 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -1,5 +1,6 @@
@@ -30,7 +30,7 @@ index 01ad76f5..a7170bef 100644
          set("config-version", 1);
 diff --git a/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 new file mode 100644
-index 00000000..a88d44d5
+index 000000000..a88d44d50
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 @@ -0,0 +1,42 @@

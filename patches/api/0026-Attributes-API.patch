@@ -1,4 +1,4 @@
-From b07b220cc502f81740d7620e7a54e7fa8fd1a31f Mon Sep 17 00:00:00 2001
+From c8e54bbbab6d0655380bbcc7cf0720dd4d515df4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:31:31 -0500
 Subject: [PATCH] Attributes API

@@ -1,4 +1,4 @@
-From 79017dd28953bc720a695155b5a9938390f7acde Mon Sep 17 00:00:00 2001
+From 2c1813eb6f2a504c56d35e7a80b2bb095d2da6f9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 1 Jun 2016 23:29:17 -0400
 Subject: [PATCH] Reset Ender Crystals on Dragon Spawn
@@ -8,7 +8,7 @@ Subject: [PATCH] Reset Ender Crystals on Dragon Spawn
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
-index ce0dcbc6..845ca472 100644
+index ce0dcbc68..845ca4723 100644
 --- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
 +++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
 @@ -378,6 +378,7 @@ public class EnderDragonBattle {

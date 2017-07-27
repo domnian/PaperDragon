@@ -1,4 +1,4 @@
-From a73f37cea4f541b0633001361a9efeb285777dd8 Mon Sep 17 00:00:00 2001
+From d693efd97495b14b6abd557d411c6668865d9876 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -10,7 +10,7 @@ Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
  3 files changed, 20 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 06aa8360..01ad76f5 100644
+index 06aa83606..01ad76f54 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -161,4 +161,9 @@ public class DragonConfig {
@@ -24,7 +24,7 @@ index 06aa8360..01ad76f5 100644
 +
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 2a180d5a..107135de 100644
+index 2a180d5a4..107135de9 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -74,6 +74,10 @@ public class DragonWorldConfig {
@@ -39,7 +39,7 @@ index 2a180d5a..107135de 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 67713832..6942c4cc 100644
+index 67713832c..6942c4cca 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 @@ -209,6 +209,17 @@ public class AdvancementDataPlayer {

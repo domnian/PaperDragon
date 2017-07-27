@@ -1,4 +1,4 @@
-From a1189ffb4d18cd58b2c404c657a40201c900c1fd Mon Sep 17 00:00:00 2001
+From 4d5bb4a50b5147705076da15d5550f9fda9432c2 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:08:31 -0400
 Subject: [PATCH] Implement AdvancementBroadcastEvent
@@ -8,7 +8,7 @@ Subject: [PATCH] Implement AdvancementBroadcastEvent
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index ada6b5d8..67713832 100644
+index ada6b5d8f..67713832c 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 @@ -1,5 +1,6 @@

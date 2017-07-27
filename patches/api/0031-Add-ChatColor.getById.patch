@@ -1,4 +1,4 @@
-From 0ad1a06f03204777df9d7d75bdf67fb9a5726621 Mon Sep 17 00:00:00 2001
+From 86e09387640808805afd39b2e95c6b8a390db4c4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 24 Apr 2017 20:27:23 -0400
 Subject: [PATCH] Add ChatColor.getById

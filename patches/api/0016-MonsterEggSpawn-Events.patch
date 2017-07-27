@@ -1,4 +1,4 @@
-From f9fdb88406a7ff6e3c519be69c733733a70728d8 Mon Sep 17 00:00:00 2001
+From 350d0bbeda700cdc4c07c4b85ced64559df26540 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:02:11 -0500
 Subject: [PATCH] MonsterEggSpawn Events
