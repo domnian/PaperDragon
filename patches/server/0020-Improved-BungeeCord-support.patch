@@ -1,4 +1,4 @@
-From 45aa0baf1ef790d9b6f4dced875f8e50da3a40f7 Mon Sep 17 00:00:00 2001
+From 0027527c689e953f132a3a802baa9ba614eb2d6c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Dec 2013 23:21:21 -0500
 Subject: [PATCH] Improved BungeeCord support
@@ -13,7 +13,7 @@ Allow online-mode to be set to true, and skip online-mode for bungee IP's
  4 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 1cf64c5b..03ee6e5a 100644
+index 1cf64c5bb..03ee6e5af 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -73,7 +73,8 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -42,10 +42,10 @@ index 1cf64c5b..03ee6e5a 100644
                          chatmessage = new ChatMessage("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
                          this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 2367023c..2d03e06f 100644
+index c5434e6ba..360aaf70c 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -184,7 +184,7 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -185,7 +185,7 @@ public class LoginListener implements PacketLoginInListener, ITickable {
      public void a(PacketLoginInStart packetlogininstart) {
          Validate.validState(this.g == LoginListener.EnumProtocolState.HELLO, "Unexpected hello packet", new Object[0]);
          this.i = packetlogininstart.a();
@@ -55,7 +55,7 @@ index 2367023c..2d03e06f 100644
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.O().getPublic(), this.e));
          } else {
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 89743d2b..e296cc0c 100644
+index 89743d2be..e296cc0c5 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -70,6 +70,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -67,7 +67,7 @@ index 89743d2b..e296cc0c 100644
      private PacketListener m;
      private IChatBaseComponent n;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 9ce3e136..8ed207cf 100644
+index 9ce3e1365..8ed207cf2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
