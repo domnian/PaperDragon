@@ -1,4 +1,4 @@
-From 9135c060aa9187eec1f6a40c79f47ed04ce16996 Mon Sep 17 00:00:00 2001
+From 0a91856ef40383277025a444c3d3ba42fe8a3417 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -958,10 +958,10 @@ index 00000000..dcf4a459
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 866a73d9..7417574b 100644
+index 4b13d494..8f07f5eb 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
-@@ -203,4 +203,6 @@ public interface BlockState extends Metadatable {
+@@ -213,4 +213,6 @@ public interface BlockState extends Metadatable {
       *         or 'virtual' (e.g. on an itemstack)
       */
      boolean isPlaced();
@@ -993,5 +993,5 @@ index c610262f..6a11b55f 100644
       * Returns the size of the inventory
       *
 -- 
-2.11.0
+2.14.0
 

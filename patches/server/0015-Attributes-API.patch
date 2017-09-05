@@ -1,4 +1,4 @@
-From 79b2537e0ff96021691e3a4e40d1643f816b68af Mon Sep 17 00:00:00 2001
+From 0e1b2880cd296c87ad619fef94d5e7100a2916bf Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
@@ -19,7 +19,7 @@ Subject: [PATCH] Attributes API
  create mode 100644 src/main/java/net/minecraft/server/AttributesAccessor.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index b11af17e..6d0b8153 100644
+index b11af17ef..6d0b81532 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -23,6 +23,7 @@
@@ -40,7 +40,7 @@ index b11af17e..6d0b8153 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/CraftDAPI_Attributes.java b/src/main/java/com/domnian/paperdragon/api/attributes/CraftDAPI_Attributes.java
 new file mode 100644
-index 00000000..2e99c173
+index 000000000..2e99c1739
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/CraftDAPI_Attributes.java
 @@ -0,0 +1,130 @@
@@ -175,7 +175,7 @@ index 00000000..2e99c173
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/AttributeInstance.java b/src/main/java/net/minecraft/server/AttributeInstance.java
-index be179ba2..d9445ba4 100644
+index be179ba21..d9445ba4a 100644
 --- a/src/main/java/net/minecraft/server/AttributeInstance.java
 +++ b/src/main/java/net/minecraft/server/AttributeInstance.java
 @@ -8,7 +8,7 @@ public interface AttributeInstance {
@@ -197,7 +197,7 @@ index be179ba2..d9445ba4 100644
      @Nullable
      AttributeModifier a(UUID uuid);
 diff --git a/src/main/java/net/minecraft/server/AttributeMapBase.java b/src/main/java/net/minecraft/server/AttributeMapBase.java
-index e541672b..4c869b08 100644
+index e541672b2..4c869b088 100644
 --- a/src/main/java/net/minecraft/server/AttributeMapBase.java
 +++ b/src/main/java/net/minecraft/server/AttributeMapBase.java
 @@ -26,7 +26,7 @@ public abstract class AttributeMapBase {
@@ -211,7 +211,7 @@ index e541672b..4c869b08 100644
          } else {
 diff --git a/src/main/java/net/minecraft/server/AttributesAccessor.java b/src/main/java/net/minecraft/server/AttributesAccessor.java
 new file mode 100644
-index 00000000..6945b8b5
+index 000000000..6945b8b5d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AttributesAccessor.java
 @@ -0,0 +1,47 @@
@@ -263,10 +263,10 @@ index 00000000..6945b8b5
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 7dd66ded..727a2f55 100644
+index 89e878365..0662affe4 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -981,6 +981,7 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -978,6 +978,7 @@ public abstract class EntityInsentient extends EntityLiving {
      @Nullable
      public GroupDataEntity prepare(DifficultyDamageScaler difficultydamagescaler, @Nullable GroupDataEntity groupdataentity) {
          this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).b(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05D, 1));
@@ -275,7 +275,7 @@ index 7dd66ded..727a2f55 100644
              this.o(true);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 66b82bbf..d84ed84f 100644
+index 66b82bbfb..d84ed84f0 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -163,6 +163,7 @@ public abstract class EntityLiving extends Entity {
@@ -287,7 +287,7 @@ index 66b82bbf..d84ed84f 100644
  
      protected void a(double d0, boolean flag, IBlockData iblockdata, BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 21865021..e5d76dff 100644
+index 21865021b..e5d76dff5 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -62,6 +62,7 @@ public class GenericAttributes {
@@ -299,7 +299,7 @@ index 21865021..e5d76dff 100644
          NBTTagCompound nbttagcompound = new NBTTagCompound();
  
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java b/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
-index ba8c1480..5c2533cd 100644
+index ba8c1480b..5c2533cdb 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
 @@ -68,7 +68,7 @@ public abstract class PathfinderGoalTarget extends PathfinderGoal {
@@ -312,7 +312,7 @@ index ba8c1480..5c2533cd 100644
          return attributeinstance == null ? 16.0D : attributeinstance.getValue();
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index cdf16e15..9ceee9c6 100644
+index cdf16e15a..9ceee9c67 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 @@ -91,7 +91,7 @@ public final class CraftItemStack extends ItemStack {
@@ -325,5 +325,5 @@ index cdf16e15..9ceee9c6 100644
      /**
       * Mirror
 -- 
-2.11.0
+2.14.0
 

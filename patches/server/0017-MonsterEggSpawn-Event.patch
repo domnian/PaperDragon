@@ -1,4 +1,4 @@
-From 9abfd71131c528b57ed8c0d6f89ef19f42ff03dc Mon Sep 17 00:00:00 2001
+From 4bdcb535b573edc52e226f1ae73171b42aa9c5c7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -11,7 +11,7 @@ Get the itemstack used to spawn an entity
  3 files changed, 41 insertions(+), 8 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
-index 41566872..5070cdb7 100644
+index 415668724..5070cdb72 100644
 --- a/src/main/java/net/minecraft/server/BlockPortal.java
 +++ b/src/main/java/net/minecraft/server/BlockPortal.java
 @@ -47,7 +47,7 @@ public class BlockPortal extends BlockHalfTransparent {
@@ -24,7 +24,7 @@ index 41566872..5070cdb7 100644
                  if (entity != null) {
                      entity.portalCooldown = entity.aM();
 diff --git a/src/main/java/net/minecraft/server/DispenserRegistry.java b/src/main/java/net/minecraft/server/DispenserRegistry.java
-index ceccc992..8128d034 100644
+index ceccc9924..8128d0342 100644
 --- a/src/main/java/net/minecraft/server/DispenserRegistry.java
 +++ b/src/main/java/net/minecraft/server/DispenserRegistry.java
 @@ -148,7 +148,7 @@ public class DispenserRegistry {
@@ -37,7 +37,7 @@ index ceccc992..8128d034 100644
                  if (entity instanceof EntityLiving && itemstack.hasName()) {
                      entity.setCustomName(itemstack.getName());
 diff --git a/src/main/java/net/minecraft/server/ItemMonsterEgg.java b/src/main/java/net/minecraft/server/ItemMonsterEgg.java
-index 643bc41c..82187c74 100644
+index 5a08f6b4e..10895c792 100644
 --- a/src/main/java/net/minecraft/server/ItemMonsterEgg.java
 +++ b/src/main/java/net/minecraft/server/ItemMonsterEgg.java
 @@ -4,6 +4,7 @@ import java.util.Iterator;
@@ -126,8 +126,8 @@ index 643bc41c..82187c74 100644
                          entityinsentient.D();
                      }
                      // CraftBukkit end
-@@ -192,8 +226,7 @@ public class ItemMonsterEgg extends Item {
-         }
+@@ -216,8 +250,7 @@ public class ItemMonsterEgg extends Item {
+         itemstack.setTag(nbttagcompound);
      }
  
 -    @Nullable
@@ -137,5 +137,5 @@ index 643bc41c..82187c74 100644
  
          if (nbttagcompound == null) {
 -- 
-2.11.0
+2.14.0
 

@@ -1,4 +1,4 @@
-From d693efd97495b14b6abd557d411c6668865d9876 Mon Sep 17 00:00:00 2001
+From b9277a9555e510e6d8cf96513e7b480d88a04ef0 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -39,10 +39,10 @@ index 2a180d5a4..107135de9 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 67713832c..6942c4cca 100644
+index d13615936..eaa4aaeba 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -209,6 +209,17 @@ public class AdvancementDataPlayer {
+@@ -208,6 +208,17 @@ public class AdvancementDataPlayer {
                      //this.d.getPlayerList().sendMessage(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
                      ChatMessage adv = new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()});
                      com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new AdvancementBroadcastEvent(this.player.getBukkitEntity());
@@ -61,5 +61,5 @@ index 67713832c..6942c4cca 100644
                      event.getReceivers().forEach(p -> ((org.bukkit.craftbukkit.entity.CraftPlayer)p).getHandle().sendMessage(adv));
                      // PaperDragon ed
 -- 
-2.11.0
+2.14.0
 

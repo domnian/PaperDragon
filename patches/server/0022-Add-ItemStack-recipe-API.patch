@@ -1,4 +1,4 @@
-From 5b4374ede08053d4ff79c53d12340006f17d277a Mon Sep 17 00:00:00 2001
+From 6225be19da2b17ef02316b1edba66e18fd586806 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 28 Jan 2014 21:04:24 -0500
 Subject: [PATCH] Add ItemStack recipe API
@@ -13,7 +13,7 @@ Allows using custom items in Crafting Recipes
  5 files changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 81ba15b1..bb7078f3 100644
+index 81ba15b17..bb7078f33 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -29,6 +29,15 @@ public final class ItemStack {
@@ -33,7 +33,7 @@ index 81ba15b1..bb7078f3 100644
      public static final ItemStack a = new ItemStack((Item) null);public static final ItemStack NULL_ITEM = a; // PaperDragon
      public static final DecimalFormat b = new DecimalFormat("#.##");
 diff --git a/src/main/java/net/minecraft/server/ShapedRecipes.java b/src/main/java/net/minecraft/server/ShapedRecipes.java
-index 91d090d3..cf107ec8 100644
+index dd42c47dd..c6e07cd51 100644
 --- a/src/main/java/net/minecraft/server/ShapedRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapedRecipes.java
 @@ -92,7 +92,8 @@ public class ShapedRecipes implements IRecipe {
@@ -46,7 +46,7 @@ index 91d090d3..cf107ec8 100644
              }
              c++;
          }
-@@ -149,7 +150,8 @@ public class ShapedRecipes implements IRecipe {
+@@ -153,7 +154,8 @@ public class ShapedRecipes implements IRecipe {
                      }
                  }
  
@@ -57,7 +57,7 @@ index 91d090d3..cf107ec8 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/ShapelessRecipes.java b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-index 81066342..a27f64bf 100644
+index 9c69f92f2..38fe0ece0 100644
 --- a/src/main/java/net/minecraft/server/ShapelessRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapelessRecipes.java
 @@ -39,7 +39,8 @@ public class ShapelessRecipes implements IRecipe {
@@ -70,7 +70,7 @@ index 81066342..a27f64bf 100644
              }
          }
          return recipe;
-@@ -78,7 +79,8 @@ public class ShapelessRecipes implements IRecipe {
+@@ -82,7 +83,8 @@ public class ShapelessRecipes implements IRecipe {
                      while (iterator.hasNext()) {
                          RecipeItemStack recipeitemstack = (RecipeItemStack) iterator.next();
  
@@ -81,7 +81,7 @@ index 81066342..a27f64bf 100644
                              arraylist.remove(recipeitemstack);
                              break;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
-index 44df9301..9acaa1a5 100644
+index 44df93019..9acaa1a58 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapedRecipe.java
 @@ -36,7 +36,7 @@ public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
@@ -94,7 +94,7 @@ index 44df9301..9acaa1a5 100644
          }
          return ret;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-index 211898c5..5e582aca 100644
+index 211898c51..5e582acaf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 @@ -31,7 +31,7 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
@@ -107,5 +107,5 @@ index 211898c5..5e582aca 100644
          return ret;
      }
 -- 
-2.11.0
+2.14.0
 

@@ -1,4 +1,4 @@
-From 85d5e50db0bb26858f07b7e2d525067a2b4afa46 Mon Sep 17 00:00:00 2001
+From 2db634a18b1349569d2cdbab93b96a169efb3860 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:12:56 -0500
 Subject: [PATCH] MinecraftKey API
@@ -50,21 +50,21 @@ index b6ef8c0b6..b9ef260eb 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6d5da299e..4d0e708fe 100644
+index 50dba1284..b25755049 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1915,6 +1915,11 @@ public final class CraftServer implements Server {
+@@ -1930,6 +1930,11 @@ public final class CraftServer implements Server {
+         return true;
      }
  
-     @Override
++    @Override
 +    public com.destroystokyo.paper.MinecraftKey createKey(@javax.annotation.Nonnull String group, @javax.annotation.Nonnull String name) {
 +        return new net.minecraft.server.MinecraftKey(group, name);
 +    }
 +
-+    @Override
+     @Override
      public boolean suggestPlayerNamesWhenNullTabCompletions() {
          return com.destroystokyo.paper.PaperConfig.suggestPlayersWhenNullTabCompletions;
-     }
 -- 
-2.11.0
+2.14.0
 

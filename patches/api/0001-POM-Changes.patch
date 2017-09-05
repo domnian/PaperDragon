@@ -1,14 +1,14 @@
-From df40c95f1dea83339370d6f9edf6caf9c48c097b Mon Sep 17 00:00:00 2001
+From 54f30d11e2d6f29af0f7bee4fad1fb01da21c795 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ pom.xml | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 862910e0..b2656d4b 100644
+index 60e9f910..aac4af04 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -26,7 +26,7 @@ index 862910e0..b2656d4b 100644
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.12-R0.1-SNAPSHOT</version>
+     <version>1.12.1-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -36,11 +36,8 @@ index 862910e0..b2656d4b 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -25,15 +25,16 @@
-         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     </properties>
+@@ -27,12 +27,14 @@
  
--    <!-- just until we get deployment to central approved -->
      <distributionManagement>
          <repository>
 -            <id>destroystokyo-releases</id>
@@ -59,5 +56,5 @@ index 862910e0..b2656d4b 100644
      </distributionManagement>
  
 -- 
-2.11.0
+2.14.0
 
