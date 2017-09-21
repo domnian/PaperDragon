@@ -1,4 +1,4 @@
-From ff66ad6de6603b2186cd75de7c9bc6c3954dce0e Mon Sep 17 00:00:00 2001
+From 05f4f340a8ff212c3c27cf89a0a25eeb363e824b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 3c20c8f34..3cab28265 100644
+index 3c20c8f34..c8432837e 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -60,7 +60,7 @@ index 3c20c8f34..3cab28265 100644
 +        <dependency>
 +            <groupId>com.zaxxer</groupId>
 +            <artifactId>HikariCP</artifactId>
-+            <version>2.4.1</version>
++            <version>2.7.1</version>
 +            <scope>compile</scope>
 +        </dependency>
 +        <!-- json-smart -->
