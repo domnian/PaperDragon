@@ -1,4 +1,4 @@
-From 20ca8be5aa6bbb5b1bd401d9d1510ceb399206c5 Mon Sep 17 00:00:00 2001
+From e35e187cf9d7d9e72c3def98218b2b1431416f59 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -622,10 +622,10 @@ index c15961602..62b006123 100644
          public boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index dd36b271f..56cef2245 100644
+index ab665f23c..d681ddea5 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1750,7 +1750,7 @@ public abstract class World implements IBlockAccess {
+@@ -1742,7 +1742,7 @@ public abstract class World implements IBlockAccess {
          entity.O = entity.locZ;
          entity.lastYaw = entity.yaw;
          entity.lastPitch = entity.pitch;
@@ -647,5 +647,5 @@ index b08564618..1e1df167a 100644
          // PAIL: inChunk - boolean under datawatchers
          if ( !entity.aa || entity instanceof EntityFireworks ) {
 -- 
-2.14.0
+2.14.1
 

@@ -1,4 +1,4 @@
-From eff3e47ab06628c40b56ca349311b78689f76602 Mon Sep 17 00:00:00 2001
+From ff66ad6de6603b2186cd75de7c9bc6c3954dce0e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index d36611644..cf34782d7 100644
+index 3c20c8f34..3cab28265 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -21,7 +21,7 @@ index d36611644..cf34782d7 100644
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon</artifactId>
      <packaging>jar</packaging>
-     <version>1.12.1-R0.1-SNAPSHOT</version>
+     <version>1.12.2-R0.1-SNAPSHOT</version>
 -    <name>Paper</name>
 -    <url>https://github.com/PaperMC/Paper</url>
 +    <name>PaperDragon</name>
@@ -127,5 +127,5 @@ index 674096cab..50cd5f9ca 100644
  
          if (stream != null) {
 -- 
-2.14.0
+2.14.1
 

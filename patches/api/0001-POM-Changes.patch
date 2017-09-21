@@ -1,4 +1,4 @@
-From 54f30d11e2d6f29af0f7bee4fad1fb01da21c795 Mon Sep 17 00:00:00 2001
+From 0c20f4576d6ab140f45ffd4ac207d48c8dc283f0 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
@@ -8,7 +8,7 @@ Subject: [PATCH] POM Changes
  1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 60e9f910..aac4af04 100644
+index a775f4ed..e0066a80 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -26,7 +26,7 @@ index 60e9f910..aac4af04 100644
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.12.1-R0.1-SNAPSHOT</version>
+     <version>1.12.2-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -56,5 +56,5 @@ index 60e9f910..aac4af04 100644
      </distributionManagement>
  
 -- 
-2.14.0
+2.14.1
 

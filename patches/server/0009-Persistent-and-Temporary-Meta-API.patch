@@ -1,4 +1,4 @@
-From 984b587ece435427d513766c962c4f05406015b9 Mon Sep 17 00:00:00 2001
+From 80310dc07900b3c19120155b83fcbc3cdb8759fa Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -127,7 +127,7 @@ index 000000000..6352db624
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 228792fa5..d56d5efca 100644
+index ed5959559..16b57b7f5 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -113,6 +113,8 @@ public class Chunk {
@@ -140,7 +140,7 @@ index 228792fa5..d56d5efca 100644
  
      public Chunk(World world, ChunkSnapshot chunksnapshot, int i, int j) {
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 1b863d4dc..de64d4549 100644
+index 14f88e91d..b9b74e6af 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -290,6 +290,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -714,10 +714,10 @@ index 237f7e6fe..064d5d301 100644
      public InventoryHolder getOwner() {
          if (world == null) return null;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 61c620aec..dd36b271f 100644
+index 6e4453536..ab665f23c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -428,6 +428,7 @@ public abstract class World implements IBlockAccess {
+@@ -427,6 +427,7 @@ public abstract class World implements IBlockAccess {
                      this.c(blockposition, block);
                  }
                  */
@@ -726,7 +726,7 @@ index 61c620aec..dd36b271f 100644
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
 diff --git a/src/main/java/net/minecraft/server/WorldData.java b/src/main/java/net/minecraft/server/WorldData.java
-index 57ec601aa..4fe1aaa31 100644
+index 7f0baf17a..e57321b84 100644
 --- a/src/main/java/net/minecraft/server/WorldData.java
 +++ b/src/main/java/net/minecraft/server/WorldData.java
 @@ -55,6 +55,7 @@ public class WorldData {
@@ -755,10 +755,10 @@ index 57ec601aa..4fe1aaa31 100644
  
      public long getSeed() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b25755049..30834240e 100644
+index 19c3e2b01..7c6074fbc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -795,6 +795,7 @@ public final class CraftServer implements Server {
+@@ -799,6 +799,7 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
@@ -844,5 +844,5 @@ index 4866d1aee..e0f7107ba 100644
          this.inventory = inventory;
      }
 -- 
-2.14.0
+2.14.1
 

@@ -1,4 +1,4 @@
-From e79823b3ad2472ecfa1cf097b5b96f7d823672b4 Mon Sep 17 00:00:00 2001
+From 2e77389480a13d8723a5e70a012463ab394e5791 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 5 Apr 2014 00:14:38 -0400
 Subject: [PATCH] World.getNearbyEntities Improvements
@@ -10,10 +10,10 @@ Improves the getNearbyEntities API
  2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index d56d5efca..85eab25e1 100644
+index 16b57b7f5..ad714f373 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -962,7 +962,8 @@ public class Chunk {
+@@ -957,7 +957,8 @@ public class Chunk {
              while (iterator.hasNext()) {
                  Entity entity = (Entity) iterator.next();
  
@@ -53,5 +53,5 @@ index a606f6ce2..4ec60bbe9 100644
          return CraftMagicNumbers.getId(world.getType(new BlockPosition(x, y, z)).getBlock());
      }
 -- 
-2.14.0
+2.14.1
 
