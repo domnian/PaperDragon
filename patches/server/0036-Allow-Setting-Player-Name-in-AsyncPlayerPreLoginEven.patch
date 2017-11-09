@@ -1,0 +1,28 @@
+From f0666e60761d1bcc50e1d5faad7d124c55af3d8c Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 9 Nov 2017 13:41:03 -0500
+Subject: [PATCH] Allow Setting Player Name in AsyncPlayerPreLoginEvent
+
+---
+ src/main/java/net/minecraft/server/LoginListener.java | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
+index a23aba3ad..515fe8865 100644
+--- a/src/main/java/net/minecraft/server/LoginListener.java
++++ b/src/main/java/net/minecraft/server/LoginListener.java
+@@ -288,6 +288,11 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+ 
+                             AsyncPlayerPreLoginEvent asyncEvent = new AsyncPlayerPreLoginEvent(playerName, address, uniqueId);
+                             server.getPluginManager().callEvent(asyncEvent);
++                            // PaperDragon - Allow Setting Player Name in AsyncPlayerPreLoginEvent
++                            GameProfile old = i;
++                            i = new GameProfile(uniqueId, asyncEvent.getName());
++                            i.getProperties().putAll(old.getProperties());
++                            // PaperDragon end
+ 
+                             if (PlayerPreLoginEvent.getHandlerList().getRegisteredListeners().length != 0) {
+                                 final PlayerPreLoginEvent event = new PlayerPreLoginEvent(playerName, address, uniqueId);
+-- 
+2.14.1
+
