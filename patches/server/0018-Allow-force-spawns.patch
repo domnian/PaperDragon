@@ -1,4 +1,4 @@
-From 6652c007e95f55ce56f2ea4b0957a6d6343bff5d Mon Sep 17 00:00:00 2001
+From 903b02c8f5a6627972752ef3b261ad72c5e0be96 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -12,10 +12,10 @@ Force some cases where plugins should not be allowed to block it.
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c110fd2aa..34577d7ab 100644
+index d35981c7b..ab4c71c32 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2469,7 +2469,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2475,7 +2475,7 @@ public abstract class Entity implements ICommandListener {
                  boolean flag = entity.attachedToPlayer;
  
                  entity.attachedToPlayer = true;
@@ -38,10 +38,10 @@ index c201e9cec..33e14a38e 100644
              }
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index d681ddea5..c94f993e2 100644
+index 5bac19070..eaad0cb8d 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1164,14 +1164,14 @@ public abstract class World implements IBlockAccess {
+@@ -1175,7 +1175,7 @@ public abstract class World implements IBlockAccess {
              }
          } // Spigot end
  
@@ -50,8 +50,9 @@ index d681ddea5..c94f993e2 100644
              entity.dead = true;
              return false;
          }
-         // CraftBukkit end
- 
+@@ -1195,7 +1195,7 @@ public abstract class World implements IBlockAccess {
+             flag = true;
+         }
  
 -        if (!flag && !this.isChunkLoaded(i, j, false)) {
 +        if (spawnReason != SpawnReason.FORCE && !flag && !this.isChunkLoaded(i, j, false)) { // PaperDragon
@@ -59,5 +60,5 @@ index d681ddea5..c94f993e2 100644
          } else {
              if (entity instanceof EntityHuman) {
 -- 
-2.14.1
+2.15.0
 

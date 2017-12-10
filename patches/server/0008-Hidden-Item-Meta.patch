@@ -1,4 +1,4 @@
-From 33b524877d6a852e5ba329a6d0472351e4ac8982 Mon Sep 17 00:00:00 2001
+From 6772d095e0c4666f83d523f2a3fa101dab8bdc44 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -21,7 +21,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 00000000..3b4c3f23
+index 000000000..3b4c3f23b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,90 @@
@@ -116,7 +116,7 @@ index 00000000..3b4c3f23
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 6b6aa458..81ba15b1 100644
+index 6b6aa4588..81ba15b17 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -35,7 +35,7 @@ public final class ItemStack {
@@ -129,10 +129,10 @@ index 6b6aa458..81ba15b1 100644
      private int damage;
      private EntityItemFrame i;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index c1273e98..bb31c98c 100644
+index d71734df8..c243f4f28 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -250,6 +250,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -251,6 +251,7 @@ public class PacketDataSerializer extends ByteBuf {
                  CraftItemStack.setItemMeta(itemstack, CraftItemStack.getItemMeta(itemstack));
                  // Spigot end
                  nbttagcompound = itemstack.getTag();
@@ -140,7 +140,7 @@ index c1273e98..bb31c98c 100644
              }
  
              this.a(nbttagcompound);
-@@ -271,6 +272,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -272,6 +273,7 @@ public class PacketDataSerializer extends ByteBuf {
              itemstack.setTag(this.j());
              // CraftBukkit start
              if (itemstack.getTag() != null) {
@@ -149,5 +149,5 @@ index c1273e98..bb31c98c 100644
              }
              // CraftBukkit end
 -- 
-2.11.0
+2.15.0
 

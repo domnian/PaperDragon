@@ -1,4 +1,4 @@
-From e35e187cf9d7d9e72c3def98218b2b1431416f59 Mon Sep 17 00:00:00 2001
+From 56f37bc3cd5a5f5f798d9dab8bf2ecb95a241fcd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -369,7 +369,7 @@ index 000000000..ac1f1a4dd
 +    
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ce47673c6..c110fd2aa 100644
+index 446f54257..d35981c7b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -130,7 +130,9 @@ public abstract class Entity implements ICommandListener {
@@ -383,7 +383,7 @@ index ce47673c6..c110fd2aa 100644
      protected DataWatcher datawatcher;
      protected static final DataWatcherObject<Byte> Z = DataWatcher.a(Entity.class, DataWatcherRegistry.a);
      private static final DataWatcherObject<Integer> aA = DataWatcher.a(Entity.class, DataWatcherRegistry.b);
-@@ -317,6 +319,7 @@ public abstract class Entity implements ICommandListener {
+@@ -323,6 +325,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setPosition(double d0, double d1, double d2) {
@@ -391,7 +391,7 @@ index ce47673c6..c110fd2aa 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -380,6 +383,7 @@ public abstract class Entity implements ICommandListener {
+@@ -386,6 +389,7 @@ public abstract class Entity implements ICommandListener {
      // CraftBukkit end
  
      public void Y() {
@@ -399,7 +399,7 @@ index ce47673c6..c110fd2aa 100644
          this.world.methodProfiler.a("entityBaseTick");
          if (this.isPassenger() && this.bJ().dead) {
              this.stopRiding();
-@@ -564,6 +568,7 @@ public abstract class Entity implements ICommandListener {
+@@ -570,6 +574,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -407,7 +407,7 @@ index ce47673c6..c110fd2aa 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -1265,6 +1270,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1271,6 +1276,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -415,7 +415,7 @@ index ce47673c6..c110fd2aa 100644
          this.locX = MathHelper.a(d0, -3.0E7D, 3.0E7D);
          this.locY = d1;
          this.locZ = MathHelper.a(d2, -3.0E7D, 3.0E7D);
-@@ -1295,6 +1301,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1301,6 +1307,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -423,7 +423,7 @@ index ce47673c6..c110fd2aa 100644
          this.locX = d0;
          this.locY = d1;
          this.locZ = d2;
-@@ -1352,6 +1359,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1358,6 +1365,7 @@ public abstract class Entity implements ICommandListener {
      public void d(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -431,7 +431,7 @@ index ce47673c6..c110fd2aa 100644
          if (!this.x(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX - this.locX;
-@@ -1388,6 +1396,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1394,6 +1402,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void f(double d0, double d1, double d2) {
@@ -439,7 +439,7 @@ index ce47673c6..c110fd2aa 100644
          this.motX += d0;
          this.motY += d1;
          this.motZ += d2;
-@@ -1399,6 +1408,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1405,6 +1414,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -447,7 +447,7 @@ index ce47673c6..c110fd2aa 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2306,7 +2316,7 @@ public abstract class Entity implements ICommandListener {
+@@ -2312,7 +2322,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -470,7 +470,7 @@ index b768434ed..6c16bbd17 100644
      public ItemStack breedItem; // CraftBukkit - Add breedItem variable
  
 diff --git a/src/main/java/net/minecraft/server/EntityArmorStand.java b/src/main/java/net/minecraft/server/EntityArmorStand.java
-index 7899324ed..f976b4f4e 100644
+index df0d66ad0..cf147c5f3 100644
 --- a/src/main/java/net/minecraft/server/EntityArmorStand.java
 +++ b/src/main/java/net/minecraft/server/EntityArmorStand.java
 @@ -42,7 +42,7 @@ public class EntityArmorStand extends EntityLiving {
@@ -522,7 +522,7 @@ index 000000000..d0ee7f304
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index b56d1a35e..aea6a2e1d 100644
+index 0b7fc327f..8a0b16c54 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -22,6 +22,7 @@ public class EntityItem extends Entity implements HopperPusher {
@@ -622,10 +622,10 @@ index c15961602..62b006123 100644
          public boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ab665f23c..d681ddea5 100644
+index f29af1bb8..5bac19070 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1742,7 +1742,7 @@ public abstract class World implements IBlockAccess {
+@@ -1766,7 +1766,7 @@ public abstract class World implements IBlockAccess {
          entity.O = entity.locZ;
          entity.lastYaw = entity.yaw;
          entity.lastPitch = entity.pitch;
@@ -647,5 +647,5 @@ index b08564618..1e1df167a 100644
          // PAIL: inChunk - boolean under datawatchers
          if ( !entity.aa || entity instanceof EntityFireworks ) {
 -- 
-2.14.1
+2.15.0
 

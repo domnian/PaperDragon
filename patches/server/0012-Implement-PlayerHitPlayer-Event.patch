@@ -1,4 +1,4 @@
-From 49855ccbc9de9bbe0ac589b8ccc248980a752777 Mon Sep 17 00:00:00 2001
+From 312689ac3beea2f09febec95377dd557d267364f Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
@@ -12,7 +12,7 @@ Fired when a player hits another player, regardless of gamemode
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 new file mode 100644
-index 00000000..ee6012e4
+index 000000000..ee6012e49
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 @@ -0,0 +1,21 @@
@@ -38,10 +38,10 @@ index 00000000..ee6012e4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index f5e25e63..376aafb0 100644
+index 347237055..130b428dd 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -942,6 +942,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -951,6 +951,7 @@ public abstract class EntityHuman extends EntityLiving {
      public void attack(Entity entity) {
          if (entity.bd()) {
              if (!entity.t(this)) {
@@ -50,5 +50,5 @@ index f5e25e63..376aafb0 100644
                  float f1;
  
 -- 
-2.11.0
+2.15.0
 

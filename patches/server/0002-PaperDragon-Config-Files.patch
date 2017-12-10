@@ -1,4 +1,4 @@
-From 39f73602fc75826b34cb13e82c6061dc8c0fe902 Mon Sep 17 00:00:00 2001
+From 5b05baf20d5f57d8263f03cf8d640636fa93e975 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -267,10 +267,10 @@ index 000000000..2a180d5a4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index b3f1aa999..74b47be51 100644
+index 854455711..c5247f7b2 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -202,6 +202,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -204,6 +204,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              com.destroystokyo.paper.PaperConfig.init((File) options.valueOf("paper-settings"));
              com.destroystokyo.paper.PaperConfig.registerCommands();
              // Paper end
@@ -282,11 +282,11 @@ index b3f1aa999..74b47be51 100644
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f690aaa10..6e4453536 100644
+index eb8a1c43c..b67629a63 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -140,6 +140,8 @@ public abstract class World implements IBlockAccess {
-     public final com.destroystokyo.paper.PaperWorldConfig paperConfig; // Paper
+@@ -143,6 +143,8 @@ public abstract class World implements IBlockAccess {
+     public final ChunkPacketBlockController chunkPacketBlockController; // Paper - Anti-Xray
  
      public final co.aikar.timings.WorldTimingsHandler timings; // Paper
 +
@@ -294,19 +294,19 @@ index f690aaa10..6e4453536 100644
      private boolean guardEntityList; // Spigot
      public static boolean haveWeSilencedAPhysicsCrash;
      public static String blockLocation;
-@@ -169,6 +171,7 @@ public abstract class World implements IBlockAccess {
-     protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
+@@ -173,6 +175,7 @@ public abstract class World implements IBlockAccess {
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig( worlddata.getName() ); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(worlddata.getName(), this.spigotConfig); // Paper
+         this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this.paperConfig) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
 +        this.dragonConfig = new com.domnian.paperdragon.DragonWorldConfig(worlddata.getName(), this.spigotConfig, this.paperConfig); // PaperDragon
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b42f4e9ee..ca00fd1bb 100644
+index 09eb79439..1820562b6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -734,6 +734,7 @@ public final class CraftServer implements Server {
+@@ -732,6 +732,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
@@ -314,7 +314,7 @@ index b42f4e9ee..ca00fd1bb 100644
          for (WorldServer world : console.worlds) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -750,6 +751,7 @@ public final class CraftServer implements Server {
+@@ -748,6 +749,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -322,7 +322,7 @@ index b42f4e9ee..ca00fd1bb 100644
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -768,6 +770,8 @@ public final class CraftServer implements Server {
+@@ -766,6 +768,8 @@ public final class CraftServer implements Server {
          reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -331,7 +331,7 @@ index b42f4e9ee..ca00fd1bb 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
  
          int pollCount = 0;
-@@ -1842,6 +1846,13 @@ public final class CraftServer implements Server {
+@@ -1840,6 +1844,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -365,5 +365,5 @@ index 21628e196..fe6961a22 100644
          };
  
 -- 
-2.14.1
+2.15.0
 

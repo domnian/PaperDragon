@@ -1,4 +1,4 @@
-From 0e1b2880cd296c87ad619fef94d5e7100a2916bf Mon Sep 17 00:00:00 2001
+From 26fd4f9031000dfb2f6e8cbe172e832d67a99511 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
@@ -275,10 +275,10 @@ index 89e878365..0662affe4 100644
              this.o(true);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 66b82bbfb..d84ed84f0 100644
+index 559aebf20..4baf5ea91 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -163,6 +163,7 @@ public abstract class EntityLiving extends Entity {
+@@ -169,6 +169,7 @@ public abstract class EntityLiving extends Entity {
          this.getAttributeMap().b(GenericAttributes.MOVEMENT_SPEED);
          this.getAttributeMap().b(GenericAttributes.h);
          this.getAttributeMap().b(GenericAttributes.i);
@@ -325,5 +325,5 @@ index cdf16e15a..9ceee9c67 100644
      /**
       * Mirror
 -- 
-2.14.0
+2.15.0
 
