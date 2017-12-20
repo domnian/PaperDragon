@@ -1,0 +1,99 @@
+From 3d0432b7ca5af673849959c75cb54e270bd20755 Mon Sep 17 00:00:00 2001
+From: Derek Williams <GreenMeanieMC@gmail.com>
+Date: Wed, 20 Dec 2017 02:42:34 -0500
+Subject: [PATCH] PlayerUseItem Event
+
+This lets us control when an item is consumed and change the item.
+---
+ .../java/net/minecraft/server/EntityLiving.java    |  2 +-
+ .../minecraft/server/PlayerInteractManager.java    | 27 +++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
+index 4baf5ea9..70b1aca3 100644
+--- a/src/main/java/net/minecraft/server/EntityLiving.java
++++ b/src/main/java/net/minecraft/server/EntityLiving.java
+@@ -1526,7 +1526,7 @@ public abstract class EntityLiving extends Entity {
+         }
+     }
+ 
+-    public void a(EnumHand enumhand, ItemStack itemstack) {
++    public void setHand(EnumHand hand, ItemStack item) { a(hand, item); } public void a(EnumHand enumhand, ItemStack itemstack) { // PaperDragon - OBF HELPER
+         if (enumhand == EnumHand.MAIN_HAND) {
+             this.setSlot(EnumItemSlot.MAINHAND, itemstack);
+         } else {
+diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
+index b1826332..d1c9eec9 100644
+--- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
++++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
+@@ -2,6 +2,8 @@ package net.minecraft.server;
+ 
+ // CraftBukkit start
+ import java.util.ArrayList;
++
++import org.bukkit.entity.Player;
+ import org.bukkit.event.block.BlockBreakEvent;
+ import org.bukkit.craftbukkit.event.CraftEventFactory;
+ import org.bukkit.event.Event;
+@@ -395,6 +397,13 @@ public class PlayerInteractManager {
+     }
+ 
+     public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand) {
++        // PaperDragon Start - Allow control over if item should be consumed or not.
++        org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
++        com.domnian.paperdragon.events.PlayerUseItemEvent event = new com.domnian.paperdragon.events.PlayerUseItemEvent((org.bukkit.entity.Player) entityhuman.getBukkitEntity(), craftitem);
++        if (!event.callEvent()) {
++            return EnumInteractionResult.FAIL;
++        }
++        // PaperDragon end
+         if (this.gamemode == EnumGamemode.SPECTATOR) {
+             return EnumInteractionResult.PASS;
+         } else if (entityhuman.getCooldownTracker().a(itemstack.getItem())) {
+@@ -411,7 +420,7 @@ public class PlayerInteractManager {
+                 return interactionresultwrapper.a();
+             } else {
+                 entityhuman.a(enumhand, itemstack1);
+-                if (this.isCreative()) {
++                if (!event.getConsumeItem() || this.isCreative()) { // PaperDragon - add getConsumeItem
+                     itemstack1.setCount(i);
+                     if (itemstack1.f()) {
+                         itemstack1.setData(j);
+@@ -434,7 +443,7 @@ public class PlayerInteractManager {
+     // CraftBukkit start - whole method
+     public boolean interactResult = false;
+     public boolean firedInteract = false;
+-    public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand, BlockPosition blockposition, EnumDirection enumdirection, float f, float f1, float f2) {
++    public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand, BlockPosition blockposition, EnumDirection enumdirection, float f, float f1, float f2) {org.bukkit.util.Vector hitVector = new org.bukkit.util.Vector(f, f1, f2); // PaperDragon - OBF HELPER
+         IBlockData blockdata = world.getType(blockposition);
+         EnumInteractionResult enuminteractionresult = EnumInteractionResult.FAIL;
+         if (blockdata.getBlock() != Blocks.AIR) {
+@@ -501,13 +510,25 @@ public class PlayerInteractManager {
+             }
+ 
+             if (!itemstack.isEmpty() && enuminteractionresult != EnumInteractionResult.SUCCESS && !interactResult) { // add !interactResult SPIGOT-764
++                // PaperDragon Start - Allow control over if item should be consumed or not.
++                org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
++                com.domnian.paperdragon.events.PlayerUseItemAtEvent eventUse = new com.domnian.paperdragon.events.PlayerUseItemAtEvent(
++                        (Player) entityhuman.getBukkitEntity(), craftitem,
++                        MCUtil.toLocation(world, blockposition),
++                        org.bukkit.craftbukkit.block.CraftBlock.notchToBlockFace(enumdirection),
++                        hitVector);
++
++                if (!eventUse.callEvent()) {
++                    return EnumInteractionResult.FAIL;
++                }
++                // PaperDragon end
+                 int i = itemstack.getData();
+                 int j = itemstack.getCount();
+ 
+                 enuminteractionresult = itemstack.placeItem(entityhuman, world, blockposition, enumhand, enumdirection, f, f1, f2);
+ 
+                 // The item count should not decrement in Creative mode.
+-                if (this.isCreative()) {
++                if (!eventUse.getConsumeItem() || this.isCreative()) { // PaperDragon - add getConsumeItem
+                     itemstack.setData(i);
+                     itemstack.setCount(j);
+                 }
+-- 
+2.14.2.windows.3
+
