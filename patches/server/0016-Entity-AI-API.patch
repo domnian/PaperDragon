@@ -1,4 +1,4 @@
-From 56f37bc3cd5a5f5f798d9dab8bf2ecb95a241fcd Mon Sep 17 00:00:00 2001
+From 4257fd480f15380277f3e1810f44e1a7e430d082 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -647,5 +647,5 @@ index b08564618..1e1df167a 100644
          // PAIL: inChunk - boolean under datawatchers
          if ( !entity.aa || entity instanceof EntityFireworks ) {
 -- 
-2.15.0
+2.15.1
 

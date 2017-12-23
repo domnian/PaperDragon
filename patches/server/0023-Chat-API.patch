@@ -1,4 +1,4 @@
-From ae76986e2a6d09eb05de64a9d0f1a21418d75ba2 Mon Sep 17 00:00:00 2001
+From 5acb82c78e8a224dad02b5ffca37652a551f500e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -14,7 +14,7 @@ But did a lot of bug fixing and improving upon it, and designing into the Dragon
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index 6d0b8153..7afe9863 100644
+index 6d0b81532..7afe98639 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -24,6 +24,7 @@
@@ -35,7 +35,7 @@ index 6d0b8153..7afe9863 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 new file mode 100644
-index 00000000..0e78d884
+index 000000000..0e78d8848
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 @@ -0,0 +1,270 @@
@@ -311,7 +311,7 @@ index 00000000..0e78d884
 +
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
-index 00000000..afc5e9e7
+index 000000000..afc5e9e73
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 @@ -0,0 +1,40 @@
@@ -356,5 +356,5 @@ index 00000000..afc5e9e7
 +    }
 +}
 -- 
-2.11.0
+2.15.1
 

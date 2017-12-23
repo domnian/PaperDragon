@@ -1,4 +1,4 @@
-From 6225be19da2b17ef02316b1edba66e18fd586806 Mon Sep 17 00:00:00 2001
+From 39bccbd72188b1257b1c2df76aacf18884ee4b15 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 28 Jan 2014 21:04:24 -0500
 Subject: [PATCH] Add ItemStack recipe API
@@ -107,5 +107,5 @@ index 211898c51..5e582acaf 100644
          return ret;
      }
 -- 
-2.14.0
+2.15.1
 

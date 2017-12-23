@@ -1,4 +1,4 @@
-From 6772d095e0c4666f83d523f2a3fa101dab8bdc44 Mon Sep 17 00:00:00 2001
+From 3c9fcfdada1ed30a19993e145f1436866183d794 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -149,5 +149,5 @@ index d71734df8..c243f4f28 100644
              }
              // CraftBukkit end
 -- 
-2.15.0
+2.15.1
 

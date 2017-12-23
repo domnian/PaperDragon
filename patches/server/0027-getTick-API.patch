@@ -1,4 +1,4 @@
-From 331fe0cd72ddd5ebd1bcf87140bacb5d4e9b35ee Mon Sep 17 00:00:00 2001
+From 55c52453e449c2e06689d602eb521fadb1542052 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jun 2015 23:51:20 -0400
 Subject: [PATCH] getTick API
@@ -20,5 +20,5 @@ index b062da542..b2202915a 100644
          @Deprecated
          @Override
 -- 
-2.15.0
+2.15.1
 

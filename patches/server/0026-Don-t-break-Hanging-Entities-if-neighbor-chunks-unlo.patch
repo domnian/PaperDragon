@@ -1,4 +1,4 @@
-From 73a07e173202375da1416adb48549586d80554c0 Mon Sep 17 00:00:00 2001
+From f84de8ec72cb7f82f08c4ea9b003ea5b4dea7b08 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 May 2015 19:11:01 -0400
 Subject: [PATCH] Don't break Hanging Entities if neighbor chunks unloaded
@@ -8,7 +8,7 @@ Subject: [PATCH] Don't break Hanging Entities if neighbor chunks unloaded
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHanging.java b/src/main/java/net/minecraft/server/EntityHanging.java
-index cc903e1e..460ec268 100644
+index cc903e1ea..460ec2684 100644
 --- a/src/main/java/net/minecraft/server/EntityHanging.java
 +++ b/src/main/java/net/minecraft/server/EntityHanging.java
 @@ -129,6 +129,7 @@ public abstract class EntityHanging extends Entity {
@@ -20,5 +20,5 @@ index cc903e1e..460ec268 100644
              return false;
          } else {
 -- 
-2.11.0
+2.15.1
 

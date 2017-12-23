@@ -1,4 +1,4 @@
-From dd3da7d229f3d6ca84a1655b5f5a5e8c5a3c1981 Mon Sep 17 00:00:00 2001
+From 612b0b70631a1bd2e67f1b823798dc4dad6bb86a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 31 Dec 2012 01:25:46 -0500
 Subject: [PATCH] Anvil Event
@@ -9,7 +9,7 @@ Fire an event for anvil usage, remove cap from server, send level to client
  1 file changed, 14 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ContainerAnvil.java b/src/main/java/net/minecraft/server/ContainerAnvil.java
-index e3897a3f..a86ac721 100644
+index 16ec67569..cb79b857e 100644
 --- a/src/main/java/net/minecraft/server/ContainerAnvil.java
 +++ b/src/main/java/net/minecraft/server/ContainerAnvil.java
 @@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
@@ -41,5 +41,5 @@ index e3897a3f..a86ac721 100644
              if (!itemstack1.isEmpty()) {
                  int k2 = itemstack1.getRepairCost();
 -- 
-2.11.0
+2.15.1
 

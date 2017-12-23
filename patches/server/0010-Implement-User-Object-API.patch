@@ -1,4 +1,4 @@
-From eb4b34e915fe61c36975cb01d4cd268670a354a9 Mon Sep 17 00:00:00 2001
+From d22fa8e36357f68206bceb49725749ecbbc3e1f7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 23 Jun 2016 22:30:39 -0400
 Subject: [PATCH] Implement User Object API
@@ -29,5 +29,5 @@ index eeab46333..d51912670 100644
 +
  }
 -- 
-2.15.0
+2.15.1
 

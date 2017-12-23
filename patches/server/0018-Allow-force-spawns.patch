@@ -1,4 +1,4 @@
-From 903b02c8f5a6627972752ef3b261ad72c5e0be96 Mon Sep 17 00:00:00 2001
+From 599bd6ba8babe924ecbdcb75ada1de84ce0f8de2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -60,5 +60,5 @@ index 5bac19070..eaad0cb8d 100644
          } else {
              if (entity instanceof EntityHuman) {
 -- 
-2.15.0
+2.15.1
 

@@ -1,4 +1,4 @@
-From 3f4a3fe15f83bc3c1c97b3f81cf2cd1e906f7c66 Mon Sep 17 00:00:00 2001
+From f52d9e6cfef2301e2a2276009c0aa3d3b9a113cc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Dec 2013 23:21:21 -0500
 Subject: [PATCH] Improved BungeeCord support
@@ -95,5 +95,5 @@ index cc1f3ac96..f9aa525bc 100644
  
      private static void nettyThreads()
 -- 
-2.15.0
+2.15.1
 
