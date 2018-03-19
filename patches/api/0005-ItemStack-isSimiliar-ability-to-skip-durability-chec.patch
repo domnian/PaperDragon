@@ -1,4 +1,4 @@
-From eb60d641c7e087f0e81c8e2051887dca614cdef3 Mon Sep 17 00:00:00 2001
+From 9f178d36ee2b70f6ea9a28e828deeed800b07dad Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 15 Jun 2013 23:19:03 -0400
 Subject: [PATCH] ItemStack isSimiliar ability to skip durability check
@@ -8,7 +8,7 @@ Subject: [PATCH] ItemStack isSimiliar ability to skip durability check
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 188ae6d7..6ee0863a 100644
+index 567706ac..3dd6044e 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -327,15 +327,21 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
@@ -35,5 +35,5 @@ index 188ae6d7..6ee0863a 100644
  
      @Override
 -- 
-2.11.0
+2.16.2
 
