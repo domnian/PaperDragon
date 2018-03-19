@@ -1,4 +1,4 @@
-From 12ce4b8c6f58a1ad8b8f4c031cf7145f4fee6b17 Mon Sep 17 00:00:00 2001
+From 6a33102e22cbf9a72d5ab456225331115f3c33d0 Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:36:29 -0500
 Subject: [PATCH] Keep certain items on death API
@@ -12,10 +12,10 @@ This can be used for never-to-be-dropped items.
  2 files changed, 46 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 0b71c4b9..f82585ad 100644
+index cce3f98d..e261a777 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -424,6 +424,45 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -433,6 +433,45 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
  
      }
  
@@ -61,7 +61,7 @@ index 0b71c4b9..f82585ad 100644
      public void die(DamageSource damagesource) {
          boolean flag = this.world.getGameRules().getBoolean("showDeathMessages");
  
-@@ -471,8 +510,13 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -480,8 +519,13 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          this.releaseShoulderEntities();
          // we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
          if (!event.getKeepInventory()) {
@@ -90,5 +90,5 @@ index 84f59b75..2c96fcaf 100644
      public EntityHuman player;
      private ItemStack carried;
 -- 
-2.14.2.windows.3
+2.16.2
 

@@ -1,4 +1,4 @@
-From ebf58d5c80b08002b6c7f389bb798dc5f6344617 Mon Sep 17 00:00:00 2001
+From 3d8997861569e44e0321e13d183e1a5401fb505c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:12:56 -0500
 Subject: [PATCH] MinecraftKey API
@@ -9,7 +9,7 @@ Subject: [PATCH] MinecraftKey API
  2 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftKey.java b/src/main/java/net/minecraft/server/MinecraftKey.java
-index b6ef8c0b6..b9ef260eb 100644
+index b6ef8c0b..b9ef260e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftKey.java
 +++ b/src/main/java/net/minecraft/server/MinecraftKey.java
 @@ -12,10 +12,10 @@ import java.util.Locale;
@@ -50,10 +50,10 @@ index b6ef8c0b6..b9ef260eb 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f99afe7c9..aed4c982b 100644
+index 193a612d..0fff64af 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1932,6 +1932,11 @@ public final class CraftServer implements Server {
+@@ -1935,6 +1935,11 @@ public final class CraftServer implements Server {
          return true;
      }
  
@@ -66,5 +66,5 @@ index f99afe7c9..aed4c982b 100644
      public boolean suggestPlayerNamesWhenNullTabCompletions() {
          return com.destroystokyo.paper.PaperConfig.suggestPlayersWhenNullTabCompletions;
 -- 
-2.15.0
+2.16.2
 

@@ -1,4 +1,4 @@
-From 3c9fcfdada1ed30a19993e145f1436866183d794 Mon Sep 17 00:00:00 2001
+From 1ac194cf6ec6beb765a1d694ba9ebd46b107a113 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -21,7 +21,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 000000000..3b4c3f23b
+index 00000000..3b4c3f23
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,90 @@
@@ -116,7 +116,7 @@ index 000000000..3b4c3f23b
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 6b6aa4588..81ba15b17 100644
+index 5883c5a9..a912d619 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -35,7 +35,7 @@ public final class ItemStack {
@@ -126,10 +126,10 @@ index 6b6aa4588..81ba15b17 100644
 -    private NBTTagCompound tag;
 +    public NBTTagCompound tag; // PaperDragon - Hidden Item Meta API
      private boolean g;
-     private int damage;
+     private int damage; public void setDamage(int i) { this.damage = i; } // Paper - OBFHELPER
      private EntityItemFrame i;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index d71734df8..c243f4f28 100644
+index d71734df..c243f4f2 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -251,6 +251,7 @@ public class PacketDataSerializer extends ByteBuf {
@@ -149,5 +149,5 @@ index d71734df8..c243f4f28 100644
              }
              // CraftBukkit end
 -- 
-2.15.1
+2.16.2
 

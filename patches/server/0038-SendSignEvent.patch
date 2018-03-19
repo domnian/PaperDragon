@@ -1,4 +1,4 @@
-From e69b5b56446d9ab66f5934827bbb6e8831e5ecc9 Mon Sep 17 00:00:00 2001
+From 612a715c5dfb322f29caefa3094af69b122b3de4 Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
@@ -100,5 +100,5 @@ index 3f2c5b2d..50476bde 100644
  
      public boolean isFilteredNBT() {
 -- 
-2.14.2.windows.3
+2.16.2
 

@@ -1,13 +1,13 @@
-From a6f6db367f18eda5eb4b989472d28724037e89e7 Mon Sep 17 00:00:00 2001
+From 9f440f707b3c0e3ee599b7b6293f53aef87a87b0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:07:55 -0500
 Subject: [PATCH] MinecraftKey API
 
 ---
  .../java/com/destroystokyo/paper/MinecraftKey.java | 38 ++++++++++++++++++++++
- src/main/java/org/bukkit/Bukkit.java               | 12 +++++++
- src/main/java/org/bukkit/Server.java               | 19 +++++++++++
- 3 files changed, 69 insertions(+)
+ src/main/java/org/bukkit/Bukkit.java               | 10 ++++++
+ src/main/java/org/bukkit/Server.java               | 18 ++++++++++
+ 3 files changed, 66 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/MinecraftKey.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/MinecraftKey.java b/src/main/java/com/destroystokyo/paper/MinecraftKey.java
@@ -56,16 +56,10 @@ index 00000000..cc296cc7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 4f27b9f2..7fdb7927 100644
+index 690d9c07..579866a5 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -44,10 +44,22 @@ import org.bukkit.generator.ChunkGenerator;
- import org.bukkit.inventory.ItemFactory;
- import org.bukkit.inventory.meta.ItemMeta;
- 
-+import javax.annotation.Nonnull;
-+
- /**
+@@ -51,6 +51,16 @@ import javax.annotation.Nonnull; // Paper
   * Represents the Bukkit core, for version and Server singleton handling
   */
  public final class Bukkit {
@@ -83,22 +77,21 @@ index 4f27b9f2..7fdb7927 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index ee39bca1..11531f25 100644
+index eaf4bc28..f3ebfb2a 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -45,6 +45,8 @@ import org.bukkit.generator.ChunkGenerator;
- import org.bukkit.inventory.ItemFactory;
- import org.bukkit.inventory.meta.ItemMeta;
- 
-+import javax.annotation.Nonnull; // PaperDragon
-+
- /**
-  * Represents a server implementation.
-  */
-@@ -1047,5 +1049,22 @@ public interface Server extends PluginMessageRecipient {
-      * @return true if player names should be suggested
-      */
+@@ -1052,6 +1052,7 @@ public interface Server extends PluginMessageRecipient {
      boolean suggestPlayerNamesWhenNullTabCompletions();
+ 
+     /**
++<<<<<<< HEAD
+      * Creates a PlayerProfile for the specified uuid, with name as null
+      * @param uuid UUID to create profile for
+      * @return A PlayerProfile object
+@@ -1075,5 +1076,22 @@ public interface Server extends PluginMessageRecipient {
+      * @return A PlayerProfile object
+      */
+     com.destroystokyo.paper.profile.PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name);
 +
 +    /**
 +     * @see com.destroystokyo.paper.MinecraftKey#create(String)
@@ -119,5 +112,5 @@ index ee39bca1..11531f25 100644
      // Paper end
  }
 -- 
-2.11.0
+2.16.2
 

@@ -1,4 +1,4 @@
-From bf6900eb1529c59c762a32e41f4558237ceff028 Mon Sep 17 00:00:00 2001
+From 0c9da862142450bc9ac4eabf7d68f3855fe296b8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -11,7 +11,7 @@ Subject: [PATCH] Misc PaperDragon Changes
  4 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EULA.java b/src/main/java/net/minecraft/server/EULA.java
-index 3623751bf..902a78b66 100644
+index 3623751b..902a78b6 100644
 --- a/src/main/java/net/minecraft/server/EULA.java
 +++ b/src/main/java/net/minecraft/server/EULA.java
 @@ -52,7 +52,7 @@ public class EULA {
@@ -24,10 +24,10 @@ index 3623751bf..902a78b66 100644
              EULA.a.warn("Failed to save {}", this.b, exception);
          } finally {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a2acf1b3e..ed7eec91a 100644
+index 579f0ba0..257bb7ec 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1147,7 +1147,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -1148,7 +1148,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
      }
  
      public String getServerModName() {
@@ -37,20 +37,20 @@ index a2acf1b3e..ed7eec91a 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fa7c2242c..33eec8915 100644
+index da4730a9..65b36334 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -137,7 +137,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
+@@ -140,7 +140,7 @@ import javax.annotation.Nonnull; // Paper
+ 
  
  public final class CraftServer implements Server {
-     private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
 -    private final String serverName = "Paper";
 +    private final String serverName = "PaperDragon"; // PaperDragon - We are PaperDragon
      private final String serverVersion;
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index cb1fcf0f4..230e00147 100644
+index cb1fcf0f..230e0014 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -19,7 +19,7 @@ public class WatchdogThread extends Thread
@@ -84,5 +84,5 @@ index cb1fcf0f4..230e00147 100644
                  log.log( Level.SEVERE, "------------------------------" );
                  //
 -- 
-2.14.0
+2.16.2
 

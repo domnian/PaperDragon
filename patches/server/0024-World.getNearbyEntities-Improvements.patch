@@ -1,4 +1,4 @@
-From e070b3eb0b2d70c7076a8424f65c1af7fc992b64 Mon Sep 17 00:00:00 2001
+From 9b36f49890a2361676e7da27aa4a9933c3c13bd9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 5 Apr 2014 00:14:38 -0400
 Subject: [PATCH] World.getNearbyEntities Improvements
@@ -10,10 +10,10 @@ Improves the getNearbyEntities API
  2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 84e57e28f..8f05aa037 100644
+index 16b88d5a..4f33e158 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -957,7 +957,8 @@ public class Chunk {
+@@ -958,7 +958,8 @@ public class Chunk {
              while (iterator.hasNext()) {
                  Entity entity = (Entity) iterator.next();
  
@@ -24,7 +24,7 @@ index 84e57e28f..8f05aa037 100644
                  }
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 4ffe0d208..f57cac5f5 100644
+index 568a50ec..dc9e5e07 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -118,6 +118,24 @@ public class CraftWorld implements World {
@@ -53,5 +53,5 @@ index 4ffe0d208..f57cac5f5 100644
          return CraftMagicNumbers.getId(world.getType(new BlockPosition(x, y, z)).getBlock());
      }
 -- 
-2.15.1
+2.16.2
 

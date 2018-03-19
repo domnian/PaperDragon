@@ -1,4 +1,4 @@
-From 832a0ad08f9c7ede9bf0a9468cdb3ae2fbfe801f Mon Sep 17 00:00:00 2001
+From 054e79f33a6c996a7e1a97c862fa3f3d2840741f Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:08:32 -0500
 Subject: [PATCH] Identifier API
@@ -20,7 +20,7 @@ Manually Applied Patch from Empire Minecraft - Originally by Aikar
  2 files changed, 65 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index ba3676b67..b5488aa14 100644
+index ba3676b6..b5488aa1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -29,6 +29,7 @@ public class CraftChunk implements Chunk {
@@ -72,7 +72,7 @@ index ba3676b67..b5488aa14 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index bea02c493..3cb9bb220 100644
+index a9d3f12b..558eaf0a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 @@ -35,6 +35,7 @@ public class CraftBlock implements Block {
@@ -117,5 +117,5 @@ index bea02c493..3cb9bb220 100644
 +    // PaperDragon end
  }
 -- 
-2.15.1
+2.16.2
 

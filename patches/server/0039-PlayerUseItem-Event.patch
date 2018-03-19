@@ -1,4 +1,4 @@
-From 7120e91dbd2ecb0699f142bd04feea3601c40e9c Mon Sep 17 00:00:00 2001
+From d473bf3d147aa1120efbc60928a461c044bec741 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,10 +10,10 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 50 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 4baf5ea91..d853011f7 100644
+index f54280e9..4e768339 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1526,7 +1526,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1527,7 +1527,7 @@ public abstract class EntityLiving extends Entity {
          }
      }
  
@@ -23,7 +23,7 @@ index 4baf5ea91..d853011f7 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index b1826332a..b10d5d6b8 100644
+index b1cdb215..38d41634 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -2,6 +2,7 @@ package net.minecraft.server;
@@ -88,7 +88,7 @@ index b1826332a..b10d5d6b8 100644
          IBlockData blockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.FAIL;
          if (blockdata.getBlock() != Blocks.AIR) {
-@@ -501,16 +522,39 @@ public class PlayerInteractManager {
+@@ -507,16 +528,39 @@ public class PlayerInteractManager {
              }
  
              if (!itemstack.isEmpty() && enuminteractionresult != EnumInteractionResult.SUCCESS && !interactResult) { // add !interactResult SPIGOT-764
@@ -132,5 +132,5 @@ index b1826332a..b10d5d6b8 100644
          }
          return enuminteractionresult;
 -- 
-2.15.1
+2.16.2
 

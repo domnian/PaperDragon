@@ -1,4 +1,4 @@
-From ba3697b99560e2a9ed038928d8de2533b085fec1 Mon Sep 17 00:00:00 2001
+From e6a3637de203b7c160de9467c1096d08a2b802bc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:35:55 -0500
 Subject: [PATCH] ShulkerBox API
@@ -41,14 +41,13 @@ index f35c91b6..d80840bf 100644
 +    
  }
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index 86489593..0b6ebeca 100644
+index fcc76e19..2f20e739 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
-@@ -1388,4 +1388,27 @@ public enum Material {
-                 return false;
+@@ -695,6 +695,29 @@ public enum Material {
          }
      }
-+
+ 
 +    public boolean isShulkerBox() {
 +        switch (this) {
 +            case WHITE_SHULKER_BOX:
@@ -71,7 +70,10 @@ index 86489593..0b6ebeca 100644
 +        }
 +        return false;
 +    }
- }
++
+     /**
+      * Attempts to get the Material with the given ID
+      *
 -- 
-2.11.0
+2.16.2
 

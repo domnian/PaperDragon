@@ -1,4 +1,4 @@
-From b9277a9555e510e6d8cf96513e7b480d88a04ef0 Mon Sep 17 00:00:00 2001
+From 3a9ea30850adbe33b84f5ae942c49a7b8d96d6de Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -10,7 +10,7 @@ Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
  3 files changed, 20 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 06aa83606..01ad76f54 100644
+index 06aa8360..01ad76f5 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -161,4 +161,9 @@ public class DragonConfig {
@@ -24,7 +24,7 @@ index 06aa83606..01ad76f54 100644
 +
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 2a180d5a4..107135de9 100644
+index 2a180d5a..107135de 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -74,6 +74,10 @@ public class DragonWorldConfig {
@@ -39,10 +39,10 @@ index 2a180d5a4..107135de9 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index d13615936..eaa4aaeba 100644
+index b57bdc1e..64998d60 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -208,6 +208,17 @@ public class AdvancementDataPlayer {
+@@ -214,6 +214,17 @@ public class AdvancementDataPlayer {
                      //this.d.getPlayerList().sendMessage(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
                      ChatMessage adv = new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()});
                      com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new AdvancementBroadcastEvent(this.player.getBukkitEntity());
@@ -61,5 +61,5 @@ index d13615936..eaa4aaeba 100644
                      event.getReceivers().forEach(p -> ((org.bukkit.craftbukkit.entity.CraftPlayer)p).getHandle().sendMessage(adv));
                      // PaperDragon ed
 -- 
-2.14.0
+2.16.2
 

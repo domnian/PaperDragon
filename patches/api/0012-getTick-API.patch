@@ -1,4 +1,4 @@
-From c7ccd9ca6f720d077a15510351e689571a80a575 Mon Sep 17 00:00:00 2001
+From cffb5dd601a43b582d9c9bd3d1239a9473a1da14 Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:07:31 -0400
 Subject: [PATCH] getTick API
@@ -8,10 +8,10 @@ Subject: [PATCH] getTick API
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 11531f25..6f0b1f6e 100644
+index f3ebfb2a..6be53464 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -987,6 +987,7 @@ public interface Server extends PluginMessageRecipient {
+@@ -988,6 +988,7 @@ public interface Server extends PluginMessageRecipient {
              throw new UnsupportedOperationException( "Not supported yet." );
          }
  
@@ -20,5 +20,5 @@ index 11531f25..6f0b1f6e 100644
          {
              throw new UnsupportedOperationException( "Not supported yet." );
 -- 
-2.11.0
+2.16.2
 
