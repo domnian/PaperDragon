@@ -1,19 +1,19 @@
-From 70a0e0c8ca912f906081cbdea02c5e951f224731 Mon Sep 17 00:00:00 2001
+From da79b84498081828c4858f00866a1be0e43f701c Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:46:00 -0500
 Subject: [PATCH] SendSignEvent
 
 ---
- .../domnian/paperdragon/events/SendSignEvent.java  | 43 ++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ .../domnian/paperdragon/events/SendSignEvent.java  | 45 ++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 new file mode 100644
-index 00000000..7a490e87
+index 00000000..f296bca3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,45 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -39,6 +39,7 @@ index 00000000..7a490e87
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.block.Block;
++import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +
@@ -46,6 +47,7 @@ index 00000000..7a490e87
 +    public abstract Block getBlock();
 +    public abstract String[] getLines();
 +    public abstract void setLine(int i, String line);
++    public abstract Player getPlayer();
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
@@ -57,7 +59,6 @@ index 00000000..7a490e87
 +        return handlers;
 +    }
 +}
-\ No newline at end of file
 -- 
-2.14.2.windows.3
+2.16.2
 
