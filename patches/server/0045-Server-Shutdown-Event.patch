@@ -1,0 +1,46 @@
+From 9df8b30bfcca185d1f3c1f52b4c3441b4c1413ec Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sat, 14 Apr 2018 03:26:45 -0400
+Subject: [PATCH] Server Shutdown Event
+
+---
+ src/main/java/com/domnian/paperdragon/PDEventFactory.java | 5 +++++
+ src/main/java/net/minecraft/server/MinecraftServer.java   | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
+index 24cc29da..b9d2de8b 100644
+--- a/src/main/java/com/domnian/paperdragon/PDEventFactory.java
++++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
+@@ -1,6 +1,7 @@
+ package com.domnian.paperdragon;
+ 
+ import com.domnian.paperdragon.events.PlayerHitPlayerEvent;
++import com.domnian.paperdragon.events.ServerShutdownEvent;
+ import net.minecraft.server.BlockPosition;
+ import net.minecraft.server.Entity;
+ import net.minecraft.server.EntityPlayer;
+@@ -33,4 +34,8 @@ public class PDEventFactory {
+         return event;
+     }
+ 
++    public static void handleShutdown(boolean isRestarting) {
++        new ServerShutdownEvent(isRestarting).callEvent();
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 50397c12..918d23cc 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -575,6 +575,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+     }
+ 
+     public void safeShutdown(boolean isRestarting) {
++        com.domnian.paperdragon.PDEventFactory.handleShutdown(isRestarting); // PaperDragon
+         this.isRunning = false;
+         this.isRestarting = isRestarting;
+     }
+-- 
+2.16.2
+
