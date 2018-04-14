@@ -1,28 +1,26 @@
-From 5f53f68180d67860e4d71dd92fe3bae6eb4ae2c1 Mon Sep 17 00:00:00 2001
+From cea164d59dfb477b0dbd8d1cfd2e9c8086f3d55c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:19:32 -0500
 Subject: [PATCH] ServerReloadEvent
 
 ---
- .../paperdragon/events/ServerReloadEvent.java        | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ .../paperdragon/events/ServerReloadEvent.java      | 29 ++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
 new file mode 100644
-index 00000000..7fb07128
+index 00000000..88084e06
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,29 @@
 +package com.domnian.paperdragon.events;
 +
++import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +
-+public class ServerReloadEvent extends Event {
-+
-+    public ServerReloadEvent() {
-+    }
++public class ServerReloadEvent extends Event implements Cancellable {
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
@@ -33,7 +31,18 @@ index 00000000..7fb07128
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
++    private boolean cancelled = false;
++    @Override
++    public boolean isCancelled() {
++        return cancelled;
++    }
++
++    @Override
++    public void setCancelled(boolean cancel) {
++        this.cancelled = cancel;
++    }
 +}
 -- 
-2.11.0
+2.16.2
 

@@ -1,4 +1,4 @@
-From 35769ee9ec1995bf5e3dc65a0e02bd42f52f681b Mon Sep 17 00:00:00 2001
+From 283e681e91f5b853aa75958a257996a739f3613a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 25 Jun 2015 21:00:09 -0400
 Subject: [PATCH] ServerReloadEvent
@@ -8,14 +8,14 @@ Subject: [PATCH] ServerReloadEvent
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8329ca52..410d9508 100644
+index 8329ca52..bbc9b184 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -696,6 +696,7 @@ public final class CraftServer implements Server {
  
      @Override
      public void reload() {
-+        new com.domnian.paperdragon.events.ServerReloadEvent().callEvent(); // PaperDragon
++        if (!new com.domnian.paperdragon.events.ServerReloadEvent().callEvent()) return; // PaperDragon - Server Reload Event
          reloadCount++;
          configuration = YamlConfiguration.loadConfiguration(getConfigFile());
          commandsConfiguration = YamlConfiguration.loadConfiguration(getCommandsConfigFile());
