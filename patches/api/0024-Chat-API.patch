@@ -1,4 +1,4 @@
-From ca13f80ee07b99a6d4605030b6765dd532d0f936 Mon Sep 17 00:00:00 2001
+From c9a9f95168992e3763189b15705e06d29f412647 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:30:15 -0500
 Subject: [PATCH] Chat API
@@ -85,5 +85,5 @@ index f78acdd6..c348aef5 100644
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.11.0
+2.16.2
 

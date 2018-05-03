@@ -1,4 +1,4 @@
-From b26b0fafd555aad87cda088b16704f13f72f7fc0 Mon Sep 17 00:00:00 2001
+From 83995baf52e2741a143aae631c03f04d5d372e70 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:52:38 -0500
 Subject: [PATCH] Identifier API
@@ -89,5 +89,5 @@ index 359b81f3..96a5b7eb 100644
 +    com.domnian.paperdragon.Identifier getIdentifier(); // PaperDragon
  }
 -- 
-2.15.1
+2.16.2
 

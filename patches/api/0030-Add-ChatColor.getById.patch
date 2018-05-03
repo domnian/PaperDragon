@@ -1,4 +1,4 @@
-From 590ded7e1d3daadab8e6e85368c1093bbc10be2b Mon Sep 17 00:00:00 2001
+From 5a21d48a567b8d233a739de646298ed06fad7d39 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 24 Apr 2017 20:27:23 -0400
 Subject: [PATCH] Add ChatColor.getById
@@ -47,5 +47,5 @@ index adbae51a..a5d53def 100644
       * Gets the color represented by the specified color code
       *
 -- 
-2.14.0
+2.16.2
 

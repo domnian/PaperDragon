@@ -1,4 +1,4 @@
-From 0f33f2b500825748a91a30161f7204566921b9a8 Mon Sep 17 00:00:00 2001
+From 8ee261463a5a9a4f43c401905660d846e9dbf268 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -25,10 +25,10 @@ index d1833f0d..d39af2d9 100644
                  worldserver1.entityJoinedWorld(entity, false);
                  // CraftBukkit start - Forward the CraftEntity to the new entity
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index d2883862..c2dcd16d 100644
+index 1c0c1bd8..8ab58654 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -1016,7 +1016,7 @@ public abstract class PlayerList {
+@@ -1019,7 +1019,7 @@ public abstract class PlayerList {
                          entity.getBukkitEntity().setVelocity(velocity);
                      }
                  }

@@ -1,4 +1,4 @@
-From 23858b3738d075670c84167a22c544e7c36e3b0f Mon Sep 17 00:00:00 2001
+From 471df373e9dd8a116062bee9492dee6368d22015 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -267,12 +267,12 @@ index 00000000..2a180d5a
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 85445571..c5247f7b 100644
+index 39a3d46f..43ad2027 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -204,6 +204,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
-             com.destroystokyo.paper.PaperConfig.init((File) options.valueOf("paper-settings"));
+@@ -205,6 +205,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              com.destroystokyo.paper.PaperConfig.registerCommands();
+             com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
              // Paper end
 +            // PaperDragon start
 +            com.domnian.paperdragon.DragonConfig.init((File) options.valueOf("dragon-settings"));
@@ -303,10 +303,10 @@ index 9f5388ed..beafcb59 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 090a4d2f..da4730a9 100644
+index 80702f6f..63ba6f28 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -735,6 +735,7 @@ public final class CraftServer implements Server {
+@@ -743,6 +743,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
@@ -314,7 +314,7 @@ index 090a4d2f..da4730a9 100644
          for (WorldServer world : console.worlds) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -751,6 +752,7 @@ public final class CraftServer implements Server {
+@@ -759,6 +760,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -322,7 +322,7 @@ index 090a4d2f..da4730a9 100644
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -769,6 +771,8 @@ public final class CraftServer implements Server {
+@@ -777,6 +779,8 @@ public final class CraftServer implements Server {
          reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -331,7 +331,7 @@ index 090a4d2f..da4730a9 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
  
          int pollCount = 0;
-@@ -1843,6 +1847,13 @@ public final class CraftServer implements Server {
+@@ -1871,6 +1875,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  

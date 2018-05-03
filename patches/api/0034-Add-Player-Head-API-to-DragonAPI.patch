@@ -1,4 +1,4 @@
-From aadb91c629b3dd6ceb6dc7ca87c242b20830eee8 Mon Sep 17 00:00:00 2001
+From 79ad1607b471200dd110ddb787bd689f86a9636a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:48:21 -0500
 Subject: [PATCH] Add Player Head API to DragonAPI
@@ -70,5 +70,5 @@ index 191b8d9b..bb95f13e 100644
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.15.0
+2.16.2
 

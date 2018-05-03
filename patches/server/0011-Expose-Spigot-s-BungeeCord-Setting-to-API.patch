@@ -1,4 +1,4 @@
-From 372f93bc80d1ce34df48eeae9854b669975069f8 Mon Sep 17 00:00:00 2001
+From 61201a924bb463d09cd6b64ca1f08aa5a1a6f5ab Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 19:16:19 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -8,10 +8,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
  1 file changed, 8 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0b0bc983..b7a7abfd 100644
+index 064fdb62..d307b84c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1946,6 +1946,14 @@ public final class CraftServer implements Server {
+@@ -1974,6 +1974,14 @@ public final class CraftServer implements Server {
          return com.destroystokyo.paper.PaperConfig.suggestPlayersWhenNullTabCompletions;
      }
  

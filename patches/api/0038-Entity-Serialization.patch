@@ -1,4 +1,4 @@
-From 22d63eb265b1424291865b87682b04bde199a7de Mon Sep 17 00:00:00 2001
+From 1f95e5c0fe2b34acd59a766c5ec0da4e0fa8e93c Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:26:15 -0500
 Subject: [PATCH] Entity Serialization
@@ -31,7 +31,7 @@ index 493aec97..0664cabf 100644
      void setItemCanDespawn(Item item, boolean canDespawn);
  
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 1794b73a..0203ab3f 100644
+index 69c1db4a..2fd158b6 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -21,6 +21,11 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -47,5 +47,5 @@ index 1794b73a..0203ab3f 100644
       * Gets the entity's current position
       *
 -- 
-2.15.1
+2.16.2
 

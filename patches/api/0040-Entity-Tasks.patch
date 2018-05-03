@@ -1,4 +1,4 @@
-From a1f22c6c903fae6fd4414ce8f0c180ed7252a33f Mon Sep 17 00:00:00 2001
+From eba5a80842215673ac037bb673a37326fe92cb64 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:17:18 -0500
 Subject: [PATCH] Entity Tasks
@@ -77,5 +77,5 @@ index 00000000..be17660d
 +    }
 +}
 -- 
-2.15.1
+2.16.2
 

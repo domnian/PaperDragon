@@ -1,4 +1,4 @@
-From 488ffdabf6aaff8a8b4288c887bc1ed2e9d436b0 Mon Sep 17 00:00:00 2001
+From 759832380ac514497cf0524bbcaea8f9bad8fb0a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:08:14 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -8,7 +8,7 @@ Subject: [PATCH] Misc PaperDragon Changes
  1 file changed, 23 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index aae605e9..59730d4b 100644
+index c45faf4c..96542cdd 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -1,9 +1,8 @@
@@ -32,7 +32,7 @@ index aae605e9..59730d4b 100644
  import java.util.concurrent.locks.ReentrantLock;
  import java.util.logging.Level;
  import java.util.logging.Logger;
-@@ -174,13 +171,7 @@ public class VersionCommand extends BukkitCommand {
+@@ -192,13 +189,7 @@ public class VersionCommand extends BukkitCommand {
              sender.sendMessage("Checking version, please wait...");
              if (!versionTaskStarted) {
                  versionTaskStarted = true;
@@ -47,7 +47,7 @@ index aae605e9..59730d4b 100644
              }
          } finally {
              versionLock.unlock();
-@@ -191,7 +182,25 @@ public class VersionCommand extends BukkitCommand {
+@@ -209,7 +200,25 @@ public class VersionCommand extends BukkitCommand {
      private void obtainVersion() {
          String version = Bukkit.getVersion();
          if (version == null) version = "Custom";
@@ -74,7 +74,7 @@ index aae605e9..59730d4b 100644
              String[] parts = version.substring("git-Paper-".length()).split("[-\\s]");
              int distance = getDistance(null, parts[0]);
              switch (distance) {
-@@ -248,7 +257,7 @@ public class VersionCommand extends BukkitCommand {
+@@ -266,7 +275,7 @@ public class VersionCommand extends BukkitCommand {
              return getFromJenkins(currentVer);
          } catch (NumberFormatException ex) {
              verInfo = verInfo.replace("\"", "");
@@ -84,5 +84,5 @@ index aae605e9..59730d4b 100644
              /*
              BufferedReader reader = Resources.asCharSource(
 -- 
-2.11.0
+2.16.2
 

@@ -1,4 +1,4 @@
-From 4ad155afc4f57732a189269f55ce57a9e7979e3a Mon Sep 17 00:00:00 2001
+From 3dce85ec2e5ec79551b6f4d0f82b2f77c92c4d94 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:07:55 -0500
 Subject: [PATCH] MinecraftKey API
@@ -56,7 +56,7 @@ index 00000000..cc296cc7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 690d9c07..579866a5 100644
+index 682d2bbf..1728a3be 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -51,6 +51,16 @@ import javax.annotation.Nonnull; // Paper
@@ -77,10 +77,10 @@ index 690d9c07..579866a5 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index eaf4bc28..f3ebfb2a 100644
+index 2ea20935..e2f93161 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1052,6 +1052,7 @@ public interface Server extends PluginMessageRecipient {
+@@ -1064,6 +1064,7 @@ public interface Server extends PluginMessageRecipient {
      boolean suggestPlayerNamesWhenNullTabCompletions();
  
      /**
@@ -88,7 +88,7 @@ index eaf4bc28..f3ebfb2a 100644
       * Creates a PlayerProfile for the specified uuid, with name as null
       * @param uuid UUID to create profile for
       * @return A PlayerProfile object
-@@ -1075,5 +1076,22 @@ public interface Server extends PluginMessageRecipient {
+@@ -1087,5 +1088,22 @@ public interface Server extends PluginMessageRecipient {
       * @return A PlayerProfile object
       */
      com.destroystokyo.paper.profile.PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name);

@@ -1,4 +1,4 @@
-From 0c9da862142450bc9ac4eabf7d68f3855fe296b8 Mon Sep 17 00:00:00 2001
+From e46908d61ef425316207189941c10685f8a4c8d3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -24,10 +24,10 @@ index 3623751b..902a78b6 100644
              EULA.a.warn("Failed to save {}", this.b, exception);
          } finally {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 579f0ba0..257bb7ec 100644
+index 99cfe1ae..3e14b3fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1148,7 +1148,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -1150,7 +1150,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
      }
  
      public String getServerModName() {
@@ -37,7 +37,7 @@ index 579f0ba0..257bb7ec 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index da4730a9..65b36334 100644
+index 63ba6f28..f7943b8c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -140,7 +140,7 @@ import javax.annotation.Nonnull; // Paper

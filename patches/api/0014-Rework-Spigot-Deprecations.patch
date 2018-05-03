@@ -1,4 +1,4 @@
-From 11044c260d073277bfdace67af94495390e07918 Mon Sep 17 00:00:00 2001
+From 2cd1f450c85c2a4a35f68c8273e6795c786c952f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Apr 2016 02:14:00 -0400
 Subject: [PATCH] Rework Spigot Deprecations
@@ -63,5 +63,5 @@ index 3275e172..c610262f 100644
  
      /**
 -- 
-2.11.0
+2.16.2
 

@@ -1,4 +1,4 @@
-From 350e0324086ddb6bb854b0989b76c5f42cab7232 Mon Sep 17 00:00:00 2001
+From 44afbbc4325dc5da54b396f5fe0c14c05739a695 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 4 Apr 2014 23:50:33 -0400
 Subject: [PATCH] World.getNearbyEntities Improvements
@@ -9,10 +9,10 @@ Improves the getNearbyEntities API
  1 file changed, 3 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 0bc47dd6..686d2048 100644
+index 6fa17d98..d83ac0d6 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -533,6 +533,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -536,6 +536,9 @@ public interface World extends PluginMessageRecipient, Metadatable {
       *     match one or more of the given classes/interfaces
       */
      public Collection<Entity> getEntitiesByClasses(Class<?>... classes);
@@ -20,8 +20,8 @@ index 0bc47dd6..686d2048 100644
 +    public Collection<Player> getNearbyPlayers(Location loc, double x, double y, double z); // PaperDragon - Import Patch from EMC
 +    public <T> Collection<T> getNearbyEntitiesByType(Class<? extends T> clazz, Location loc, double x, double y, double z); // PaperDragon - Import Patch from EMC
  
+     // Paper start
      /**
-      * Get a list of all players in this World
 -- 
-2.15.0
+2.16.2
 

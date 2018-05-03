@@ -1,4 +1,4 @@
-From 7a650bda6f82350cb23ab57c2ef66ae6b90ab4b6 Mon Sep 17 00:00:00 2001
+From b03df8ec57b9aae45120d25cb92123e730b7f042 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:21:28 -0500
 Subject: [PATCH] Dragon API
@@ -122,10 +122,10 @@ index 00000000..21bd42ff
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 65b36334..193a612d 100644
+index f7943b8c..f64db4c5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -184,6 +184,7 @@ public final class CraftServer implements Server {
+@@ -185,6 +185,7 @@ public final class CraftServer implements Server {
      }
  
      static {

@@ -1,4 +1,4 @@
-From 8f38688c0f7ad441f5a9b03c2b5f03558137af17 Mon Sep 17 00:00:00 2001
+From d2ff0e09eb28ad26e6026ebde5164aeae360c414 Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:21:33 -0500
 Subject: [PATCH] PlayerDeathEvent.getItemsToKeep
@@ -22,5 +22,5 @@ index aad03549..f88dc3a0 100644
      public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final String deathMessage) {
          this(player, drops, droppedExp, 0, deathMessage);
 -- 
-2.14.2.windows.3
+2.16.2
 

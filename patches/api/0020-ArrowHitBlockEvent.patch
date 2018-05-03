@@ -1,4 +1,4 @@
-From c0a972d112a703090313d215ae9a266b83d1461a Mon Sep 17 00:00:00 2001
+From b95fe63f511b17f164417c1df04d89aa39880d73 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:03:19 -0500
 Subject: [PATCH] ArrowHitBlockEvent
@@ -61,5 +61,5 @@ index 00000000..9459450d
 +
 +}
 -- 
-2.11.0
+2.16.2
 

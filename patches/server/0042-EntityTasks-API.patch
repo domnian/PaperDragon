@@ -1,4 +1,4 @@
-From 32b9ccd5b803e733e3e519f3d713a39dd63dcb25 Mon Sep 17 00:00:00 2001
+From 7b549f7f107cf0a23f9d3c6715e9d01df5152be8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:30:36 -0500
 Subject: [PATCH] EntityTasks API
@@ -137,10 +137,10 @@ index 86409781..53e489cb 100644
          // Spigot start
          // Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 410d9508..4ca16b63 100644
+index 664cd589..18479faa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -802,6 +802,7 @@ public final class CraftServer implements Server {
+@@ -810,6 +810,7 @@ public final class CraftServer implements Server {
              ));
          }
          net.minecraft.server.MetaApiAccessor.reload(); // PaperDragon - Persistent and Temporary Meta API

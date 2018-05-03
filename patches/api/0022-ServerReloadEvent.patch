@@ -1,4 +1,4 @@
-From cea164d59dfb477b0dbd8d1cfd2e9c8086f3d55c Mon Sep 17 00:00:00 2001
+From 81a753e50be0c1f045aa8cdafa637b76a19d4181 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:19:32 -0500
 Subject: [PATCH] ServerReloadEvent

@@ -1,4 +1,4 @@
-From f841d473388af116f7237d2ab8ee7dbf75019b74 Mon Sep 17 00:00:00 2001
+From 8ed8583d2f62456bd6bc18ea86e5f4542035999f Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
@@ -66,7 +66,7 @@ index 00000000..b185b5ef
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 3f2c5b2d..1cd5e6dc 100644
+index 67bd3bcb..94d022cd 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
 @@ -1,5 +1,7 @@
@@ -108,7 +108,7 @@ index 3f2c5b2d..1cd5e6dc 100644
  
      public boolean isFilteredNBT() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 3e596e18..a7de637e 100644
+index 42eaaf9c..cd9f6b63 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.entity;
@@ -119,7 +119,7 @@ index 3e596e18..a7de637e 100644
  import com.google.common.base.Preconditions;
  import com.google.common.collect.ImmutableSet;
  import com.google.common.io.BaseEncoding;
-@@ -544,7 +545,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -545,7 +546,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          sign.setPosition(new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
          System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
  

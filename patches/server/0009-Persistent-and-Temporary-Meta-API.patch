@@ -1,4 +1,4 @@
-From c9c217edefd1548fa363bb432d806770c51e2288 Mon Sep 17 00:00:00 2001
+From d51078c026701220e343b35df93bc11bb9a51814 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -755,10 +755,10 @@ index 7f0baf17..e57321b8 100644
  
      public long getSeed() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0fff64af..0b0bc983 100644
+index 5e5a3826..064fdb62 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -800,6 +800,7 @@ public final class CraftServer implements Server {
+@@ -808,6 +808,7 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }

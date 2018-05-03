@@ -1,4 +1,4 @@
-From 111fd85bdef6352f567e35e6eb944ccec58a56cb Mon Sep 17 00:00:00 2001
+From 8437889ca4b718da6692dc892cec32491f5c72e8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 11:22:21 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -8,10 +8,10 @@ Subject: [PATCH] PaperDragon Config Files
  1 file changed, 6 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index f2ee6516..eaf4bc28 100644
+index 2912bdae..2ea20935 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1003,6 +1003,12 @@ public interface Server extends PluginMessageRecipient {
+@@ -1015,6 +1015,12 @@ public interface Server extends PluginMessageRecipient {
              throw new UnsupportedOperationException("Not supported yet.");
          }
  

@@ -1,4 +1,4 @@
-From d473bf3d147aa1120efbc60928a461c044bec741 Mon Sep 17 00:00:00 2001
+From f3645851dbdb5a665fa5c6e885c757e2a3ffa39c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,10 +10,10 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 50 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index f54280e9..4e768339 100644
+index 52824b34..622e72da 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1527,7 +1527,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1529,7 +1529,7 @@ public abstract class EntityLiving extends Entity {
          }
      }
  
