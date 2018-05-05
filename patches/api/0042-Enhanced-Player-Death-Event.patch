@@ -1,0 +1,60 @@
+From 3135a8f29684d41d4497fdf696a77a5faffce4cc Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 3 May 2018 21:32:29 -0400
+Subject: [PATCH] Enhanced Player Death Event
+
+---
+ .../events/EnhancedPlayerDeathEvent.java           | 41 ++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java b/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
+new file mode 100644
+index 00000000..098ba1c8
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
+@@ -0,0 +1,41 @@
++/*
++ * Copyright (c) 2018. Domnian Development
++ *
++ * This source code is proprietary software and must not be
++ * redistributed without Domnian Development's approval
++ */
++package com.domnian.paperdragon.events;
++
++import org.bukkit.event.HandlerList;
++import org.bukkit.event.entity.PlayerDeathEvent;
++import org.bukkit.event.player.PlayerEvent;
++
++public class EnhancedPlayerDeathEvent extends PlayerEvent {
++
++    private static HandlerList handlerList = new HandlerList();
++    private PlayerDeathEvent cause;
++    private String sourceKey;
++
++    public static HandlerList getHandlerList() {
++        return handlerList;
++    }
++
++    public HandlerList getHandlers() {
++        return handlerList;
++    }
++
++    public EnhancedPlayerDeathEvent(PlayerDeathEvent parent, String key) {
++        super(parent.getEntity());
++        this.cause = parent;
++        this.sourceKey = key != null ? key : "death.attack.generic";
++    }
++
++    public String getSourceKey() {
++        return sourceKey;
++    }
++
++    public PlayerDeathEvent getCause() {
++        return cause;
++    }
++
++}
+-- 
+2.16.2
+
