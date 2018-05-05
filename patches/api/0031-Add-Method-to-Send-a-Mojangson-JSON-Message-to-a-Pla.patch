@@ -1,0 +1,25 @@
+From 8b3641c12bf031973d46894962faa9aaee9f2a25 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 22 Sep 2017 00:45:19 -0400
+Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
+
+---
+ src/main/java/org/bukkit/entity/Player.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index a1db2982..1970a734 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1990,6 +1990,8 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+     public void setUserObject(org.bukkit.plugin.Plugin owner, Object object);
+ 
+     public <T> T getUserObject(org.bukkit.plugin.Plugin owner);
++
++    public void sendJsonMessage(String json);
+     // PaperDragon end
+ 
+ }
+-- 
+2.16.2
+

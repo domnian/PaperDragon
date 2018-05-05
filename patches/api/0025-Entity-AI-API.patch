@@ -1,0 +1,68 @@
+From 4813f0f543b2b8c76eab7b6fb7730443d8a198d9 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 6 Dec 2016 22:31:40 -0500
+Subject: [PATCH] Entity AI API
+
+---
+ .../com/domnian/paperdragon/api/DAPI_Entity.java   | 48 +++++++++++++++++++++-
+ 1 file changed, 47 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+index 72d04546..493aec97 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+@@ -1,4 +1,50 @@
+ package com.domnian.paperdragon.api;
+ 
+-public class DAPI_Entity {
++import org.bukkit.Location;
++import org.bukkit.entity.*;
++
++public interface DAPI_Entity {
++
++    boolean isEntityDisabled(org.bukkit.entity.Entity entity);
++    void setItemCanDespawn(Item item, boolean canDespawn);
++
++    /**
++     * Disables Ticking on an Entity
++     * @param entity
++     * @param disabled
++     */
++    void setDisabledEntity(org.bukkit.entity.Entity entity, boolean disabled);
++    int getLove(Animals animal);
++    void setLove(Animals animal, int love);
++
++    void setFireProof(Creature creature, boolean flag);
++    void setFirePanicProof(Creature creature, boolean flag);
++    void makeAggressive(Creature creature, float range);
++
++    void makePeaceful(Creature creature);
++
++    void removeGoalByName(Creature creature, String goalName);
++
++
++    void setEntitySize(org.bukkit.entity.Entity entity, float width, float height);
++
++    void setTargetRange(LivingEntity entity, float range);
++
++    void setArrowAttackRange(Monster monster, float range);
++    void setArrowAttackSpeed(Monster monster, Integer min, Integer max);
++
++    void setEntityMaxPathfindingRange(Creature creature, float range);
++
++    int getDisabledSlots(ArmorStand armorStand);
++    void setDisabledSlots(ArmorStand armorStand, int i);
++
++    void respawnEntity(org.bukkit.entity.Entity entity);
++
++    void setEnderSignalDestination(EnderSignal enderSignal, Location target);
++
++    boolean hasEntityPath(Creature entity);
++
++    Location getEntityPathDestination(Creature entity);
++    boolean setEntityDestination(Creature entity, Location loc);
++    boolean setEntityDestination(Creature entity, LivingEntity target);
+ }
+-- 
+2.16.2
+

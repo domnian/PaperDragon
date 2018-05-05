@@ -1,0 +1,65 @@
+From 5f0155e1ebc7065ddf814c032afd6345f48b58ff Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 9 Nov 2017 13:37:27 -0500
+Subject: [PATCH] Allow Setting Player Name in AsyncPlayerPreLoginEvent
+
+---
+ .../event/player/AsyncPlayerPreLoginEvent.java     | 28 +++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java b/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java
+index 0c16128e..2d2ed9d9 100644
+--- a/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java
++++ b/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java
+@@ -17,7 +17,10 @@ public class AsyncPlayerPreLoginEvent extends Event {
+     private static final HandlerList handlers = new HandlerList();
+     private Result result;
+     private String message;
+-    private final String name;
++    // PaperDragon start - Allow Setting Player Name in AsyncPlayerPreLoginEvent
++    private String name;
++    private final String originalName;
++    // PaperDragon end
+     private final InetAddress ipAddress;
+     private final UUID uniqueId;
+ 
+@@ -55,6 +58,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
+         this.result = Result.ALLOWED;
+         this.message = "";
+         this.name = name;
++        this.originalName = name; // PaperDragon
+         this.ipAddress = ipAddress;
+         this.uniqueId = uniqueId;
+     }
+@@ -165,6 +169,28 @@ public class AsyncPlayerPreLoginEvent extends Event {
+         return name;
+     }
+ 
++    // PaperDragon start - Allow Setting Player Name in AsyncPlayerPreLoginEvent
++    /**
++     * Sets the player's name.
++     *
++     * @param name the player's new name
++     */
++    public void setName(String name) {
++        PlayerProfile old = this.profile;
++        this.profile = Bukkit.createProfile(this.profile.getId(), this.profile.getName());
++        this.profile.getProperties().addAll(old.getProperties());
++    }
++
++    /**
++     * Get the player's original name
++     *
++     * @return the player's original name
++     */
++    public String getOriginalName() {
++        return originalName;
++    }
++    // PaperDragon end
++
+     /**
+      * Gets the player IP address.
+      *
+-- 
+2.16.2
+

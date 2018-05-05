@@ -1,0 +1,67 @@
+From d64645e4ad4be96017b817af4ac4a033aa40de95 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 3 Dec 2016 22:08:01 -0500
+Subject: [PATCH] Spawn Egg API's
+
+---
+ .../java/com/domnian/paperdragon/api/DAPI_Misc.java     | 17 +++++++++++++++++
+ .../paperdragon/events/MonsterEggPrepareSpawnEvent.java |  4 ++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+index d80840bf..e3f588dd 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+@@ -1,5 +1,7 @@
+ package com.domnian.paperdragon.api;
+ 
++import org.bukkit.NamespacedKey;
++import org.bukkit.entity.EntityType;
+ import org.bukkit.inventory.ItemStack;
+ 
+ import javax.annotation.Nonnull;
+@@ -8,6 +10,21 @@ import java.util.List;
+ 
+ public interface DAPI_Misc {
+ 
++    /**
++     * Gets Registered Entity Type for this spawn egg.
++     * @param bukkitItem
++     * @return
++     */
++    EntityType getTypeForSpawnEgg(@Nonnull ItemStack bukkitItem);
++
++    /**
++     * Changes the type of a Spawn Egg and returns new itemstack. ALWAYS USE THE RETURNED STACK
++     * @param bukkitItem
++     * @param key
++     * @return
++     */
++    ItemStack spawnEggAsType(@Nonnull ItemStack bukkitItem, @Nonnull NamespacedKey key);
++
+     /**
+      * Returns if this is a shulker box with items in it.
+      * @param shulker
+diff --git a/src/main/java/com/domnian/paperdragon/events/MonsterEggPrepareSpawnEvent.java b/src/main/java/com/domnian/paperdragon/events/MonsterEggPrepareSpawnEvent.java
+index 1861342c..284de755 100644
+--- a/src/main/java/com/domnian/paperdragon/events/MonsterEggPrepareSpawnEvent.java
++++ b/src/main/java/com/domnian/paperdragon/events/MonsterEggPrepareSpawnEvent.java
+@@ -25,7 +25,7 @@ public class MonsterEggPrepareSpawnEvent extends Event implements Cancellable {
+     }
+ 
+     @Nonnull public SpawnReason getSpawnReason() {
+-	     return spawnReason;
++         return spawnReason;
+     }
+ 
+     @Nullable public HumanEntity getPlayer() {
+@@ -66,4 +66,4 @@ public class MonsterEggPrepareSpawnEvent extends Event implements Cancellable {
+     public void setCancelled(boolean cancel) {
+         cancelled = cancel;
+     }
+-}
+\ No newline at end of file
++}
+-- 
+2.16.2
+
