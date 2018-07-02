@@ -1,11 +1,11 @@
-From ef13b60d6c40cfc6a780173418a9fe16d27c259f Mon Sep 17 00:00:00 2001
+From fceb6e8f557640df76b16d944d51e6914ab4b8db Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Jun 2017 00:28:41 -0400
 Subject: [PATCH] Add PaperDragon Command
 
 ---
- .../java/com/domnian/paperdragon/DragonConfig.java |  2 ++
- .../domnian/paperdragon/PaperDragonCommand.java    | 42 ++++++++++++++++++++++
+ .../com/domnian/paperdragon/DragonConfig.java |  2 +
+ .../paperdragon/PaperDragonCommand.java       | 42 +++++++++++++++++++
  2 files changed, 44 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 
@@ -77,5 +77,5 @@ index 000000000..a88d44d50
 +    }
 +}
 -- 
-2.11.0
+2.17.0
 

@@ -1,4 +1,4 @@
-From b3ddf4efd0fb1c73732382c646b6fe718cb694f9 Mon Sep 17 00:00:00 2001
+From a704ce54d6f6918f56330a383864d7848555246b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 9 Jun 2016 00:57:38 -0400
 Subject: [PATCH] Don't use force unload for keep spawn setting change
@@ -8,10 +8,10 @@ Subject: [PATCH] Don't use force unload for keep spawn setting change
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f57cac5f5..91fb23fe0 100644
+index e2da30d88..1985a5c19 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1333,7 +1333,7 @@ public class CraftWorld implements World {
+@@ -1324,7 +1324,7 @@ public class CraftWorld implements World {
                      loadChunk(chunkCoordX + x, chunkCoordZ + z);
                  } else {
                      if (isChunkLoaded(chunkCoordX + x, chunkCoordZ + z)) {
@@ -21,5 +21,5 @@ index f57cac5f5..91fb23fe0 100644
                  }
              }
 -- 
-2.15.0
+2.17.0
 

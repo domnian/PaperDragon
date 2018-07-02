@@ -1,4 +1,4 @@
-From 2ddc6277e2f15768dca38e7d622e5a932c954eb2 Mon Sep 17 00:00:00 2001
+From 2220c6ad9886e98f8a82413283e3254f133ec28c Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:52:38 -0500
 Subject: [PATCH] Identifier API
@@ -15,10 +15,10 @@ Objects represended by an Identifier, should be able to use them as their equal/
 
 Manually Applied Patch from Empire Minecraft - Originally by Aikar
 ---
- .../java/com/domnian/paperdragon/Identifier.java   |  3 +++
- .../com/domnian/paperdragon/UniqueIdentifier.java  | 27 ++++++++++++++++++++++
- src/main/java/org/bukkit/Chunk.java                |  2 ++
- src/main/java/org/bukkit/block/Block.java          |  1 +
+ .../com/domnian/paperdragon/Identifier.java   |  3 +++
+ .../domnian/paperdragon/UniqueIdentifier.java | 27 +++++++++++++++++++
+ src/main/java/org/bukkit/Chunk.java           |  2 ++
+ src/main/java/org/bukkit/block/Block.java     |  1 +
  4 files changed, 33 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/Identifier.java
  create mode 100644 src/main/java/com/domnian/paperdragon/UniqueIdentifier.java
@@ -89,5 +89,5 @@ index 359b81f3..96a5b7eb 100644
 +    com.domnian.paperdragon.Identifier getIdentifier(); // PaperDragon
  }
 -- 
-2.16.2
+2.17.0
 

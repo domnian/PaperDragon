@@ -1,60 +1,49 @@
-From 3135a8f29684d41d4497fdf696a77a5faffce4cc Mon Sep 17 00:00:00 2001
+From 4386bdc1aaa64e2617de298da433c2d3829cff84 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:32:29 -0400
 Subject: [PATCH] Enhanced Player Death Event
 
 ---
- .../events/EnhancedPlayerDeathEvent.java           | 41 ++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
+ .../bukkit/event/entity/PlayerDeathEvent.java | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java b/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
-new file mode 100644
-index 00000000..098ba1c8
---- /dev/null
-+++ b/src/main/java/com/domnian/paperdragon/events/EnhancedPlayerDeathEvent.java
-@@ -0,0 +1,41 @@
-+/*
-+ * Copyright (c) 2018. Domnian Development
-+ *
-+ * This source code is proprietary software and must not be
-+ * redistributed without Domnian Development's approval
-+ */
-+package com.domnian.paperdragon.events;
+diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
+index f88dc3a0..0054a7ab 100644
+--- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
++++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
+@@ -17,6 +17,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+     private boolean keepInventory = false;
+     private List<ItemStack> itemsToKeep = new java.util.ArrayList(); // PaperDragon
+     public List<ItemStack> getItemsToKeep() {return itemsToKeep;} // PaperDragon
++    private String sourceKey = "death.attack.generic"; // PaperDragon - Enhanced Player Death Event
+ 
+     public PlayerDeathEvent(final Player player, final List<ItemStack> drops, final int droppedExp, final String deathMessage) {
+         this(player, drops, droppedExp, 0, deathMessage);
+@@ -160,4 +161,24 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+     public boolean getKeepInventory() {
+         return keepInventory;
+     }
 +
-+import org.bukkit.event.HandlerList;
-+import org.bukkit.event.entity.PlayerDeathEvent;
-+import org.bukkit.event.player.PlayerEvent;
-+
-+public class EnhancedPlayerDeathEvent extends PlayerEvent {
-+
-+    private static HandlerList handlerList = new HandlerList();
-+    private PlayerDeathEvent cause;
-+    private String sourceKey;
-+
-+    public static HandlerList getHandlerList() {
-+        return handlerList;
++    // PaperDragon start - Enhanced Player Death Event
++    /**
++     * Sets the translation key for this type of death.
++     *
++     * @param key the translation key for this type of death.
++     */
++    public void setSourceKey(String key) {
++        this.sourceKey = key;
 +    }
 +
-+    public HandlerList getHandlers() {
-+        return handlerList;
-+    }
-+
-+    public EnhancedPlayerDeathEvent(PlayerDeathEvent parent, String key) {
-+        super(parent.getEntity());
-+        this.cause = parent;
-+        this.sourceKey = key != null ? key : "death.attack.generic";
-+    }
-+
++    /**
++     * Gets the translation key for this type of death.
++     *
++     * @return the translation key for this type of death.
++     */
 +    public String getSourceKey() {
 +        return sourceKey;
 +    }
-+
-+    public PlayerDeathEvent getCause() {
-+        return cause;
-+    }
-+
-+}
++    // PaperDragon end
+ }
 -- 
-2.16.2
+2.17.0
 

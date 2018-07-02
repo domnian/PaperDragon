@@ -1,4 +1,4 @@
-From 9df8b30bfcca185d1f3c1f52b4c3441b4c1413ec Mon Sep 17 00:00:00 2001
+From 78e45777d84f88fdf7dda6543b930bf53ece2f8f Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sat, 14 Apr 2018 03:26:45 -0400
 Subject: [PATCH] Server Shutdown Event
@@ -9,7 +9,7 @@ Subject: [PATCH] Server Shutdown Event
  2 files changed, 6 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
-index 24cc29da..b9d2de8b 100644
+index 24cc29dac..b9d2de8b9 100644
 --- a/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 @@ -1,6 +1,7 @@
@@ -30,7 +30,7 @@ index 24cc29da..b9d2de8b 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 50397c12..918d23cc 100644
+index 887545bcb..c1158adb8 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -575,6 +575,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -42,5 +42,5 @@ index 50397c12..918d23cc 100644
          this.isRestarting = isRestarting;
      }
 -- 
-2.16.2
+2.17.0
 

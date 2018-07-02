@@ -1,4 +1,4 @@
-From 6a33102e22cbf9a72d5ab456225331115f3c33d0 Mon Sep 17 00:00:00 2001
+From 187f19910f7fe157efba859632ccb61b9bd445bb Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:36:29 -0500
 Subject: [PATCH] Keep certain items on death API
@@ -7,12 +7,12 @@ This adds a getItemsToKeep to PlayerDeathEvent that can be modified for what ite
 
 This can be used for never-to-be-dropped items.
 ---
- .../java/net/minecraft/server/EntityPlayer.java    | 46 +++++++++++++++++++++-
- .../java/net/minecraft/server/PlayerInventory.java |  2 +-
+ .../net/minecraft/server/EntityPlayer.java    | 46 ++++++++++++++++++-
+ .../net/minecraft/server/PlayerInventory.java |  2 +-
  2 files changed, 46 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index cce3f98d..e261a777 100644
+index cce3f98da..e261a777b 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -433,6 +433,45 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -77,7 +77,7 @@ index cce3f98d..e261a777 100644
          this.closeInventory();
          this.setSpectatorTarget(this); // Remove spectated target
 diff --git a/src/main/java/net/minecraft/server/PlayerInventory.java b/src/main/java/net/minecraft/server/PlayerInventory.java
-index 84f59b75..2c96fcaf 100644
+index 84f59b750..2c96fcaf0 100644
 --- a/src/main/java/net/minecraft/server/PlayerInventory.java
 +++ b/src/main/java/net/minecraft/server/PlayerInventory.java
 @@ -19,7 +19,7 @@ public class PlayerInventory implements IInventory {
@@ -90,5 +90,5 @@ index 84f59b75..2c96fcaf 100644
      public EntityHuman player;
      private ItemStack carried;
 -- 
-2.16.2
+2.17.0
 

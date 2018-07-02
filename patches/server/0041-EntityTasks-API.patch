@@ -1,4 +1,4 @@
-From 7b549f7f107cf0a23f9d3c6715e9d01df5152be8 Mon Sep 17 00:00:00 2001
+From cdb521abb3501dd4572737403d2dcc930f236d3a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:30:36 -0500
 Subject: [PATCH] EntityTasks API
@@ -8,16 +8,16 @@ Avoids Bukkit system so that tasks will simply maintain themselves on entity rem
 
 Manually Applied Patch from Empire Minecraft - Originally by Aikar
 ---
- .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 22 +++++++++
- src/main/java/net/minecraft/server/Entity.java     |  1 +
- .../net/minecraft/server/EntityTasksHandler.java   | 52 ++++++++++++++++++++++
- src/main/java/net/minecraft/server/World.java      |  1 +
- .../java/org/bukkit/craftbukkit/CraftServer.java   |  1 +
+ .../paperdragon/api/CraftDAPI_Entity.java     | 22 ++++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../minecraft/server/EntityTasksHandler.java  | 52 +++++++++++++++++++
+ src/main/java/net/minecraft/server/World.java |  1 +
+ .../org/bukkit/craftbukkit/CraftServer.java   |  1 +
  5 files changed, 77 insertions(+)
  create mode 100644 src/main/java/net/minecraft/server/EntityTasksHandler.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index c5074160..be31b121 100644
+index c5074160a..be31b1218 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -33,11 +33,33 @@ import org.bukkit.entity.Entity;
@@ -55,7 +55,7 @@ index c5074160..be31b121 100644
          if (craftentity == null) {
              throw new NullPointerException("Entity can not be null for serialization");
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 52d06883..2cdaaa88 100644
+index 12b012515..d036408d2 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -46,6 +46,7 @@ public abstract class Entity implements ICommandListener {
@@ -68,7 +68,7 @@ index 52d06883..2cdaaa88 100644
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
-index 00000000..8d01b34b
+index 000000000..8d01b34b0
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 @@ -0,0 +1,52 @@
@@ -125,10 +125,10 @@ index 00000000..8d01b34b
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 86409781..53e489cb 100644
+index 1dc4be851..307f54d6f 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1750,6 +1750,7 @@ public abstract class World implements IBlockAccess {
+@@ -1756,6 +1756,7 @@ public abstract class World implements IBlockAccess {
          int j;
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
@@ -137,7 +137,7 @@ index 86409781..53e489cb 100644
          // Spigot start
          // Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 664cd589..18479faa 100644
+index 664cd5899..18479faa7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -810,6 +810,7 @@ public final class CraftServer implements Server {
@@ -149,5 +149,5 @@ index 664cd589..18479faa 100644
          enablePlugins(PluginLoadOrder.STARTUP);
          enablePlugins(PluginLoadOrder.POSTWORLD);
 -- 
-2.16.2
+2.17.0
 

@@ -1,11 +1,11 @@
-From 0d8e6973f7667deb4509ae3ab9cd59b0bf351c6c Mon Sep 17 00:00:00 2001
+From 868509aa88ce2f2c61fc2b20cc02132cfaf4d088 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:35:55 -0500
 Subject: [PATCH] ShulkerBox API
 
 ---
- .../com/domnian/paperdragon/api/DAPI_Misc.java     | 24 +++++++++++++++++++++-
- src/main/java/org/bukkit/Material.java             | 23 +++++++++++++++++++++
+ .../domnian/paperdragon/api/DAPI_Misc.java    | 24 ++++++++++++++++++-
+ src/main/java/org/bukkit/Material.java        | 23 ++++++++++++++++++
  2 files changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
@@ -75,5 +75,5 @@ index fcc76e19..2f20e739 100644
       * Attempts to get the Material with the given ID
       *
 -- 
-2.16.2
+2.17.0
 

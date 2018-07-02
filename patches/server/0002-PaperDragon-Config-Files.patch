@@ -1,22 +1,22 @@
-From 471df373e9dd8a116062bee9492dee6368d22015 Mon Sep 17 00:00:00 2001
+From 1e0e97c9151e2ec27b25f081ec4bcb9cac9fa157 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
 
 ---
- .../java/com/domnian/paperdragon/DragonConfig.java | 161 +++++++++++++++++++++
- .../com/domnian/paperdragon/DragonWorldConfig.java |  79 ++++++++++
- .../java/net/minecraft/server/DedicatedServer.java |   4 +
- src/main/java/net/minecraft/server/World.java      |   3 +
- .../java/org/bukkit/craftbukkit/CraftServer.java   |  11 ++
- src/main/java/org/bukkit/craftbukkit/Main.java     |   8 +
+ .../com/domnian/paperdragon/DragonConfig.java | 161 ++++++++++++++++++
+ .../paperdragon/DragonWorldConfig.java        |  79 +++++++++
+ .../net/minecraft/server/DedicatedServer.java |   4 +
+ src/main/java/net/minecraft/server/World.java |   3 +
+ .../org/bukkit/craftbukkit/CraftServer.java   |  11 ++
+ .../java/org/bukkit/craftbukkit/Main.java     |   8 +
  6 files changed, 266 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonConfig.java
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 new file mode 100644
-index 00000000..6ef5dd62
+index 000000000..6ef5dd625
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -0,0 +1,161 @@
@@ -183,7 +183,7 @@ index 00000000..6ef5dd62
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 new file mode 100644
-index 00000000..2a180d5a
+index 000000000..2a180d5a4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -0,0 +1,79 @@
@@ -267,7 +267,7 @@ index 00000000..2a180d5a
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 39a3d46f..43ad2027 100644
+index 39a3d46ff..43ad20270 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -205,6 +205,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -282,7 +282,7 @@ index 39a3d46f..43ad2027 100644
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9f5388ed..beafcb59 100644
+index c0816b9f8..e877a7072 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -143,6 +143,8 @@ public abstract class World implements IBlockAccess {
@@ -303,7 +303,7 @@ index 9f5388ed..beafcb59 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 80702f6f..63ba6f28 100644
+index 80702f6f6..63ba6f281 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -743,6 +743,7 @@ public final class CraftServer implements Server {
@@ -346,7 +346,7 @@ index 80702f6f..63ba6f28 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 21628e19..fe6961a2 100644
+index ae2c51f5d..a68586a3f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -142,6 +142,14 @@ public class Main {
@@ -365,5 +365,5 @@ index 21628e19..fe6961a2 100644
          };
  
 -- 
-2.16.2
+2.17.0
 

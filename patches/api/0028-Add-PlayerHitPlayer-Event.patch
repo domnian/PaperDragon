@@ -1,11 +1,11 @@
-From d6a6454d02d6ea37c8a6b5430998c1baea35fa72 Mon Sep 17 00:00:00 2001
+From e601825e4df97a56ee3fd4f56715de38fded9406 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:16:15 -0400
 Subject: [PATCH] Add PlayerHitPlayer Event
 
 Fired when a player hits another player, regardless of gamemode
 ---
- .../paperdragon/events/PlayerHitPlayerEvent.java   | 37 ++++++++++++++++++++++
+ .../events/PlayerHitPlayerEvent.java          | 37 +++++++++++++++++++
  1 file changed, 37 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/PlayerHitPlayerEvent.java
 
@@ -54,5 +54,5 @@ index 00000000..8bbfb1b5
 +}
 \ No newline at end of file
 -- 
-2.16.2
+2.17.0
 

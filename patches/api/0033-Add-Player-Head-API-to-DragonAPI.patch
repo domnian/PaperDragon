@@ -1,12 +1,12 @@
-From b0f664cf75985afa90a8368a9daaddf2718d0329 Mon Sep 17 00:00:00 2001
+From f0e04f9c17c9d71211d65ff27e7c9952ee09661d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:48:21 -0500
 Subject: [PATCH] Add Player Head API to DragonAPI
 
 Used to create Player heads w/o the Annoying Boilerplate
 ---
- .../com/domnian/paperdragon/api/DAPI_Heads.java    | 41 ++++++++++++++++++++++
- .../com/domnian/paperdragon/api/DragonAPI.java     |  1 +
+ .../domnian/paperdragon/api/DAPI_Heads.java   | 41 +++++++++++++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    |  1 +
  2 files changed, 42 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/DAPI_Heads.java
 
@@ -70,5 +70,5 @@ index 191b8d9b..bb95f13e 100644
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.16.2
+2.17.0
 

@@ -1,4 +1,4 @@
-From 0c20f4576d6ab140f45ffd4ac207d48c8dc283f0 Mon Sep 17 00:00:00 2001
+From 34d15c1185a9b08b7e76f67403cd6a149f1e8892 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
@@ -8,7 +8,7 @@ Subject: [PATCH] POM Changes
  1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index a775f4ed..e0066a80 100644
+index ae5cfd10..9fe0fad9 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -41,20 +41,20 @@ index a775f4ed..e0066a80 100644
      <distributionManagement>
          <repository>
 -            <id>destroystokyo-releases</id>
--            <url>https://repo.destroystokyo.com/repository/maven-releases/</url>
+-            <url>https://destroystokyo.com/repo/repository/maven-releases/</url>
 +            <id>domnian-rel</id>
 +            <name>Domnian Releases</name>
-+            <url>https://repo.domnian.com/content/repositories/releases/</url>
++            <url>https://domnian.com/repo/content/repositories/releases/</url>
          </repository>
          <snapshotRepository>
 -            <id>destroystokyo-snapshots</id>
--            <url>https://repo.destroystokyo.com/repository/maven-snapshots/</url>
+-            <url>https://destroystokyo.com/repo/repository/maven-snapshots/</url>
 +            <id>domnian-snap</id>
 +            <name>Domnian Snapshots</name>
-+            <url>https://repo.domnian.com/content/repositories/snapshots/</url>
++            <url>https://domnian.com/repo/content/repositories/snapshots/</url>
          </snapshotRepository>
      </distributionManagement>
  
 -- 
-2.14.1
+2.17.0
 

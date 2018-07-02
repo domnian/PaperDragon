@@ -1,11 +1,11 @@
-From f866c5acf0736aee364fc7c19cd98d93298c3357 Mon Sep 17 00:00:00 2001
+From ccf0191622b68c81254e1f718062cb9dffaa2ed3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:02:11 -0500
 Subject: [PATCH] MonsterEggSpawn Events
 
 ---
- .../events/MonsterEggPrepareSpawnEvent.java        | 69 ++++++++++++++++++++++
- .../paperdragon/events/MonsterEggSpawnEvent.java   | 62 +++++++++++++++++++
+ .../events/MonsterEggPrepareSpawnEvent.java   | 69 +++++++++++++++++++
+ .../events/MonsterEggSpawnEvent.java          | 62 +++++++++++++++++
  2 files changed, 131 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/MonsterEggPrepareSpawnEvent.java
  create mode 100644 src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
@@ -156,5 +156,5 @@ index 00000000..dd5e0c79
 +}
 \ No newline at end of file
 -- 
-2.16.2
+2.17.0
 

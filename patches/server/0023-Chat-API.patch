@@ -1,4 +1,4 @@
-From 5acb82c78e8a224dad02b5ffca37652a551f500e Mon Sep 17 00:00:00 2001
+From 7a85567d7db126566c80ca3edd853c823a265968 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -6,9 +6,9 @@ Subject: [PATCH] Chat API
 Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pleasant-chat-message-formatting.195148/
 But did a lot of bug fixing and improving upon it, and designing into the Dragon API
 ---
- .../domnian/paperdragon/api/CraftDragonAPI.java    |   2 +
- .../paperdragon/api/FancifulChatAPIImpl.java       | 270 +++++++++++++++++++++
- .../paperdragon/api/chat/CraftDAPI_Chat.java       |  40 +++
+ .../paperdragon/api/CraftDragonAPI.java       |   2 +
+ .../paperdragon/api/FancifulChatAPIImpl.java  | 270 ++++++++++++++++++
+ .../paperdragon/api/chat/CraftDAPI_Chat.java  |  40 +++
  3 files changed, 312 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
@@ -356,5 +356,5 @@ index 000000000..afc5e9e73
 +    }
 +}
 -- 
-2.15.1
+2.17.0
 

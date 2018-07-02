@@ -1,4 +1,4 @@
-From 054e79f33a6c996a7e1a97c862fa3f3d2840741f Mon Sep 17 00:00:00 2001
+From d9e485331d4fe5e7a8d80bd78dc3264427bf382e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:08:32 -0500
 Subject: [PATCH] Identifier API
@@ -15,12 +15,12 @@ Objects represented by an Identifier, should be able to use them as their equal/
 
 Manually Applied Patch from Empire Minecraft - Originally by Aikar
 ---
- .../java/org/bukkit/craftbukkit/CraftChunk.java    | 36 ++++++++++++++++++++++
- .../org/bukkit/craftbukkit/block/CraftBlock.java   | 29 +++++++++++++++++
+ .../org/bukkit/craftbukkit/CraftChunk.java    | 36 +++++++++++++++++++
+ .../bukkit/craftbukkit/block/CraftBlock.java  | 29 +++++++++++++++
  2 files changed, 65 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index ba3676b6..b5488aa1 100644
+index ba3676b67..b5488aa14 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -29,6 +29,7 @@ public class CraftChunk implements Chunk {
@@ -72,7 +72,7 @@ index ba3676b6..b5488aa1 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index a9d3f12b..558eaf0a 100644
+index a9d3f12bc..558eaf0ae 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 @@ -35,6 +35,7 @@ public class CraftBlock implements Block {
@@ -117,5 +117,5 @@ index a9d3f12b..558eaf0a 100644
 +    // PaperDragon end
  }
 -- 
-2.16.2
+2.17.0
 

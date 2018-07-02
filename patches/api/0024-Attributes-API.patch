@@ -1,13 +1,13 @@
-From c958678c3d83728147eab1bdfadcfd3a9dc97aa9 Mon Sep 17 00:00:00 2001
+From de8c34a2ebb0e8d45f7c22e14bb076524692ae21 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:31:31 -0500
 Subject: [PATCH] Attributes API
 
 ---
- .../com/domnian/paperdragon/api/DragonAPI.java     |  2 +
- .../paperdragon/api/attributes/Attribute.java      | 37 ++++++++++++++++
- .../api/attributes/DAPI_Attributes.java            | 45 +++++++++++++++++++
- .../paperdragon/api/attributes/Operation.java      | 50 ++++++++++++++++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    |  2 +
+ .../paperdragon/api/attributes/Attribute.java | 37 ++++++++++++++
+ .../api/attributes/DAPI_Attributes.java       | 45 +++++++++++++++++
+ .../paperdragon/api/attributes/Operation.java | 50 +++++++++++++++++++
  4 files changed, 134 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
@@ -183,5 +183,5 @@ index 00000000..bab3d260
 +    }
 +}
 -- 
-2.16.2
+2.17.0
 

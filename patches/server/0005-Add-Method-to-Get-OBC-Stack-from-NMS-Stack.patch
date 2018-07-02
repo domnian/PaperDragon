@@ -1,4 +1,4 @@
-From 0281903ce0fc32674ad92dd40a64085a9bc26d89 Mon Sep 17 00:00:00 2001
+From 54e04e8e71c15d1701d92f15f94ffb7e1b8169c7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 17 Mar 2017 16:55:31 -0400
 Subject: [PATCH] Add Method to Get OBC Stack from NMS Stack
@@ -8,10 +8,10 @@ Subject: [PATCH] Add Method to Get OBC Stack from NMS Stack
  1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 45ebd3f61..250d583a9 100644
+index 6521bb508..b5cd77558 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -21,7 +21,16 @@ import org.bukkit.event.world.StructureGrowEvent;
+@@ -22,7 +22,16 @@ import org.bukkit.event.world.StructureGrowEvent;
  
  public final class ItemStack {
  
@@ -30,5 +30,5 @@ index 45ebd3f61..250d583a9 100644
      private int count;
      private int d;
 -- 
-2.11.0
+2.17.0
 

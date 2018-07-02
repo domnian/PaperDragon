@@ -1,11 +1,11 @@
-From 4037ae53a17b76a03351586d959fbbe2453aae3b Mon Sep 17 00:00:00 2001
+From a27ca2a363286fae3dc7d80fe28a460ee55ab791 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:30:15 -0500
 Subject: [PATCH] Chat API
 
 ---
- .../com/domnian/paperdragon/api/DAPI_Chat.java     | 57 ++++++++++++++++++++++
- .../com/domnian/paperdragon/api/DragonAPI.java     |  1 +
+ .../domnian/paperdragon/api/DAPI_Chat.java    | 57 +++++++++++++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    |  1 +
  2 files changed, 58 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
 
@@ -85,5 +85,5 @@ index f78acdd6..c348aef5 100644
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.16.2
+2.17.0
 

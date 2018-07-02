@@ -1,18 +1,18 @@
-From 8ed8583d2f62456bd6bc18ea86e5f4542035999f Mon Sep 17 00:00:00 2001
+From 92cc0c73b3ed368b420b0f548f8895add6563b8a Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
 
 ---
- .../domnian/paperdragon/api/SendSignEventImpl.java | 49 ++++++++++++++++++++++
- .../java/net/minecraft/server/TileEntitySign.java  | 14 ++++++-
- .../org/bukkit/craftbukkit/entity/CraftPlayer.java |  8 +++-
+ .../paperdragon/api/SendSignEventImpl.java    | 49 +++++++++++++++++++
+ .../net/minecraft/server/TileEntitySign.java  | 14 +++++-
+ .../craftbukkit/entity/CraftPlayer.java       |  8 ++-
  3 files changed, 69 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 new file mode 100644
-index 00000000..b185b5ef
+index 000000000..b185b5ef3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 @@ -0,0 +1,49 @@
@@ -66,7 +66,7 @@ index 00000000..b185b5ef
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 67bd3bcb..94d022cd 100644
+index 67bd3bcbe..94d022cd7 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
 @@ -1,5 +1,7 @@
@@ -108,7 +108,7 @@ index 67bd3bcb..94d022cd 100644
  
      public boolean isFilteredNBT() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 42eaaf9c..cd9f6b63 100644
+index 42eaaf9c7..cd9f6b63a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.entity;
@@ -134,5 +134,5 @@ index 42eaaf9c..cd9f6b63 100644
  
      @Override
 -- 
-2.16.2
+2.17.0
 

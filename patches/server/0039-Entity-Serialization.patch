@@ -1,4 +1,4 @@
-From c93439a1e2caa2897e4532538ecb27c834a93285 Mon Sep 17 00:00:00 2001
+From 9fa4ced7b512e7d1f645edcea7cad7d39c9e199e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:41:38 -0500
 Subject: [PATCH] Entity Serialization
@@ -7,13 +7,13 @@ Allow serializing an Entity to raw NBT, and to get an Entity object without spaw
 
 Manually Applied Patch from Empire Minecraft - Originally by Aikar
 ---
- .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 61 ++++++++++++++++++++++
- src/main/java/net/minecraft/server/Entity.java     |  1 +
- .../org/bukkit/craftbukkit/entity/CraftEntity.java | 10 ++++
+ .../paperdragon/api/CraftDAPI_Entity.java     | 61 +++++++++++++++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../craftbukkit/entity/CraftEntity.java       | 10 +++
  3 files changed, 72 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index e7d4e223..c5074160 100644
+index e7d4e2231..c5074160a 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -23,11 +23,72 @@
@@ -90,7 +90,7 @@ index e7d4e223..c5074160 100644
      public boolean isEntityDisabled(Entity entity) {
          return EntityAIApi.isEntityDisabled(entity);
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d39af2d9..52d06883 100644
+index 9fbcbe9e6..12b012515 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1482,6 +1482,7 @@ public abstract class Entity implements ICommandListener {
@@ -102,7 +102,7 @@ index d39af2d9..52d06883 100644
          String s = this.getSaveID();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 8871752b..dcfa98d0 100644
+index c2640955f..2699cf739 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -36,6 +36,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -123,5 +123,5 @@ index 8871752b..dcfa98d0 100644
          this.server = server;
          this.entity = entity;
 -- 
-2.16.2
+2.17.0
 

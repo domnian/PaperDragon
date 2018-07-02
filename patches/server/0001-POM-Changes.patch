@@ -1,15 +1,15 @@
-From 51b109ce6dd2d5ed9a7969095462195141b768bc Mon Sep 17 00:00:00 2001
+From c5ae8c9488afc6fc65594c36b628c5c8e2e66545 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml                                            | 50 +++++++++++++++++-----
- .../org/bukkit/craftbukkit/util/Versioning.java    |  2 +-
+ pom.xml                                       | 50 +++++++++++++++----
+ .../bukkit/craftbukkit/util/Versioning.java   |  2 +-
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index c7d45cff6..1baf9f763 100644
+index bf04f6d12..9a6c328e9 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -127,5 +127,5 @@ index 674096cab..50cd5f9ca 100644
  
          if (stream != null) {
 -- 
-2.15.0
+2.17.0
 

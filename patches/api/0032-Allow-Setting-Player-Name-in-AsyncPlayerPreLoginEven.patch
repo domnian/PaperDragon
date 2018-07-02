@@ -1,10 +1,10 @@
-From 5f0155e1ebc7065ddf814c032afd6345f48b58ff Mon Sep 17 00:00:00 2001
+From 936da9cb95947d5cb1b5c5757edd3e33d599f907 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 9 Nov 2017 13:37:27 -0500
 Subject: [PATCH] Allow Setting Player Name in AsyncPlayerPreLoginEvent
 
 ---
- .../event/player/AsyncPlayerPreLoginEvent.java     | 28 +++++++++++++++++++++-
+ .../player/AsyncPlayerPreLoginEvent.java      | 28 ++++++++++++++++++-
  1 file changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java b/src/main/java/org/bukkit/event/player/AsyncPlayerPreLoginEvent.java
@@ -61,5 +61,5 @@ index 0c16128e..2d2ed9d9 100644
       * Gets the player IP address.
       *
 -- 
-2.16.2
+2.17.0
 

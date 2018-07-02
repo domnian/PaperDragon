@@ -1,19 +1,19 @@
-From f3645851dbdb5a665fa5c6e885c757e2a3ffa39c Mon Sep 17 00:00:00 2001
+From ad00a014849866e6e66cbafbd6a224d896f262f1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
 
 This lets us control when an item is consumed and change the item.
 ---
- .../java/net/minecraft/server/EntityLiving.java    |  2 +-
- .../minecraft/server/PlayerInteractManager.java    | 54 ++++++++++++++++++++--
+ .../net/minecraft/server/EntityLiving.java    |  2 +-
+ .../server/PlayerInteractManager.java         | 54 +++++++++++++++++--
  2 files changed, 50 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 52824b34..622e72da 100644
+index 108fb8fcc..69db34545 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1529,7 +1529,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1547,7 +1547,7 @@ public abstract class EntityLiving extends Entity {
          }
      }
  
@@ -23,7 +23,7 @@ index 52824b34..622e72da 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index b1cdb215..38d41634 100644
+index b1cdb2154..38d416349 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -2,6 +2,7 @@ package net.minecraft.server;
@@ -132,5 +132,5 @@ index b1cdb215..38d41634 100644
          }
          return enuminteractionresult;
 -- 
-2.16.2
+2.17.0
 

@@ -1,13 +1,13 @@
-From b03df8ec57b9aae45120d25cb92123e730b7f042 Mon Sep 17 00:00:00 2001
+From 89c82f0756beaf12db0f43fc107a9b5ba24e0f8e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:21:28 -0500
 Subject: [PATCH] Dragon API
 
 ---
- .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 27 ++++++++++++++++
- .../domnian/paperdragon/api/CraftDAPI_Misc.java    | 27 ++++++++++++++++
- .../domnian/paperdragon/api/CraftDragonAPI.java    | 36 ++++++++++++++++++++++
- .../java/org/bukkit/craftbukkit/CraftServer.java   |  1 +
+ .../paperdragon/api/CraftDAPI_Entity.java     | 27 ++++++++++++++
+ .../paperdragon/api/CraftDAPI_Misc.java       | 27 ++++++++++++++
+ .../paperdragon/api/CraftDragonAPI.java       | 36 +++++++++++++++++++
+ .../org/bukkit/craftbukkit/CraftServer.java   |  1 +
  4 files changed, 91 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
@@ -15,7 +15,7 @@ Subject: [PATCH] Dragon API
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 new file mode 100644
-index 00000000..d5c63810
+index 000000000..d5c638104
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -0,0 +1,27 @@
@@ -48,7 +48,7 @@ index 00000000..d5c63810
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 new file mode 100644
-index 00000000..ab3428a6
+index 000000000..ab3428a68
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -0,0 +1,27 @@
@@ -81,7 +81,7 @@ index 00000000..ab3428a6
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 new file mode 100644
-index 00000000..21bd42ff
+index 000000000..21bd42ff9
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -0,0 +1,36 @@
@@ -122,7 +122,7 @@ index 00000000..21bd42ff
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f7943b8c..f64db4c5 100644
+index f7943b8cc..f64db4c50 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -185,6 +185,7 @@ public final class CraftServer implements Server {
@@ -134,5 +134,5 @@ index f7943b8c..f64db4c5 100644
          CraftItemFactory.instance();
      }
 -- 
-2.16.2
+2.17.0
 

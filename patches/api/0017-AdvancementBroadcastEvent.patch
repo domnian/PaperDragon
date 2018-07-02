@@ -1,10 +1,10 @@
-From 75a7a756b7434c66eebf21496a4dde9bfdf75629 Mon Sep 17 00:00:00 2001
+From 83b8471ca181342aab91e1da7ed53afa85f5081d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:01:08 -0500
 Subject: [PATCH] AdvancementBroadcastEvent
 
 ---
- .../events/AdvancementBroadcastEvent.java          | 60 ++++++++++++++++++++++
+ .../events/AdvancementBroadcastEvent.java     | 60 +++++++++++++++++++
  1 file changed, 60 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 
@@ -75,5 +75,5 @@ index 00000000..2dd54817
 +    }
 +}
 -- 
-2.16.2
+2.17.0
 

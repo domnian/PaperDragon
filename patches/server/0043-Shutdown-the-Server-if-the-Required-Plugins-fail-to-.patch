@@ -1,16 +1,16 @@
-From 1821857700af6117ec4266ebbf642228ecd9261b Mon Sep 17 00:00:00 2001
+From b4202cb09544bab9d5bc0f7970d8b4c62d8c103d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Mar 2018 02:23:21 -0400
 Subject: [PATCH] Shutdown the Server if the Required Plugins fail to Load
 
 Based on EmpireCraft Server Patch #76 (https://git.io/vx3xr)
 ---
- .../java/com/domnian/paperdragon/DragonConfig.java    |  6 ++++++
- .../java/net/minecraft/server/MinecraftServer.java    | 19 +++++++++++++++++++
+ .../com/domnian/paperdragon/DragonConfig.java |  6 ++++++
+ .../net/minecraft/server/MinecraftServer.java | 19 +++++++++++++++++++
  2 files changed, 25 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index a7170bef..d6bff80a 100644
+index a7170bef5..d6bff80a5 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -13,6 +13,7 @@ import java.io.IOException;
@@ -32,7 +32,7 @@ index a7170bef..d6bff80a 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 257bb7ec..50397c12 100644
+index 3997c4f0f..887545bcb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -440,6 +440,25 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -62,5 +62,5 @@ index 257bb7ec..50397c12 100644
  
      protected void saveChunks(boolean flag) {
 -- 
-2.16.2
+2.17.0
 

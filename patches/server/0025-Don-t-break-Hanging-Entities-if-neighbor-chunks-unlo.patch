@@ -1,4 +1,4 @@
-From f84de8ec72cb7f82f08c4ea9b003ea5b4dea7b08 Mon Sep 17 00:00:00 2001
+From 6b533b60a3b1fc82845ff34e8b08c2dc36931706 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 May 2015 19:11:01 -0400
 Subject: [PATCH] Don't break Hanging Entities if neighbor chunks unloaded
@@ -20,5 +20,5 @@ index cc903e1ea..460ec2684 100644
              return false;
          } else {
 -- 
-2.15.1
+2.17.0
 

@@ -1,10 +1,10 @@
-From ea5dedc8c78cf04bf3267ce124391b3ea712a159 Mon Sep 17 00:00:00 2001
+From 996b84221f142d187af996ad46fc299964df933c Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sat, 3 Dec 2016 22:27:48 -0500
 Subject: [PATCH] Debug API's
 
 ---
- .../com/domnian/paperdragon/api/DragonAPI.java     | 22 ++++++++++++++++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    | 22 +++++++++++++++++++
  1 file changed, 22 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
@@ -43,5 +43,5 @@ index 6f9eef36..74c4c59e 100644
 +    
  }
 -- 
-2.16.2
+2.17.0
 

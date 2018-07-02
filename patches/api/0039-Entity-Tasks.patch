@@ -1,12 +1,12 @@
-From 6d44d930bc409f3273025c654851e620d94ac6e2 Mon Sep 17 00:00:00 2001
+From 360a347d1790022ca20f1be48a41d5c0a7d9c406 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 22:17:18 -0500
 Subject: [PATCH] Entity Tasks
 
 Manually Applied Patch from Empire Minecraft - Originally by Aikar
 ---
- .../com/domnian/paperdragon/api/DAPI_Entity.java   |  4 ++
- .../com/domnian/paperdragon/api/EntityTask.java    | 45 ++++++++++++++++++++++
+ .../domnian/paperdragon/api/DAPI_Entity.java  |  4 ++
+ .../domnian/paperdragon/api/EntityTask.java   | 45 +++++++++++++++++++
  2 files changed, 49 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityTask.java
 
@@ -77,5 +77,5 @@ index 00000000..be17660d
 +    }
 +}
 -- 
-2.16.2
+2.17.0
 

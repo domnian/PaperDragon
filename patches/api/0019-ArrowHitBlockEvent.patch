@@ -1,10 +1,10 @@
-From 7af35795afc85c0aac8a59e3787377328ff2cbb7 Mon Sep 17 00:00:00 2001
+From 2346847dd45fb541b01dcc48316c561f4db240d4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:03:19 -0500
 Subject: [PATCH] ArrowHitBlockEvent
 
 ---
- .../paperdragon/events/ArrowHitBlockEvent.java     | 46 ++++++++++++++++++++++
+ .../events/ArrowHitBlockEvent.java            | 46 +++++++++++++++++++
  1 file changed, 46 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/ArrowHitBlockEvent.java
 
@@ -61,5 +61,5 @@ index 00000000..9459450d
 +
 +}
 -- 
-2.16.2
+2.17.0
 

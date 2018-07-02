@@ -1,12 +1,12 @@
-From abb7c3864018fab96ca675a49a94f8dfeaefb734 Mon Sep 17 00:00:00 2001
+From a0b9ca114ac8186d653f2fc7f14b2df794a03c24 Mon Sep 17 00:00:00 2001
 From: GreenMeanie <GreenMeanieMC@gmail.com>
 Date: Sun, 24 Jul 2016 19:38:19 -0400
 Subject: [PATCH] Add ItemStack recipe API
 
 Allows using custom items in Crafting Recipes
 ---
- .../java/org/bukkit/inventory/ShapedRecipe.java    |  9 ++++++++
- .../java/org/bukkit/inventory/ShapelessRecipe.java | 26 ++++++++++++++++++++++
+ .../org/bukkit/inventory/ShapedRecipe.java    |  9 +++++++
+ .../org/bukkit/inventory/ShapelessRecipe.java | 26 +++++++++++++++++++
  2 files changed, 35 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/inventory/ShapedRecipe.java b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
@@ -67,5 +67,5 @@ index f2dd46f2..a38d5ac8 100644
      /**
       * Removes an ingredient from the list. If the ingredient occurs multiple
 -- 
-2.15.0
+2.17.0
 

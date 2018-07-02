@@ -1,10 +1,10 @@
-From 759832380ac514497cf0524bbcaea8f9bad8fb0a Mon Sep 17 00:00:00 2001
+From 4c99c040f0945377ac08b79e1428077cb09ac7b2 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:08:14 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
- .../bukkit/command/defaults/VersionCommand.java    | 37 ++++++++++++++--------
+ .../command/defaults/VersionCommand.java      | 37 ++++++++++++-------
  1 file changed, 23 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
@@ -84,5 +84,5 @@ index c45faf4c..96542cdd 100644
              /*
              BufferedReader reader = Resources.asCharSource(
 -- 
-2.16.2
+2.17.0
 

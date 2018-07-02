@@ -1,4 +1,4 @@
-From 1ac194cf6ec6beb765a1d694ba9ebd46b107a113 Mon Sep 17 00:00:00 2001
+From e7e7f5613ef312b32438d7082cc570c10e0e4f93 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -13,15 +13,15 @@ Then you can store Data on 21+
 Also adds a &&::SHINY tag to send a fake enchantment aura if it does not exists.
 Must be set before META
 ---
- .../domnian/paperdragon/api/HiddenItemMeta.java    | 90 ++++++++++++++++++++++
- src/main/java/net/minecraft/server/ItemStack.java  |  2 +-
- .../net/minecraft/server/PacketDataSerializer.java |  2 +
+ .../paperdragon/api/HiddenItemMeta.java       | 90 +++++++++++++++++++
+ .../java/net/minecraft/server/ItemStack.java  |  2 +-
+ .../server/PacketDataSerializer.java          |  2 +
  3 files changed, 93 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 00000000..3b4c3f23
+index 000000000..3b4c3f23b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,90 @@
@@ -116,10 +116,10 @@ index 00000000..3b4c3f23
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 5883c5a9..a912d619 100644
+index b5cd77558..9fb8201ea 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -35,7 +35,7 @@ public final class ItemStack {
+@@ -36,7 +36,7 @@ public final class ItemStack {
      private int count;
      private int d;
      private Item item;
@@ -129,7 +129,7 @@ index 5883c5a9..a912d619 100644
      private int damage; public void setDamage(int i) { this.damage = i; } // Paper - OBFHELPER
      private EntityItemFrame i;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index d71734df..c243f4f2 100644
+index d71734df8..c243f4f28 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -251,6 +251,7 @@ public class PacketDataSerializer extends ByteBuf {
@@ -149,5 +149,5 @@ index d71734df..c243f4f2 100644
              }
              // CraftBukkit end
 -- 
-2.16.2
+2.17.0
 

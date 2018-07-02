@@ -1,23 +1,23 @@
-From 986c6129ddbcf6170c909adc0e5b19af937a4941 Mon Sep 17 00:00:00 2001
+From 4de8e12703a0928c5603557d2ddae2cab9d45473 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
 
 Entity, TileEntity, World, Chunk, Block, Inventory API's
 ---
- .../com/domnian/paperdragon/api/DragonAPI.java     |   2 +
- .../java/com/domnian/paperdragon/api/Vector3i.java |  64 ++++
- .../domnian/paperdragon/api/meta/DAPI_Meta.java    |  50 +++
- .../com/domnian/paperdragon/api/meta/Meta.java     | 410 +++++++++++++++++++++
- .../com/domnian/paperdragon/api/meta/MetaKey.java  |  51 +++
- .../paperdragon/api/meta/PersistentKeyImpl.java    |  44 +++
- .../paperdragon/api/meta/PersistentMetaList.java   |  73 ++++
- .../paperdragon/api/meta/PersistentMetaMap.java    |  71 ++++
- .../domnian/paperdragon/api/meta/TempKeyImpl.java  |  44 +++
- .../BlockWithPersistentMetaClearedEvent.java       |  49 +++
- src/main/java/org/bukkit/block/BlockState.java     |   2 +
- src/main/java/org/bukkit/entity/Entity.java        |   1 +
- src/main/java/org/bukkit/inventory/Inventory.java  |   1 +
+ .../domnian/paperdragon/api/DragonAPI.java    |   2 +
+ .../com/domnian/paperdragon/api/Vector3i.java |  64 +++
+ .../paperdragon/api/meta/DAPI_Meta.java       |  50 +++
+ .../domnian/paperdragon/api/meta/Meta.java    | 410 ++++++++++++++++++
+ .../domnian/paperdragon/api/meta/MetaKey.java |  51 +++
+ .../api/meta/PersistentKeyImpl.java           |  44 ++
+ .../api/meta/PersistentMetaList.java          |  73 ++++
+ .../api/meta/PersistentMetaMap.java           |  71 +++
+ .../paperdragon/api/meta/TempKeyImpl.java     |  44 ++
+ .../BlockWithPersistentMetaClearedEvent.java  |  49 +++
+ .../java/org/bukkit/block/BlockState.java     |   2 +
+ src/main/java/org/bukkit/entity/Entity.java   |   1 +
+ .../java/org/bukkit/inventory/Inventory.java  |   1 +
  13 files changed, 862 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/Vector3i.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
@@ -993,5 +993,5 @@ index c610262f..6a11b55f 100644
       * Returns the size of the inventory
       *
 -- 
-2.16.2
+2.17.0
 

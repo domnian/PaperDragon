@@ -1,4 +1,4 @@
-From 77b21b2fdaf8d18e224957dd5d3d87562235b9b6 Mon Sep 17 00:00:00 2001
+From a3c68a380e334be3faaa3176981471fdd60ca1b3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 1 Jun 2016 23:29:17 -0400
 Subject: [PATCH] Reset Ender Crystals on Dragon Spawn
@@ -28,5 +28,5 @@ index ce0dcbc68..845ca4723 100644
          WorldGenEnder.Spike[] aworldgenender_spike = BiomeTheEndDecorator.a(this.d);
          int i = aworldgenender_spike.length;
 -- 
-2.15.1
+2.17.0
 

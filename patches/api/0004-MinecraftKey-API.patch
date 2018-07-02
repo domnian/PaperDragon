@@ -1,12 +1,12 @@
-From 3dce85ec2e5ec79551b6f4d0f82b2f77c92c4d94 Mon Sep 17 00:00:00 2001
+From e738bbb295795a9e0ff1e827aa2ac0242934b702 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Nov 2016 17:07:55 -0500
 Subject: [PATCH] MinecraftKey API
 
 ---
- .../java/com/destroystokyo/paper/MinecraftKey.java | 38 ++++++++++++++++++++++
- src/main/java/org/bukkit/Bukkit.java               | 10 ++++++
- src/main/java/org/bukkit/Server.java               | 18 ++++++++++
+ .../com/destroystokyo/paper/MinecraftKey.java | 38 +++++++++++++++++++
+ src/main/java/org/bukkit/Bukkit.java          | 10 +++++
+ src/main/java/org/bukkit/Server.java          | 18 +++++++++
  3 files changed, 66 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/MinecraftKey.java
 
@@ -112,5 +112,5 @@ index 2ea20935..e2f93161 100644
      // Paper end
  }
 -- 
-2.16.2
+2.17.0
 
