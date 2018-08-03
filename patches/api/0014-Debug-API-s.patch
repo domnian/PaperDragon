@@ -1,0 +1,47 @@
+From a59699156edecf3c5201bf15d62ccb64ea02f923 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sat, 3 Dec 2016 22:27:48 -0500
+Subject: [PATCH] Debug API's
+
+---
+ .../domnian/paperdragon/api/DragonAPI.java    | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+index 6f9eef36..74c4c59e 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
++++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+@@ -1,8 +1,30 @@
+ package com.domnian.paperdragon.api;
+ 
++import org.apache.commons.lang.exception.ExceptionUtils;
++
+ public class DragonAPI {
+ 
+     public static DAPI_Entity entity;
+     public static DAPI_Misc misc;
+ 
++    public static String stack() {
++        return ExceptionUtils.getFullStackTrace(new Throwable());
++    }
++
++    public static void exception(Throwable e) {
++        exception(null, e);
++    }
++
++    public static void exception(String msg, Throwable e) {
++        if (msg != null) {
++            System.err.println(msg);
++        }
++        if (e.getMessage() != null) {
++            System.err.println(e.getMessage());
++        }
++        for (String line : ExceptionUtils.getFullStackTrace(e).split("\n")) {
++            System.err.println(line);
++        }
++    }
++    
+ }
+-- 
+2.18.0
+

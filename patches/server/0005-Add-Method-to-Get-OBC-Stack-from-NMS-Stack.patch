@@ -1,34 +1,33 @@
-From 54e04e8e71c15d1701d92f15f94ffb7e1b8169c7 Mon Sep 17 00:00:00 2001
+From 69fc0a9b36e458a8d31904b71986c2985735fbdb Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 17 Mar 2017 16:55:31 -0400
 Subject: [PATCH] Add Method to Get OBC Stack from NMS Stack
 
 ---
- src/main/java/net/minecraft/server/ItemStack.java | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ src/main/java/net/minecraft/server/ItemStack.java | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 6521bb508..b5cd77558 100644
+index 0952bf0b8..94dcb9494 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -22,7 +22,16 @@ import org.bukkit.event.world.StructureGrowEvent;
- 
+@@ -38,7 +38,15 @@ import org.bukkit.event.world.StructureGrowEvent;
  public final class ItemStack {
  
+     private static final Logger c = LogManager.getLogger();
 -    public static final ItemStack a = new ItemStack((Item) null);
++
 +    // PaperDragon start
 +    private org.bukkit.inventory.ItemStack bukkitStack;
 +    public org.bukkit.inventory.ItemStack getBukkitStack() {
-+        if (bukkitStack == null) {
-+                bukkitStack = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
-+            }
++        if (bukkitStack == null) bukkitStack = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
 +        return bukkitStack;
 +    }
 +    // PaperDragon end
-+    public static final ItemStack a = new ItemStack((Item) null);public static final ItemStack NULL_ITEM = a; // PaperDragon
-     public static final DecimalFormat b = new DecimalFormat("#.##");
++    public static final ItemStack a = new ItemStack((Item) null);public static final ItemStack NULL_ITEM = a; // PaperDragon - OBFHELPER
+     public static final DecimalFormat b = D();
      private int count;
-     private int d;
+     private int e;
 -- 
-2.17.0
+2.18.0
 

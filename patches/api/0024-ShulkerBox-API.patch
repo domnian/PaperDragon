@@ -1,0 +1,79 @@
+From 5b4628d4530257fc097013860968b66a105c3bda Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 1 Jan 2017 20:35:55 -0500
+Subject: [PATCH] ShulkerBox API
+
+---
+ .../domnian/paperdragon/api/DAPI_Misc.java    | 24 ++++++++++++++++++-
+ src/main/java/org/bukkit/Material.java        | 23 ++++++++++++++++++
+ 2 files changed, 46 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+index f35c91b6..d80840bf 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+@@ -1,4 +1,26 @@
+ package com.domnian.paperdragon.api;
+ 
+-public class DAPI_Misc {
++import org.bukkit.inventory.ItemStack;
++
++import javax.annotation.Nonnull;
++import javax.annotation.Nullable;
++import java.util.List;
++
++public interface DAPI_Misc {
++
++    /**
++     * Returns if this is a shulker box with items in it.
++     * @param shulker
++     * @return Has items or not
++     */
++    boolean hasShulkerInventory(@Nonnull ItemStack shulker);
++
++    /**
++     * Returns a list of items inside of a Shulker Box Item Stack
++     * @param shulker
++     * @return List of Items, Not Mutable
++     */
++    @Nullable
++    List<ItemStack> getShulkerInventory(@Nonnull ItemStack shulker);
++    
+ }
+diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
+index af0ec817..10dfe5fe 100644
+--- a/src/main/java/org/bukkit/Material.java
++++ b/src/main/java/org/bukkit/Material.java
+@@ -2730,6 +2730,29 @@ public enum Material implements Keyed {
+         }
+     }
+ 
++    public boolean isShulkerBox() {
++        switch (this) {
++            case WHITE_SHULKER_BOX:
++            case ORANGE_SHULKER_BOX:
++            case MAGENTA_SHULKER_BOX:
++            case LIGHT_BLUE_SHULKER_BOX:
++            case YELLOW_SHULKER_BOX:
++            case LIME_SHULKER_BOX:
++            case PINK_SHULKER_BOX:
++            case GRAY_SHULKER_BOX:
++            case LIGHT_GRAY_SHULKER_BOX:
++            case CYAN_SHULKER_BOX:
++            case PURPLE_SHULKER_BOX:
++            case BLUE_SHULKER_BOX:
++            case BROWN_SHULKER_BOX:
++            case GREEN_SHULKER_BOX:
++            case RED_SHULKER_BOX:
++            case BLACK_SHULKER_BOX:
++                return true;
++        }
++        return false;
++    }
++
+     /**
+      * Attempts to get the Material with the given name.
+      * <p>
+-- 
+2.18.0
+

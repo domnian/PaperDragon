@@ -1,0 +1,66 @@
+From 6b6b34149313eed83a72efd6e91b74739592417d Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 15 Jun 2017 17:42:33 -0400
+Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
+
+---
+ .../java/com/domnian/paperdragon/DragonConfig.java    |  5 ++++-
+ .../com/domnian/paperdragon/DragonWorldConfig.java    |  4 ++++
+ .../net/minecraft/server/AdvancementDataPlayer.java   | 11 +++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+index b75e1c92b..4731d0f7b 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+@@ -168,6 +168,9 @@ public class DragonConfig {
+         blockEnderpearlTravelExploit = getBoolean("settings.block-enderpearl-travel-exploit", blockEnderpearlTravelExploit);
+     }
+ 
+-    // TODO Add New Settings!! :D
++    public static boolean broadcastAdvancementsToServer = false;
++    private static void advancements() {
++        broadcastAdvancementsToServer = getBoolean("settings.broadcast-advancements-to-server", false);
++    }
+ 
+ }
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index 2a180d5a4..107135de9 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -74,6 +74,10 @@ public class DragonWorldConfig {
+         return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
+     }
+ 
++    public static boolean broadcastAdvancementsToWorld = false;
++    private void advancements() {
++        broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
++    }
+     // TODO Add New Settings!! :D
+ 
+ }
+diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
+index 3e380ce0e..2f7628abc 100644
+--- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
++++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
+@@ -250,6 +250,17 @@ public class AdvancementDataPlayer {
+                     //this.d.getPlayerList().sendMessage(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
+                     ChatMessage adv = new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()});
+                     com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new AdvancementBroadcastEvent(this.player.getBukkitEntity());
++                    if (com.domnian.paperdragon.DragonWorldConfig.broadcastAdvancementsToWorld) {
++                        List<EntityHuman> humans = this.player.getWorld().players;
++                        List<org.bukkit.entity.Player> players = new ArrayList<>();
++                        humans.forEach(human -> players.add((org.bukkit.entity.Player) human.getBukkitEntity()));
++                        event.setReceivers(players);
++                    }
++                    if (com.domnian.paperdragon.DragonConfig.broadcastAdvancementsToServer) {
++                        List<org.bukkit.entity.Player> players = new ArrayList<>();
++                        players.addAll(org.bukkit.Bukkit.getOnlinePlayers());
++                        event.setReceivers(players);
++                    }
+                     event.callEvent();
+                     event.getReceivers().forEach(p -> ((org.bukkit.craftbukkit.entity.CraftPlayer)p).getHandle().sendMessage(adv));
+                     // PaperDragon ed
+-- 
+2.18.0
+

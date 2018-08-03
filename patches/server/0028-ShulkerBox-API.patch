@@ -1,0 +1,132 @@
+From 09734c6d04d018612c86f192762a64a14e25d880 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 1 Jan 2017 20:36:31 -0500
+Subject: [PATCH] ShulkerBox API
+
+---
+ .../paperdragon/api/CraftDAPI_Misc.java       | 94 +++++++++++++++++++
+ 1 file changed, 94 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+index ab3428a68..342bbcefc 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -1,4 +1,5 @@
+ /*
++<<<<<<< found
+  * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
+  *
+  *  Permission is hereby granted, free of charge, to any person obtaining
+@@ -7,6 +8,26 @@
+  *  without limitation the rights to use, copy, modify, merge, publish,
+  *  distribute, sublicense, and/or sell copies of the Software, and to
+  *  permit persons to whom the Software is furnished to do so, subject to
++||||||| expected
++import net.minecraft.server.ItemWorldMap;
++import net.minecraft.server.MCUtil;
++import net.minecraft.server.MapIcon;
++import net.minecraft.server.MapIcon.Type;
++import net.minecraft.server.MinecraftKey;
++import net.minecraft.server.NBTTagCompound;
++import net.minecraft.server.World;
++import net.minecraft.server.WorldMap;
++=======
++import net.minecraft.server.ItemWorldMap;
++import net.minecraft.server.MCUtil;
++import net.minecraft.server.MapIcon.Type;
++import net.minecraft.server.MinecraftKey;
++import net.minecraft.server.NBTTagCompound;
++import net.minecraft.server.NBTTagList;
++import net.minecraft.server.ThreadWatchdog;
++import net.minecraft.server.World;
++import net.minecraft.server.WorldMap;
++>>>>>>> replacement
+  *  the following conditions:
+  *
+  *  The above copyright notice and this permission notice shall be
+@@ -19,9 +40,82 @@
+  *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++<<<<<<< found
+  */
+ 
+ package com.domnian.paperdragon.api;
+ 
++import net.minecraft.server.ItemStack;
++import net.minecraft.server.NBTTagCompound;
++import net.minecraft.server.NBTTagList;
++import org.bukkit.craftbukkit.inventory.CraftItemStack;
++
++import javax.annotation.Nonnull;
++import java.util.ArrayList;
++import java.util.List;
++
+ public class CraftDAPI_Misc implements DAPI_Misc {
++
++    @Override
++    public boolean hasShulkerInventory(@Nonnull org.bukkit.inventory.ItemStack shulker) {
++        return getNBTItems(shulker) != null;
++    }
++
++    @Override
++    public List<org.bukkit.inventory.ItemStack> getShulkerInventory(org.bukkit.inventory.ItemStack shulker) {
++        NBTTagList nbttaglist = getNBTItems(shulker);
++        if (nbttaglist == null) {
++            return null;
++        }
++        List<org.bukkit.inventory.ItemStack> items = new ArrayList<>(nbttaglist.size());
++        for (int i = 0; i < nbttaglist.size(); ++i) {
++            NBTTagCompound nbttagcompound1 = nbttaglist.getCompound(i);
++            int j = nbttagcompound1.getByte("Slot") & 255;
++            items.add(j, CraftItemStack.asBukkitCopy(ItemStack.a(nbttagcompound1)));
++        }
++        return items;
++    }
++
++    private static NBTTagList getNBTItems(org.bukkit.inventory.ItemStack shulker) {
++        if (shulker == null) {
++            throw new NullPointerException("Itemstack can not be null");
++        }
++        switch (shulker.getType()) {
++            case WHITE_SHULKER_BOX:
++            case ORANGE_SHULKER_BOX:
++            case MAGENTA_SHULKER_BOX:
++            case LIGHT_BLUE_SHULKER_BOX:
++            case YELLOW_SHULKER_BOX:
++            case LIME_SHULKER_BOX:
++            case PINK_SHULKER_BOX:
++            case GRAY_SHULKER_BOX:
++            case LIGHT_GRAY_SHULKER_BOX:
++            case CYAN_SHULKER_BOX:
++            case PURPLE_SHULKER_BOX:
++            case BLUE_SHULKER_BOX:
++            case BROWN_SHULKER_BOX:
++            case GREEN_SHULKER_BOX:
++            case RED_SHULKER_BOX:
++            case BLACK_SHULKER_BOX:
++                break;
++            default:
++                throw new IllegalArgumentException("Not a shulker box");
++        }
++
++        final CraftItemStack craft;
++        if (shulker instanceof CraftItemStack) {
++            craft = ((CraftItemStack) shulker);
++        } else {
++            craft = CraftItemStack.asCraftCopy(shulker);
++        }
++        if (craft == null || craft.handle == null || craft.handle.tag == null || !craft.handle.tag.hasKeyOfType("BlockEntityTag", 10)) {
++            return null;
++        }
++        final NBTTagCompound tag = craft.handle.tag.getCompound("BlockEntityTag");
++        if (tag.hasKeyOfType("Items", 9)) {
++            final NBTTagList items = tag.getList("Items", 10);
++            return items.isEmpty() ? null : items;
++        }
++        return null;
++    }
+ }
+-- 
+2.18.0
+

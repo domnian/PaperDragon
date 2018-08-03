@@ -1,0 +1,187 @@
+From b27c9562e059632b691c939dedba44e230afb528 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 6 Dec 2016 22:31:31 -0500
+Subject: [PATCH] Attributes API
+
+---
+ .../domnian/paperdragon/api/DragonAPI.java    |  2 +
+ .../paperdragon/api/attributes/Attribute.java | 37 ++++++++++++++
+ .../api/attributes/DAPI_Attributes.java       | 45 +++++++++++++++++
+ .../paperdragon/api/attributes/Operation.java | 50 +++++++++++++++++++
+ 4 files changed, 134 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+index c348aef5..191b8d9b 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
++++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+@@ -1,5 +1,6 @@
+ package com.domnian.paperdragon.api;
+ 
++import com.domnian.paperdragon.api.attributes.DAPI_Attributes;
+ import com.domnian.paperdragon.api.meta.DAPI_Meta;
+ import org.apache.commons.lang.exception.ExceptionUtils;
+ 
+@@ -9,6 +10,7 @@ public class DragonAPI {
+     public static DAPI_Misc misc;
+     public static DAPI_Meta meta;
+     public static DAPI_Chat chat;
++    public static DAPI_Attributes attributes;
+ 
+     public static String stack() {
+         return ExceptionUtils.getFullStackTrace(new Throwable());
+diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
+new file mode 100644
+index 00000000..eb0f53a2
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
+@@ -0,0 +1,37 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api.attributes;
++
++public enum Attribute {
++    TARGET_RANGE,
++    FOLLOW_RANGE,
++    MAX_HEALTH,
++    KNOCKBACK_RESISTANCE,
++    MOVEMENT_SPEED,
++    ATTACK_DAMAGE,
++    ATTACK_SPEED,
++    ARMOR,
++    ARMOR_TOUGHNESS,
++    LUCK
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java b/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
+new file mode 100644
+index 00000000..29fcf7ac
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
+@@ -0,0 +1,45 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api.attributes;
++
++import org.bukkit.entity.LivingEntity;
++import org.bukkit.inventory.ItemStack;
++
++public interface DAPI_Attributes {
++
++    /**
++     * Defaults to Operation.ADD_NUMBER
++     * @param item
++     * @param attr
++     * @param val
++     */
++    default void setAttribute(ItemStack item, Attribute attr, double val) {
++        setAttribute(item, attr, Operation.ADD_NUMBER, val);
++    }
++    void setAttribute(ItemStack item, Attribute attr, Operation operation, double val);
++    void removeAttribute(ItemStack item, Attribute attr);
++
++    boolean setAttribute(LivingEntity livingEntity, Attribute attr, double val);
++    Double getAttribute(LivingEntity livingEntity, Attribute attr);
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java b/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
+new file mode 100644
+index 00000000..bab3d260
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
+@@ -0,0 +1,50 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.api.attributes;
++
++// part of this copied from https://bukkit.org/threads/util-edit-itemstack-attributes-adding-speed-damage-or-health-bonuses.158316/
++public enum Operation {
++    ADD_NUMBER(0),
++    MULTIPLY_PERCENTAGE(1),
++    ADD_PERCENTAGE(2);
++    private final int id;
++
++    Operation(int id) {
++        this.id = id;
++    }
++
++    public int getId() {
++        return id;
++    }
++
++    public static Operation fromId(int id) {
++        // Linear scan is very fast for small N
++        for (Operation op : values()) {
++            if (op.getId() == id) {
++                return op;
++            }
++        }
++        throw new IllegalArgumentException("Corrupt operation ID " + id + " detected.");
++    }
++}
+-- 
+2.18.0
+

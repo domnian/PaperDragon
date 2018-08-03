@@ -45,11 +45,11 @@ import PacketPlayOutTileEntityData
 import EntityEnderSignal
 import PathfinderGoalArrowAttack
 import PathfinderGoalSelector
-import MinecraftKey
 import AttributeInstance
 import AttributeMapBase
 import BlockSponge
 import EnderDragonBattle
+import RecipeItemStack
 
 (
 	cd Paper/Paper-Server/

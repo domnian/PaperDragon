@@ -1,0 +1,32 @@
+From ec78f3d50d13410dd4b3779e307b80520a706cc2 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 28 Sep 2013 22:01:47 -0400
+Subject: [PATCH] MovedTooQuickly event
+
+also make creative immune to this event
+---
+ src/main/java/net/minecraft/server/PlayerConnection.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index 6ebc0a95e..4ede9772a 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -902,11 +902,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                             if (!this.player.H() && (!this.player.getWorldServer().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.dc())) {
+                                 float f2 = this.player.dc() ? 300.0F : 100.0F;
+ 
+-                                if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.J() || !this.minecraftServer.I().equals(this.player.getProfile().getName()))) {
++                                if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.J() || !this.minecraftServer.I().equals(this.player.getName()))) { // Spigot
++                                if (new com.domnian.paperdragon.events.MovedTooQuicklyEvent(d10, getPlayer()).callEvent()) { // PaperDragon
+                                 // CraftBukkit end
+                                     PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getDisplayName().getString(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9));
+                                     this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
+                                     return;
++                                } // PaperDragon
+                                 }
+                             }
+ 
+-- 
+2.18.0
+

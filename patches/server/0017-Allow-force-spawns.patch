@@ -1,0 +1,64 @@
+From 524b0c901517f6978f618949e64d37cb11cb2a80 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 26 Jul 2013 22:19:29 -0400
+Subject: [PATCH] Allow force spawns
+
+Pass spawn reason force to not allow plugins to block
+Force some cases where plugins should not be allowed to block it.
+---
+ src/main/java/net/minecraft/server/Entity.java     | 2 +-
+ src/main/java/net/minecraft/server/PlayerList.java | 2 +-
+ src/main/java/net/minecraft/server/World.java      | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index f5e001a54..1dbd0ab8b 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -2670,7 +2670,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+                 boolean flag = entity.attachedToPlayer;
+ 
+                 entity.attachedToPlayer = true;
+-                worldserver1.addEntity(entity);
++                worldserver1.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
+                 entity.attachedToPlayer = flag;
+                 worldserver1.entityJoinedWorld(entity, false);
+                 // CraftBukkit start - Forward the CraftEntity to the new entity
+diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
+index 7a2b219c6..bfe20c7e3 100644
+--- a/src/main/java/net/minecraft/server/PlayerList.java
++++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -1017,7 +1017,7 @@ public abstract class PlayerList {
+                         entity.getBukkitEntity().setVelocity(velocity);
+                     }
+                 }
+-                // worldserver1.addEntity(entity);
++                // worldserver1.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
+                 worldserver1.entityJoinedWorld(entity, false);
+             }
+ 
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 112b58527..1f2b9a0bb 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -1038,7 +1038,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+             }
+         } // Spigot end
+ 
+-        if (event != null && (event.isCancelled() || entity.dead)) {
++        if (spawnReason != SpawnReason.FORCE && event != null && (event.isCancelled() || entity.dead)) { // PaperDragon
+             entity.dead = true;
+             return false;
+         }
+@@ -1058,7 +1058,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+             flag = true;
+         }
+ 
+-        if (!flag && !this.isChunkLoaded(i, j, false)) {
++        if (spawnReason != SpawnReason.FORCE && !flag && !this.isChunkLoaded(i, j, false)) { // PaperDragon
+             return false;
+         } else {
+             if (entity instanceof EntityHuman) {
+-- 
+2.18.0
+

@@ -1,0 +1,128 @@
+From 15bee17c8522b3295134f589bee5849d7b5e91f8 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 25 Dec 2017 21:41:38 -0500
+Subject: [PATCH] Entity Serialization
+
+Allow serializing an Entity to raw NBT, and to get an Entity object without spawning it into the world.
+
+Manually Applied Patch from Empire Minecraft - Originally by Aikar
+---
+ .../paperdragon/api/CraftDAPI_Entity.java     | 62 +++++++++++++++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../craftbukkit/entity/CraftEntity.java       | 10 +++
+ 3 files changed, 73 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+index e7d4e2231..98d19ca94 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -23,11 +23,73 @@
+ 
+ package com.domnian.paperdragon.api;
+ 
++import net.minecraft.server.*;
++import org.apache.commons.lang.exception.ExceptionUtils;
+ import org.bukkit.Location;
++import org.bukkit.craftbukkit.CraftWorld;
++import org.bukkit.craftbukkit.entity.CraftEntity;
+ import org.bukkit.entity.*;
++import org.bukkit.entity.Entity;
++import org.bukkit.entity.Item;
++
++import java.io.*;
++import java.util.logging.Logger;
++import java.util.regex.Pattern;
+ 
+ public class CraftDAPI_Entity implements DAPI_Entity {
+ 
++    public final byte[] serializeEntity(Entity craftentity) {
++        if (craftentity == null) {
++            throw new NullPointerException("Entity can not be null for serialization");
++        }
++        net.minecraft.server.Entity entity = ((CraftEntity) craftentity).getHandle();
++        NBTTagCompound cmp = new NBTTagCompound();
++        entity.serializeEntity(cmp);
++
++        return NBTToBytes(cmp);
++    }
++
++    public final Entity deserializeEntity(byte[] data, org.bukkit.World world) {
++        throw new UnsupportedOperationException("Entity Deserialization is Not Currently Supported for 1,13");
++        // FIXME Fix Entity Data Conversion
++//        if (data == null || data.length == 0) {
++//            throw new NullPointerException("Data can not be null or empty for deserialization");
++//        }
++//        ByteArrayInputStream stream = new ByteArrayInputStream(data);
++//
++//        try {
++//            NBTTagCompound cmp = MinecraftServer.getServer().dataConverterManager.a(DataConverterTypes.ENTITY, readNBT(stream));
++//            net.minecraft.server.Entity entity = EntityTypes.a(cmp, ((CraftWorld) world).getHandle());
++//            return entity != null ? entity.getBukkitEntity() : null;
++//        } catch (IOException e) {
++//            if (e.getMessage() != null) {
++//                for (String s : Pattern.compile("\n").split(e.getMessage())) {
++//                    Logger.getLogger("NMS").severe(s);
++//                }
++//            }
++//            for (String s : Pattern.compile("\n").split(ExceptionUtils.getFullStackTrace(e))) {
++//                Logger.getLogger("NMS").severe(s);
++//            }
++//            return null;
++//        }
++
++    }
++
++    private static byte[] NBTToBytes(NBTTagCompound nbttagcompound) {
++        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
++
++        try {
++            NBTCompressedStreamTools.a(nbttagcompound, bytearrayoutputstream);
++        } catch (IOException ignored) {
++            return null;
++        }
++
++        return bytearrayoutputstream.toByteArray();
++    }
++    private static NBTTagCompound readNBT(ByteArrayInputStream datainputstream) throws IOException {
++        return NBTCompressedStreamTools.a((InputStream) new DataInputStream(datainputstream));
++    }
++    
+     @Override
+     public boolean isEntityDisabled(Entity entity) {
+         return EntityAIApi.isEntityDisabled(entity);
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 1dbd0ab8b..5720cc63b 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -1569,6 +1569,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+         }
+     }
+ 
++    public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon // OBF HELPER
+     public boolean d(NBTTagCompound nbttagcompound) {
+         return this.isPassenger() ? false : this.c(nbttagcompound);
+     }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+index 07a218124..c3254f735 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+@@ -42,6 +42,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+     protected Entity entity;
+     private EntityDamageEvent lastDamageEvent;
+ 
++    // PaperDragon start
++    public boolean spawnAt(Location loc) {
++        return spawnAt(loc, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DEFAULT);
++    }
++    public boolean spawnAt(Location loc, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
++        entity.world = ((CraftWorld) loc.getWorld()).getHandle();
++        entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
++        return !entity.valid && entity.world.addEntity(entity, spawnReason);
++    }
++    // PaperDragon end
+     public CraftEntity(final CraftServer server, final Entity entity) {
+         this.server = server;
+         this.entity = entity;
+-- 
+2.18.0
+

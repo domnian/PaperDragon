@@ -1,0 +1,115 @@
+From 505710ff01307ddf9c24ba0af8799d0f4075468c Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 3 Dec 2016 22:23:55 -0500
+Subject: [PATCH] Spawn Egg API
+
+---
+ .../paperdragon/api/CraftDAPI_Misc.java       | 70 +++++++++++++------
+ 1 file changed, 49 insertions(+), 21 deletions(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+index 342bbcefc..c2b141165 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -8,26 +8,6 @@
+  *  without limitation the rights to use, copy, modify, merge, publish,
+  *  distribute, sublicense, and/or sell copies of the Software, and to
+  *  permit persons to whom the Software is furnished to do so, subject to
+-||||||| expected
+-import net.minecraft.server.ItemWorldMap;
+-import net.minecraft.server.MCUtil;
+-import net.minecraft.server.MapIcon;
+-import net.minecraft.server.MapIcon.Type;
+-import net.minecraft.server.MinecraftKey;
+-import net.minecraft.server.NBTTagCompound;
+-import net.minecraft.server.World;
+-import net.minecraft.server.WorldMap;
+-=======
+-import net.minecraft.server.ItemWorldMap;
+-import net.minecraft.server.MCUtil;
+-import net.minecraft.server.MapIcon.Type;
+-import net.minecraft.server.MinecraftKey;
+-import net.minecraft.server.NBTTagCompound;
+-import net.minecraft.server.NBTTagList;
+-import net.minecraft.server.ThreadWatchdog;
+-import net.minecraft.server.World;
+-import net.minecraft.server.WorldMap;
+->>>>>>> replacement
+  *  the following conditions:
+  *
+  *  The above copyright notice and this permission notice shall be
+@@ -40,15 +20,16 @@ import net.minecraft.server.WorldMap;
+  *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-<<<<<<< found
+  */
+ 
+ package com.domnian.paperdragon.api;
+ 
+ import net.minecraft.server.ItemStack;
+ import net.minecraft.server.NBTTagCompound;
++import org.bukkit.Material;
+ import net.minecraft.server.NBTTagList;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.entity.EntityType;
+ 
+ import javax.annotation.Nonnull;
+ import java.util.ArrayList;
+@@ -56,6 +37,53 @@ import java.util.List;
+ 
+ public class CraftDAPI_Misc implements DAPI_Misc {
+ 
++    public final EntityType getTypeForSpawnEgg(@Nonnull org.bukkit.inventory.ItemStack bukkitItem) {
++        Material m = bukkitItem.getType();
++        if (!m.isSpawnEgg()) return null;
++        String typeName;
++        switch (bukkitItem.getType()) {
++            case MOOSHROOM_SPAWN_EGG:
++                typeName = "MUSHROOM_COW";
++                break;
++            case ZOMBIE_PIGMAN_SPAWN_EGG:
++                typeName = "PIG_ZOMBIE";
++                break;
++            default:
++                typeName = m.name().substring(0, m.name().length() - 10);
++        }
++        return EntityType.valueOf(typeName);
++    }
++
++    public final org.bukkit.inventory.ItemStack spawnEggAsType(@Nonnull org.bukkit.inventory.ItemStack bukkitItem,
++                                                               @Nonnull org.bukkit.entity.EntityType type) {
++        return spawnEggAsType(bukkitItem, new org.bukkit.NamespacedKey("minecraft", type.getName()));
++    }
++
++    public final org.bukkit.inventory.ItemStack spawnEggAsType(@Nonnull org.bukkit.inventory.ItemStack bukkitItem,
++                                                               @Nonnull org.bukkit.NamespacedKey key) {
++        ItemStack item;
++        if (bukkitItem instanceof CraftItemStack && ((CraftItemStack) bukkitItem).handle != null) {
++            item = ((CraftItemStack) bukkitItem).handle;
++        } else {
++            item = CraftItemStack.asNMSCopy(bukkitItem);
++        }
++        if (item == null) {
++            throw new NullPointerException("Could not set type for spawn egg");
++        }
++        if (item.tag == null) {
++            item.tag = new NBTTagCompound();
++        }
++
++        NBTTagCompound nbttagcompound = (NBTTagCompound) item.tag.get("EntityTag");
++        if (nbttagcompound == null) {
++            nbttagcompound = new NBTTagCompound();
++        }
++        nbttagcompound.setString("id", key.toString());
++        item.tag.set("EntityTag", nbttagcompound);
++
++        return CraftItemStack.asCraftMirror(item);
++    }
++
+     @Override
+     public boolean hasShulkerInventory(@Nonnull org.bukkit.inventory.ItemStack shulker) {
+         return getNBTItems(shulker) != null;
+-- 
+2.18.0
+

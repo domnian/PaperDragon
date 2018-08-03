@@ -1,0 +1,117 @@
+From 898fcf7e4529f7859fe3604f36b67ca632feb05c Mon Sep 17 00:00:00 2001
+From: Derek Williams <GreenMeanieMC@gmail.com>
+Date: Sun, 17 Dec 2017 01:59:04 -0500
+Subject: [PATCH] SendSignEvent
+
+---
+ .../paperdragon/api/SendSignEventImpl.java    | 49 +++++++++++++++++++
+ .../net/minecraft/server/TileEntitySign.java  |  7 ++-
+ .../craftbukkit/entity/CraftPlayer.java       |  8 ++-
+ 3 files changed, 62 insertions(+), 2 deletions(-)
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+new file mode 100644
+index 000000000..b185b5ef3
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+@@ -0,0 +1,49 @@
++package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.events.SendSignEvent;
++import net.minecraft.server.BlockPosition;
++import net.minecraft.server.ChatComponentText;
++import net.minecraft.server.IChatBaseComponent;
++import net.minecraft.server.World;
++import org.bukkit.block.Block;
++import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.bukkit.entity.Player;
++
++public class SendSignEventImpl extends SendSignEvent {
++    public final IChatBaseComponent[] lines;
++    private final String[] slines;
++    private final Block block;
++    private final Player player;
++
++    public SendSignEventImpl(World world, BlockPosition position, IChatBaseComponent[] lines, Player player) {
++        this.block = world.getWorld().getBlockAt(position.getX(), position.getY(), position.getZ());
++        this.lines = new IChatBaseComponent[lines.length];
++        this.slines = new String[lines.length];
++        this.player = player;
++        for (int i = 0; i < lines.length; i++) {
++            this.lines[i] = lines[i];
++            slines[i] = CraftChatMessage.fromComponent(lines[i]);
++        }
++    }
++
++    public Block getBlock() {
++        return block;
++    }
++
++    public String[] getLines() {
++        return slines;
++    }
++
++    public void setLine(int i, String line) {
++        slines[i] = line;
++        lines[i] = new ChatComponentText("");
++        for (IChatBaseComponent comp : CraftChatMessage.fromString(line)) {
++            lines[i].addSibling(comp);
++        }
++    }
++
++    public org.bukkit.entity.Player getPlayer() {
++        return player;
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
+index 2591c2f0b..3637824fc 100644
+--- a/src/main/java/net/minecraft/server/TileEntitySign.java
++++ b/src/main/java/net/minecraft/server/TileEntitySign.java
+@@ -15,10 +15,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener {
+     }
+ 
+     public NBTTagCompound save(NBTTagCompound nbttagcompound) {
++        // PaperDragon start
++        return save(nbttagcompound, this.lines);
++    }
++    public NBTTagCompound save(NBTTagCompound nbttagcompound, IChatBaseComponent[] lines) {
++        // PaperDragon end
+         super.save(nbttagcompound);
+ 
+         for (int i = 0; i < 4; ++i) {
+-            String s = IChatBaseComponent.ChatSerializer.a(this.lines[i]);
++            String s = IChatBaseComponent.ChatSerializer.a(lines[i]); // PaperDragon
+ 
+             nbttagcompound.setString("Text" + (i + 1), s);
+         }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 90de08865..0ba37e357 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.entity;
+ import com.destroystokyo.paper.Title;
+ import com.destroystokyo.paper.profile.CraftPlayerProfile;
+ import com.destroystokyo.paper.profile.PlayerProfile;
++import com.domnian.paperdragon.api.SendSignEventImpl;
+ import com.google.common.base.Preconditions;
+ import com.google.common.collect.ImmutableSet;
+ import com.google.common.io.BaseEncoding;
+@@ -630,7 +631,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         sign.setPosition(new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+         System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
+ 
+-        getHandle().playerConnection.sendPacket(sign.getUpdatePacket());
++        SendSignEventImpl event = new SendSignEventImpl(sign.getWorld(), sign.getPosition(), sign.lines, this);
++        event.callEvent();
++        net.minecraft.server.NBTTagCompound component = sign.save(new net.minecraft.server.NBTTagCompound(), event.lines);
++        net.minecraft.server.PacketPlayOutTileEntityData packet = new net.minecraft.server.PacketPlayOutTileEntityData(sign.getPosition(), 9, component);
++
++        getHandle().playerConnection.sendPacket(packet);
+     }
+ 
+     @Override
+-- 
+2.18.0
+
