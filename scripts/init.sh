@@ -7,7 +7,7 @@ API_REPO="git@bitbucket.org:domnian/PaperDragon-API"
 SERVER_REPO="git@bitbucket.org:domnian/PaperDragon-Server"
 PAPERAPI_REPO="git@bitbucket.org:domnian/Paper-API"
 PAPERSERVER_REPO="git@bitbucket.org:domnian/Paper-Server"
-PAPER_BRANCH="pre/1.13"
+PAPER_BRANCH="ver/1.14"
 MCDEV_REPO="git@bitbucket.org:domnian/mc-dev"
 
 function cleanupPatches {
