@@ -1,24 +1,27 @@
-From 8aac089296f91ba5cb5b3ae191163b384b56207b Mon Sep 17 00:00:00 2001
-From: GreenMeanie <GreenMeanieMC@gmail.com>
-Date: Sun, 24 Jul 2016 19:07:31 -0400
+From 4058b3f908a1e46a0aeafc1f170dcab38d08de6f Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 12 Jul 2015 23:51:12 -0400
 Subject: [PATCH] getTick API
 
 ---
- src/main/java/org/bukkit/Server.java | 1 +
- 1 file changed, 1 insertion(+)
+ src/main/java/org/bukkit/Server.java | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 376b6586..2f412880 100644
+index 5a4101fc..febf8ba5 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1092,6 +1092,7 @@ public interface Server extends PluginMessageRecipient {
-             throw new UnsupportedOperationException( "Not supported yet." );
+@@ -1325,6 +1325,10 @@ public interface Server extends PluginMessageRecipient {
+         public org.bukkit.configuration.file.YamlConfiguration getDragonConfig() {
+             throw new UnsupportedOperationException("Not supported yet.");
          }
++
++        public int getTick() {
++            return 0;
++        }
+         // PaperDragon end
  
-+        public int getTick() { return 0; } // PaperDragon - Import Patch From EMC
-         public org.bukkit.configuration.file.YamlConfiguration getBukkitConfig()
-         {
-             throw new UnsupportedOperationException( "Not supported yet." );
+         /**
 -- 
-2.18.0
+2.17.1
 

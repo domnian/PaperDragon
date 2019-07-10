@@ -1,4 +1,4 @@
-From c269e9280fa14bc497ada313fb4fbcddb30e643a Mon Sep 17 00:00:00 2001
+From 9d298fc7c72c0ef63c10f4ed0566e0f774232d85 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Tue, 14 Mar 2017 00:00:00 -0500
 Subject: [PATCH] DragonAPI
@@ -15,23 +15,23 @@ A Derivative of the EmpirDAPI by Aikar/Starlis/Empire Minecraft
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 new file mode 100644
-index 00000000..72d04546
+index 00000000..9ea6b96d
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 @@ -0,0 +1,4 @@
 +package com.domnian.paperdragon.api;
 +
-+public class DAPI_Entity {
++public interface DAPI_Entity {
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 new file mode 100644
-index 00000000..f35c91b6
+index 00000000..7beb77f4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 @@ -0,0 +1,4 @@
 +package com.domnian.paperdragon.api;
 +
-+public class DAPI_Misc {
++public interface DAPI_Misc {
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 new file mode 100644
@@ -48,5 +48,5 @@ index 00000000..6f9eef36
 +
 +}
 -- 
-2.18.0
+2.17.1
 

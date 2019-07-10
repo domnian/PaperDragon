@@ -1,19 +1,19 @@
-From f9d5192836f20b67af3a705e1d29ec745339414a Mon Sep 17 00:00:00 2001
+From 5efccf361bb2e4087ad7cecd476e68da28736ec5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ pom.xml | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index a771e156..11424598 100644
+index df8fc517..91651ded 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -4,17 +4,18 @@
+@@ -3,19 +3,19 @@
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
      <modelVersion>4.0.0</modelVersion>
- 
      <parent>
 -        <groupId>com.destroystokyo.paper</groupId>
 -        <artifactId>paper-parent</artifactId>
@@ -22,10 +22,12 @@ index a771e156..11424598 100644
          <version>dev-SNAPSHOT</version>
      </parent>
  
+-    <groupId>com.destroystokyo.paper</groupId>
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.13-R0.1-SNAPSHOT</version>
+     <version>1.14.3-R0.1-SNAPSHOT</version>
+ 
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -35,25 +37,18 @@ index a771e156..11424598 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -26,12 +27,14 @@
- 
-     <distributionManagement>
+@@ -33,8 +33,9 @@
+             Please see https://www.spigotmc.org/go/maven for more information.
+         -->
          <repository>
--            <id>destroystokyo-releases</id>
--            <url>https://destroystokyo.com/repo/repository/maven-releases/</url>
+-            <id>spigotmc-public</id>
+-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 +            <id>domnian-rel</id>
 +            <name>Domnian Releases</name>
 +            <url>https://domnian.com/repo/content/repositories/releases/</url>
          </repository>
-         <snapshotRepository>
--            <id>destroystokyo-snapshots</id>
--            <url>https://destroystokyo.com/repo/repository/maven-snapshots/</url>
-+            <id>domnian-snap</id>
-+            <name>Domnian Snapshots</name>
-+            <url>https://domnian.com/repo/content/repositories/snapshots/</url>
-         </snapshotRepository>
-     </distributionManagement>
- 
+         <repository>
+             <id>sonatype</id>
 -- 
-2.18.0
+2.17.1
 
