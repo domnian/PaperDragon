@@ -1,0 +1,50 @@
+From e4b0e4995070e2cb9b5be9f95117aab224c8e7d6 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 26 Jul 2013 22:19:29 -0400
+Subject: [PATCH] Allow force spawns
+
+Pass spawn reason force to not allow plugins to block
+Force some cases where plugins should not be allowed to block it.
+---
+ src/main/java/net/minecraft/server/WorldServer.java           | 4 ++--
+ .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 154b4ae09..b1962bfb7 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -903,7 +903,7 @@ public class WorldServer extends World {
+         boolean flag = entity.attachedToPlayer;
+ 
+         entity.attachedToPlayer = true;
+-        this.addEntitySerialized(entity);
++        this.addEntitySerialized(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
+         entity.attachedToPlayer = flag;
+         this.chunkCheck(entity);
+     }
+@@ -969,7 +969,7 @@ public class WorldServer extends World {
+             // CraftBukkit end
+             IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX / 16.0D), MathHelper.floor(entity.locZ / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
+ 
+-            if (!(ichunkaccess instanceof Chunk)) {
++            if (spawnReason != CreatureSpawnEvent.SpawnReason.FORCE && !(ichunkaccess instanceof Chunk)) { // PaperDragon
+                 return false;
+             } else {
+                 ichunkaccess.a(entity);
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 9e0a2c5ca..a23fcc648 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -576,7 +576,7 @@ public class CraftEventFactory {
+             event = CraftEventFactory.callEntitySpawnEvent(entity);
+         }
+ 
+-        if (event != null && (event.isCancelled() || entity.dead)) {
++        if (spawnReason != SpawnReason.FORCE && event != null && (event.isCancelled() || entity.dead)) { // PaperDragon - add != FORCE
+             Entity vehicle = entity.getVehicle();
+             if (vehicle != null) {
+                 vehicle.dead = true;
+-- 
+2.17.1
+

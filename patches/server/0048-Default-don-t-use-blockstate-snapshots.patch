@@ -1,0 +1,25 @@
+From 93cbfe2dc0ad4d65059bf46be57cc7b46dce772b Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 28 Jun 2018 22:13:44 -0400
+Subject: [PATCH] Default don't use blockstate snapshots
+
+---
+ src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
+index 5296c6d9b..8011733bc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
+@@ -313,7 +313,7 @@ public class CraftBlock implements Block {
+     @Override
+     public BlockState getState() {
+         // Paper start - allow disabling the use of snapshots
+-        return getState(true);
++        return getState(false); // PaperDragon - default to not use snapshots
+     }
+     public BlockState getState(boolean useSnapshot) {
+         boolean prev = CraftBlockEntityState.DISABLE_SNAPSHOT;
+-- 
+2.17.1
+

@@ -1,0 +1,31 @@
+From e5758347e41a46c09fd34036f5c31a9bc80edb69 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 8 Jul 2018 23:21:47 -0400
+Subject: [PATCH] Detect async meta
+
+---
+ src/main/java/net/minecraft/server/MetaApiAccessor.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
+index 53059c01d..c52f64522 100644
+--- a/src/main/java/net/minecraft/server/MetaApiAccessor.java
++++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
+@@ -361,12 +361,14 @@ public final class MetaApiAccessor {
+             return null;
+         }
+         PersistentMetaMap map = new PersistentMetaMap();
++        map.allowAsync = true;
+         for (Entry<String, NBTBase> entry : cmp.map.entrySet()) {
+             final Object metaData = getObjectFromNbt(entry.getValue());
+             if (metaData != null) {
+                 map.put(entry.getKey(), metaData);
+             }
+         }
++        map.allowAsync = false;
+         return map;
+     }
+ 
+-- 
+2.17.1
+

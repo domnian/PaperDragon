@@ -1,4 +1,4 @@
-From 898fcf7e4529f7859fe3604f36b67ca632feb05c Mon Sep 17 00:00:00 2001
+From 15f325f06a39dc5a3bde75c594441112c243d026 Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
@@ -6,13 +6,13 @@ Subject: [PATCH] SendSignEvent
 ---
  .../paperdragon/api/SendSignEventImpl.java    | 49 +++++++++++++++++++
  .../net/minecraft/server/TileEntitySign.java  |  7 ++-
- .../craftbukkit/entity/CraftPlayer.java       |  8 ++-
- 3 files changed, 62 insertions(+), 2 deletions(-)
+ .../craftbukkit/entity/CraftPlayer.java       |  7 ++-
+ 3 files changed, 61 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 new file mode 100644
-index 000000000..b185b5ef3
+index 000000000..a289065f6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 @@ -0,0 +1,49 @@
@@ -60,18 +60,18 @@ index 000000000..b185b5ef3
 +        }
 +    }
 +
-+    public org.bukkit.entity.Player getPlayer() {
++    public Player getPlayer() {
 +        return player;
 +    }
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 2591c2f0b..3637824fc 100644
+index b3fa4ba06..0ad3f5831 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
-@@ -15,10 +15,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener {
-     }
+@@ -28,10 +28,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
  
+     @Override
      public NBTTagCompound save(NBTTagCompound nbttagcompound) {
 +        // PaperDragon start
 +        return save(nbttagcompound, this.lines);
@@ -87,23 +87,15 @@ index 2591c2f0b..3637824fc 100644
              nbttagcompound.setString("Text" + (i + 1), s);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 90de08865..0ba37e357 100644
+index c94944dfe..b3aeb6870 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.entity;
- import com.destroystokyo.paper.Title;
- import com.destroystokyo.paper.profile.CraftPlayerProfile;
- import com.destroystokyo.paper.profile.PlayerProfile;
-+import com.domnian.paperdragon.api.SendSignEventImpl;
- import com.google.common.base.Preconditions;
- import com.google.common.collect.ImmutableSet;
- import com.google.common.io.BaseEncoding;
-@@ -630,7 +631,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
-         sign.setPosition(new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+@@ -678,7 +678,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         sign.setColor(EnumColor.fromColorIndex(dyeColor.getWoolData()));
          System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
  
 -        getHandle().playerConnection.sendPacket(sign.getUpdatePacket());
-+        SendSignEventImpl event = new SendSignEventImpl(sign.getWorld(), sign.getPosition(), sign.lines, this);
++        com.domnian.paperdragon.api.SendSignEventImpl event = new com.domnian.paperdragon.api.SendSignEventImpl(sign.getWorld(), sign.getPosition(), sign.lines, this);
 +        event.callEvent();
 +        net.minecraft.server.NBTTagCompound component = sign.save(new net.minecraft.server.NBTTagCompound(), event.lines);
 +        net.minecraft.server.PacketPlayOutTileEntityData packet = new net.minecraft.server.PacketPlayOutTileEntityData(sign.getPosition(), 9, component);
@@ -113,5 +105,5 @@ index 90de08865..0ba37e357 100644
  
      @Override
 -- 
-2.18.0
+2.17.1
 

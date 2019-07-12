@@ -1,0 +1,57 @@
+From 667a858f3426a516fc1211824215327eaea78d9a Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 12 Jul 2019 03:48:22 -0400
+Subject: [PATCH] Implement method to get player skin hash
+
+---
+ .../paperdragon/api/CraftDAPI_Misc.java        | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+index 7c469c052..3a931540f 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -24,15 +24,22 @@
+ package com.domnian.paperdragon.api;
+ 
+ import com.destroystokyo.paper.MaterialTags;
++import com.destroystokyo.paper.profile.CraftPlayerProfile;
++import com.destroystokyo.paper.profile.ProfileProperty;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
+ import net.minecraft.server.ItemStack;
+ import net.minecraft.server.NBTTagCompound;
+ import net.minecraft.server.NBTTagList;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
++import org.bukkit.entity.Player;
+ 
+ import javax.annotation.Nonnull;
+ import java.util.ArrayList;
++import java.util.Base64;
+ import java.util.List;
++import java.util.Set;
+ 
+ public class CraftDAPI_Misc implements DAPI_Misc {
+ 
+@@ -56,6 +63,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+         return items;
+     }
+ 
++    @Override
++    public String getSkinHash(@Nonnull Player player) {
++        if (!player.getPlayerProfile().hasTextures()) return null;
++        Set<ProfileProperty> properties = player.getPlayerProfile().getProperties();
++        properties.removeIf(p -> !p.getName().equalsIgnoreCase("textures"));
++        String encoded = properties.stream().findFirst().get().getValue();
++        JsonObject decoded = new Gson().fromJson(new String(Base64.getDecoder().decode(encoded)), JsonObject.class);
++        String skinUrl = decoded.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
++        return skinUrl.substring(38);
++    }
++
+     private static NBTTagList getNBTItems(org.bukkit.inventory.ItemStack shulker) {
+         if (shulker == null) {
+             throw new NullPointerException("Itemstack can not be null");
+-- 
+2.17.1
+

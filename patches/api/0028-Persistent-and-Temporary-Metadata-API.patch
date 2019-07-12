@@ -1,4 +1,4 @@
-From 68581faaec0e2468fe3172129d8cae68cfeb14dd Mon Sep 17 00:00:00 2001
+From aa344192dfe90c10874c0cfda9f147a4aa4e2c0c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -1599,17 +1599,18 @@ index 00000000..dcf4a459
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 6d45a421..ecd27a4b 100644
+index 0abd4377..62cb6681 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -1,5 +1,6 @@
+@@ -1,6 +1,7 @@
  package org.bukkit;
  
+ import java.util.Collection;
 +import com.domnian.paperdragon.api.meta.TempMetaMap;
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockState;
  import org.bukkit.entity.Entity;
-@@ -120,6 +121,8 @@ public interface Chunk {
+@@ -122,6 +123,8 @@ public interface Chunk {
      BlockState[] getTileEntities(boolean useSnapshot);
      // Paper end
  

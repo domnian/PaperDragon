@@ -1,0 +1,143 @@
+From ee14bc29485fc94c64e39e391f7d08680376be9c Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 11 Jun 2013 23:15:00 -0400
+Subject: [PATCH] EntityTasks API
+
+Allows scheduling repeating task timers on an entity level.
+Avoids Bukkit system so that tasks will simply maintain themselves on entity removal.
+---
+ .../paperdragon/api/CraftDAPI_Entity.java     | 18 ++++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../minecraft/server/EntityTasksHandler.java  | 42 +++++++++++++++++++
+ .../net/minecraft/server/WorldServer.java     |  2 +
+ .../org/bukkit/craftbukkit/CraftServer.java   |  5 ++-
+ 5 files changed, 67 insertions(+), 1 deletion(-)
+ create mode 100644 src/main/java/net/minecraft/server/EntityTasksHandler.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+index d5c638104..aa79b57c2 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -23,5 +23,23 @@
+ 
+ package com.domnian.paperdragon.api;
+ 
++import net.minecraft.server.EntityTasksHandler;
++import org.bukkit.craftbukkit.entity.CraftEntity;
++import org.bukkit.entity.Entity;
++
++import java.util.ArrayList;
++import java.util.List;
++
+ public class CraftDAPI_Entity implements DAPI_Entity {
++
++    public <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task) {
++        final EntityTasksHandler.TaskList entityTasks = ((CraftEntity) entity).getHandle().entityTasks;
++        entityTasks.add(task);
++        task.init(entity, interval);
++        return task;
++    }
++
++    public void cancelTasks(Entity entity) {
++        ((CraftEntity) entity).getHandle().entityTasks.clear();
++    }
+ }
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 8e1747914..ca3196c79 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+ 
+     // CraftBukkit start
+     public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
++    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
+     private static final int CURRENT_LEVEL = 2;
+     // Paper start
+     public static Random SHARED_RANDOM = new Random() {
+diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
+new file mode 100644
+index 000000000..361135b2c
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/EntityTasksHandler.java
+@@ -0,0 +1,42 @@
++package net.minecraft.server;
++
++import java.util.ArrayList;
++import java.util.Iterator;
++import java.util.List;
++
++import com.domnian.paperdragon.api.EntityTask;
++
++public final class EntityTasksHandler {
++
++    private EntityTasksHandler() {}
++
++    public static void tickHandler(Entity entity) {
++        if (entity.entityTasks.isEmpty()) {
++            return;
++        }
++        List<EntityTask> tasksToRun = new ArrayList<>();
++        final Iterator<EntityTask> it = entity.entityTasks.iterator();
++        while (it.hasNext()) {
++            EntityTask task = it.next();
++            if (!task.isValid()) {
++                it.remove();
++                continue;
++            }
++            if (task.isReady()) {
++                tasksToRun.add(task);
++            }
++        }
++
++        tasksToRun.forEach(EntityTask::tick);
++    }
++
++    public static void reload() {
++        for (WorldServer world : MinecraftServer.getServer().getWorlds()) {
++            for (Entity entity : world.globalEntityList) {
++                entity.entityTasks.clear();
++            }
++        }
++    }
++
++    public static class TaskList extends ArrayList<EntityTask> {}
++}
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 6003ef2cc..cf1f20c84 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -561,6 +561,7 @@ public class WorldServer extends World {
+             // Spigot start
+             if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
+                 entity.ticksLived++;
++                EntityTasksHandler.tickHandler(entity); // PaperDragon
+                 entity.inactiveTick();
+                 return;
+             }
+@@ -574,6 +575,7 @@ public class WorldServer extends World {
+             entity.lastPitch = entity.pitch;
+             if (entity.inChunk) {
+                 ++entity.ticksLived;
++                EntityTasksHandler.tickHandler(entity); // PaperDragon
+                 this.getMethodProfiler().a(() -> {
+                     return IRegistry.ENTITY_TYPE.getKey(entity.getEntityType()).toString();
+                 });
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index b46cf40a8..bd83e19eb 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -859,7 +859,10 @@ public final class CraftServer implements Server {
+                 "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
+             ));
+         }
+-        net.minecraft.server.MetaApiAccessor.reload(); // PaperDragon
++        // PaperDragon start
++        net.minecraft.server.MetaApiAccessor.reload();
++        net.minecraft.server.EntityTasksHandler.reload();
++        // PaperDragon end
+         loadPlugins();
+         enablePlugins(PluginLoadOrder.STARTUP);
+         enablePlugins(PluginLoadOrder.POSTWORLD);
+-- 
+2.17.1
+

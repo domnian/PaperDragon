@@ -1,0 +1,53 @@
+From cee2cf5cb83b1ae5f36c887b5438297ef735b6d2 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 20 Jul 2013 22:40:56 -0400
+Subject: [PATCH] MonsterEggSpawn Event
+
+Get the itemstack used to spawn an entity
+---
+ .../net/minecraft/server/EntityTypes.java     | 21 +++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
+index eaacc9bff..9868eeb26 100644
+--- a/src/main/java/net/minecraft/server/EntityTypes.java
++++ b/src/main/java/net/minecraft/server/EntityTypes.java
+@@ -157,18 +157,31 @@ public class EntityTypes<T extends Entity> {
+ 
+     @Nullable
+     public Entity spawnCreature(World world, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
+-        return this.spawnCreature(world, itemstack == null ? null : itemstack.getTag(), itemstack != null && itemstack.hasName() ? itemstack.getName() : null, entityhuman, blockposition, enummobspawn, flag, flag1);
++        // PaperDragon start - Pass ItemStack for Monster Eggs
++        return this.spawnCreature(world, itemstack, itemstack == null ? null : itemstack.getTag(), itemstack != null && itemstack.hasName() ? itemstack.getName() : null, entityhuman, blockposition, enummobspawn, flag, flag1);
+     }
+ 
+     @Nullable
+-    public T spawnCreature(World world, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
++    public T spawnCreature(World world, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
+         // CraftBukkit start
+-        return this.spawnCreature(world, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
++        return this.spawnCreature(world, itemstack, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
+     }
+ 
+     @Nullable
+-    public T spawnCreature(World world, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
++    public T spawnCreature(World world, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
+         T t0 = this.b(world, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
++        // PaperDragon start - if false, the spawn was canceled, add new event
++        if (spawnReason == org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG && itemstack != null && t0 != null) {
++            final com.domnian.paperdragon.events.MonsterEggSpawnEvent event = new com.domnian.paperdragon.events.MonsterEggSpawnEvent(entityhuman != null ? entityhuman.getBukkitEntity() : null, (org.bukkit.entity.LivingEntity) t0.getBukkitEntity(), org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack));
++            if (!event.callEvent()) {
++                ((WorldServer)world).removeEntity(t0);
++                return null;
++            }
++            if (event.getEntity().getEntityId() != t0.getId()) {
++                return (T) ((org.bukkit.craftbukkit.entity.CraftEntity) event.getEntity()).getHandle();
++            }
++        }
++        // PaperDragon end
+ 
+         return world.addEntity(t0, spawnReason) ? t0 : null; // Don't return an entity when CreatureSpawnEvent is canceled
+         // CraftBukkit end
+-- 
+2.17.1
+

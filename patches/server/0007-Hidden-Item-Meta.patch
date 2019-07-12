@@ -1,4 +1,4 @@
-From 3ff786a71d94f48950af4c8401d683b7f48679f5 Mon Sep 17 00:00:00 2001
+From 35617b9b8cc0c0a099fc0765190ef93eff97370f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -14,14 +14,14 @@ Also adds a &&::SHINY tag to send a fake enchantment aura if it does not exists.
 Must be set before META
 ---
  .../com/domnian/paperdragon/DragonConfig.java |  6 ++
- .../paperdragon/api/HiddenItemMeta.java       | 93 +++++++++++++++++++
+ .../paperdragon/api/HiddenItemMeta.java       | 90 +++++++++++++++++++
  .../java/net/minecraft/server/ItemStack.java  |  2 +-
  .../server/PacketDataSerializer.java          |  2 +
- 4 files changed, 102 insertions(+), 1 deletion(-)
+ 4 files changed, 99 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 6ef5dd625..6d129abae 100644
+index 2f7bc8187..248830d16 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -156,6 +156,12 @@ public class DragonConfig {
@@ -39,19 +39,17 @@ index 6ef5dd625..6d129abae 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 000000000..ff87756a5
+index 000000000..3b4c3f23b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
-@@ -0,0 +1,93 @@
+@@ -0,0 +1,90 @@
 +package com.domnian.paperdragon.api;
 +
-+import com.domnian.paperdragon.DragonConfig;
 +import net.minecraft.server.NBTTagCompound;
 +import net.minecraft.server.NBTTagList;
 +import net.minecraft.server.NBTTagString;
 +
 +public class HiddenItemMeta {
-+
 +    public static NBTTagCompound filterItemLore(NBTTagCompound nbttagcompound, boolean storeOriginal) {
 +        if (nbttagcompound != null && nbttagcompound.hasKey("display")) {
 +            NBTTagCompound display = nbttagcompound.getCompound("display");
@@ -63,16 +61,16 @@ index 000000000..ff87756a5
 +                for (int i = 0; i < lore.size(); i++) {
 +                    String line = lore.getString(i);
 +
-+                    if (line.equals(DragonConfig.hiddenItemMetaTagMeta)) {
++                    if (line.equals("&&::META")) {
 +                        hasSpecial = true;
 +                        break;
 +                    } else if (!line.isEmpty()) {
-+                        if (line.equals(DragonConfig.hiddenItemMetaTagShiny)) {
++                        if (line.equals("&&::SHINY")) {
 +                            hasShiny = true;
 +                            hasSpecial = true;
 +                            break;
 +                        } else {
-+                            lastLine = i + 1;
++                            lastLine = i+1;
 +                        }
 +                    }
 +                }
@@ -89,7 +87,7 @@ index 000000000..ff87756a5
 +                        enchant.setShort("id", (short) 1);
 +                        enchant.setShort("lvl", (short) 1);
 +                        nbtbase.add(enchant);
-+                        nbttagcompound.set("ench", nbtbase);
++                        nbttagcompound.set("ench" , nbtbase);
 +                        int flags = 1;
 +                        if (nbttagcompound.hasKey("HideFlags")) {
 +                            flags = nbttagcompound.getInt("HideFlags");
@@ -134,41 +132,40 @@ index 000000000..ff87756a5
 +        }
 +        return tag;
 +    }
-+
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 94dcb9494..9f9b0a6ea 100644
+index 03236cf98..22b16890c 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -52,7 +52,7 @@ public final class ItemStack {
-     private int e;
+@@ -54,7 +54,7 @@ public final class ItemStack {
+     // Paper end
      @Deprecated
      private Item item;
--    private NBTTagCompound tag;
-+    public NBTTagCompound tag; // PaperDragon - Hidden Item Meta API
+-    NBTTagCompound tag; // Paper -> package private
++    public NBTTagCompound tag; // Paper -> package private // PaperDragon
      private boolean h;
      private EntityItemFrame i;
      private ShapeDetectorBlock j;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index d04afceb7..1a11aa67e 100644
+index dac560c63..9c40cdb28 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -251,6 +251,7 @@ public class PacketDataSerializer extends ByteBuf {
-                 CraftItemStack.setItemMeta(itemstack, CraftItemStack.getItemMeta(itemstack));
+@@ -256,6 +256,7 @@ public class PacketDataSerializer extends ByteBuf {
                  // Spigot end
                  nbttagcompound = itemstack.getTag();
-+                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon - Hidden Item Meta API
-             }
- 
-             this.a(nbttagcompound);
-@@ -271,6 +272,7 @@ public class PacketDataSerializer extends ByteBuf {
-             itemstack.setTag(this.j());
+                 // Paper start
++                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon
+                 if (nbttagcompound != null && nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
+                     NBTTagCompound owner = nbttagcompound.getCompound("SkullOwner");
+                     if (owner.hasKey("Id")) {
+@@ -284,6 +285,7 @@ public class PacketDataSerializer extends ByteBuf {
              // CraftBukkit start
              if (itemstack.getTag() != null) {
-+                itemstack.tag = com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - Hidden Item Meta API
-                 CraftItemStack.setItemMeta(itemstack, CraftItemStack.getItemMeta(itemstack));
-             }
-             // CraftBukkit end
+                 // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
++                itemstack.tag = com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
+                 if (itemstack.tag.hasKey("SkullOwnerOrig")) {
+                     NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
+                     String ownerOrig = itemstack.tag.getString("SkullOwnerOrig");
 -- 
-2.18.0
+2.17.1
 

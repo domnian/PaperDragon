@@ -1,26 +1,28 @@
-From 215e41fbc55b6acf8ed38836865edbbd83426afe Mon Sep 17 00:00:00 2001
+From 7bb6f3ca736d30abdd0ac593d5d8c6f1b676365d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
 
 ---
  .../paperdragon/api/CraftDragonAPI.java       |   3 +
- .../paperdragon/api/meta/CraftDAPI_Meta.java  |  75 +++
- src/main/java/net/minecraft/server/Chunk.java |   4 +
- .../minecraft/server/ChunkRegionLoader.java   |   2 +
+ .../paperdragon/api/meta/CraftDAPI_Meta.java  |  80 +++
+ src/main/java/net/minecraft/server/Chunk.java |   2 +
+ .../minecraft/server/ChunkRegionLoader.java   |   3 +-
  .../java/net/minecraft/server/Entity.java     |   3 +
- .../net/minecraft/server/MetaApiAccessor.java | 468 ++++++++++++++++++
- .../server/PacketPlayOutMapChunk.java         |   3 +-
+ .../net/minecraft/server/MetaApiAccessor.java | 504 ++++++++++++++++++
+ .../server/PacketPlayOutMapChunk.java         |   1 +
  .../server/PacketPlayOutTileEntityData.java   |   1 +
  .../java/net/minecraft/server/TileEntity.java |   3 +
  src/main/java/net/minecraft/server/World.java |   1 +
- .../java/net/minecraft/server/WorldData.java  |   4 +-
+ .../java/net/minecraft/server/WorldData.java  |   3 +
+ .../net/minecraft/server/WorldServer.java     |   2 +-
+ .../org/bukkit/craftbukkit/CraftChunk.java    |   2 +
  .../org/bukkit/craftbukkit/CraftServer.java   |   1 +
- .../craftbukkit/block/CraftBlockState.java    |  14 +-
- .../craftbukkit/entity/CraftEntity.java       |   6 +
+ .../block/CraftBlockEntityState.java          |   7 +
+ .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
- .../craftbukkit/inventory/CraftInventory.java |   7 +-
- 16 files changed, 596 insertions(+), 4 deletions(-)
+ .../craftbukkit/inventory/CraftInventory.java |   6 +
+ 18 files changed, 627 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -47,10 +49,10 @@ index 21bd42ff9..b11af17ef 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
 new file mode 100644
-index 000000000..6352db624
+index 000000000..2afd6f251
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,80 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -107,6 +109,11 @@ index 000000000..6352db624
 +    }
 +
 +    @Override
++    public TempMetaMap getChunkTempMetaMap(Chunk chunk, boolean isWrite) {
++        return chunk.getTempMeta();
++    }
++
++    @Override
 +    public Map<Vector3i, PersistentMetaMap> getChunkMetaData(Chunk chunk) {
 +        return ((CraftChunk) chunk).getHandle().chunkMeta;
 +    }
@@ -127,74 +134,80 @@ index 000000000..6352db624
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 6d4b9adff..a0a8f48f4 100644
+index d19412f18..ab0c20ffc 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -178,6 +178,10 @@ public class Chunk implements IChunkAccess {
-     public boolean mustSave;
-     public boolean newChunk;
-     // CraftBukkit end
-+    // PaperDragon start - Persistent and Temporary Meta API
-+    public MetaApiAccessor.ChunkTempMeta chunkTempMeta = new MetaApiAccessor.ChunkTempMeta();
-+    public MetaApiAccessor.ChunkPersistentMeta chunkMeta;
-+    // PaperDragon emd
+@@ -135,6 +135,8 @@ public class Chunk implements IChunkAccess {
+         return bukkitChunk;
+     }
  
-     public Chunk(World world, ProtoChunk protochunk, int i, int j) {
-         this(world, i, j, protochunk.getBiomeIndex(), protochunk.v(), protochunk.n(), protochunk.o(), protochunk.m());
++    public MetaApiAccessor.ChunkPersistentMeta chunkMeta; // PaperDragon
++    public MetaApiAccessor.ChunkTempMeta chunkTempMeta = new MetaApiAccessor.ChunkTempMeta(); // PaperDragon
+     public boolean mustNotSave;
+     public boolean needsDecoration;
+     // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 54840851b..33dbdf35e 100644
+index f88e3d957..31d05e250 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -578,6 +578,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
-     private void saveBody(Chunk chunk, World world, NBTTagCompound nbttagcompound, long worldTime, boolean worldHasSkyLight) { // Spigot
-         nbttagcompound.setInt("xPos", chunk.locX);
-         nbttagcompound.setInt("zPos", chunk.locZ);
-+        MetaApiAccessor.saveChunkMetaNbt(nbttagcompound, chunk); // PaperDragon - Persistent and Temporary Meta API
-         nbttagcompound.setLong("LastUpdate", worldTime); // Spigot
-         nbttagcompound.setLong("InhabitedTime", chunk.m());
-         nbttagcompound.setString("Status", chunk.i().b());
-@@ -744,6 +745,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
-         Chunk chunk = new Chunk(generatoraccess.getMinecraftWorld(), i, j, abiomebase, chunkconverter, protochunkticklist, protochunkticklist1, i1);
+@@ -95,7 +95,6 @@ public class ChunkRegionLoader {
+                 }
+             }
+         }
+-
+         long l = nbttagcompound1.getLong("InhabitedTime");
+         ChunkStatus.Type chunkstatus_type = a(nbttagcompound);
+         Object object;
+@@ -172,6 +171,7 @@ public class ChunkRegionLoader {
+         }
  
-         chunk.c(nbttagcompound.getString("Status"));
-+        MetaApiAccessor.loadChunkMetaNbt(nbttagcompound, chunk); // PaperDragon - Persistent and Temporary Meta API
-         NBTTagList nbttaglist = nbttagcompound.getList("Sections", 10);
+         HeightMap.a((IChunkAccess) object, enumset);
++        MetaApiAccessor.loadChunkMetaNbt(nbttagcompound, (IChunkAccess) object); // PaperDragon
+         NBTTagCompound nbttagcompound4 = nbttagcompound1.getCompound("Structures");
  
-         chunk.a(this.a((IWorldReader) generatoraccess, nbttaglist));
+         ((IChunkAccess) object).a(a(chunkgenerator, definedstructuremanager, worldchunkmanager, nbttagcompound4));
+@@ -246,6 +246,7 @@ public class ChunkRegionLoader {
+         nbttagcompound.set("Level", nbttagcompound1);
+         nbttagcompound1.setInt("xPos", chunkcoordintpair.x);
+         nbttagcompound1.setInt("zPos", chunkcoordintpair.z);
++        MetaApiAccessor.saveChunkMetaNbt(nbttagcompound, ichunkaccess); // PaperDragon
+         nbttagcompound1.setLong("LastUpdate", worldserver.getTime());
+         nbttagcompound1.setLong("InhabitedTime", ichunkaccess.q());
+         nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ce33cd5b8..6d64b1f1f 100644
+index b2a2090e7..8e1747914 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -50,6 +50,7 @@ import org.bukkit.plugin.PluginManager;
+@@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
  public abstract class Entity implements INamableTileEntity, ICommandListener, KeyedObject { // Paper
  
      // CraftBukkit start
-+    public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon - Persistent and Temporary Meta API
++    public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
      private static final int CURRENT_LEVEL = 2;
      // Paper start
      public static Random SHARED_RANDOM = new Random() {
-@@ -1573,6 +1574,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1555,6 +1556,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
-+            MetaApiAccessor.saveEntityMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
++            MetaApiAccessor.saveEntityMeta(this, nbttagcompound); // PaperDragon
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1679,6 +1681,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
-             this.motX = nbttaglist1.k(0);
-             this.motY = nbttaglist1.k(1);
-             this.motZ = nbttaglist1.k(2);
-+            MetaApiAccessor.loadEntityMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
+@@ -1773,6 +1775,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+             // CraftBukkit end
  
-             /* CraftBukkit start - Moved section down
-             if (Math.abs(this.motX) > 10.0D) {
+             // Paper start - Restore the entity's origin location
++            MetaApiAccessor.loadEntityMeta(this, nbttagcompound); // PaperDragon
+             NBTTagList originTag = nbttagcompound.getList("Paper.Origin", 6);
+             if (!originTag.isEmpty()) {
+                 origin = new Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 000000000..a05e2d398
+index 000000000..53059c01d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -0,0 +1,468 @@
+@@ -0,0 +1,504 @@
 +package net.minecraft.server;
 +
 +import org.bukkit.Bukkit;
@@ -209,6 +222,7 @@ index 000000000..a05e2d398
 +import org.bukkit.craftbukkit.block.CraftBlockState;
 +import org.bukkit.craftbukkit.entity.CraftEntity;
 +import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.entity.Player;
 +
 +import java.util.*;
 +import java.util.Map.Entry;
@@ -351,12 +365,26 @@ index 000000000..a05e2d398
 +    /**
 +     * Saves this chunks Meta Data into NBT
 +     * @param cmp
++     * @param chunkAccess
++     */
++    static void saveChunkMetaNbt(NBTTagCompound cmp, IChunkAccess chunkAccess) {
++        Chunk chunk = null;
++        if (chunkAccess instanceof Chunk) {
++            chunk = (Chunk) chunkAccess;
++        } else if (chunkAccess instanceof PlayerChunk) {
++            chunk = ((PlayerChunk) chunkAccess).getChunk();
++        }
++        if (chunk == null) throw new IllegalArgumentException("Chunk Access is not a Chunk!");
++        saveChunkMetaNbt(cmp, chunk);
++    }
++
++    /**
++     * Saves this chunks Meta Data into NBT
++     * @param cmp
 +     * @param chunk
 +     */
 +    static void saveChunkMetaNbt(NBTTagCompound cmp, Chunk chunk) {
-+        if (chunk.chunkMeta == null || chunk.chunkMeta.isEmpty()) {
-+            return;
-+        }
++        if (chunk.chunkMeta == null || chunk.chunkMeta.isEmpty()) return;
 +        NBTTagList meta = new NBTTagList();
 +        for (Map.Entry<Vector3i, PersistentMetaMap> entry : chunk.chunkMeta.entrySet()) {
 +            PersistentMetaMap list = entry.getValue();
@@ -371,6 +399,22 @@ index 000000000..a05e2d398
 +        if (!meta.isEmpty()) {
 +            cmp.set(CHUNK_META_LIST, meta);
 +        }
++    }
++
++    /**
++     * Loads this chunks Meta Data from NBT
++     * @param cmp
++     * @param chunkAccess
++     */
++    static void loadChunkMetaNbt(NBTTagCompound cmp, IChunkAccess chunkAccess) {
++        Chunk chunk = null;
++        if (chunkAccess instanceof Chunk) {
++            chunk = (Chunk) chunkAccess;
++        } else if (chunkAccess instanceof PlayerChunk) {
++            chunk = ((PlayerChunk) chunkAccess).getChunk();
++        }
++        if (chunk == null) throw new IllegalArgumentException("Chunk Access is not a Chunk!");
++        loadChunkMetaNbt(cmp, chunk);
 +    }
 +
 +    /**
@@ -474,15 +518,15 @@ index 000000000..a05e2d398
 +            return null;
 +        }
 +        if (nbt instanceof NBTTagString) {
-+            return (String) nbt.b_();
++            return (String) nbt.asString();
 +            // Redundant casts added to each number so that it will fail to compile
 +            // If the method names change for each type. Do not remove.
 +        } else if (nbt instanceof NBTTagInt) {
-+            return (Integer) ((NBTNumber) nbt).e();
++            return (Integer) ((NBTNumber) nbt).asInt();
 +        } else if (nbt instanceof NBTTagLong) {
-+            return (Long) ((NBTNumber) nbt).d();
++            return (Long) ((NBTNumber) nbt).asLong();
 +        } else if (nbt instanceof NBTTagFloat) {
-+            return (Float) ((NBTNumber) nbt).i();
++            return (Float) ((NBTNumber) nbt).asFloat();
 +        } else if (nbt instanceof NBTTagDouble) {
 +            return (Double) ((NBTNumber) nbt).asDouble();
 +        } else if (nbt instanceof NBTTagList) {
@@ -504,7 +548,7 @@ index 000000000..a05e2d398
 +                String type = cmp.getString(META_TYPE);
 +                cmp.remove(META_TYPE);
 +                if (ITEM.equals(type)) {
-+                    return CraftItemStack.asBukkitCopy(ItemStack.a(cmp));
++                    return CraftItemStack.asCraftMirror(ItemStack.a(cmp));
 +                } else if (META_MAP.equals(type)) {
 +                    final PersistentMetaMap metaMap = getMetaMapFromCompound(cmp);
 +                    if (metaMap == null || metaMap.isEmpty()) {
@@ -610,13 +654,18 @@ index 000000000..a05e2d398
 +    }
 +
 +    public static void reload() {
-+        for (org.bukkit.World world : Bukkit.getWorlds()) {
-+            for (org.bukkit.entity.Entity entity : world.getEntities()) {
-+                entity.getTempMeta().clear();
++        // Players are not guaranteed to be in a chunk if dead
++        for (Player player: Bukkit.getOnlinePlayers()) {
++            player.getTempMeta().clear();
++        }
++        for (WorldServer world : MinecraftServer.getServer().getWorlds()) {
++            for (Entity entity : world.globalEntityList) {
++                entity.getBukkitEntity().getTempMeta().clear();
 +            }
-+            for (org.bukkit.Chunk chunk : world.getLoadedChunks()) {
-+                ((CraftChunk) chunk).getHandle().chunkTempMeta.clear();
-+            }
++            world.getChunkProvider().playerChunkMap.visibleChunks.values().stream()
++                    .map(PlayerChunk::getChunk)
++                    .filter(Objects::nonNull)
++                    .forEach(chunk -> chunk.chunkTempMeta.clear());
 +        }
 +    }
 +
@@ -664,200 +713,197 @@ index 000000000..a05e2d398
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-index 1aa36156a..e2ff01c27 100644
+index 483317608..270994095 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-@@ -38,6 +38,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
+@@ -85,6 +85,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
+                 // Paper end
+                 NBTTagCompound nbttagcompound = tileentity.b();
+                 if (tileentity instanceof TileEntitySkull) { TileEntitySkull.sanitizeTileEntityUUID(nbttagcompound); } // Paper
++                MetaApiAccessor.filterTileEntityMeta(nbttagcompound); // PaperDragon
  
-             if (this.f() || (i & 1 << j) != 0) {
-                 NBTTagCompound nbttagcompound = tileentity.aa_();
-+                MetaApiAccessor.filterTileEntityMeta(nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
- 
-                 this.e.add(nbttagcompound);
+                 this.f.add(nbttagcompound);
              }
-@@ -121,7 +122,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
-             BiomeBase[] abiomebase = chunk.getBiomeIndex();
- 
-             for (l = 0; l < abiomebase.length; ++l) {
--                packetdataserializer.writeInt(BiomeBase.REGISTRY_ID.a((Object) abiomebase[l]));
-+                packetdataserializer.writeInt(BiomeBase.REGISTRY_ID.a(abiomebase[l])); // PaperDragon - Fix Decompile Error
-             }
-         }
- 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java b/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
-index b30c97e3f..a41730074 100644
+index 6bcb19b56..73bc4103b 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
 @@ -11,6 +11,7 @@ public class PacketPlayOutTileEntityData implements Packet<PacketListenerPlayOut
      public PacketPlayOutTileEntityData() {}
  
      public PacketPlayOutTileEntityData(BlockPosition blockposition, int i, NBTTagCompound nbttagcompound) {
-+        MetaApiAccessor.filterTileEntityMeta(nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
++        MetaApiAccessor.filterTileEntityMeta(nbttagcompound); // PaperDragon
          this.a = blockposition;
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index 536fd3725..82c051fc6 100644
+index b8ddb99fa..eb41c0e3e 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -68,6 +68,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -79,6 +79,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
      }
  
      public void load(NBTTagCompound nbttagcompound) {
-+        MetaApiAccessor.loadTileEntityMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
++        MetaApiAccessor.loadTileEntityMeta(this, nbttagcompound); // PaperDragon
          this.position = new BlockPosition(nbttagcompound.getInt("x"), nbttagcompound.getInt("y"), nbttagcompound.getInt("z"));
-     }
- 
-@@ -82,6 +83,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+         // CraftBukkit start - read container
+         this.persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
+@@ -101,6 +102,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
              throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
          } else {
              nbttagcompound.setString("id", minecraftkey.toString());
-+            MetaApiAccessor.saveTileEntityMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
++            MetaApiAccessor.saveTileEntityMeta(this, nbttagcompound); // PaperDragon
              nbttagcompound.setInt("x", this.position.getX());
              nbttagcompound.setInt("y", this.position.getY());
              nbttagcompound.setInt("z", this.position.getZ());
-@@ -205,6 +207,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
-         return this.e;
+@@ -231,6 +233,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+         }
      }
  
-+    com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap; // PaperDragon - Persistent and Temporary Meta API
++    com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap; // PaperDragon
      // CraftBukkit start - add method
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index efc987756..70f1a67b0 100644
+index 1fb94b974..1f61eae4c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -428,6 +428,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
-                     }
+@@ -467,6 +467,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
+                     this.a(blockposition, iblockdata1, iblockdata2);
                  }
                  */
-+                if (block == Blocks.AIR) MetaApiAccessor.processSetAir(chunk, blockposition); // PaperDragon - Persistent and Temporary Meta API
++                if (block == Blocks.AIR) MetaApiAccessor.processSetAir(chunk, blockposition); // PaperDragon
  
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
 diff --git a/src/main/java/net/minecraft/server/WorldData.java b/src/main/java/net/minecraft/server/WorldData.java
-index b0445d6a2..7019a54e0 100644
+index ca4c31458..fde955298 100644
 --- a/src/main/java/net/minecraft/server/WorldData.java
 +++ b/src/main/java/net/minecraft/server/WorldData.java
-@@ -70,6 +70,7 @@ public class WorldData {
-     private NBTTagCompound U;
-     private final GameRules V;
+@@ -73,6 +73,7 @@ public class WorldData {
+     private final GameRules X;
+     private final CustomFunctionCallbackTimerQueue<MinecraftServer> Y;
      public WorldServer world; // CraftBukkit
-+    public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = new com.domnian.paperdragon.api.meta.PersistentMetaMap(); // PaperDragon - Persistent and Temporary Meta API
++    public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = new com.domnian.paperdragon.api.meta.PersistentMetaMap(); // PaperDragon
  
      protected WorldData() {
          this.f = WorldType.NORMAL;
-@@ -258,6 +259,7 @@ public class WorldData {
-             this.U = nbttagcompound.getCompound("CustomBossEvents");
+@@ -228,6 +229,7 @@ public class WorldData {
+         if (nbttagcompound.hasKeyOfType("BorderWarningBlocks", 99)) {
+             this.O = nbttagcompound.getInt("BorderWarningBlocks");
+         }
++        MetaApiAccessor.loadWorldMeta(this, nbttagcompound); // PaperDragon
+ 
+         if (nbttagcompound.hasKeyOfType("BorderWarningTime", 99)) {
+             this.P = nbttagcompound.getInt("BorderWarningTime");
+@@ -386,6 +388,7 @@ public class WorldData {
+             nbttagcompound3.set(String.valueOf(((DimensionManager) entry.getKey()).getDimensionID()), (NBTBase) entry.getValue());
          }
  
-+        MetaApiAccessor.loadWorldMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
-     }
++        MetaApiAccessor.saveWorldMeta(this, nbttagcompound); // PaperDragon
+         nbttagcompound.set("DimensionData", nbttagcompound3);
+         if (nbttagcompound1 != null) {
+             nbttagcompound.set("Player", nbttagcompound1);
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index c646393eb..6003ef2cc 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -46,7 +46,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
+ public class WorldServer extends World {
  
-     public WorldData(WorldSettings worldsettings, String s) {
-@@ -395,7 +397,7 @@ public class WorldData {
-         if (this.U != null) {
-             nbttagcompound.set("CustomBossEvents", this.U);
-         }
--
-+        MetaApiAccessor.saveWorldMeta(this, nbttagcompound); // PaperDragon - Persistent and Temporary Meta API
-     }
+     private static final Logger LOGGER = LogManager.getLogger();
+-    private final List<Entity> globalEntityList = Lists.newArrayList();
++    final List<Entity> globalEntityList = Lists.newArrayList(); // PaperDragon private -> package-private
+     public final Int2ObjectMap<Entity> entitiesById = new Int2ObjectLinkedOpenHashMap();
+     private final Map<UUID, Entity> entitiesByUUID = Maps.newHashMap();
+     private final Queue<Entity> entitiesToAdd = Queues.newArrayDeque();
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+index bb3e4805b..8a7374c53 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+@@ -32,6 +32,8 @@ import org.bukkit.plugin.Plugin;
  
-     public long getSeed() {
+ public class CraftChunk implements Chunk {
+     private WeakReference<net.minecraft.server.Chunk> weakChunk;
++    private final com.domnian.paperdragon.api.meta.TempMetaMap tempMeta = new com.domnian.paperdragon.api.meta.TempMetaMap(); // PaperDragon
++    public com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta() { return tempMeta; } // PaperDragon
+     private final WorldServer worldServer;
+     private final int x;
+     private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 408c1f170..bc96263b2 100644
+index 7210f6ea4..b46cf40a8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -847,6 +847,7 @@ public final class CraftServer implements Server {
+@@ -859,6 +859,7 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
-+        net.minecraft.server.MetaApiAccessor.reload(); // PaperDragon - Persistent and Temporary Meta API
++        net.minecraft.server.MetaApiAccessor.reload(); // PaperDragon
          loadPlugins();
          enablePlugins(PluginLoadOrder.STARTUP);
          enablePlugins(PluginLoadOrder.POSTWORLD);
-diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
-index 5cf595e2a..c852a3e7d 100644
---- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
-+++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
-@@ -1,6 +1,7 @@
- package org.bukkit.craftbukkit.block;
- 
- import net.minecraft.server.BlockPosition;
-+import net.minecraft.server.TileEntity; // PaperDragon - #BlameSpigot (https://url.domnian.com/obcblockstatebreak)
- import org.bukkit.Location;
- import org.bukkit.block.Block;
- import org.bukkit.Chunk;
-@@ -278,4 +279,15 @@ public class CraftBlockState implements BlockState {
-             throw new IllegalStateException("The blockState must be placed to call this method");
-         }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
+index 3e22d558e..c010aa6fd 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
+@@ -156,4 +156,11 @@ public class CraftBlockEntityState<T extends TileEntity> extends CraftBlockState
+     public PersistentDataContainer getPersistentDataContainer() {
+         return this.getSnapshot().persistentDataContainer;
      }
--}
-\ No newline at end of file
 +
-+    // PaperDragon - Persistent and Temporary Meta API start
-+    public TileEntity getTileEntity() {
-+        return null;
-+    }
-+
++    // PaperDragon start
 +    @Override
 +    public boolean isTileEntity() {
-+        return getTileEntity() != null || world.getTileEntityAt(getX(), getY(), getZ()) != null;
++        return tileEntity != null;
 +    }
 +    // PaperDragon end
-+}
+ }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 6af229ce2..07a218124 100644
+index 15042943c..13c038caf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -30,6 +30,12 @@ import org.bukkit.plugin.Plugin;
+@@ -166,6 +166,8 @@ import org.bukkit.util.NumberConversions;
  import org.bukkit.util.Vector;
  
  public abstract class CraftEntity implements org.bukkit.entity.Entity {
-+    // PaperDragon start - Persistent and Temporary Meta API
-+    private final java.util.Map<String, Object> tempMeta = com.google.common.collect.Maps.newHashMapWithExpectedSize(0);
-+    public java.util.Map<String, Object> getTempMeta() {
-+        return tempMeta;
-+    }
-+    // PaperDragon end
++    private final com.domnian.paperdragon.api.meta.TempMetaMap tempMeta = new com.domnian.paperdragon.api.meta.TempMetaMap(); // PaperDragon
++    public com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta() { return tempMeta; } // PaperDragon
      private static PermissibleBase perm;
+     private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
-     protected final CraftServer server;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 140ddae0d..a4cef99d0 100644
+index 71b48d418..9e0a2c5ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -936,6 +936,11 @@ public class CraftEventFactory {
+@@ -1335,6 +1335,11 @@ public class CraftEventFactory {
          // Paper end
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
-+        // PaperDragon - Persistent and Temporary Meta API start
++        // PaperDragon start
 +        if (event.getInventory().getViewers().isEmpty()) {
 +            org.bukkit.craftbukkit.inventory.CraftInventory.meta.remove(((org.bukkit.craftbukkit.inventory.CraftInventory)event.getInventory()).getInventory());
 +        }
 +        // PaperDragon end
      }
  
-     public static void handleEditBookEvent(EntityPlayer player, ItemStack newBookItem) {
+     public static ItemStack handleEditBookEvent(EntityPlayer player, EnumItemSlot slot, ItemStack itemInHand, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index dd7b3d766..a958b223d 100644
+index 026a0c399..688900bf0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-@@ -30,7 +30,12 @@ import org.bukkit.craftbukkit.util.CraftLegacy;
- 
+@@ -31,6 +31,12 @@ import org.bukkit.inventory.ItemStack;
  public class CraftInventory implements Inventory {
      protected final IInventory inventory;
--
-+    // PaperDragon - Persistent and Temporary Meta API start
+ 
++    // PaperDragon start
 +    public static final java.util.WeakHashMap<IInventory, HashMap<String, Object>> meta = new java.util.WeakHashMap<>(64);
 +    public HashMap<String, Object> getMeta() {
-+        return meta.computeIfAbsent(inventory, k -> new HashMap<>(8));
-+    }
-+    // PaperDragon end
++        return meta.computeIfAbsent(inventory, k -> new HashMap<>());
++    } // PaperDragon end
++
      public CraftInventory(IInventory inventory) {
          this.inventory = inventory;
      }
 -- 
-2.18.0
+2.17.1
 

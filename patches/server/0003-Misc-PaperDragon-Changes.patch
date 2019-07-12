@@ -1,46 +1,148 @@
-From ac9690702c3833f239be7568cfc50ee201563180 Mon Sep 17 00:00:00 2001
+From 4ebab150038be8d3edaf1dee38f39022849a8f31 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
- src/main/java/net/minecraft/server/EULA.java            | 2 +-
- src/main/java/net/minecraft/server/MinecraftServer.java | 5 ++++-
- src/main/java/org/bukkit/craftbukkit/CraftServer.java   | 2 +-
- src/main/java/org/spigotmc/WatchdogThread.java          | 9 ++++-----
- 4 files changed, 10 insertions(+), 8 deletions(-)
+ .../java/com/destroystokyo/paper/Metrics.java |  4 +-
+ .../paperdragon/DragonVersionFetcher.java     | 84 +++++++++++++++++++
+ .../net/minecraft/server/MinecraftServer.java |  4 +-
+ .../org/bukkit/craftbukkit/CraftServer.java   |  2 +-
+ .../craftbukkit/util/CraftMagicNumbers.java   |  2 +-
+ .../java/org/spigotmc/WatchdogThread.java     | 13 ++-
+ 6 files changed, 97 insertions(+), 12 deletions(-)
+ create mode 100644 src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 
-diff --git a/src/main/java/net/minecraft/server/EULA.java b/src/main/java/net/minecraft/server/EULA.java
-index eb4b08be4..06dada180 100644
---- a/src/main/java/net/minecraft/server/EULA.java
-+++ b/src/main/java/net/minecraft/server/EULA.java
-@@ -52,7 +52,7 @@ public class EULA {
+diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
+index e257d6b36..5ef397950 100644
+--- a/src/main/java/com/destroystokyo/paper/Metrics.java
++++ b/src/main/java/com/destroystokyo/paper/Metrics.java
+@@ -578,7 +578,7 @@ public class Metrics {
+             boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
+             // Only start Metrics, if it's enabled in the config
+             if (config.getBoolean("enabled", true)) {
+-                Metrics metrics = new Metrics("Paper", serverUUID, logFailedRequests, Bukkit.getLogger());
++                Metrics metrics = new Metrics("PaperDragon", serverUUID, logFailedRequests, Bukkit.getLogger());
  
-                 fileoutputstream = new FileOutputStream(this.b);
-                 properties.setProperty("eula", "false");
--                properties.store(fileoutputstream, "By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\nYou also agree that tacos are tasty, and the best food in the world.");  // Paper - fix lag);
-+                properties.store(fileoutputstream, "By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\nYou also agree that tacos are tasty, and the best food in the world.\nand also agreeing that dragons are awesome!");  // Paper - fix lag); // PaperDragon - 4000 TPS!
-             } catch (Exception exception) {
-                 EULA.a.warn("Failed to save {}", this.b, exception);
-             } finally {
+                 metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
+                     String minecraftVersion = Bukkit.getVersion();
+@@ -588,7 +588,7 @@ public class Metrics {
+ 
+                 metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
+                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
+-                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
++                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
+ 
+                 metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
+                     Map<String, Map<String, Integer>> map = new HashMap<>();
+diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
+new file mode 100644
+index 000000000..edd083ef6
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
+@@ -0,0 +1,84 @@
++package com.domnian.paperdragon;
++
++import com.destroystokyo.paper.VersionHistoryManager;
++import com.destroystokyo.paper.util.VersionFetcher;
++import com.google.common.base.Charsets;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
++import com.google.gson.JsonSyntaxException;
++
++import javax.annotation.Nonnull;
++import javax.annotation.Nullable;
++import java.io.BufferedReader;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.net.HttpURLConnection;
++import java.net.URL;
++
++public class DragonVersionFetcher implements VersionFetcher {
++
++    private static final String GITHUB_BRANCH_NAME = "master";
++
++    @Override
++    public long getCacheTime() {
++        return 720000;
++    }
++
++    @Nonnull
++    @Override
++    public String getVersionMessage(@Nonnull String serverVersion) {
++        String[] parts = serverVersion.substring("git-PaperDragon-".length()).split("[-\\s]");
++        String updateMessage = getUpdateStatusMessage("domnian/PaperDragon", GITHUB_BRANCH_NAME, parts[0]);
++        String history = getHistory();
++
++        return history != null ? history + "\n" + updateMessage : updateMessage;
++    }
++
++    private static String getUpdateStatusMessage(@Nonnull String repo, @Nonnull String branch, @Nonnull String versionInfo) {
++        versionInfo = versionInfo.replace("\"", "");
++        int distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
++
++        switch (distance) {
++            case -1: return "Error obtaining version information";
++            case 0: return "You are running the latest version";
++            case -2: return "Unknown version";
++            default: return "You are " + distance + " version(s) behind";
++        }
++    }
++
++    // Contributed by Techcable <Techcable@outlook.com> in GH-65
++    private static int fetchDistanceFromGitHub(@Nonnull String repo, @Nonnull String branch, @Nonnull String hash) {
++        try {
++            HttpURLConnection connection = (HttpURLConnection) new URL("https://api.github.com/repos/" + repo + "/compare/" + branch + "..." + hash).openConnection();
++            connection.connect();
++            if (connection.getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) return -2; // Unknown commit
++            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charsets.UTF_8))) {
++                JsonObject obj = new Gson().fromJson(reader, JsonObject.class);
++                String status = obj.get("status").getAsString();
++                switch (status) {
++                    case "identical": return 0;
++                    case "behind": return obj.get("behind_by").getAsInt();
++                    default: return -1;
++                }
++            } catch (JsonSyntaxException | NumberFormatException e) {
++                e.printStackTrace();
++                return -1;
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++            return -1;
++        }
++    }
++
++    @Nullable
++    private String getHistory() {
++        final VersionHistoryManager.VersionData data = VersionHistoryManager.INSTANCE.getVersionData();
++        if (data == null) return null;
++
++        final String oldVersion = data.getOldVersion();
++        if (oldVersion == null) return null;
++
++        return "Previous version: " + oldVersion;
++    }
++
++}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d6b56d685..d5fdb670a 100644
+index 2b99fdc63..2875daaf6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1298,10 +1298,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-         return this.getPropertyManager().getBoolean("debug", false); // CraftBukkit - don't hardcode
+@@ -1411,10 +1411,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         return false;
      }
  
-+    public void error(String line) { this.f(line); } // PaperDragon - OBFHELPER
-     public void f(String s) {
++    public void error(String line) { this.g(line); } // PaperDragon - OBFHELPER
+     public void g(String s) {
          MinecraftServer.LOGGER.error(s);
      }
  
 +    public void debug(String line) { this.g(line); } // PaperDragon - OBFHELPER
-     public void g(String s) {
+     public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1310,7 +1312,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -1423,7 +1425,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -49,32 +151,37 @@ index d6b56d685..d5fdb670a 100644
      }
  
      public CrashReport b(CrashReport crashreport) {
-@@ -1357,6 +1359,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-         return this.H;
-     }
- 
-+    public int getPort() { return this.H(); } // PaperDragon - OBF HELPER
-     public int H() {
-         return this.r;
-     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f8e2d190c..44da7f9d9 100644
+index 6738713d8..ea464a14f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -158,7 +158,7 @@ import javax.annotation.Nonnull; // Paper
- 
+@@ -200,7 +200,7 @@ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
 -    private final String serverName = "Paper"; // Paper
-+    private final String serverName = "PaperDragon"; // PaperDragon - We are PaperDragon
++    private final String serverName = "PaperDragon"; // PaperDragon
      private final String serverVersion;
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+index 1b8d94d29..c8fed3d34 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+@@ -296,7 +296,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+ 
+     @Override
+     public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
+-        return new com.destroystokyo.paper.PaperVersionFetcher();
++        return new com.domnian.paperdragon.DragonVersionFetcher(); // PaperDragon
+     }
+     // Paper end
+ 
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 57a4748a3..a92d01967 100644
+index a1d93200e..1c1568ea1 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -19,7 +19,7 @@ public class WatchdogThread extends Thread
+@@ -24,7 +24,7 @@ public class WatchdogThread extends Thread
  
      private WatchdogThread(long timeoutTime, boolean restart)
      {
@@ -82,29 +189,44 @@ index 57a4748a3..a92d01967 100644
 +        super( "PaperDragon Watchdog Thread" ); // PaperDragon - We are PaperDragon
          this.timeoutTime = timeoutTime;
          this.restart = restart;
-     }
-@@ -56,10 +56,9 @@ public class WatchdogThread extends Thread
-             {
-                 Logger log = Bukkit.getServer().getLogger();
-                 log.log( Level.SEVERE, "The server has stopped responding!" );
--                log.log( Level.SEVERE, "Please report this to https://github.com/PaperMC/Paper/issues" );
-+                log.log( Level.SEVERE, "Please report this to https://bug.domnian.com/issues/PD" ); // PaperDragon - We are PaperDragon
+         earlyWarningEvery = Math.min(PaperConfig.watchdogPrintEarlyWarningEvery, timeoutTime); // Paper
+@@ -80,10 +80,9 @@ public class WatchdogThread extends Thread
+                 log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
+                 log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
+                 log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
+-                log.log( Level.SEVERE, "If you are unsure or still think this is a Paper bug, please report this to https://github.com/PaperMC/Paper/issues" );
++                log.log( Level.SEVERE, "If you are unsure or still think this is a Paper bug, please report this to https://github.com/domnian/PaperDragon/issues" ); // PaperDragon - We are PaperDragon
                  log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
 -                log.log( Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion() );
 -                //
 +                log.log( Level.SEVERE, "PaperDragon version: " + Bukkit.getServer().getVersion() ); // PaperDragon - We are PaperDragon
-                 if(net.minecraft.server.World.haveWeSilencedAPhysicsCrash)
+                 if ( net.minecraft.server.World.lastPhysicsProblem != null )
                  {
                      log.log( Level.SEVERE, "------------------------------" );
-@@ -80,7 +79,7 @@ public class WatchdogThread extends Thread
-                 }
+@@ -105,12 +104,12 @@ public class WatchdogThread extends Thread
                  // Paper end
+                 } else
+                 {
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---");
++                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPERDRAGON - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---"); // PaperDragon - We are PaperDragon
+                     log.log(Level.SEVERE, "The server has not responded for " + (currentTime - lastTick) / 1000 + " seconds! Creating thread dump");
+                 }
+                 // Paper end - Different message for short timeout
                  log.log( Level.SEVERE, "------------------------------" );
--                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):" );
+-                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):" ); // Paper
 +                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to PaperDragon!):" ); // PaperDragon - We are PaperDragon
-                 dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().primaryThread.getId(), Integer.MAX_VALUE ), log );
+                 dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
                  log.log( Level.SEVERE, "------------------------------" );
                  //
+@@ -124,7 +123,7 @@ public class WatchdogThread extends Thread
+                     dumpThread( thread, log );
+                 }
+                 } else {
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
++                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPERDRAGON - THIS IS NOT A BUG OR A CRASH ---"); // PaperDragon - We are PaperDragon
+                 }
+ 
+ 
 -- 
-2.18.0
+2.17.1
 

@@ -1,0 +1,26 @@
+From 9c19dbc0c7652b8e95cdb2dea3d6cd93db0b251d Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 27 Jul 2017 00:09:21 -0400
+Subject: [PATCH] Export Dragon Config to Timings
+
+---
+ src/main/java/co/aikar/timings/TimingsExport.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
+index 23eb8c65..221998d2 100644
+--- a/src/main/java/co/aikar/timings/TimingsExport.java
++++ b/src/main/java/co/aikar/timings/TimingsExport.java
+@@ -206,7 +206,8 @@ class TimingsExport extends Thread {
+         parent.put("config", createObject(
+             pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
+             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
+-            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
++            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)),
++            pair("dragon", mapAsJSON(Bukkit.spigot().getDragonConfig(), null)) // PaperDragon - Export Config to Timings
+         ));
+ 
+         new TimingsExport(listeners, parent, history).start();
+-- 
+2.17.1
+

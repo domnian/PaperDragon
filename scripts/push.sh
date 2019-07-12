@@ -6,16 +6,15 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
-basedir="../"
 . $(dirname $SOURCE)/init.sh
 
-paperVer=$(cat current-paper)
+minecraftversion=$(cat $basedir/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
 
-pushRepo PaperDragon-API $API_REPO master
-pushRepo PaperDragon-Server $SERVER_REPO master
-pushRepo mc-dev $MCDEV_REPO $paperVer
+basedir
+pushRepo PaperDragon-API ${API_REPO} master:${minecraftversion}
+pushRepo PaperDragon-Server ${SERVER_REPO} master:${minecraftversion}
+pushRepo mc-dev ${MCDEV_REPO} ${paperVer}
 
 # Push Parent to Three Remotes
-cd "$basedir"
 git push origin master -f
 git push pd-push master -f

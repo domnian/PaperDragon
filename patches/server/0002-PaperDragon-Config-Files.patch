@@ -1,4 +1,4 @@
-From e011b401bd32c6aacdb995644708e2da2f445f55 Mon Sep 17 00:00:00 2001
+From 6d3b362e9c1b07b6a7f8c26349a63742782e1837 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -7,16 +7,16 @@ Subject: [PATCH] PaperDragon Config Files
  .../com/domnian/paperdragon/DragonConfig.java | 161 ++++++++++++++++++
  .../paperdragon/DragonWorldConfig.java        |  79 +++++++++
  .../net/minecraft/server/DedicatedServer.java |   4 +
- src/main/java/net/minecraft/server/World.java |   3 +
+ src/main/java/net/minecraft/server/World.java |   2 +
  .../org/bukkit/craftbukkit/CraftServer.java   |  11 ++
  .../java/org/bukkit/craftbukkit/Main.java     |   8 +
- 6 files changed, 266 insertions(+)
+ 6 files changed, 265 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonConfig.java
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 new file mode 100644
-index 000000000..6ef5dd625
+index 000000000..2f7bc8187
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -0,0 +1,161 @@
@@ -48,12 +48,12 @@ index 000000000..6ef5dd625
 +            + "If you need help with the configuration or have any questions related to PaperDragon,\n"
 +            + "join us at the IRC.\n"
 +            + "\n"
-+            + "IRC: #paperdragon @ irc.domnian.com ( https://irc.domnian.com/?ch=paperdragon )\n";
++            + "IRC: #paperdragon @ irc.spi.gt\n";
 +    /*========================================================================*/
 +    public static YamlConfiguration config;
 +    static int version;
 +    static Map<String, Command> commands;
-+            /*========================================================================*/
++    /*========================================================================*/
 +
 +    public static void init(File configFile) {
 +        CONFIG_FILE = configFile;
@@ -76,9 +76,9 @@ index 000000000..6ef5dd625
 +    }
 +
 +    public static void registerCommands() {
-+        for (Map.Entry<String, Command> entry : commands.entrySet()) {
-+            MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "PaperDragon", entry.getValue());
-+        }
++        commands.forEach((key, value) -> {
++            MinecraftServer.getServer().server.getCommandMap().register(key, "PaperDragon", value);
++        });
 +    }
 +
 +    static void readConfig(Class<?> clazz, Object instance) {
@@ -267,54 +267,53 @@ index 000000000..2a180d5a4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 8e15710ca..17c6e42ea 100644
+index c1473330f..1c733738a 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -209,6 +209,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
-             com.destroystokyo.paper.PaperConfig.registerCommands();
-             com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
-             // Paper end
-+            // PaperDragon start
-+            com.domnian.paperdragon.DragonConfig.init((File) options.valueOf("dragon-settings"));
-+            com.domnian.paperdragon.DragonConfig.registerCommands();
-+            // PaperDragon end
+@@ -176,6 +176,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         com.destroystokyo.paper.PaperConfig.registerCommands();
+         com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
+         // Paper end
++        // PaperDragon start
++        com.domnian.paperdragon.DragonConfig.init((File) options.valueOf("dragon-settings"));
++        com.domnian.paperdragon.DragonConfig.registerCommands();
++        // PaperDragon end
  
-             DedicatedServer.LOGGER.info("Generating keypair");
-             this.a(MinecraftEncryption.b());
+         this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
+         this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index c2b9d60f8..efc987756 100644
+index ee6474b18..c399557f7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -140,6 +140,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
-     public final com.destroystokyo.paper.PaperWorldConfig paperConfig; // Paper
+@@ -98,6 +98,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
+     public final ChunkPacketBlockController chunkPacketBlockController; // Paper - Anti-Xray
  
      public final co.aikar.timings.WorldTimingsHandler timings; // Paper
-+
 +    public com.domnian.paperdragon.DragonWorldConfig dragonConfig; // PaperDragon
-     private boolean guardEntityList; // Spigot
-     public static boolean haveWeSilencedAPhysicsCrash;
-     public static String blockLocation;
-@@ -163,6 +165,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
-     protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
+     public static BlockPosition lastPhysicsProblem; // Spigot
+     private org.spigotmc.TickLimiter entityLimiter;
+     private org.spigotmc.TickLimiter tileLimiter;
+@@ -138,6 +139,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig( worlddata.getName() ); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(worlddata.getName(), this.spigotConfig); // Paper
+         this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this.paperConfig) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
 +        this.dragonConfig = new com.domnian.paperdragon.DragonWorldConfig(worlddata.getName(), this.spigotConfig, this.paperConfig); // PaperDragon
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8a58479f4..f8e2d190c 100644
+index cba4ef0e1..6738713d8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -781,6 +781,7 @@ public final class CraftServer implements Server {
+@@ -793,6 +793,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
 +        com.domnian.paperdragon.DragonConfig.init((File) console.options.valueOf("dragon-settings")); // PaperDragon
-         for (WorldServer world : console.worlds) {
-             world.worldData.setDifficulty(difficulty);
-             world.setSpawnFlags(monsters, animals);
-@@ -797,6 +798,7 @@ public final class CraftServer implements Server {
+         for (WorldServer world : console.getWorlds()) {
+             world.worldData.setDifficulty(config.difficulty);
+             world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
+@@ -809,6 +810,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -322,7 +321,7 @@ index 8a58479f4..f8e2d190c 100644
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -815,6 +817,8 @@ public final class CraftServer implements Server {
+@@ -827,6 +829,8 @@ public final class CraftServer implements Server {
          reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -331,7 +330,7 @@ index 8a58479f4..f8e2d190c 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -1947,6 +1951,13 @@ public final class CraftServer implements Server {
+@@ -2040,6 +2044,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -346,7 +345,7 @@ index 8a58479f4..f8e2d190c 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index d4f6e009e..09b8ab14b 100644
+index 1fa81904d..8b6717c8c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -144,6 +144,14 @@ public class Main {
@@ -365,5 +364,5 @@ index d4f6e009e..09b8ab14b 100644
          };
  
 -- 
-2.18.0
+2.17.1
 

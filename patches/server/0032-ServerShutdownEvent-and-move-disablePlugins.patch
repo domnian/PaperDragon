@@ -1,0 +1,50 @@
+From 25f45a1a7de4d19ddcdb8bc7f87090e835de04e9 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 8 May 2015 19:56:21 -0400
+Subject: [PATCH] ServerShutdownEvent and move disablePlugins
+
+---
+ src/main/java/net/minecraft/server/MinecraftServer.java | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 2875daaf6..7afdaca3a 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -89,6 +89,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     private boolean z;
+     private boolean spawnAnimals;
+     private boolean spawnNPCs;
++    public String shutdownReason; // PaperDragon
+     private boolean pvpMode;
+     private boolean allowFlight;
+     @Nullable
+@@ -714,7 +715,8 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         MinecraftTimings.stopServer(); // Paper
+         // CraftBukkit start
+         if (this.server != null) {
+-            this.server.disablePlugins();
++            // this.server.disablePlugins(); // PaperDragon - Moved below after everything has unloaded so plugins can get events
++            new com.domnian.paperdragon.events.ServerShutdownEvent(shutdownReason).callEvent(); // PaperDragon
+         }
+         // CraftBukkit end
+         if (this.getServerConnection() != null) {
+@@ -753,6 +755,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 }
+             }
+         }
++        if (server != null) { this.server.disablePlugins(); } // PaperDragon
+ 
+         if (this.snooper.d()) {
+             this.snooper.e();
+@@ -783,6 +786,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         this.safeShutdown(flag, false);
+     }
+     public void safeShutdown(boolean flag, boolean isRestarting) {
++        if (shutdownReason == null) { shutdownReason = "Server Shutting Down"; } // PaperDragon
+         this.isRunning = false;
+         this.isRestarting = isRestarting;
+         if (flag) {
+-- 
+2.17.1
+

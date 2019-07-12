@@ -1,0 +1,29 @@
+From e2235d4465b3717b8c750dc8f8dd2955a91a68ea Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 28 Dec 2013 21:25:06 -0500
+Subject: [PATCH] Don't save Fireworks
+
+Fireworks can bug out and not detonate, and an automated
+launcher can very easily fill a chunk.
+
+Prevent saving Fireworks so that chunk unloads will wipe a chunks
+fireworks in this case.
+---
+ src/main/java/net/minecraft/server/Entity.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 4565ed3ec..406cccd8e 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -1556,6 +1556,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+ 
+     public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon - OBF HELPER
+     public boolean d(NBTTagCompound nbttagcompound) {
++        if (this instanceof EntityFireworks) return false; // PaperDragon
+         return this.isPassenger() ? false : this.c(nbttagcompound);
+     }
+ 
+-- 
+2.17.1
+
