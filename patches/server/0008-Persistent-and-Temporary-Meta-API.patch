@@ -1,4 +1,4 @@
-From 7bb6f3ca736d30abdd0ac593d5d8c6f1b676365d Mon Sep 17 00:00:00 2001
+From e247f4ba41a53086a5cfb6358be16cb6a836e521 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -19,10 +19,11 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../org/bukkit/craftbukkit/CraftChunk.java    |   2 +
  .../org/bukkit/craftbukkit/CraftServer.java   |   1 +
  .../block/CraftBlockEntityState.java          |   7 +
+ .../craftbukkit/block/CraftBlockState.java    |   7 +
  .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
  .../craftbukkit/inventory/CraftInventory.java |   6 +
- 18 files changed, 627 insertions(+), 2 deletions(-)
+ 19 files changed, 634 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -858,6 +859,24 @@ index 3e22d558e..c010aa6fd 100644
 +    }
 +    // PaperDragon end
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
+index 0cb5582b1..caa6f67d7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
+@@ -289,6 +289,13 @@ public class CraftBlockState implements BlockState {
+         return world != null;
+     }
+ 
++    // PaperDragon start
++    @Override
++    public boolean isTileEntity() {
++        return false;
++    }
++    // PaperDragon end
++
+     protected void requirePlaced() {
+         if (!isPlaced()) {
+             throw new IllegalStateException("The blockState must be placed to call this method");
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 index 15042943c..13c038caf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java

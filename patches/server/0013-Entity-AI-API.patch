@@ -1,15 +1,15 @@
-From 103332d5ccb0fd9f5e0637424628440f8780a39b Mon Sep 17 00:00:00 2001
+From 5b4c820cb7bbef10d0a4769cf966f1827edfc675 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
 
 ---
  .../paperdragon/api/CraftDAPI_Entity.java     | 137 +++++++-
- .../domnian/paperdragon/api/EntityAIApi.java  | 293 ++++++++++++++++++
+ .../domnian/paperdragon/api/EntityAIApi.java  | 297 ++++++++++++++++++
  .../minecraft/server/AttributesAccessor.java  |   1 +
- .../java/net/minecraft/server/Entity.java     |  14 +-
+ .../java/net/minecraft/server/Entity.java     |  16 +-
  .../net/minecraft/server/EntityAnimal.java    |   2 +-
- .../net/minecraft/server/EntityBlaze.java     |  25 +-
+ .../net/minecraft/server/EntityBlaze.java     |  27 +-
  .../net/minecraft/server/EntityCreature.java  |   1 +
  .../minecraft/server/EntityEnderSignal.java   |  22 +-
  .../net/minecraft/server/EntityGhast.java     |   3 +-
@@ -22,13 +22,14 @@ Subject: [PATCH] Entity AI API
  .../server/PathfinderGoalBowShoot.java        |   4 +-
  .../server/PathfinderGoalFleeSun.java         |   4 +-
  .../minecraft/server/PathfinderGoalPanic.java |   3 +-
- .../server/PathfinderGoalSelector.java        |   2 +-
+ .../server/PathfinderGoalSelector.java        |  12 +-
+ .../server/PathfinderGoalWrapped.java         |   1 +
  .../net/minecraft/server/WorldServer.java     |   3 +-
  .../bukkit/craftbukkit/entity/CraftBlaze.java |  18 ++
  .../craftbukkit/entity/CraftEnderSignal.java  |   3 +-
  .../bukkit/craftbukkit/entity/CraftGhast.java |   9 +
  .../java/org/spigotmc/ActivationRange.java    |   1 +
- 24 files changed, 569 insertions(+), 26 deletions(-)
+ 25 files changed, 580 insertions(+), 34 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
  create mode 100644 src/main/java/net/minecraft/server/EntityGoalAccessor.java
 
@@ -192,13 +193,14 @@ index aa79b57c2..019deaf04 100644
      }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
 new file mode 100644
-index 000000000..c4daa878a
+index 000000000..576a07772
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
-@@ -0,0 +1,293 @@
+@@ -0,0 +1,297 @@
 +package com.domnian.paperdragon.api;
 +
 +import com.destroystokyo.paper.entity.RangedEntity;
++import org.bukkit.craftbukkit.CraftWorld;
 +import org.bukkit.entity.Mob;
 +import com.domnian.paperdragon.api.attributes.Attribute;
 +import com.domnian.paperdragon.api.meta.Meta;
@@ -350,8 +352,8 @@ index 000000000..c4daa878a
 +        return null;
 +    }
 +
-+    private static List<Set<PathfinderGoalSelector.PathfinderGoalSelectorItem>> getGoalSets(EntityInsentient entity) {
-+        List<Set<PathfinderGoalSelector.PathfinderGoalSelectorItem>> check = new ArrayList();
++    private static List<Set<PathfinderGoalWrapped>> getGoalSets(EntityInsentient entity) {
++        List<Set<PathfinderGoalWrapped>> check = new ArrayList();
 +        check.add(entity.goalSelector.getTasks());
 +        check.add(entity.goalSelector.getExecutingTasks());
 +        check.add(entity.targetSelector.getTasks());
@@ -359,7 +361,7 @@ index 000000000..c4daa878a
 +        return check;
 +    }
 +
-+    private static void removeGoal(EntityInsentient entity, PathfinderGoalSelector.PathfinderGoalSelectorItem o) {
++    private static void removeGoal(EntityInsentient entity, PathfinderGoalWrapped o) {
 +        entity.goalSelector.getTasks().remove(o);
 +        entity.goalSelector.getExecutingTasks().remove(o);
 +        entity.targetSelector.getTasks().remove(o);
@@ -371,7 +373,7 @@ index 000000000..c4daa878a
 +    }
 +
 +    public static void setTargetRange(Mob entity, float range) {
-+        API.attributes.setAttribute(entity, Attribute.TARGET_RANGE, range);
++        DragonAPI.attributes.setAttribute(entity, Attribute.TARGET_RANGE, range);
 +    }
 +
 +    public static void setRangedAttackDistance(RangedEntity monster, float range) {
@@ -408,12 +410,15 @@ index 000000000..c4daa878a
 +        }));
 +    }
 +    public static void setEntityMaxPathfindingRange(Mob entity, float range) {
-+        API.attributes.setAttribute(entity, Attribute.FOLLOW_RANGE, range);
++        DragonAPI.attributes.setAttribute(entity, Attribute.FOLLOW_RANGE, range);
 +    }
 +
 +    public static void respawnEntity(org.bukkit.entity.Entity entity) {
 +        CraftEntity craft = (CraftEntity) entity;
-+        Entity newHandle = craft.getHandle().teleportTo(entity.getLocation(), false);
++        Entity newHandle = craft.getHandle().teleportTo(
++                ((CraftWorld)craft.getWorld()).getHandle().getWorldProvider().getDimensionManager(),
++                MCUtil.toBlockPosition(entity.getLocation())
++        );
 +        if (newHandle != null) {
 +            craft.setHandle(newHandle);
 +        }
@@ -502,7 +507,7 @@ index 34dc07031..dc3480a4e 100644
              map.registerAttribute(targetRange);
              if (entity instanceof Wither) {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ca3196c79..9ce70dfe2 100644
+index ca3196c79..68415e5e6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -148,6 +148,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -515,6 +520,15 @@ index ca3196c79..9ce70dfe2 100644
      protected final DataWatcher datawatcher;
      protected static final DataWatcherObject<Byte> W = DataWatcher.a(Entity.class, DataWatcherRegistry.a);
      private static final DataWatcherObject<Integer> AIR_TICKS = DataWatcher.a(Entity.class, DataWatcherRegistry.b);
+@@ -177,7 +180,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+     private boolean aF;
+     private final double[] aG;
+     private long aH;
+-    private EntitySize size;
++    private EntitySize size;public void setSize(float width, float height) { size = EntitySize.b(width, height); } // PaperDragon
+     private float headHeight;
+     // CraftBukkit start
+     public boolean persist = true;
 @@ -353,6 +356,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
@@ -610,10 +624,15 @@ index eab32ec04..6e16654cb 100644
      public ItemStack breedItem; // CraftBukkit - Add breedItem variable
  
 diff --git a/src/main/java/net/minecraft/server/EntityBlaze.java b/src/main/java/net/minecraft/server/EntityBlaze.java
-index 89f1bfa41..66e1e938b 100644
+index 89f1bfa41..3a14311c8 100644
 --- a/src/main/java/net/minecraft/server/EntityBlaze.java
 +++ b/src/main/java/net/minecraft/server/EntityBlaze.java
-@@ -28,6 +28,25 @@ public class EntityBlaze extends EntityMonster {
+@@ -24,10 +24,29 @@ public class EntityBlaze extends EntityMonster {
+         this.goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D, 0.0F));
+         this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
+         this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
+-        this.targetSelector.a(1, (new PathfinderGoalHurtByTarget(this, new Class[0])).a());
++        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, new Class[0])); // PaperDragon - fix error
          this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, true));
      }
  
@@ -967,10 +986,34 @@ index f399683b7..ee77925e6 100644
              return false;
          } else {
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
-index 44bb18c59..85ddbedda 100644
+index 44bb18c59..465dc6fa4 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
-@@ -33,7 +33,7 @@ public class PathfinderGoalSelector {
+@@ -1,10 +1,8 @@
+ package net.minecraft.server;
+ 
+ import com.google.common.collect.Sets;
+-import java.util.EnumMap;
+-import java.util.EnumSet;
+-import java.util.Map;
+-import java.util.Set;
++
++import java.util.*;
+ import java.util.stream.Stream;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+@@ -23,8 +21,8 @@ public class PathfinderGoalSelector {
+             return false;
+         }
+     };
+-    private final Map<PathfinderGoal.Type, PathfinderGoalWrapped> c = new EnumMap(PathfinderGoal.Type.class);
+-    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet();
++    private final Map<PathfinderGoal.Type, PathfinderGoalWrapped> c = new EnumMap(PathfinderGoal.Type.class); public Set<PathfinderGoalWrapped> getTasks() { return new HashSet<>(c.values()); }// PaperDragon - OBF HELPER
++    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet(); public Set<PathfinderGoalWrapped> getExecutingTasks() { return d; } // PaperDragon - OBF HELPER
+     private final GameProfilerFiller e;
+     private final EnumSet<PathfinderGoal.Type> f = EnumSet.noneOf(PathfinderGoal.Type.class);
+     private int g = 3;
+@@ -33,7 +31,7 @@ public class PathfinderGoalSelector {
          this.e = gameprofilerfiller;
      }
  
@@ -979,6 +1022,18 @@ index 44bb18c59..85ddbedda 100644
          this.d.add(new PathfinderGoalWrapped(i, pathfindergoal));
      }
  
+diff --git a/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java b/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
+index 182cd7e91..28d00140d 100644
+--- a/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
++++ b/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
+@@ -72,6 +72,7 @@ public class PathfinderGoalWrapped extends PathfinderGoal {
+         return this.b;
+     }
+ 
++    public PathfinderGoal getGoal() { return this.j(); } // PaperDragon - OBF HELPER
+     public PathfinderGoal j() {
+         return this.a;
+     }
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
 index cf1f20c84..154b4ae09 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java

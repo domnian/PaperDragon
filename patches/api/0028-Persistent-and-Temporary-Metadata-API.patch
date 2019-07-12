@@ -1,4 +1,4 @@
-From aa344192dfe90c10874c0cfda9f147a4aa4e2c0c Mon Sep 17 00:00:00 2001
+From d770011562d7478a184f5d5f9338a5e412edffbc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -182,7 +182,7 @@ index 00000000..3844b493
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
 new file mode 100644
-index 00000000..d2760ff2
+index 00000000..07bc1240
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
 @@ -0,0 +1,885 @@
@@ -211,7 +211,7 @@ index 00000000..d2760ff2
 +
 +package com.domnian.paperdragon.api.meta;
 +
-+import com.empireminecraft.api.API;
++import com.domnian.paperdragon.api.DragonAPI;
 +import com.domnian.paperdragon.api.Vector3i;
 +import com.domnian.paperdragon.api.meta.MetaKey.PersistentKey;
 +import com.domnian.paperdragon.api.meta.MetaKey.TempKey;
@@ -280,7 +280,7 @@ index 00000000..d2760ff2
 +    //////////////////////////////////////////////////
 +
 +    public static PersistentMetaMap getWorldPersistentMetaMap(World world) {
-+        return world != null ? API.meta.getWorldMetaMap(world) : null;
++        return world != null ? DragonAPI.meta.getWorldMetaMap(world) : null;
 +    }
 +
 +    public static <T> T getWorldMeta(World world, PersistentKey key) {
@@ -355,7 +355,7 @@ index 00000000..d2760ff2
 +    //////////////////////////////////////////////////
 +
 +    public static PersistentMetaMap getEntityPersistentMetaMap(Entity entity, boolean isWrite) {
-+        return entity != null ? API.meta.getEntityMetaMap(entity, isWrite) : null;
++        return entity != null ? DragonAPI.meta.getEntityMetaMap(entity, isWrite) : null;
 +    }
 +
 +    public static <T> T getEntityMeta(Entity entity, PersistentKey key) {
@@ -436,11 +436,11 @@ index 00000000..d2760ff2
 +     */
 +    @Deprecated
 +    public static Map<Vector3i, PersistentMetaMap> getChunkMetaData(Chunk chunk) {
-+        return API.meta.getChunkMetaData(chunk);
++        return DragonAPI.meta.getChunkMetaData(chunk);
 +    }
 +
 +    public static PersistentMetaMap getChunkPersistentMetaMap(Chunk chunk, boolean isWrite) {
-+        return chunk != null ? API.meta.getChunkMetaMap(chunk, isWrite) : null;
++        return chunk != null ? DragonAPI.meta.getChunkMetaMap(chunk, isWrite) : null;
 +    }
 +
 +    public static boolean hasChunkMeta(Chunk chunk, PersistentKey key) {
@@ -531,7 +531,7 @@ index 00000000..d2760ff2
 +    //////////////////////////////////////////////////
 +
 +    public static PersistentMetaMap getBlockPersistentMetaMap(Location loc, boolean isWrite) {
-+        return loc != null ? API.meta.getBlockMetaMap(loc, isWrite) : null;
++        return loc != null ? DragonAPI.meta.getBlockMetaMap(loc, isWrite) : null;
 +    }
 +
 +    public static boolean hasBlockMeta(Location loc, PersistentKey key) {
@@ -624,11 +624,11 @@ index 00000000..d2760ff2
 +    //////////////////////////////////////////////////
 +
 +    public static PersistentMetaMap getTileEntityPersistentMetaMap(Location tileEntity, boolean isWrite) {
-+        return API.meta.getTileEntityMetaMap(tileEntity.getBlock().getState(), isWrite);
++        return DragonAPI.meta.getTileEntityMetaMap(tileEntity.getBlock().getState(), isWrite);
 +    }
 +
 +    public static PersistentMetaMap getTileEntityPersistentMetaMap(BlockState tileEntity, boolean isWrite) {
-+        return API.meta.getTileEntityMetaMap(tileEntity, isWrite);
++        return DragonAPI.meta.getTileEntityMetaMap(tileEntity, isWrite);
 +    }
 +
 +    public static boolean hasTileEntityMeta(Location tileEntity, PersistentKey key) {
@@ -791,17 +791,17 @@ index 00000000..d2760ff2
 +    //////////////////////////////////////////////////
 +
 +    public static boolean hasBlockMeta(Block block, TempKey key) {
-+        Map<String, Object> blockMeta = API.meta.getBlockTempMeta(block, false);
++        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, false);
 +        return blockMeta != null && blockMeta.containsKey(key.key());
 +    }
 +
 +    public static <T> T setBlockMeta(Block block, TempKey key, Object val) {
-+        Map<String, Object> blockMeta = API.meta.getBlockTempMeta(block, true);
++        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, true);
 +        return (T) blockMeta.put(key.key(), val);
 +    }
 +
 +    public static <T> T removeBlockMeta(Block block, TempKey key) {
-+        Map<String, Object> blockMeta = API.meta.getBlockTempMeta(block, true);
++        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, true);
 +        return (T) blockMeta.remove(key.key());
 +    }
 +
@@ -810,7 +810,7 @@ index 00000000..d2760ff2
 +    }
 +
 +    public static <T> T getBlockMeta(Block block, TempKey key, T def) {
-+        Map<String, Object> blockMeta = API.meta.getBlockTempMeta(block, false);
++        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, false);
 +        if (blockMeta == null) {
 +            return null;
 +        }
@@ -891,7 +891,7 @@ index 00000000..d2760ff2
 +
 +
 +    public static TempMetaMap getChunkTempMetaMap(Chunk chunk, boolean isWrite) {
-+        return API.meta.getChunkTempMetaMap(chunk, isWrite);
++        return DragonAPI.meta.getChunkTempMetaMap(chunk, isWrite);
 +    }
 +
 +    public static boolean hasChunkMeta(Chunk chunk, TempKey key) {

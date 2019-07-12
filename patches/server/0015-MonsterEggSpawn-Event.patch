@@ -1,13 +1,27 @@
-From cee2cf5cb83b1ae5f36c887b5438297ef735b6d2 Mon Sep 17 00:00:00 2001
+From 3463fc519ecc85819038fac63f0373643f9e59d7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
 
 Get the itemstack used to spawn an entity
 ---
+ .../net/minecraft/server/BlockPortal.java     |  2 +-
  .../net/minecraft/server/EntityTypes.java     | 21 +++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
+diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
+index 4eef7127a..4682ec77c 100644
+--- a/src/main/java/net/minecraft/server/BlockPortal.java
++++ b/src/main/java/net/minecraft/server/BlockPortal.java
+@@ -42,7 +42,7 @@ public class BlockPortal extends Block {
+ 
+             if (world.getType(blockposition).a((IBlockAccess) world, blockposition, EntityTypes.ZOMBIE_PIGMAN)) {
+                 // CraftBukkit - set spawn reason to NETHER_PORTAL
+-                Entity entity = EntityTypes.ZOMBIE_PIGMAN.spawnCreature(world, (NBTTagCompound) null, (IChatBaseComponent) null, (EntityHuman) null, blockposition.up(), EnumMobSpawn.STRUCTURE, false, false, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.NETHER_PORTAL);
++                Entity entity = EntityTypes.ZOMBIE_PIGMAN.spawnCreature(world, null, (NBTTagCompound) null, (IChatBaseComponent) null, (EntityHuman) null, blockposition.up(), EnumMobSpawn.STRUCTURE, false, false, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.NETHER_PORTAL); // PaperDragon
+ 
+                 if (entity != null) {
+                     entity.portalCooldown = entity.aX();
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
 index eaacc9bff..9868eeb26 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
