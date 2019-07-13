@@ -1,4 +1,4 @@
-From e5758347e41a46c09fd34036f5c31a9bc80edb69 Mon Sep 17 00:00:00 2001
+From d1a72e62f349044f71aff4f24bdd7a19f0f95535 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 8 Jul 2018 23:21:47 -0400
 Subject: [PATCH] Detect async meta
@@ -8,10 +8,10 @@ Subject: [PATCH] Detect async meta
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-index 53059c01d..c52f64522 100644
+index 6d1135734..124f1685a 100644
 --- a/src/main/java/net/minecraft/server/MetaApiAccessor.java
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -361,12 +361,14 @@ public final class MetaApiAccessor {
+@@ -367,12 +367,14 @@ public final class MetaApiAccessor {
              return null;
          }
          PersistentMetaMap map = new PersistentMetaMap();
