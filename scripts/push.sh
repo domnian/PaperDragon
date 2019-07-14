@@ -11,10 +11,18 @@ done
 minecraftversion=$(cat $basedir/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
 
 basedir
-pushRepo PaperDragon-API ${API_REPO} master:${minecraftversion}
-pushRepo PaperDragon-Server ${SERVER_REPO} master:${minecraftversion}
+pushRepo PaperDragon-API ${API_REPO} master:ver/${minecraftversion}
+pushRepo PaperDragon-Server ${SERVER_REPO} master:ver/${minecraftversion}
 pushRepo mc-dev ${MCDEV_REPO} ${paperVer}
 
-# Push Parent to Three Remotes
+# Push Parent to Remotes
 git push origin master -f
-git push pd-push master -f
+git push origin master:mc/${minecraftversion} -f
+(
+    git ls-remote --exit-code pd-push >> /dev/null
+    [[ "$?" == "128" ]] && git remote add pd-push git@github.com:domnian/PaperDragon >> /dev/null
+)
+[[ "$(git config minecraft.push-${FORK_NAME})" == "1" ]] && (
+    git push pd-push master -f
+    git push pd-push master:ver/${minecraftversion} -f
+)
