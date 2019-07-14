@@ -1,14 +1,14 @@
-From f2ce601c7e7a31e80e17a125ddfacdf7e5eafebd Mon Sep 17 00:00:00 2001
+From e477e7557dca1786c954c051187f08e4e4be4455 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Apr 2014 23:18:28 -0400
 Subject: [PATCH] Spawn Reason API
 
 ---
- src/main/java/org/bukkit/World.java | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ src/main/java/org/bukkit/World.java | 31 ++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 1e7b633c..99464b53 100644
+index 1e7b633c..c7563d7c 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -20,19 +20,20 @@ index 1e7b633c..99464b53 100644
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -1954,6 +1956,11 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1954,6 +1956,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @NotNull
      public <T extends Entity> T spawn(@NotNull Location location, @NotNull Class<T> clazz) throws IllegalArgumentException;
  
 +    // PaperDragon start - Import Patch from EMC
-+    public default <T extends Entity> T spawn(Location location, Class<T> clazz, CreatureSpawnEvent.SpawnReason reason) throws IllegalArgumentException {
++    @NotNull
++    public default <T extends Entity> T spawn(@NotNull Location location, @NotNull Class<T> clazz, @NotNull CreatureSpawnEvent.SpawnReason reason) throws IllegalArgumentException {
 +        return spawn(location, clazz, reason, null);
 +    }
 +
      /**
       * Spawn an entity of a specific class at the given {@link Location}, with
       * the supplied function run before the entity is added to the world.
-@@ -1971,7 +1978,22 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1971,7 +1979,28 @@ public interface World extends PluginMessageRecipient, Metadatable {
       *     {@link Entity} requested cannot be spawned
       */
      @NotNull
@@ -41,17 +42,23 @@ index 1e7b633c..99464b53 100644
 +        return spawn(location, clazz, CreatureSpawnEvent.SpawnReason.CUSTOM, function);
 +    }
 +
-+    public default <T extends Entity> T spawn(Location location, Class<T> clazz, CreatureSpawnEvent.SpawnReason reason, Consumer<T> function) throws IllegalArgumentException {
++    @NotNull
++    public default <T extends Entity> T spawn(@NotNull Location location, @NotNull Class<T> clazz, @NotNull CreatureSpawnEvent.SpawnReason reason, @Nullable Consumer<T> function) throws IllegalArgumentException {
 +        return spawn(location, clazz, function, reason);
 +    }
 +
-+    public default Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason) {
++    @NotNull
++    public default Entity spawnEntity(@NotNull Location loc, @NotNull EntityType type, @NotNull CreatureSpawnEvent.SpawnReason reason) {
 +        return spawn(loc, (Class<Entity>) type.getEntityClass(), reason, null);
 +    }
-+    public default Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason, Consumer<Entity> function) {
++
++    @NotNull
++    public default Entity spawnEntity(@NotNull Location loc, @NotNull EntityType type, @NotNull CreatureSpawnEvent.SpawnReason reason, @Nullable Consumer<Entity> function) {
 +        return spawn(loc, (Class<Entity>) type.getEntityClass(), reason, function);
 +    }
-+    public <T extends Entity> T spawn(Location location, Class<T> clazz, Consumer<T> function, CreatureSpawnEvent.SpawnReason reason) throws IllegalArgumentException;
++
++    @NotNull
++    public <T extends Entity> T spawn(@NotNull Location location, @NotNull Class<T> clazz, @Nullable Consumer<T> function, @NotNull CreatureSpawnEvent.SpawnReason reason) throws IllegalArgumentException;
 +    // PaperDragon end
  
      /**

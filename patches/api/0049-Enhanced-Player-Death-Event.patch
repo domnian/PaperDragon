@@ -1,14 +1,14 @@
-From d2f6e6aca9cc60c7b13ebb20f2e737829bca0225 Mon Sep 17 00:00:00 2001
+From 191b996d5be51cc39928e9fab0dfe89403cb3d40 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:32:29 -0400
 Subject: [PATCH] Enhanced Player Death Event
 
 ---
- .../bukkit/event/entity/PlayerDeathEvent.java | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ .../bukkit/event/entity/PlayerDeathEvent.java | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-index f5c3c5e2..b3d83d82 100644
+index f5c3c5e2..784f33fd 100644
 --- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 @@ -16,6 +16,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
@@ -19,7 +19,7 @@ index f5c3c5e2..b3d83d82 100644
  
      // Paper start
      private List<ItemStack> itemsToKeep = new java.util.ArrayList<>();
-@@ -195,4 +196,24 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+@@ -195,4 +196,25 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      public boolean getKeepInventory() {
          return keepInventory;
      }
@@ -30,7 +30,7 @@ index f5c3c5e2..b3d83d82 100644
 +     *
 +     * @param key the translation key for this type of death.
 +     */
-+    public void setSourceKey(String key) {
++    public void setSourceKey(@NotNull String key) {
 +        this.sourceKey = key;
 +    }
 +
@@ -39,6 +39,7 @@ index f5c3c5e2..b3d83d82 100644
 +     *
 +     * @return the translation key for this type of death.
 +     */
++    @NotNull
 +    public String getSourceKey() {
 +        return sourceKey;
 +    }

@@ -1,0 +1,103 @@
+From 3e943503d3134a723fb72d72fcc91a84fdcb4a41 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 14 Jul 2019 01:07:06 -0400
+Subject: [PATCH] Add classes to be ignored by the annotation test
+
+I'll eventually get time to annotate them all, but some classes
+that are excluded do have issues that were not resolved.
+---
+ src/test/java/org/bukkit/AnnotationTest.java | 70 ++++++++++++++++++--
+ 1 file changed, 63 insertions(+), 7 deletions(-)
+
+diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
+index af2abd47..b76c7a02 100644
+--- a/src/test/java/org/bukkit/AnnotationTest.java
++++ b/src/test/java/org/bukkit/AnnotationTest.java
+@@ -5,12 +5,8 @@ import java.io.FileInputStream;
+ import java.io.IOException;
+ import java.net.URISyntaxException;
+ import java.net.URL;
+-import java.util.ArrayList;
+-import java.util.Collection;
+-import java.util.Collections;
+-import java.util.HashMap;
+-import java.util.List;
+-import java.util.Map;
++import java.util.*;
++
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ import org.junit.Assert;
+@@ -49,8 +45,68 @@ public class AnnotationTest {
+         "co/aikar/timings/TimingHistory$2$1$2",
+         "co/aikar/timings/TimingHistory$3",
+         "co/aikar/timings/TimingHistory$4",
+-        "co/aikar/timings/TimingHistoryEntry$1"
++        "co/aikar/timings/TimingHistoryEntry$1",
+         // Paper end
++        // PaperDragon start
++        // TODO Eventually annotate these, and hope that maven actually recognizes that they are
++        "com/domnian/paperdragon/api/attributes/Attribute",
++        "com/domnian/paperdragon/api/attributes/AttributeSlot",
++        "com/domnian/paperdragon/api/attributes/DAPI_Attributes",
++        "com/domnian/paperdragon/api/attributes/Operation",
++        "com/domnian/paperdragon/api/meta/DAPI_Meta",
++        "com/domnian/paperdragon/api/meta/Meta",
++        "com/domnian/paperdragon/api/meta/MetaKey",
++        "com/domnian/paperdragon/api/meta/MetaKey$PersistentKey",
++        "com/domnian/paperdragon/api/meta/MetaKey$TempKey",
++        "com/domnian/paperdragon/api/meta/MetaMap",
++        "com/domnian/paperdragon/api/meta/PersistentKeyImpl",
++        "com/domnian/paperdragon/api/meta/PersistentMetaList",
++        "com/domnian/paperdragon/api/meta/PersistentMetaMap",
++        "com/domnian/paperdragon/api/meta/TempKeyImpl",
++        "com/domnian/paperdragon/api/meta/TempMetaMap",
++        "com/domnian/paperdragon/api/DAPI_Chat",
++        "com/domnian/paperdragon/api/DAPI_Chat$FancifulChat",
++        "com/domnian/paperdragon/api/DAPI_Entity",
++        "com/domnian/paperdragon/api/DAPI_Entity$1",
++        "com/domnian/paperdragon/api/DAPI_Entity$2",
++        "com/domnian/paperdragon/api/DAPI_Entity$3",
++        "com/domnian/paperdragon/api/DAPI_Entity$4",
++        "com/domnian/paperdragon/api/DAPI_Entity$5",
++        "com/domnian/paperdragon/api/DAPI_Entity$6",
++        "com/domnian/paperdragon/api/DAPI_Heads",
++        "com/domnian/paperdragon/api/DAPI_Misc",
++        "com/domnian/paperdragon/api/DragonAPI",
++        "com/domnian/paperdragon/api/EntityTask",
++        "com/domnian/paperdragon/api/EntityTask$TaskHandler",
++        "com/domnian/paperdragon/api/Vector3i",
++        "com/domnian/paperdragon/events/AdvancementBroadcastEvent",
++        "com/domnian/paperdragon/events/AnvilEvent",
++        "com/domnian/paperdragon/events/BlazeLaunchFireballEvent",
++        "com/domnian/paperdragon/events/BlockBreakNaturallyEvent",
++        "com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent",
++        "com/domnian/paperdragon/events/EggHatchEvent",
++        "com/domnian/paperdragon/events/EnderSignalArriveEvent",
++        "com/domnian/paperdragon/events/EntityEffectAddedEvent",
++        "com/domnian/paperdragon/events/FlowerPotPlantEvent",
++        "com/domnian/paperdragon/events/HopperDrainEvent",
++        "com/domnian/paperdragon/events/HopperFillEvent",
++        "com/domnian/paperdragon/events/MonsterEggSpawnEvent",
++        "com/domnian/paperdragon/events/MovedTooQuicklyEvent",
++        "com/domnian/paperdragon/events/PlayerHitPlayerEvent",
++        "com/domnian/paperdragon/events/PlayerPlaceItemAtEvent",
++        "com/domnian/paperdragon/events/PlayerUseItemEvent",
++        "com/domnian/paperdragon/events/SendSignEvent",
++        "com/domnian/paperdragon/events/ServerReloadEvent",
++        "com/domnian/paperdragon/events/ServerShutdownEvent",
++        "com/domnian/paperdragon/events/SnowmanThrowSnowballEvent",
++        "com/domnian/paperdragon/events/SpawnerInitiateEvent",
++        "com/domnian/paperdragon/events/ZombieReinforcementEvent",
++        "com/domnian/paperdragon/Identifier",
++        "com/domnian/paperdragon/UniqueIdentifier",
++        "com/destroystokyo/paper/event/entity/ArrowHitBlockEvent",
++        "com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent",
++        "com/destroystokyo/paper/event/player/PlayerPostUseItemEvent"
++        // PaperDragon end
+     };
+ 
+     @Test
+-- 
+2.17.1
+

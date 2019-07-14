@@ -1,4 +1,4 @@
-From 4058b3f908a1e46a0aeafc1f170dcab38d08de6f Mon Sep 17 00:00:00 2001
+From 8fb4a947ecf2ec7db59593618ac59e534c2d5ab7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 12 Jul 2015 23:51:12 -0400
 Subject: [PATCH] getTick API
@@ -8,10 +8,10 @@ Subject: [PATCH] getTick API
  1 file changed, 4 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 5a4101fc..febf8ba5 100644
+index 8f65a1df..6014d42c 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1325,6 +1325,10 @@ public interface Server extends PluginMessageRecipient {
+@@ -1326,6 +1326,10 @@ public interface Server extends PluginMessageRecipient {
          public org.bukkit.configuration.file.YamlConfiguration getDragonConfig() {
              throw new UnsupportedOperationException("Not supported yet.");
          }

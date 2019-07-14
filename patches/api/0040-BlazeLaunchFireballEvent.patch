@@ -1,4 +1,4 @@
-From 81b7d736f1b7112829e09f44b96d34481b2839a6 Mon Sep 17 00:00:00 2001
+From a212e8e970d73fa9e7bab8a8891e85b273a395b9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 May 2018 20:25:37 -0400
 Subject: [PATCH] BlazeLaunchFireballEvent
@@ -10,7 +10,7 @@ Subject: [PATCH] BlazeLaunchFireballEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
 new file mode 100644
-index 00000000..534221f7
+index 00000000..0635d644
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
 @@ -0,0 +1,66 @@
@@ -37,7 +37,7 @@ index 00000000..534221f7
 + *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 + */
 +
-+package com.domnian.paperdragon.customevents;
++package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.Blaze;
 +import org.bukkit.entity.SmallFireball;

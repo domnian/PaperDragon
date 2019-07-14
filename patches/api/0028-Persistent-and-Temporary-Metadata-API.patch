@@ -1,4 +1,4 @@
-From d770011562d7478a184f5d5f9338a5e412edffbc Mon Sep 17 00:00:00 2001
+From 517753e5723a2926922a3492cecc6c877c9c6a3a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -17,11 +17,11 @@ Entity, TileEntity, World, Chunk, Block, Inventory API's
  .../paperdragon/api/meta/TempKeyImpl.java     |  44 +
  .../paperdragon/api/meta/TempMetaMap.java     |  29 +
  .../BlockWithPersistentMetaClearedEvent.java  |  49 +
- src/main/java/org/bukkit/Chunk.java           |   3 +
+ src/main/java/org/bukkit/Chunk.java           |   5 +
  .../java/org/bukkit/block/BlockState.java     |   2 +
- src/main/java/org/bukkit/entity/Entity.java   |   1 +
- .../java/org/bukkit/inventory/Inventory.java  |   1 +
- 16 files changed, 1489 insertions(+)
+ src/main/java/org/bukkit/entity/Entity.java   |   2 +
+ .../java/org/bukkit/inventory/Inventory.java  |   2 +
+ 16 files changed, 1493 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/Vector3i.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/Meta.java
@@ -1599,10 +1599,10 @@ index 00000000..dcf4a459
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 0abd4377..62cb6681 100644
+index 0abd4377..61bca256 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -1,6 +1,7 @@
+@@ -1,11 +1,13 @@
  package org.bukkit;
  
  import java.util.Collection;
@@ -1610,10 +1610,17 @@ index 0abd4377..62cb6681 100644
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockState;
  import org.bukkit.entity.Entity;
-@@ -122,6 +123,8 @@ public interface Chunk {
+ import org.bukkit.plugin.Plugin;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ /**
+  * Represents a chunk of blocks
+@@ -122,6 +124,9 @@ public interface Chunk {
      BlockState[] getTileEntities(boolean useSnapshot);
      // Paper end
  
++    @Nullable
 +    TempMetaMap getTempMeta(); // PaperDragon
 +
      /**
@@ -1631,25 +1638,27 @@ index 631cbf2b..d5a390d9 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 2df8cf6b..6c7a1250 100644
+index e6fc31c0..076fc9ac 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -257,6 +257,7 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -257,6 +257,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
      public Server getServer();
  
++    @Nullable
 +    public com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta(); // PaperDragon
      /**
       * Returns true if the entity gets persisted.
       * <p>
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 6040d971..5e1b46bb 100644
+index 6040d971..fdd178a3 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
-@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
+@@ -27,6 +27,8 @@ import org.jetbrains.annotations.Nullable;
   */
  public interface Inventory extends Iterable<ItemStack> {
  
++    @Nullable
 +    public HashMap<String, Object> getMeta(); // PaperDragon
      /**
       * Returns the size of the inventory

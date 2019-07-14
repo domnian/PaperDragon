@@ -1,4 +1,4 @@
-From f19115de3da0767657cd73c22df38ab789f996ef Mon Sep 17 00:00:00 2001
+From aab6653f2dacb9ff37b65adc2fcaf154af2888ce Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:26:15 -0500
 Subject: [PATCH] Entity Serialization
@@ -28,7 +28,7 @@ index 9ea6b96d..7f99d075 100644
 +
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 29229c64..2df8cf6b 100644
+index 29229c64..e6fc31c0 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -28,6 +28,11 @@ import org.jetbrains.annotations.Nullable;
@@ -36,8 +36,8 @@ index 29229c64..2df8cf6b 100644
  public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder {
  
 +    // PaperDragon start
-+    public boolean spawnAt(Location loc);
-+    public boolean spawnAt(Location loc, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason);
++    public boolean spawnAt(@NotNull Location loc);
++    public boolean spawnAt(@NotNull Location loc, @NotNull org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason);
 +    // PaperDragon end
 +
      /*

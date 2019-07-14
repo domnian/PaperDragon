@@ -1,21 +1,22 @@
-From 84513a1b6dd8370139843ca7dd4a53bf5eb51e75 Mon Sep 17 00:00:00 2001
+From 1bcfae5fe96fb0fa75e49250ae699e3c00fb9684 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 11:22:21 -0400
 Subject: [PATCH] PaperDragon Config Files
 
 ---
- src/main/java/org/bukkit/Server.java | 6 ++++++
- 1 file changed, 6 insertions(+)
+ src/main/java/org/bukkit/Server.java | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 27d3b5ad..5a4101fc 100644
+index 27d3b5ad..8f65a1df 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1321,6 +1321,12 @@ public interface Server extends PluginMessageRecipient {
+@@ -1321,6 +1321,13 @@ public interface Server extends PluginMessageRecipient {
          }
          // Paper end
  
 +        // PaperDragon start
++        @NotNull
 +        public org.bukkit.configuration.file.YamlConfiguration getDragonConfig() {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }

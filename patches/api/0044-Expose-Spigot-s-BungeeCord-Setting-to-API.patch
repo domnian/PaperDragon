@@ -1,4 +1,4 @@
-From a4720de476652d0b9cbc5c87b73956f6e2055ba0 Mon Sep 17 00:00:00 2001
+From 4ad267fc2880d95c2374e4468581185969ff62e2 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -27,10 +27,10 @@ index 6db69159..dfb9e289 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index febf8ba5..c177bf71 100644
+index 6014d42c..00091ca1 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1409,4 +1409,11 @@ public interface Server extends PluginMessageRecipient {
+@@ -1410,4 +1410,11 @@ public interface Server extends PluginMessageRecipient {
      @NotNull
      com.destroystokyo.paper.profile.PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name);
      // Paper end

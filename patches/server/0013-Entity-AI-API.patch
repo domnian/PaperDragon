@@ -1,4 +1,4 @@
-From 5b4c820cb7bbef10d0a4769cf966f1827edfc675 Mon Sep 17 00:00:00 2001
+From a07d1dfa99ddf2ab016b85779f4d7a0c4876f58a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -624,7 +624,7 @@ index eab32ec04..6e16654cb 100644
      public ItemStack breedItem; // CraftBukkit - Add breedItem variable
  
 diff --git a/src/main/java/net/minecraft/server/EntityBlaze.java b/src/main/java/net/minecraft/server/EntityBlaze.java
-index 89f1bfa41..3a14311c8 100644
+index 89f1bfa41..0157e57c4 100644
 --- a/src/main/java/net/minecraft/server/EntityBlaze.java
 +++ b/src/main/java/net/minecraft/server/EntityBlaze.java
 @@ -24,10 +24,29 @@ public class EntityBlaze extends EntityMonster {
@@ -673,7 +673,7 @@ index 89f1bfa41..3a14311c8 100644
                                  EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.a.world, this.a, d1 + this.a.getRandom().nextGaussian() * (double) f, d2, d3 + this.a.getRandom().nextGaussian() * (double) f);
  
                                  entitysmallfireball.locY = this.a.locY + (double) (this.a.getHeight() / 2.0F) + 0.5D;
-+                                if (new com.domnian.paperdragon.customevents.BlazeLaunchFireballEvent((org.bukkit.entity.Blaze) this.a.getBukkitEntity(), (org.bukkit.entity.SmallFireball) entitysmallfireball.getBukkitEntity()).callEvent()) { // PaperDragon
++                                if (new com.domnian.paperdragon.events.BlazeLaunchFireballEvent((org.bukkit.entity.Blaze) this.a.getBukkitEntity(), (org.bukkit.entity.SmallFireball) entitysmallfireball.getBukkitEntity()).callEvent()) { // PaperDragon
                                  this.a.world.addEntity(entitysmallfireball);
 +                                } else { entitysmallfireball.die(); }// PaperDragon
                              }

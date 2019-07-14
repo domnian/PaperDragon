@@ -1,4 +1,4 @@
-From 6a156517c6e273624ccdb6ee4a86209111fe27ae Mon Sep 17 00:00:00 2001
+From c64118f493383981478d2f8ed4ab3976c488ccb5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 21:09:39 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
@@ -7,14 +7,21 @@ lets you copy an entities data into a spawn egg.
 Partial data is supported through a predicate, letting MC
 follow normal spawn behavior in the summon phase.
 ---
- .../bukkit/inventory/meta/SpawnEggMeta.java   | 39 +++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ .../bukkit/inventory/meta/SpawnEggMeta.java   | 40 +++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
-index 9ae84de4..f6ee31cd 100644
+index 9ae84de4..2311e869 100644
 --- a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
-@@ -9,6 +9,45 @@ import org.jetbrains.annotations.NotNull;
+@@ -3,12 +3,52 @@ package org.bukkit.inventory.meta;
+ import org.bukkit.entity.EntityType;
+ import org.jetbrains.annotations.Contract;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ /**
+  * Represents a spawn egg and it's spawned type.
   */
  public interface SpawnEggMeta extends ItemMeta {
  
@@ -24,9 +31,9 @@ index 9ae84de4..f6ee31cd 100644
 +     * Copies the Entity as is into the spawn egg.
 +     *
 +     * All non positional data properties will be saved
-+ * @param entity
++     * @param entity
 +     */
-+    default void setSpawnedEntity(org.bukkit.entity.Entity entity) {
++    default void setSpawnedEntity(@NotNull org.bukkit.entity.Entity entity) {
 +        setSpawnedEntity(entity, null);
 +    }
 +    /**
@@ -54,7 +61,7 @@ index 9ae84de4..f6ee31cd 100644
 +     * @param entity
 +     * @param keyFilter
 +     */
-+    void setSpawnedEntity(org.bukkit.entity.Entity entity, java.util.function.Predicate<String> keyFilter);
++    void setSpawnedEntity(@NotNull org.bukkit.entity.Entity entity, @Nullable java.util.function.Predicate<String> keyFilter);
 +    // Paper end
 +
      /**
