@@ -1,4 +1,4 @@
-From 3463fc519ecc85819038fac63f0373643f9e59d7 Mon Sep 17 00:00:00 2001
+From 857090d206b65b228c617ad95c02d49c973c52bc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -6,8 +6,8 @@ Subject: [PATCH] MonsterEggSpawn Event
 Get the itemstack used to spawn an entity
 ---
  .../net/minecraft/server/BlockPortal.java     |  2 +-
- .../net/minecraft/server/EntityTypes.java     | 21 +++++++++++++++----
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ .../net/minecraft/server/EntityTypes.java     | 29 ++++++++++++++++---
+ 2 files changed, 26 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
 index 4eef7127a..4682ec77c 100644
@@ -23,10 +23,10 @@ index 4eef7127a..4682ec77c 100644
                  if (entity != null) {
                      entity.portalCooldown = entity.aX();
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index eaacc9bff..9868eeb26 100644
+index eaacc9bff..62f670881 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
 +++ b/src/main/java/net/minecraft/server/EntityTypes.java
-@@ -157,18 +157,31 @@ public class EntityTypes<T extends Entity> {
+@@ -157,23 +157,44 @@ public class EntityTypes<T extends Entity> {
  
      @Nullable
      public Entity spawnCreature(World world, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
@@ -62,6 +62,19 @@ index eaacc9bff..9868eeb26 100644
  
          return world.addEntity(t0, spawnReason) ? t0 : null; // Don't return an entity when CreatureSpawnEvent is canceled
          // CraftBukkit end
+     }
+ 
++    // PaperDragon start - OBF HELPER
++    @Nullable
++    public T spawnCreature(World world, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
++        T t0 = this.b(world, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
++        return world.addEntity(t0) ? t0 : null;
++    }
++    // PaperDragon end
++
+     @Nullable
+     public T b(World world, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
+         T t0 = this.a(world);
 -- 
 2.17.1
 
