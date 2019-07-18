@@ -1,4 +1,4 @@
-From 428b72690c9fa9a4307b7a9b71c59a14e27363b1 Mon Sep 17 00:00:00 2001
+From e30da87f1adc9d700d9a8f0a0c69050a8fc4b669 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -9,7 +9,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  src/main/java/net/minecraft/server/Chunk.java |   2 +
  .../minecraft/server/ChunkRegionLoader.java   |   3 +-
  .../java/net/minecraft/server/Entity.java     |   3 +
- .../net/minecraft/server/MetaApiAccessor.java | 510 ++++++++++++++++++
+ .../net/minecraft/server/MetaApiAccessor.java | 508 ++++++++++++++++++
  .../server/PacketPlayOutMapChunk.java         |   1 +
  .../server/PacketPlayOutTileEntityData.java   |   1 +
  .../java/net/minecraft/server/TileEntity.java |   3 +
@@ -23,7 +23,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
  .../craftbukkit/inventory/CraftInventory.java |   6 +
- 19 files changed, 640 insertions(+), 2 deletions(-)
+ 19 files changed, 638 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -205,10 +205,10 @@ index b2a2090e7..8e1747914 100644
                  origin = new Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 000000000..6d1135734
+index 000000000..cb26bc8ee
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -0,0 +1,510 @@
+@@ -0,0 +1,508 @@
 +package net.minecraft.server;
 +
 +import org.bukkit.Bukkit;
@@ -375,7 +375,6 @@ index 000000000..6d1135734
 +        } else if (chunkAccess instanceof PlayerChunk) {
 +            chunk = ((PlayerChunk) chunkAccess).getChunk();
 +        } else if (chunkAccess instanceof ProtoChunk) {
-+            MCLog.warn("Received ProtoChunk in MataApiAccessor#saveChunkMetaNbt()");
 +            return;
 +        }
 +        if (chunk == null) throw new IllegalArgumentException("Chunk Access is not a Chunk!");
@@ -417,7 +416,6 @@ index 000000000..6d1135734
 +        } else if (chunkAccess instanceof PlayerChunk) {
 +            chunk = ((PlayerChunk) chunkAccess).getChunk();
 +        } else if (chunkAccess instanceof ProtoChunk) {
-+            MCLog.warn("Received ProtoChunk in MataApiAccessor#saveChunkMetaNbt()");
 +            return;
 +        }
 +        if (chunk == null) throw new IllegalArgumentException("Chunk Access is not a Chunk!");
