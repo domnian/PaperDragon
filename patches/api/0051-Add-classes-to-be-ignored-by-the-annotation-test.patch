@@ -1,4 +1,4 @@
-From 3e943503d3134a723fb72d72fcc91a84fdcb4a41 Mon Sep 17 00:00:00 2001
+From ef0d8773ae19b90262a7f32cc37b7474c522fe35 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 14 Jul 2019 01:07:06 -0400
 Subject: [PATCH] Add classes to be ignored by the annotation test
@@ -6,11 +6,11 @@ Subject: [PATCH] Add classes to be ignored by the annotation test
 I'll eventually get time to annotate them all, but some classes
 that are excluded do have issues that were not resolved.
 ---
- src/test/java/org/bukkit/AnnotationTest.java | 70 ++++++++++++++++++--
+ src/test/java/org/bukkit/AnnotationTest.java | 70 +++++++++++++++++++++++++---
  1 file changed, 63 insertions(+), 7 deletions(-)
 
 diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
-index af2abd47..b76c7a02 100644
+index af2abd4..b76c7a0 100644
 --- a/src/test/java/org/bukkit/AnnotationTest.java
 +++ b/src/test/java/org/bukkit/AnnotationTest.java
 @@ -5,12 +5,8 @@ import java.io.FileInputStream;
@@ -99,5 +99,5 @@ index af2abd47..b76c7a02 100644
  
      @Test
 -- 
-2.17.1
+2.7.4
 

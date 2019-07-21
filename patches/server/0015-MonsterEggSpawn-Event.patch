@@ -1,16 +1,16 @@
-From 857090d206b65b228c617ad95c02d49c973c52bc Mon Sep 17 00:00:00 2001
+From 0e7b7e0073a475c4eeb9b32a663dd053dada8c1f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
 
 Get the itemstack used to spawn an entity
 ---
- .../net/minecraft/server/BlockPortal.java     |  2 +-
- .../net/minecraft/server/EntityTypes.java     | 29 ++++++++++++++++---
+ .../java/net/minecraft/server/BlockPortal.java     |  2 +-
+ .../java/net/minecraft/server/EntityTypes.java     | 29 +++++++++++++++++++---
  2 files changed, 26 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
-index 4eef7127a..4682ec77c 100644
+index 4eef712..4682ec7 100644
 --- a/src/main/java/net/minecraft/server/BlockPortal.java
 +++ b/src/main/java/net/minecraft/server/BlockPortal.java
 @@ -42,7 +42,7 @@ public class BlockPortal extends Block {
@@ -23,10 +23,10 @@ index 4eef7127a..4682ec77c 100644
                  if (entity != null) {
                      entity.portalCooldown = entity.aX();
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index eaacc9bff..62f670881 100644
+index a7fc34f..3689296 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
 +++ b/src/main/java/net/minecraft/server/EntityTypes.java
-@@ -157,23 +157,44 @@ public class EntityTypes<T extends Entity> {
+@@ -155,23 +155,44 @@ public class EntityTypes<T extends Entity> {
  
      @Nullable
      public Entity spawnCreature(World world, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
@@ -76,5 +76,5 @@ index eaacc9bff..62f670881 100644
      public T b(World world, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
          T t0 = this.a(world);
 -- 
-2.17.1
+2.7.4
 

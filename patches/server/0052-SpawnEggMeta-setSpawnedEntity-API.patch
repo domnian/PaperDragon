@@ -1,4 +1,4 @@
-From 775f82420c95ac34dc62ecb24d10f79713bac783 Mon Sep 17 00:00:00 2001
+From 7205c898fc6704ea9b81fa73596511fe966e61fe Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 22:03:33 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
@@ -7,11 +7,11 @@ lets you copy an entities data into a spawn egg.
 Partial data is supported through a predicate, letting MC
 follow normal spawn behavior in the summon phase.
 ---
- .../inventory/CraftMetaSpawnEgg.java           | 18 ++++++++++++++++++
+ .../craftbukkit/inventory/CraftMetaSpawnEgg.java       | 18 ++++++++++++++++++
  1 file changed, 18 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
-index 082f85119..c9d86ac79 100644
+index 082f851..c9d86ac 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
 @@ -187,6 +187,24 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
@@ -40,5 +40,5 @@ index 082f85119..c9d86ac79 100644
      public EntityType getSpawnedType() {
          throw new UnsupportedOperationException("Must check item type to get spawned type");
 -- 
-2.17.1
+2.7.4
 

@@ -1,18 +1,18 @@
-From cc9acc4dcda82755ff9d06637da8788f1589e337 Mon Sep 17 00:00:00 2001
+From fe75b8cec7a5bdf3f45f1535d914f42d80266657 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
 
 Fired when a player hits another player, regardless of gamemode
 ---
- .../domnian/paperdragon/PDEventFactory.java   | 21 +++++++++++++++++++
- .../net/minecraft/server/EntityHuman.java     |  1 +
+ .../com/domnian/paperdragon/PDEventFactory.java     | 21 +++++++++++++++++++++
+ src/main/java/net/minecraft/server/EntityHuman.java |  1 +
  2 files changed, 22 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/PDEventFactory.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 new file mode 100644
-index 000000000..1a45cd0c4
+index 0000000..1a45cd0
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 @@ -0,0 +1,21 @@
@@ -38,10 +38,10 @@ index 000000000..1a45cd0c4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index c9beef458..6f06cbd1a 100644
+index 93cb27a..2843f0a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -965,6 +965,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -980,6 +980,7 @@ public abstract class EntityHuman extends EntityLiving {
      public void attack(Entity entity) {
          if (entity.bs()) {
              if (!entity.t(this)) {
@@ -50,5 +50,5 @@ index c9beef458..6f06cbd1a 100644
                  float f1;
  
 -- 
-2.17.1
+2.7.4
 

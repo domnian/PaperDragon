@@ -1,4 +1,4 @@
-From e6716b0e46dc3c17e2fac1685850e2d37a70f1f3 Mon Sep 17 00:00:00 2001
+From 93667f4fd6998d0a62e1aeb85dea94886fd59976 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Jun 2018 22:35:39 -0400
 Subject: [PATCH] Tweak Explosions
@@ -8,7 +8,7 @@ Subject: [PATCH] Tweak Explosions
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/Explosion.java b/src/main/java/net/minecraft/server/Explosion.java
-index 34bc54fca..0dfbeef7f 100644
+index 8cfdac0..d4ac105 100644
 --- a/src/main/java/net/minecraft/server/Explosion.java
 +++ b/src/main/java/net/minecraft/server/Explosion.java
 @@ -92,6 +92,7 @@ public class Explosion {
@@ -37,7 +37,7 @@ index 34bc54fca..0dfbeef7f 100644
          });
          // Paper end
 @@ -210,7 +212,7 @@ public class Explosion {
-         this.world.a((EntityHuman) null, this.posX, this.posY, this.posZ, SoundEffects.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.random.nextFloat() - this.world.random.nextFloat()) * 0.2F) * 0.7F);
+         this.world.playSound((EntityHuman) null, this.posX, this.posY, this.posZ, SoundEffects.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.random.nextFloat() - this.world.random.nextFloat()) * 0.2F) * 0.7F);
          boolean flag1 = this.b != Explosion.Effect.NONE;
  
 -        if (this.size >= 2.0F && flag1) {
@@ -46,5 +46,5 @@ index 34bc54fca..0dfbeef7f 100644
          } else {
              this.world.addParticle(Particles.EXPLOSION, this.posX, this.posY, this.posZ, 1.0D, 0.0D, 0.0D);
 -- 
-2.17.1
+2.7.4
 

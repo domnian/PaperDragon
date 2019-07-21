@@ -1,15 +1,15 @@
-From 70d4201860264f97fb17c70146e127b2e5ff332d Mon Sep 17 00:00:00 2001
+From fd6992288e610688cb0034819800a38c32f45de3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml                                       | 53 +++++++++++++++----
- .../bukkit/craftbukkit/util/Versioning.java   |  2 +-
+ pom.xml                                            | 53 ++++++++++++++++++----
+ .../org/bukkit/craftbukkit/util/Versioning.java    |  2 +-
  2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 1f3571dd0..9b020c4a1 100644
+index 0130272..7e1c93e 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,12 @@
@@ -20,7 +20,7 @@ index 1f3571dd0..9b020c4a1 100644
 +
 +    <artifactId>paperdragon</artifactId>
      <packaging>jar</packaging>
-     <version>1.14.3-R0.1-SNAPSHOT</version>
+     <version>1.14.4-R0.1-SNAPSHOT</version>
 -    <name>Paper</name>
 -    <url>https://papermc.io</url>
 +    <name>PaperDragon</name>
@@ -49,11 +49,10 @@ index 1f3571dd0..9b020c4a1 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -94,6 +95,31 @@
-             <version>1.1.1</version>
+@@ -95,6 +96,31 @@
              <scope>compile</scope>
          </dependency>
-+        <dependency>
+         <dependency>
 +            <groupId>com.zaxxer</groupId>
 +            <artifactId>HikariCP</artifactId>
 +            <version>2.7.1</version>
@@ -78,9 +77,10 @@ index 1f3571dd0..9b020c4a1 100644
 +            <version>5.0.4</version>
 +            <scope>compile</scope>
 +        </dependency>
-         <dependency>
++        <dependency>
              <groupId>org.xerial</groupId>
              <artifactId>sqlite-jdbc</artifactId>
+             <version>3.28.0</version>
 @@ -143,7 +169,7 @@
  
      <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
@@ -116,7 +116,7 @@ index 1f3571dd0..9b020c4a1 100644
      </build>
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 674096cab..50cd5f9ca 100644
+index 674096c..50cd5f9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -129,5 +129,5 @@ index 674096cab..50cd5f9ca 100644
  
          if (stream != null) {
 -- 
-2.17.1
+2.7.4
 

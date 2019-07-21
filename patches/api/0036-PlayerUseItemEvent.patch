@@ -1,13 +1,13 @@
-From 44e1bf4ca1fd2d9bf9ee8befefdef4364e5c9e47 Mon Sep 17 00:00:00 2001
+From ecba32267731a03c00d14043319ede184717eea6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Dec 2016 00:22:09 -0500
 Subject: [PATCH] PlayerUseItemEvent
 
 ---
- .../player/PlayerPostPlaceItemAtEvent.java    |  80 +++++++++++++
- .../event/player/PlayerPostUseItemEvent.java  |  69 +++++++++++
- .../events/PlayerPlaceItemAtEvent.java        | 110 ++++++++++++++++++
- .../events/PlayerUseItemEvent.java            |  89 ++++++++++++++
+ .../event/player/PlayerPostPlaceItemAtEvent.java   |  80 +++++++++++++++
+ .../paper/event/player/PlayerPostUseItemEvent.java |  69 +++++++++++++
+ .../paperdragon/events/PlayerPlaceItemAtEvent.java | 110 +++++++++++++++++++++
+ .../paperdragon/events/PlayerUseItemEvent.java     |  89 +++++++++++++++++
  4 files changed, 348 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java
  create mode 100644 src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java
@@ -16,7 +16,7 @@ Subject: [PATCH] PlayerUseItemEvent
 
 diff --git a/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java
 new file mode 100644
-index 00000000..8e83d0d9
+index 0000000..8e83d0d
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java
 @@ -0,0 +1,80 @@
@@ -102,7 +102,7 @@ index 00000000..8e83d0d9
 +}
 diff --git a/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java
 new file mode 100644
-index 00000000..511082ea
+index 0000000..511082e
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java
 @@ -0,0 +1,69 @@
@@ -177,7 +177,7 @@ index 00000000..511082ea
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java b/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java
 new file mode 100644
-index 00000000..2c3d82cb
+index 0000000..2c3d82c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java
 @@ -0,0 +1,110 @@
@@ -293,7 +293,7 @@ index 00000000..2c3d82cb
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java b/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java
 new file mode 100644
-index 00000000..17f2f549
+index 0000000..17f2f54
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java
 @@ -0,0 +1,89 @@
@@ -387,5 +387,5 @@ index 00000000..17f2f549
 +    }
 +}
 -- 
-2.17.1
+2.7.4
 

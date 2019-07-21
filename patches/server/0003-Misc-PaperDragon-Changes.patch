@@ -1,22 +1,22 @@
-From 351bf21b1c7a3a9bf271673c7e8d4f7b7f4a81ac Mon Sep 17 00:00:00 2001
+From 4b38061cb3d5eb34e6d63eed56c00863b69bf5d6 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
- .../java/com/destroystokyo/paper/Metrics.java |  4 +-
- .../paperdragon/DragonVersionFetcher.java     | 84 +++++++++++++++++++
- src/main/java/net/minecraft/server/MCLog.java | 77 +++++++++++++++++
- .../net/minecraft/server/MinecraftServer.java |  4 +-
- .../org/bukkit/craftbukkit/CraftServer.java   |  2 +-
- .../craftbukkit/util/CraftMagicNumbers.java   |  2 +-
- .../java/org/spigotmc/WatchdogThread.java     | 13 ++-
+ src/main/java/com/destroystokyo/paper/Metrics.java |  4 +-
+ .../domnian/paperdragon/DragonVersionFetcher.java  | 84 ++++++++++++++++++++++
+ src/main/java/net/minecraft/server/MCLog.java      | 77 ++++++++++++++++++++
+ .../java/net/minecraft/server/MinecraftServer.java |  4 +-
+ .../java/org/bukkit/craftbukkit/CraftServer.java   |  2 +-
+ .../bukkit/craftbukkit/util/CraftMagicNumbers.java |  2 +-
+ src/main/java/org/spigotmc/WatchdogThread.java     | 13 ++--
  7 files changed, 174 insertions(+), 12 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index e257d6b36..5ef397950 100644
+index e257d6b..5ef3979 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -578,7 +578,7 @@ public class Metrics {
@@ -39,7 +39,7 @@ index e257d6b36..5ef397950 100644
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 new file mode 100644
-index 000000000..edd083ef6
+index 0000000..edd083e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 @@ -0,0 +1,84 @@
@@ -129,7 +129,7 @@ index 000000000..edd083ef6
 +}
 diff --git a/src/main/java/net/minecraft/server/MCLog.java b/src/main/java/net/minecraft/server/MCLog.java
 new file mode 100644
-index 000000000..bf28f00db
+index 0000000..bf28f00
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MCLog.java
 @@ -0,0 +1,77 @@
@@ -211,10 +211,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2b99fdc63..2875daaf6 100644
+index eb1006d..319068d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1411,10 +1411,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1423,10 +1423,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -227,7 +227,7 @@ index 2b99fdc63..2875daaf6 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1423,7 +1425,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1435,7 +1437,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -237,7 +237,7 @@ index 2b99fdc63..2875daaf6 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6738713d8..ea464a14f 100644
+index b95214a..713ba68 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -200,7 +200,7 @@ import javax.annotation.Nullable; // Paper
@@ -250,7 +250,7 @@ index 6738713d8..ea464a14f 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1b8d94d29..c8fed3d34 100644
+index 921c16d..5a2d866 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -296,7 +296,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -263,7 +263,7 @@ index 1b8d94d29..c8fed3d34 100644
      // Paper end
  
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index a1d93200e..1c1568ea1 100644
+index a1d9320..1c1568e 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -24,7 +24,7 @@ public class WatchdogThread extends Thread
@@ -313,5 +313,5 @@ index a1d93200e..1c1568ea1 100644
  
  
 -- 
-2.17.1
+2.7.4
 

@@ -1,16 +1,16 @@
-From 315f330baae4f83e13c2b91dcd6489e2910e06b9 Mon Sep 17 00:00:00 2001
+From 4a446e6140edb587c7c36eff7145d92b85ec474e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:52:29 -0500
 Subject: [PATCH] Entity Tasks
 
 ---
- .../domnian/paperdragon/api/DAPI_Entity.java  |  59 ++++++++++
- .../domnian/paperdragon/api/EntityTask.java   | 106 ++++++++++++++++++
+ .../com/domnian/paperdragon/api/DAPI_Entity.java   |  59 ++++++++++++
+ .../com/domnian/paperdragon/api/EntityTask.java    | 106 +++++++++++++++++++++
  2 files changed, 165 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityTask.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 7f99d075..85d4b770 100644
+index 7f99d07..85d4b77 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 @@ -1,5 +1,6 @@
@@ -85,7 +85,7 @@ index 7f99d075..85d4b770 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityTask.java b/src/main/java/com/domnian/paperdragon/api/EntityTask.java
 new file mode 100644
-index 00000000..578fc722
+index 0000000..578fc72
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityTask.java
 @@ -0,0 +1,106 @@
@@ -196,5 +196,5 @@ index 00000000..578fc722
 +    }
 +}
 -- 
-2.17.1
+2.7.4
 

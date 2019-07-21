@@ -1,31 +1,31 @@
-From 166e68fe64d042ddcddad0cc37444e6504f5a736 Mon Sep 17 00:00:00 2001
+From 453c09799ba96c7cdde727abbd431fbc60410903 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
 
 ---
- src/main/java/net/minecraft/server/EntityPlayer.java         | 5 ++++-
- .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java | 3 ++-
+ src/main/java/net/minecraft/server/EntityPlayer.java              | 5 ++++-
+ src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java | 3 ++-
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 633fe836d..42c463c20 100644
+index 89a4f43..931719a 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -577,7 +577,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -578,7 +578,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
  
          String deathmessage = defaultMessage.getString();
 -        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory);
 +        // PaperDragon start - Enhanced Player Death Event
-+        String deathKey = (defaultMessage instanceof ChatMessage) ? ((ChatMessage) defaultMessage).k() : "death.attack.generic";
++        String deathKey = (defaultMessage instanceof ChatMessage) ? ((ChatMessage) defaultMessage).getKey() : "death.attack.generic";
 +        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory, deathKey);
 +        // PaperDragon stop
          // Paper start - cancellable death event
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 4675584b1..611366e5c 100644
+index 7c82a82..9e8b761 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -768,11 +768,12 @@ public class CraftEventFactory {
@@ -43,5 +43,5 @@ index 4675584b1..611366e5c 100644
          Bukkit.getServer().getPluginManager().callEvent(event);
          // Paper start - make cancellable
 -- 
-2.17.1
+2.7.4
 

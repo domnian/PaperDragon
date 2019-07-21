@@ -1,17 +1,17 @@
-From d122b20ac9fd6716649ea92e61c3530a611a5045 Mon Sep 17 00:00:00 2001
+From 5ed9d67381bb2cad3457582851dec277db398522 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)
 
 ---
- .../paperdragon/api/CraftDAPI_Heads.java      | 83 +++++++++++++++++++
- .../paperdragon/api/CraftDragonAPI.java       |  1 +
+ .../domnian/paperdragon/api/CraftDAPI_Heads.java   | 83 ++++++++++++++++++++++
+ .../domnian/paperdragon/api/CraftDragonAPI.java    |  1 +
  2 files changed, 84 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 new file mode 100644
-index 000000000..30bcea953
+index 0000000..30bcea9
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 @@ -0,0 +1,83 @@
@@ -99,7 +99,7 @@ index 000000000..30bcea953
 +
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index a9959999c..793762687 100644
+index a995999..7937626 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -38,6 +38,7 @@ public final class CraftDragonAPI extends DragonAPI {
@@ -111,5 +111,5 @@ index a9959999c..793762687 100644
  
  }
 -- 
-2.17.1
+2.7.4
 

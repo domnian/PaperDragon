@@ -1,14 +1,14 @@
-From e1bb9abbeeb530263c1ff8a134901407728b3412 Mon Sep 17 00:00:00 2001
+From 156ae90a392ac5070ce73a6706ae1ad04a52cdaa Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:39:41 -0400
 Subject: [PATCH] Add API for vehicle exit event reason
 
 ---
- .../org/bukkit/event/vehicle/VehicleExitEvent.java    | 11 +++++++++++
+ src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
-index a976c32d..6f0bf51b 100644
+index a976c32..6f0bf51 100644
 --- a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 +++ b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 @@ -10,6 +10,17 @@ import org.jetbrains.annotations.NotNull;
@@ -30,5 +30,5 @@ index a976c32d..6f0bf51b 100644
      private boolean cancelled;
      private final LivingEntity exited;
 -- 
-2.17.1
+2.7.4
 

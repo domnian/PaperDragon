@@ -1,16 +1,16 @@
-From 0f7350f98f86021c36d07f9c97beff26587d5edb Mon Sep 17 00:00:00 2001
+From 1bd48171809556b874648bb4c18f3fbef49bb59c Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Mar 2018 02:23:21 -0400
 Subject: [PATCH] Shutdown the Server if the Required Plugins fail to Load
 
 Based on EmpireCraft Server Patch #76 (https://git.io/vx3xr)
 ---
- .../com/domnian/paperdragon/DragonConfig.java |  6 ++++++
- .../net/minecraft/server/MinecraftServer.java | 19 +++++++++++++++++++
+ .../java/com/domnian/paperdragon/DragonConfig.java    |  6 ++++++
+ .../java/net/minecraft/server/MinecraftServer.java    | 19 +++++++++++++++++++
  2 files changed, 25 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 248830d16..7f9739e04 100644
+index 248830d..7f9739e 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -12,6 +12,7 @@ import java.io.IOException;
@@ -34,10 +34,10 @@ index 248830d16..7f9739e04 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7afdaca3a..296253320 100644
+index 86401d7..09468cb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -236,6 +236,25 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -246,6 +246,25 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          persistentscoreboard.a((Scoreboard) this.getScoreboard());
          this.getScoreboard().a((Runnable) (new RunnableSaveScoreboard(persistentscoreboard)));
@@ -64,5 +64,5 @@ index 7afdaca3a..296253320 100644
  
      protected abstract boolean init() throws IOException;
 -- 
-2.17.1
+2.7.4
 

@@ -1,16 +1,16 @@
-From 018d569b19c45dff9b51cd32a2d383f61e16251e Mon Sep 17 00:00:00 2001
+From 225c672bda720c9a9ef87560eef0f74d7b5944a7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
 
 ---
- src/main/java/com/domnian/paperdragon/DragonConfig.java  | 5 ++++-
- .../java/com/domnian/paperdragon/DragonWorldConfig.java  | 4 ++++
- .../java/net/minecraft/server/AdvancementDataPlayer.java | 9 +++++++++
+ src/main/java/com/domnian/paperdragon/DragonConfig.java       | 5 ++++-
+ src/main/java/com/domnian/paperdragon/DragonWorldConfig.java  | 4 ++++
+ src/main/java/net/minecraft/server/AdvancementDataPlayer.java | 9 +++++++++
  3 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index b339651e9..c0ee0bce5 100644
+index b339651..c0ee0bc 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -175,6 +175,9 @@ public class DragonConfig {
@@ -25,7 +25,7 @@ index b339651e9..c0ee0bce5 100644
  
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 2a180d5a4..107135de9 100644
+index 2a180d5..107135d 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -74,6 +74,10 @@ public class DragonWorldConfig {
@@ -40,7 +40,7 @@ index 2a180d5a4..107135de9 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index ff41b4bfb..37e27138a 100644
+index a6b5ecf..75f8bc1 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 @@ -293,6 +293,15 @@ public class AdvancementDataPlayer {
@@ -60,5 +60,5 @@ index ff41b4bfb..37e27138a 100644
                      event.getReceivers().forEach(p -> ((org.bukkit.craftbukkit.entity.CraftPlayer)p).getHandle().sendMessage(adv));
                      // PaperDragon end
 -- 
-2.17.1
+2.7.4
 

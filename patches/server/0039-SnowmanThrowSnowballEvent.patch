@@ -1,14 +1,14 @@
-From 099dd5c479741f30b7eb2c3b69c2f689fe8704d0 Mon Sep 17 00:00:00 2001
+From 2863ca8b41255d81725ae65daab98bba8c67560a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Dec 2015 13:33:00 -0500
 Subject: [PATCH] SnowmanThrowSnowballEvent
 
 ---
- .../net/minecraft/server/EntitySnowman.java   | 20 +++++++++++++++++++
+ .../java/net/minecraft/server/EntitySnowman.java     | 20 ++++++++++++++++++++
  1 file changed, 20 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/EntitySnowman.java b/src/main/java/net/minecraft/server/EntitySnowman.java
-index fe1381cc1..4a3cd1161 100644
+index fe1381c..4a3cd11 100644
 --- a/src/main/java/net/minecraft/server/EntitySnowman.java
 +++ b/src/main/java/net/minecraft/server/EntitySnowman.java
 @@ -10,6 +10,25 @@ public class EntitySnowman extends EntityGolem implements IRangedEntity {
@@ -46,5 +46,5 @@ index fe1381cc1..4a3cd1161 100644
          this.world.addEntity(entitysnowball);
      }
 -- 
-2.17.1
+2.7.4
 

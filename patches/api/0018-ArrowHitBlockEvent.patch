@@ -1,16 +1,16 @@
-From ede6d81abafa698d9285fc8928dbc7942e00d0c9 Mon Sep 17 00:00:00 2001
+From 22ae4d29b1215d18999ee3f788c6b9f6a3f99a0b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:03:19 -0500
 Subject: [PATCH] ArrowHitBlockEvent
 
 ---
- .../event/entity/ArrowHitBlockEvent.java      | 92 +++++++++++++++++++
+ .../paper/event/entity/ArrowHitBlockEvent.java     | 92 ++++++++++++++++++++++
  1 file changed, 92 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java b/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
 new file mode 100644
-index 00000000..34a27196
+index 0000000..34a2719
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
 @@ -0,0 +1,92 @@
@@ -107,5 +107,5 @@ index 00000000..34a27196
 +
 +}
 -- 
-2.17.1
+2.7.4
 

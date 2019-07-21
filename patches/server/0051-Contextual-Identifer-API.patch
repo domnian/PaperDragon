@@ -1,4 +1,4 @@
-From cda9373680cd961ea8cf7289de9de5f270beebc4 Mon Sep 17 00:00:00 2001
+From 87fc70ac1742af1b41939d2ef1eeac7ab37d2072 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:46:42 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -13,11 +13,11 @@ But we may want to store counting data by chunk, but also by Residence, and cach
 
 Objects represented by an Identifier, should be able to use them as their equal/hashcodes.
 ---
- .../org/bukkit/craftbukkit/CraftChunk.java    | 43 +++++++++++++++++++
+ .../java/org/bukkit/craftbukkit/CraftChunk.java    | 43 ++++++++++++++++++++++
  1 file changed, 43 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 8a7374c53..30172fb5a 100644
+index 8a7374c..30172fb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -46,6 +46,7 @@ public class CraftChunk implements Chunk {
@@ -76,5 +76,5 @@ index 8a7374c53..30172fb5a 100644
 +    // PaperDragon stop
  }
 -- 
-2.17.1
+2.7.4
 

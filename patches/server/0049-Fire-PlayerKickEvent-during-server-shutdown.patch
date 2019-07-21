@@ -1,4 +1,4 @@
-From 40ce2b3de54b1e27cb47f6911190173c67ab5e85 Mon Sep 17 00:00:00 2001
+From 18cfd6e58a7472edb760b6dfb8a4ac7eb73ae7ca Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 4 Jul 2018 15:49:34 -0400
 Subject: [PATCH] Fire PlayerKickEvent during server shutdown
@@ -9,10 +9,10 @@ Subject: [PATCH] Fire PlayerKickEvent during server shutdown
  2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index c6d5e0cb0..09a0930ad 100644
+index 6744ff5..b6c9c62 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -259,11 +259,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -260,11 +260,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
          PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.player), s, leaveMessage);
  
@@ -27,7 +27,7 @@ index c6d5e0cb0..09a0930ad 100644
              return;
          }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 1c1568ea1..580d4d0f3 100644
+index 1c1568e..580d4d0 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
@@ -49,5 +49,5 @@ index 1c1568ea1..580d4d0f3 100644
      private WatchdogThread(long timeoutTime, boolean restart)
      {
 -- 
-2.17.1
+2.7.4
 

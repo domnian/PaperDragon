@@ -1,22 +1,22 @@
-From 6d3b362e9c1b07b6a7f8c26349a63742782e1837 Mon Sep 17 00:00:00 2001
+From 1bb15ab5edfdfa6b2937242142b0e7a974ec9c24 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
 
 ---
- .../com/domnian/paperdragon/DragonConfig.java | 161 ++++++++++++++++++
- .../paperdragon/DragonWorldConfig.java        |  79 +++++++++
- .../net/minecraft/server/DedicatedServer.java |   4 +
- src/main/java/net/minecraft/server/World.java |   2 +
- .../org/bukkit/craftbukkit/CraftServer.java   |  11 ++
- .../java/org/bukkit/craftbukkit/Main.java     |   8 +
+ .../java/com/domnian/paperdragon/DragonConfig.java | 161 +++++++++++++++++++++
+ .../com/domnian/paperdragon/DragonWorldConfig.java |  79 ++++++++++
+ .../java/net/minecraft/server/DedicatedServer.java |   4 +
+ src/main/java/net/minecraft/server/World.java      |   2 +
+ .../java/org/bukkit/craftbukkit/CraftServer.java   |  11 ++
+ src/main/java/org/bukkit/craftbukkit/Main.java     |   8 +
  6 files changed, 265 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonConfig.java
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 new file mode 100644
-index 000000000..2f7bc8187
+index 0000000..2f7bc81
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -0,0 +1,161 @@
@@ -183,7 +183,7 @@ index 000000000..2f7bc8187
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 new file mode 100644
-index 000000000..2a180d5a4
+index 0000000..2a180d5
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -0,0 +1,79 @@
@@ -267,7 +267,7 @@ index 000000000..2a180d5a4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index c1473330f..1c733738a 100644
+index 6da54a6..f2abdee 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -176,6 +176,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -282,7 +282,7 @@ index c1473330f..1c733738a 100644
          this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
          this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ee6474b18..c399557f7 100644
+index b81b374..912a90c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -98,6 +98,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
@@ -302,7 +302,7 @@ index ee6474b18..c399557f7 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index cba4ef0e1..6738713d8 100644
+index c60e90d..b95214a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -793,6 +793,7 @@ public final class CraftServer implements Server {
@@ -345,7 +345,7 @@ index cba4ef0e1..6738713d8 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 1fa81904d..8b6717c8c 100644
+index 1fa8190..8b6717c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -144,6 +144,14 @@ public class Main {
@@ -364,5 +364,5 @@ index 1fa81904d..8b6717c8c 100644
          };
  
 -- 
-2.17.1
+2.7.4
 

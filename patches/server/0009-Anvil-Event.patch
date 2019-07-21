@@ -1,15 +1,15 @@
-From 847016abf0f3e75cbc07b7945ff5deffccda8a37 Mon Sep 17 00:00:00 2001
+From 267d5bba6d3a78a7ffc55df33e13dff21567edfc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 31 Dec 2012 01:25:46 -0500
 Subject: [PATCH] Anvil Event
 
 Fire an event for anvil usage, remove cap from server, send level to client
 ---
- .../net/minecraft/server/ContainerAnvil.java    | 17 +++++++++++++++++
+ src/main/java/net/minecraft/server/ContainerAnvil.java | 17 +++++++++++++++++
  1 file changed, 17 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ContainerAnvil.java b/src/main/java/net/minecraft/server/ContainerAnvil.java
-index abdcd52c4..b9ff7a0ce 100644
+index 7718c5a..9766a13 100644
 --- a/src/main/java/net/minecraft/server/ContainerAnvil.java
 +++ b/src/main/java/net/minecraft/server/ContainerAnvil.java
 @@ -10,6 +10,13 @@ import org.apache.logging.log4j.Logger;
@@ -27,22 +27,22 @@ index abdcd52c4..b9ff7a0ce 100644
  
      private static final Logger LOGGER = LogManager.getLogger();
 @@ -298,6 +305,16 @@ public class ContainerAnvil extends Container {
-             if (this.levelCost.b() >= maximumRepairCost && !this.player.abilities.canInstantlyBuild) { // CraftBukkit
+             if (this.levelCost.get() >= maximumRepairCost && !this.player.abilities.canInstantlyBuild) { // CraftBukkit
                  itemstack1 = ItemStack.a;
              }
 +            // PaperDragon start
-+            AnvilEvent event = new AnvilEvent((Player) player.getBukkitEntity(), CraftItemStack.asBukkitCopy(itemstack), CraftItemStack.asBukkitCopy(itemstack2), CraftItemStack.asBukkitCopy(itemstack1), this.levelCost.b());
++            AnvilEvent event = new AnvilEvent((Player) player.getBukkitEntity(), CraftItemStack.asBukkitCopy(itemstack), CraftItemStack.asBukkitCopy(itemstack2), CraftItemStack.asBukkitCopy(itemstack1), this.levelCost.get());
 +            Bukkit.getPluginManager().callEvent(event);
 +            if (event.isCancelled()) {
 +                itemstack1 = ItemStack.NULL_ITEM;
 +            } else {
 +                itemstack1 = CraftItemStack.asNMSCopy(event.getResult());
-+                this.levelCost.a(event.getCost());
++                this.levelCost.set(event.getCost());
 +            }
 +            // PaperDragon end
  
              if (!itemstack1.isEmpty()) {
                  int k2 = itemstack1.getRepairCost();
 -- 
-2.17.1
+2.7.4
 

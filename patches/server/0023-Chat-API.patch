@@ -1,4 +1,4 @@
-From 00d0cd076a28256492a4e5110fdb659dd8b16aa6 Mon Sep 17 00:00:00 2001
+From 478dbb1a178a870b6d57bc85654a1332ce12acff Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -6,15 +6,15 @@ Subject: [PATCH] Chat API
 Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pleasant-chat-message-formatting.195148/
 But did a lot of bug fixing and improving upon it, and designing into the Dragon API
 ---
- .../paperdragon/api/CraftDragonAPI.java       |   2 +
- .../paperdragon/api/FancifulChatAPIImpl.java  | 267 ++++++++++++++++++
- .../paperdragon/api/chat/CraftDAPI_Chat.java  |  40 +++
+ .../domnian/paperdragon/api/CraftDragonAPI.java    |   2 +
+ .../paperdragon/api/FancifulChatAPIImpl.java       | 267 +++++++++++++++++++++
+ .../paperdragon/api/chat/CraftDAPI_Chat.java       |  40 +++
  3 files changed, 309 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index 8889fb45a..a9959999c 100644
+index 8889fb4..a995999 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -24,6 +24,7 @@
@@ -35,7 +35,7 @@ index 8889fb45a..a9959999c 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 new file mode 100644
-index 000000000..675334319
+index 0000000..6753343
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 @@ -0,0 +1,267 @@
@@ -308,7 +308,7 @@ index 000000000..675334319
 +
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
-index 000000000..afc5e9e73
+index 0000000..afc5e9e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 @@ -0,0 +1,40 @@
@@ -353,5 +353,5 @@ index 000000000..afc5e9e73
 +    }
 +}
 -- 
-2.17.1
+2.7.4
 

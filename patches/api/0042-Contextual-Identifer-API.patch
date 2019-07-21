@@ -1,4 +1,4 @@
-From 1076172545140b36316b570084e44a1619ce017f Mon Sep 17 00:00:00 2001
+From ce4144dab88d76e302cdc4eb8d35aaa2616b0848 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:38:55 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -13,16 +13,16 @@ Implementers should not expose entropy data, just provide equal/hashcode.
 
 Objects represended by an Identifier, should be able to use them as their equal/hashcodes.
 ---
- .../com/domnian/paperdragon/Identifier.java   |  3 +++
- .../domnian/paperdragon/UniqueIdentifier.java | 27 +++++++++++++++++++
- src/main/java/org/bukkit/Chunk.java           |  3 +++
+ .../java/com/domnian/paperdragon/Identifier.java   |  3 +++
+ .../com/domnian/paperdragon/UniqueIdentifier.java  | 27 ++++++++++++++++++++++
+ src/main/java/org/bukkit/Chunk.java                |  3 +++
  3 files changed, 33 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/Identifier.java
  create mode 100644 src/main/java/com/domnian/paperdragon/UniqueIdentifier.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/Identifier.java b/src/main/java/com/domnian/paperdragon/Identifier.java
 new file mode 100644
-index 00000000..4873358b
+index 0000000..4873358
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/Identifier.java
 @@ -0,0 +1,3 @@
@@ -31,7 +31,7 @@ index 00000000..4873358b
 +public interface Identifier {}
 diff --git a/src/main/java/com/domnian/paperdragon/UniqueIdentifier.java b/src/main/java/com/domnian/paperdragon/UniqueIdentifier.java
 new file mode 100644
-index 00000000..c0ade55b
+index 0000000..c0ade55
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/UniqueIdentifier.java
 @@ -0,0 +1,27 @@
@@ -63,7 +63,7 @@ index 00000000..c0ade55b
 +
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 61bca256..d23613d2 100644
+index 61bca25..d23613d 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -14,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
@@ -77,5 +77,5 @@ index 61bca256..d23613d2 100644
       * Gets the X-coordinate of this chunk
       *
 -- 
-2.17.1
+2.7.4
 

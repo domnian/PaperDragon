@@ -1,17 +1,17 @@
-From ff7cb6b5034ebf1908cd098d598dde654e107beb Mon Sep 17 00:00:00 2001
+From dc95e389025da44e47e86f5e05df053664463707 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
 
 To give reliable control over all blocks dropping to world to restore custom item meta
 ---
- src/main/java/net/minecraft/server/Block.java                   | 2 ++
- src/main/java/net/minecraft/server/EntityItem.java              | 1 +
- .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java    | 1 +
+ src/main/java/net/minecraft/server/Block.java                     | 2 ++
+ src/main/java/net/minecraft/server/EntityItem.java                | 1 +
+ src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java | 1 +
  3 files changed, 4 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 5d8db912a..5b72a523d 100644
+index 79ed7a7..469de64 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -504,9 +504,11 @@ public class Block implements IMaterial {
@@ -27,7 +27,7 @@ index 5d8db912a..5b72a523d 100644
              // CraftBukkit end
          }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 7c0ce8212..46acb15f6 100644
+index 7c0ce82..46acb15 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -14,6 +14,7 @@ public class EntityItem extends Entity {
@@ -39,7 +39,7 @@ index 7c0ce8212..46acb15f6 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index b83baf9c7..96e6cfa53 100644
+index c74621d..f72cadc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -332,6 +332,7 @@ public class CraftEventFactory {
@@ -51,5 +51,5 @@ index b83baf9c7..96e6cfa53 100644
              }
          }
 -- 
-2.17.1
+2.7.4
 

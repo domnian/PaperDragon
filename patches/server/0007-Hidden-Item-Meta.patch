@@ -1,4 +1,4 @@
-From 35617b9b8cc0c0a099fc0765190ef93eff97370f Mon Sep 17 00:00:00 2001
+From 55727aab916a7b88ba298613d68cd1d5043fa4b9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -13,15 +13,15 @@ Then you can store Data on 21+
 Also adds a &&::SHINY tag to send a fake enchantment aura if it does not exists.
 Must be set before META
 ---
- .../com/domnian/paperdragon/DragonConfig.java |  6 ++
- .../paperdragon/api/HiddenItemMeta.java       | 90 +++++++++++++++++++
- .../java/net/minecraft/server/ItemStack.java  |  2 +-
- .../server/PacketDataSerializer.java          |  2 +
+ .../java/com/domnian/paperdragon/DragonConfig.java |  6 ++
+ .../domnian/paperdragon/api/HiddenItemMeta.java    | 90 ++++++++++++++++++++++
+ src/main/java/net/minecraft/server/ItemStack.java  |  2 +-
+ .../net/minecraft/server/PacketDataSerializer.java |  2 +
  4 files changed, 99 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 2f7bc8187..248830d16 100644
+index 2f7bc81..248830d 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -156,6 +156,12 @@ public class DragonConfig {
@@ -39,7 +39,7 @@ index 2f7bc8187..248830d16 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 000000000..3b4c3f23b
+index 0000000..3b4c3f2
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,90 @@
@@ -134,7 +134,7 @@ index 000000000..3b4c3f23b
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 03236cf98..22b16890c 100644
+index 0e16484..581016a 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -54,7 +54,7 @@ public final class ItemStack {
@@ -147,7 +147,7 @@ index 03236cf98..22b16890c 100644
      private EntityItemFrame i;
      private ShapeDetectorBlock j;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index dac560c63..9c40cdb28 100644
+index dac560c..9c40cdb 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -256,6 +256,7 @@ public class PacketDataSerializer extends ByteBuf {
@@ -167,5 +167,5 @@ index dac560c63..9c40cdb28 100644
                      NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
                      String ownerOrig = itemstack.tag.getString("SkullOwnerOrig");
 -- 
-2.17.1
+2.7.4
 

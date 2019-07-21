@@ -1,14 +1,14 @@
-From 191b996d5be51cc39928e9fab0dfe89403cb3d40 Mon Sep 17 00:00:00 2001
+From db8cb690f52ee81c5daba96b71fbf500cad887c3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:32:29 -0400
 Subject: [PATCH] Enhanced Player Death Event
 
 ---
- .../bukkit/event/entity/PlayerDeathEvent.java | 22 +++++++++++++++++++
+ .../org/bukkit/event/entity/PlayerDeathEvent.java  | 22 ++++++++++++++++++++++
  1 file changed, 22 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-index f5c3c5e2..784f33fd 100644
+index f5c3c5e..784f33f 100644
 --- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 @@ -16,6 +16,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
@@ -46,5 +46,5 @@ index f5c3c5e2..784f33fd 100644
 +    // PaperDragon end
  }
 -- 
-2.17.1
+2.7.4
 

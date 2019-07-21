@@ -1,16 +1,16 @@
-From 21207d47165fc970e7bdcd81878e335f776174d0 Mon Sep 17 00:00:00 2001
+From fc1d3372770b26b72db41c4a8d2a4d9e59c184eb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:14:52 -0500
 Subject: [PATCH] BlockBreakNaturallyEvent
 
 ---
- .../events/BlockBreakNaturallyEvent.java      | 28 +++++++++++++++++++
+ .../events/BlockBreakNaturallyEvent.java           | 28 ++++++++++++++++++++++
  1 file changed, 28 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 new file mode 100644
-index 00000000..5dc7fb4d
+index 0000000..5dc7fb4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 @@ -0,0 +1,28 @@
@@ -43,5 +43,5 @@ index 00000000..5dc7fb4d
 +    }
 +}
 -- 
-2.17.1
+2.7.4
 

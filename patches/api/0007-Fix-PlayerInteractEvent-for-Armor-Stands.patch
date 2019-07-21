@@ -1,14 +1,14 @@
-From 27e6c0c09a6ca250118ba74fc66c5fb3ce0c6e65 Mon Sep 17 00:00:00 2001
+From 04f7a290bcff96a19cb5dfbdbb6887346ab1df24 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 5 May 2015 00:34:04 -0400
 Subject: [PATCH] Fix PlayerInteractEvent for Armor Stands
 
 ---
- .../org/bukkit/event/player/PlayerInteractAtEntityEvent.java    | 2 ++
+ src/main/java/org/bukkit/event/player/PlayerInteractAtEntityEvent.java | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/event/player/PlayerInteractAtEntityEvent.java b/src/main/java/org/bukkit/event/player/PlayerInteractAtEntityEvent.java
-index 1075dbb8..e06c5d7e 100644
+index 1075dbb..e06c5d7 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerInteractAtEntityEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerInteractAtEntityEvent.java
 @@ -32,6 +32,7 @@ public class PlayerInteractAtEntityEvent extends PlayerInteractEntityEvent {
@@ -26,5 +26,5 @@ index 1075dbb8..e06c5d7e 100644
 +    */ // PaperDragon end
  }
 -- 
-2.17.1
+2.7.4
 

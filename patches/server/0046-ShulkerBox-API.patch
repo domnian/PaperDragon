@@ -1,15 +1,15 @@
-From 00e4095148c93aab3b305ea07b616d40e286c52e Mon Sep 17 00:00:00 2001
+From 9e71fe779ab660d82892cf1943d2538d7ffab05c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:36:31 -0500
 Subject: [PATCH] ShulkerBox API
 
 ---
- .../paperdragon/api/CraftDAPI_Misc.java       | 58 +++++++++++++++++++
- .../java/net/minecraft/server/ItemStack.java  |  1 +
+ .../domnian/paperdragon/api/CraftDAPI_Misc.java    | 58 ++++++++++++++++++++++
+ src/main/java/net/minecraft/server/ItemStack.java  |  1 +
  2 files changed, 59 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index ab3428a68..7c469c052 100644
+index ab3428a..7c469c0 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -23,5 +23,63 @@
@@ -77,7 +77,7 @@ index ab3428a68..7c469c052 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 544629d67..653160bd0 100644
+index aae99a9..39e228b 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -136,6 +136,7 @@ public final class ItemStack {
@@ -89,5 +89,5 @@ index 544629d67..653160bd0 100644
          try {
              return new ItemStack(nbttagcompound);
 -- 
-2.17.1
+2.7.4
 
