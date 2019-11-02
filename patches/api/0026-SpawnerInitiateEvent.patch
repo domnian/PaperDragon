@@ -1,16 +1,16 @@
-From e54e1a5c04d872da24c33b8016895cb878eba1fa Mon Sep 17 00:00:00 2001
+From aa0be2945b29ceab40b261247227e1f99adf18cd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 15:22:03 -0500
 Subject: [PATCH] SpawnerInitiateEvent
 
 ---
- .../paperdragon/events/SpawnerInitiateEvent.java   | 88 ++++++++++++++++++++++
+ .../events/SpawnerInitiateEvent.java          | 88 +++++++++++++++++++
  1 file changed, 88 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 new file mode 100644
-index 0000000..d63d889
+index 00000000..d63d8892
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 @@ -0,0 +1,88 @@
@@ -103,5 +103,5 @@ index 0000000..d63d889
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

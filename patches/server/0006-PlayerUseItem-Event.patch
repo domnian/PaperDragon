@@ -1,19 +1,19 @@
-From 5a0c8d17d52ef89d1a45729c8a2aed239b6b082c Mon Sep 17 00:00:00 2001
+From 5197022bb6f082cc0c8295fd4a67e6105138acd2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
 
 This lets us control when an item is consumed and change the item.
 ---
- .../java/net/minecraft/server/EntityLiving.java    |  2 +-
- .../minecraft/server/PlayerInteractManager.java    | 89 ++++++++++++++++++----
+ .../net/minecraft/server/EntityLiving.java    |  2 +-
+ .../server/PlayerInteractManager.java         | 89 ++++++++++++++++---
  2 files changed, 77 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 87056e1..18fd249 100644
+index f675ad2f5..19debfe03 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1870,7 +1870,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1874,7 +1874,7 @@ public abstract class EntityLiving extends Entity {
          }
      }
  
@@ -23,10 +23,10 @@ index 87056e1..18fd249 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 596b87b..1db8d63 100644
+index bc03a82b7..9786e52ac 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-@@ -382,6 +382,14 @@ public class PlayerInteractManager {
+@@ -383,6 +383,14 @@ public class PlayerInteractManager {
      }
  
      public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand) {
@@ -41,7 +41,7 @@ index 596b87b..1db8d63 100644
          if (this.gamemode == EnumGamemode.SPECTATOR) {
              return EnumInteractionResult.PASS;
          } else if (entityhuman.getCooldownTracker().hasCooldown(itemstack.getItem())) {
-@@ -389,27 +397,53 @@ public class PlayerInteractManager {
+@@ -390,27 +398,53 @@ public class PlayerInteractManager {
          } else {
              int i = itemstack.getCount();
              int j = itemstack.getDamage();
@@ -101,14 +101,14 @@ index 596b87b..1db8d63 100644
                      ((EntityPlayer) entityhuman).updateInventory(entityhuman.defaultContainer);
                  }
  
-@@ -423,6 +457,7 @@ public class PlayerInteractManager {
+@@ -424,6 +458,7 @@ public class PlayerInteractManager {
      public boolean firedInteract = false;
      public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
          BlockPosition blockposition = movingobjectpositionblock.getBlockPosition();
 +        org.bukkit.util.Vector hitVector = new org.bukkit.util.Vector(movingobjectpositionblock.pos.x, movingobjectpositionblock.pos.y, movingobjectpositionblock.pos.z); // Paper - Ensure last 3 floats line up as vector params
          IBlockData iblockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.PASS;
-         if (iblockdata.isAir()) return enuminteractionresult;
+         boolean cancelledBlock = false;
 @@ -487,17 +522,45 @@ public class PlayerInteractManager {
              }
  
@@ -163,5 +163,5 @@ index 596b87b..1db8d63 100644
          }
          return enuminteractionresult;
 -- 
-2.7.4
+2.22.0
 

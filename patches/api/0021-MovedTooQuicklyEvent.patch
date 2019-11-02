@@ -1,16 +1,16 @@
-From c4c43b461983cfbb30da566f7a6be23cfabae9ed Mon Sep 17 00:00:00 2001
+From 0b49a54b038688b548ad34fb1cb5829dea3d6452 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:19:22 -0500
 Subject: [PATCH] MovedTooQuicklyEvent
 
 ---
- .../paperdragon/events/MovedTooQuicklyEvent.java   | 46 ++++++++++++++++++++++
+ .../events/MovedTooQuicklyEvent.java          | 46 +++++++++++++++++++
  1 file changed, 46 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 new file mode 100644
-index 0000000..50c1342
+index 00000000..50c13427
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 @@ -0,0 +1,46 @@
@@ -61,5 +61,5 @@ index 0000000..50c1342
 +
 +}
 -- 
-2.7.4
+2.22.0
 

@@ -1,16 +1,16 @@
-From 98b33704fc60f88a46b340011727cadf08154cc9 Mon Sep 17 00:00:00 2001
+From f174d9fcd033ee28e0be1149afc98052f01f9cff Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 May 2018 20:25:37 -0400
 Subject: [PATCH] BlazeLaunchFireballEvent
 
 ---
- .../events/BlazeLaunchFireballEvent.java           | 66 ++++++++++++++++++++++
+ .../events/BlazeLaunchFireballEvent.java      | 66 +++++++++++++++++++
  1 file changed, 66 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
 new file mode 100644
-index 0000000..0635d64
+index 00000000..0635d644
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
 @@ -0,0 +1,66 @@
@@ -81,5 +81,5 @@ index 0000000..0635d64
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

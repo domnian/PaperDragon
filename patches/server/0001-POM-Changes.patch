@@ -1,15 +1,15 @@
-From fd6992288e610688cb0034819800a38c32f45de3 Mon Sep 17 00:00:00 2001
+From c7341fca8dff452ea9a90367260204588c230e10 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml                                            | 53 ++++++++++++++++++----
- .../org/bukkit/craftbukkit/util/Versioning.java    |  2 +-
+ pom.xml                                       | 53 +++++++++++++++----
+ .../bukkit/craftbukkit/util/Versioning.java   |  2 +-
  2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 0130272..7e1c93e 100644
+index beda5dc8a..a114f7622 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,12 @@
@@ -49,10 +49,11 @@ index 0130272..7e1c93e 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -95,6 +96,31 @@
+@@ -94,6 +95,31 @@
+             <version>1.1.1</version>
              <scope>compile</scope>
          </dependency>
-         <dependency>
++        <dependency>
 +            <groupId>com.zaxxer</groupId>
 +            <artifactId>HikariCP</artifactId>
 +            <version>2.7.1</version>
@@ -77,10 +78,9 @@ index 0130272..7e1c93e 100644
 +            <version>5.0.4</version>
 +            <scope>compile</scope>
 +        </dependency>
-+        <dependency>
+         <dependency>
              <groupId>org.xerial</groupId>
              <artifactId>sqlite-jdbc</artifactId>
-             <version>3.28.0</version>
 @@ -143,7 +169,7 @@
  
      <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
@@ -116,7 +116,7 @@ index 0130272..7e1c93e 100644
      </build>
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 674096c..50cd5f9 100644
+index 674096cab..50cd5f9ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -129,5 +129,5 @@ index 674096c..50cd5f9 100644
  
          if (stream != null) {
 -- 
-2.7.4
+2.22.0
 

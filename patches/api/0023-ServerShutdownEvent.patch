@@ -1,16 +1,16 @@
-From 8a958e348cd7dbccc0a765d9fa7fe118cd8214bc Mon Sep 17 00:00:00 2001
+From e64220c982f5b33f62c47445bc45eb2cf899fe82 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:19:40 -0500
 Subject: [PATCH] ServerShutdownEvent
 
 ---
- .../paperdragon/events/ServerShutdownEvent.java    | 29 ++++++++++++++++++++++
+ .../events/ServerShutdownEvent.java           | 29 +++++++++++++++++++
  1 file changed, 29 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
 new file mode 100644
-index 0000000..ba4b03d
+index 00000000..ba4b03d7
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
 @@ -0,0 +1,29 @@
@@ -44,5 +44,5 @@ index 0000000..ba4b03d
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

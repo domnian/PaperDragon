@@ -1,17 +1,17 @@
-From 8986e89aeff4c896b4ecd9be13f9d14c87ca12cd Mon Sep 17 00:00:00 2001
+From 8898b76ab99e994ad426c5fa6815db530448e7bf Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:30:15 -0500
 Subject: [PATCH] Chat API
 
 ---
- .../com/domnian/paperdragon/api/DAPI_Chat.java     | 57 ++++++++++++++++++++++
- .../com/domnian/paperdragon/api/DragonAPI.java     |  1 +
+ .../domnian/paperdragon/api/DAPI_Chat.java    | 57 +++++++++++++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    |  1 +
  2 files changed, 58 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
 new file mode 100644
-index 0000000..566313f
+index 00000000..566313ff
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
 @@ -0,0 +1,57 @@
@@ -73,7 +73,7 @@ index 0000000..566313f
 +
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index f78acdd..c348aef 100644
+index f78acdd6..c348aef5 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -8,6 +8,7 @@ public class DragonAPI {
@@ -85,5 +85,5 @@ index f78acdd..c348aef 100644
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.7.4
+2.22.0
 

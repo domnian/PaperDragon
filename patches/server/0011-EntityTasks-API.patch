@@ -1,4 +1,4 @@
-From c96c0e92e235549a0a031c904b47b18c37704692 Mon Sep 17 00:00:00 2001
+From 1f34bb4665f1b5fb84b24bb3ac29d81ab98f99fc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -6,28 +6,25 @@ Subject: [PATCH] EntityTasks API
 Allows scheduling repeating task timers on an entity level.
 Avoids Bukkit system so that tasks will simply maintain themselves on entity removal.
 ---
- .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 18 ++++++++++
- src/main/java/net/minecraft/server/Entity.java     |  1 +
- .../net/minecraft/server/EntityTasksHandler.java   | 42 ++++++++++++++++++++++
- .../java/net/minecraft/server/WorldServer.java     |  2 ++
- .../java/org/bukkit/craftbukkit/CraftServer.java   |  5 ++-
- 5 files changed, 67 insertions(+), 1 deletion(-)
+ .../paperdragon/api/CraftDAPI_Entity.java     | 15 +++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../minecraft/server/EntityTasksHandler.java  | 42 +++++++++++++++++++
+ .../net/minecraft/server/WorldServer.java     |  2 +
+ .../org/bukkit/craftbukkit/CraftServer.java   |  1 +
+ 5 files changed, 61 insertions(+)
  create mode 100644 src/main/java/net/minecraft/server/EntityTasksHandler.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index d5c6381..aa79b57 100644
+index d5c638104..1e903fe5c 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-@@ -23,5 +23,23 @@
+@@ -23,5 +23,20 @@
  
  package com.domnian.paperdragon.api;
  
 +import net.minecraft.server.EntityTasksHandler;
 +import org.bukkit.craftbukkit.entity.CraftEntity;
 +import org.bukkit.entity.Entity;
-+
-+import java.util.ArrayList;
-+import java.util.List;
 +
  public class CraftDAPI_Entity implements DAPI_Entity {
 +
@@ -43,7 +40,7 @@ index d5c6381..aa79b57 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 31c9a67..362bf0c 100644
+index 31c9a67df..362bf0c74 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -56,17 +53,17 @@ index 31c9a67..362bf0c 100644
      public static Random SHARED_RANDOM = new Random() {
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
-index 0000000..361135b
+index 000000000..fafea6e08
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 @@ -0,0 +1,42 @@
 +package net.minecraft.server;
 +
++import com.domnian.paperdragon.api.EntityTask;
++
 +import java.util.ArrayList;
 +import java.util.Iterator;
 +import java.util.List;
-+
-+import com.domnian.paperdragon.api.EntityTask;
 +
 +public final class EntityTasksHandler {
 +
@@ -103,10 +100,10 @@ index 0000000..361135b
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 6a8fd51..6a19217 100644
+index c0c11ff75..4a62c765c 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -559,6 +559,7 @@ public class WorldServer extends World {
+@@ -683,6 +683,7 @@ public class WorldServer extends World {
              // Spigot start
              if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
                  entity.ticksLived++;
@@ -114,7 +111,7 @@ index 6a8fd51..6a19217 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -572,6 +573,7 @@ public class WorldServer extends World {
+@@ -696,6 +697,7 @@ public class WorldServer extends World {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -123,21 +120,17 @@ index 6a8fd51..6a19217 100644
                      return IRegistry.ENTITY_TYPE.getKey(entity.getEntityType()).toString();
                  });
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2768d3c..ff771c9 100644
+index 3e6a8370f..0895094e6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -859,7 +859,10 @@ public final class CraftServer implements Server {
-                 "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
-             ));
+@@ -861,6 +861,7 @@ public final class CraftServer implements Server {
          }
--        net.minecraft.server.MetaApiAccessor.reload(); // PaperDragon
-+        // PaperDragon start
-+        net.minecraft.server.MetaApiAccessor.reload();
+         // PaperDragon start
+         net.minecraft.server.MetaApiAccessor.reload();
 +        net.minecraft.server.EntityTasksHandler.reload();
-+        // PaperDragon end
+         // PaperDragon end
          loadPlugins();
          enablePlugins(PluginLoadOrder.STARTUP);
-         enablePlugins(PluginLoadOrder.POSTWORLD);
 -- 
-2.7.4
+2.22.0
 

@@ -1,0 +1,47 @@
+From 83b41cc400d499c5d6952cf5edf97434d6058e00 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 3 Jul 2016 18:48:29 -0400
+Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
+
+---
+ src/main/java/org/bukkit/Bukkit.java | 9 +++++++++
+ src/main/java/org/bukkit/Server.java | 7 +++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index 6db69159..dfb9e289 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -1606,4 +1606,13 @@ public final class Bukkit {
+     {
+         return server.spigot();
+     }
++
++    // PaperDragon start - Expose BungeeCord Setting
++    /**
++     * Get whether this server is in Bungeecord Mode or not.
++     */
++    public static boolean isBungeeEnabled() {
++        return server.isBungeeEnabled();
++    }
++    // PaperDragon end
+ }
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 6014d42c..00091ca1 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -1410,4 +1410,11 @@ public interface Server extends PluginMessageRecipient {
+     @NotNull
+     com.destroystokyo.paper.profile.PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name);
+     // Paper end
++
++    // PaperDragon start - Expose BungeeCord Setting
++    /**
++     * Get whether this server is in Bungeecord Mode or not.
++     */
++    boolean isBungeeEnabled();
++    // PaperDragon end
+ }
+-- 
+2.22.0
+

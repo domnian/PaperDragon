@@ -1,16 +1,16 @@
-From 4daf452c4e624e760a4141971dceedc114ce5dc7 Mon Sep 17 00:00:00 2001
+From dd580c16400ff789fa9cad159be195ca1bc3eb7c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:15:46 -0500
 Subject: [PATCH] EggHatchEvent
 
 ---
- .../domnian/paperdragon/events/EggHatchEvent.java  | 38 ++++++++++++++++++++++
+ .../paperdragon/events/EggHatchEvent.java     | 38 +++++++++++++++++++
  1 file changed, 38 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/EggHatchEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/EggHatchEvent.java b/src/main/java/com/domnian/paperdragon/events/EggHatchEvent.java
 new file mode 100644
-index 0000000..225e54b
+index 00000000..225e54bb
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/EggHatchEvent.java
 @@ -0,0 +1,38 @@
@@ -53,5 +53,5 @@ index 0000000..225e54b
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

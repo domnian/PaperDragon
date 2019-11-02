@@ -1,4 +1,4 @@
-From 8504da05996732c159ecf39c9a41ac8f014cf848 Mon Sep 17 00:00:00 2001
+From 98062a6aa97a74cee4911022a3a6f2faa19452b5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 19 May 2013 21:09:31 -0400
 Subject: [PATCH] ArrowHitBlock Event
@@ -8,10 +8,10 @@ Subject: [PATCH] ArrowHitBlock Event
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index fa46dedb8..b81e51996 100644
+index 5f3e1ccb4..050ed1bf1 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -306,6 +306,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+@@ -307,6 +307,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
              this.a(SoundEffects.ENTITY_ARROW_HIT);
              this.o(false);
              this.w();
@@ -20,5 +20,5 @@ index fa46dedb8..b81e51996 100644
          }
  
 -- 
-2.17.1
+2.22.0
 

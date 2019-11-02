@@ -1,34 +1,38 @@
-From 6f78245acf3c1221be518c2760ad1fc352c8dd17 Mon Sep 17 00:00:00 2001
+From e6b491783e138aca28c271218838378d0e55bed5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jul 2013 18:58:19 -0400
 Subject: [PATCH] Entity Serialization
 
 Allow serializing an Entity to raw NBT, and to get an Entity object without spawning it into the world.
 ---
- .../domnian/paperdragon/api/CraftDAPI_Entity.java  | 63 +++++++++++++++++++++-
- src/main/java/net/minecraft/server/Entity.java     |  1 +
- .../org/bukkit/craftbukkit/entity/CraftEntity.java | 10 ++++
- 3 files changed, 72 insertions(+), 2 deletions(-)
+ .../paperdragon/api/CraftDAPI_Entity.java     | 60 +++++++++++++++++++
+ .../java/net/minecraft/server/Entity.java     |  1 +
+ .../craftbukkit/entity/CraftEntity.java       | 10 ++++
+ 3 files changed, 71 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index 019deaf..bd86e29 100644
+index a996b3c91..8bae05fc4 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-@@ -24,9 +24,11 @@
+@@ -24,10 +24,17 @@
  package com.domnian.paperdragon.api;
  
  import com.destroystokyo.paper.entity.RangedEntity;
-+import com.mojang.datafixers.Dynamic;
-+import net.minecraft.server.*;
-+import org.bukkit.Bukkit;
++import net.minecraft.server.DataConverters;
++import net.minecraft.server.DataConverters.LegacyType;
++import net.minecraft.server.EntityTypes;
 +import org.bukkit.craftbukkit.CraftWorld;
  import org.bukkit.entity.Mob;
--import net.minecraft.server.EntityTasksHandler;
--import net.minecraft.server.EntityWolf;
+ import net.minecraft.server.EntityTasksHandler;
+ import net.minecraft.server.EntityWolf;
++import net.minecraft.server.MCLog;
  import org.bukkit.Location;
++import net.minecraft.server.NBTCompressedStreamTools;
++import net.minecraft.server.NBTTagCompound;
  import org.bukkit.craftbukkit.entity.CraftEntity;
  import org.bukkit.craftbukkit.entity.CraftSpider;
-@@ -39,6 +41,13 @@ import org.bukkit.entity.Item;
+ import org.bukkit.craftbukkit.entity.CraftWolf;
+@@ -39,6 +46,12 @@ import org.bukkit.entity.Item;
  import org.bukkit.entity.Spider;
  import org.bukkit.entity.Wolf;
  
@@ -37,16 +41,14 @@ index 019deaf..bd86e29 100644
 +import java.io.DataInputStream;
 +import java.io.IOException;
 +import java.io.InputStream;
-+import java.util.logging.Logger;
 +
  public class CraftDAPI_Entity implements DAPI_Entity {
  
      public <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task) {
-@@ -173,4 +182,54 @@ public class CraftDAPI_Entity implements DAPI_Entity {
-     public void cancelTasks(Entity entity) {
-         ((CraftEntity) entity).getHandle().entityTasks.clear();
+@@ -174,4 +187,51 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+         return EntityAIApi.getEnderSignalLife(enderSignal);
      }
-+
+ 
 +    public final byte[] serializeEntity(Entity craftentity) {
 +        if (craftentity == null) {
 +            throw new NullPointerException("Entity can not be null for serialization");
@@ -54,7 +56,7 @@ index 019deaf..bd86e29 100644
 +        net.minecraft.server.Entity entity = ((CraftEntity) craftentity).getHandle();
 +        NBTTagCompound cmp = new NBTTagCompound();
 +        entity.serializeEntity(cmp);
-+        cmp.setInt("DataVersion", Bukkit.getUnsafe().getDataVersion());
++        cmp.setInt("DataVersion", DataConverters.DATA_VERSION);
 +
 +        return NBTToBytes(cmp);
 +    }
@@ -67,12 +69,10 @@ index 019deaf..bd86e29 100644
 +
 +        try {
 +            NBTTagCompound cmp = readNBT(stream);
-+            int sourceVersion = cmp.hasKeyOfType("DataVersion", 99) ? cmp.getInt("DataVersion") : -1;
-+            int targetVersion = Bukkit.getUnsafe().getDataVersion();
-+            if (sourceVersion < targetVersion) {
-+                cmp = (NBTTagCompound) MinecraftServer.getServer().dataConverterManager.update(DataConverterTypes.ENTITY, new Dynamic<>(DynamicOpsNBT.a, cmp), sourceVersion, targetVersion).getValue();
-+            }
++
++            cmp = DataConverters.convert(LegacyType.ENTITY, cmp);
 +            net.minecraft.server.Entity entity = EntityTypes.a(cmp, ((CraftWorld) world).getHandle()).orElse(null);
++
 +            return entity != null ? entity.getBukkitEntity() : null;
 +        } catch (IOException e) {
 +            MCLog.exception(e);
@@ -98,19 +98,19 @@ index 019deaf..bd86e29 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1167c93..e6f0dcb 100644
+index c315bc111..2a07addd4 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1552,6 +1552,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          }
      }
  
-+    public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon - OBF HELPER
++    public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon // OBF HELPER
      public boolean d(NBTTagCompound nbttagcompound) {
          return this.isPassenger() ? false : this.c(nbttagcompound);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 13c038c..027a346 100644
+index a7b0b29bb..cc991b10a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -176,6 +176,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -131,5 +131,5 @@ index 13c038c..027a346 100644
          this.server = server;
          this.entity = entity;
 -- 
-2.7.4
+2.22.0
 

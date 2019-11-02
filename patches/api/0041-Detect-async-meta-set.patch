@@ -1,14 +1,14 @@
-From 9059ab4ebb2a5189e4435f700bfc768f8521e930 Mon Sep 17 00:00:00 2001
+From 5e9f5faeb89d5fc50ef7519e75991b9396dcbeeb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Jun 2018 03:06:49 -0400
 Subject: [PATCH] Detect async meta set
 
 ---
- src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java | 12 ++++++++++++
+ .../com/domnian/paperdragon/api/meta/MetaMap.java    | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
-index 01841f2..953b49e 100644
+index 01841f27..953b49e7 100644
 --- a/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
 @@ -23,11 +23,14 @@
@@ -43,5 +43,5 @@ index 01841f2..953b49e 100644
          return containsKey(key.key());
      }
 -- 
-2.7.4
+2.22.0
 

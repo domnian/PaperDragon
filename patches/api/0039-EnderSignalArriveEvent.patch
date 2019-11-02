@@ -1,16 +1,16 @@
-From 0613115f17ced57717d2e7f986004e76b8e82602 Mon Sep 17 00:00:00 2001
+From 686b2ee51cd51dfbf98d29f06008f988bf532924 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 May 2018 20:24:05 -0400
 Subject: [PATCH] EnderSignalArriveEvent
 
 ---
- .../paperdragon/events/EnderSignalArriveEvent.java | 58 ++++++++++++++++++++++
+ .../events/EnderSignalArriveEvent.java        | 58 +++++++++++++++++++
  1 file changed, 58 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java b/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
 new file mode 100644
-index 0000000..67fe5fd
+index 00000000..67fe5fd1
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
 @@ -0,0 +1,58 @@
@@ -73,5 +73,5 @@ index 0000000..67fe5fd
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

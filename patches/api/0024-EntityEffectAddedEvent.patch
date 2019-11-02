@@ -1,16 +1,16 @@
-From 44c672eba638069065aee53ed6feea60995e1166 Mon Sep 17 00:00:00 2001
+From 36381d48f3184bcc166984f29100d695beaa5448 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 14:59:41 -0500
 Subject: [PATCH] EntityEffectAddedEvent
 
 ---
- .../paperdragon/events/EntityEffectAddedEvent.java | 49 ++++++++++++++++++++++
+ .../events/EntityEffectAddedEvent.java        | 49 +++++++++++++++++++
  1 file changed, 49 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/EntityEffectAddedEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/EntityEffectAddedEvent.java b/src/main/java/com/domnian/paperdragon/events/EntityEffectAddedEvent.java
 new file mode 100644
-index 0000000..b4953b4
+index 00000000..b4953b41
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/EntityEffectAddedEvent.java
 @@ -0,0 +1,49 @@
@@ -64,5 +64,5 @@ index 0000000..b4953b4
 +
 +}
 -- 
-2.7.4
+2.22.0
 

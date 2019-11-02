@@ -1,18 +1,18 @@
-From fd3f61552c15f31bf8c5d135a84da06cd6d4a7d2 Mon Sep 17 00:00:00 2001
+From 2199f5bc7063f46147ac752c2ae96d9c2abc7967 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 20:21:12 -0500
 Subject: [PATCH] Hopper Events
 
 ---
- .../paperdragon/events/HopperDrainEvent.java       | 65 ++++++++++++++++++++
- .../paperdragon/events/HopperFillEvent.java        | 70 ++++++++++++++++++++++
+ .../paperdragon/events/HopperDrainEvent.java  | 65 +++++++++++++++++
+ .../paperdragon/events/HopperFillEvent.java   | 70 +++++++++++++++++++
  2 files changed, 135 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
  create mode 100644 src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 new file mode 100644
-index 0000000..a5fce59
+index 00000000..a5fce59e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 @@ -0,0 +1,65 @@
@@ -83,7 +83,7 @@ index 0000000..a5fce59
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 new file mode 100644
-index 0000000..6bae207
+index 00000000..6bae207a
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 @@ -0,0 +1,70 @@
@@ -158,5 +158,5 @@ index 0000000..6bae207
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

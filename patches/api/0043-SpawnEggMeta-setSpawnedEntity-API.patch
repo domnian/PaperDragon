@@ -1,4 +1,4 @@
-From bcfd7d79be17eef381ec1eb8679c28960443f230 Mon Sep 17 00:00:00 2001
+From 11d597f5f739be3ea9f88ad097e44f7b31db1891 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 21:09:39 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
@@ -7,11 +7,11 @@ lets you copy an entities data into a spawn egg.
 Partial data is supported through a predicate, letting MC
 follow normal spawn behavior in the summon phase.
 ---
- .../org/bukkit/inventory/meta/SpawnEggMeta.java    | 40 ++++++++++++++++++++++
+ .../bukkit/inventory/meta/SpawnEggMeta.java   | 40 +++++++++++++++++++
  1 file changed, 40 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
-index 9ae84de..2311e86 100644
+index 9ae84de4..2311e869 100644
 --- a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
 @@ -3,12 +3,52 @@ package org.bukkit.inventory.meta;
@@ -68,5 +68,5 @@ index 9ae84de..2311e86 100644
       * Get the type of entity this egg will spawn.
       *
 -- 
-2.7.4
+2.22.0
 

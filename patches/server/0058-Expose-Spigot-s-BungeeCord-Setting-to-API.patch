@@ -1,0 +1,28 @@
+From ca999ef8f114f94de1a668db9c7fc950d5d9d9b1 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 3 Jul 2016 19:16:19 -0400
+Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
+
+---
+ src/main/java/org/bukkit/craftbukkit/CraftServer.java | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 5c647e1d0..bf6ea290b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -2180,4 +2180,11 @@ public final class CraftServer implements Server {
+         return new com.destroystokyo.paper.profile.CraftPlayerProfile(uuid, name);
+     }
+     // Paper end
++
++    // PaperDragon start - Expose BungeeCord Setting
++    @Override
++    public boolean isBungeeEnabled() {
++        return org.spigotmc.SpigotConfig.bungee;
++    }
++    // PaperDragon end
+ }
+-- 
+2.22.0
+

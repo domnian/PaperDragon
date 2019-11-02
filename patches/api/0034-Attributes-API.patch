@@ -1,14 +1,14 @@
-From 41ea92994acf7f7cfd7cf0de67a379327bffd3c1 Mon Sep 17 00:00:00 2001
+From 4dc0395266e4115a13229f5af9d1f46ef70d2345 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:31:31 -0500
 Subject: [PATCH] Attributes API
 
 ---
- .../com/domnian/paperdragon/api/DragonAPI.java     |   2 +
- .../paperdragon/api/attributes/Attribute.java      |  46 +++++++
- .../paperdragon/api/attributes/AttributeSlot.java  |  81 +++++++++++++
- .../api/attributes/DAPI_Attributes.java            | 134 +++++++++++++++++++++
- .../paperdragon/api/attributes/Operation.java      |  50 ++++++++
+ .../domnian/paperdragon/api/DragonAPI.java    |   2 +
+ .../paperdragon/api/attributes/Attribute.java |  46 ++++++
+ .../api/attributes/AttributeSlot.java         |  81 +++++++++++
+ .../api/attributes/DAPI_Attributes.java       | 134 ++++++++++++++++++
+ .../paperdragon/api/attributes/Operation.java |  50 +++++++
  5 files changed, 313 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/AttributeSlot.java
@@ -16,7 +16,7 @@ Subject: [PATCH] Attributes API
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index c348aef..191b8d9 100644
+index c348aef5..191b8d9b 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -1,5 +1,6 @@
@@ -36,7 +36,7 @@ index c348aef..191b8d9 100644
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
 new file mode 100644
-index 0000000..9457636
+index 00000000..94576366
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
 @@ -0,0 +1,46 @@
@@ -88,7 +88,7 @@ index 0000000..9457636
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/AttributeSlot.java b/src/main/java/com/domnian/paperdragon/api/attributes/AttributeSlot.java
 new file mode 100644
-index 0000000..1b7b5b1
+index 00000000..1b7b5b1e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/AttributeSlot.java
 @@ -0,0 +1,81 @@
@@ -175,7 +175,7 @@ index 0000000..1b7b5b1
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java b/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
 new file mode 100644
-index 0000000..0bf5dc3
+index 00000000..0bf5dc37
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
 @@ -0,0 +1,134 @@
@@ -315,7 +315,7 @@ index 0000000..0bf5dc3
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java b/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
 new file mode 100644
-index 0000000..bab3d26
+index 00000000..bab3d260
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/Operation.java
 @@ -0,0 +1,50 @@
@@ -370,5 +370,5 @@ index 0000000..bab3d26
 +    }
 +}
 -- 
-2.7.4
+2.22.0
 

@@ -1,22 +1,22 @@
-From 1bb15ab5edfdfa6b2937242142b0e7a974ec9c24 Mon Sep 17 00:00:00 2001
+From b1b001274ef1bfdd0fe7682a968b0e45d3c80ffc Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
 
 ---
- .../java/com/domnian/paperdragon/DragonConfig.java | 161 +++++++++++++++++++++
- .../com/domnian/paperdragon/DragonWorldConfig.java |  79 ++++++++++
- .../java/net/minecraft/server/DedicatedServer.java |   4 +
- src/main/java/net/minecraft/server/World.java      |   2 +
- .../java/org/bukkit/craftbukkit/CraftServer.java   |  11 ++
- src/main/java/org/bukkit/craftbukkit/Main.java     |   8 +
+ .../com/domnian/paperdragon/DragonConfig.java | 161 ++++++++++++++++++
+ .../paperdragon/DragonWorldConfig.java        |  79 +++++++++
+ .../net/minecraft/server/DedicatedServer.java |   4 +
+ src/main/java/net/minecraft/server/World.java |   2 +
+ .../org/bukkit/craftbukkit/CraftServer.java   |  11 ++
+ .../java/org/bukkit/craftbukkit/Main.java     |   8 +
  6 files changed, 265 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonConfig.java
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 new file mode 100644
-index 0000000..2f7bc81
+index 000000000..2f7bc8187
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -0,0 +1,161 @@
@@ -183,7 +183,7 @@ index 0000000..2f7bc81
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 new file mode 100644
-index 0000000..2a180d5
+index 000000000..2a180d5a4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -0,0 +1,79 @@
@@ -267,10 +267,10 @@ index 0000000..2a180d5
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 6da54a6..f2abdee 100644
+index 5bc19cd08..365e76134 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -176,6 +176,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -186,6 +186,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          com.destroystokyo.paper.PaperConfig.registerCommands();
          com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
          // Paper end
@@ -282,7 +282,7 @@ index 6da54a6..f2abdee 100644
          this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
          this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index b81b374..912a90c 100644
+index 1bea6dffe..17ef5370d 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -98,6 +98,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
@@ -302,7 +302,7 @@ index b81b374..912a90c 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c60e90d..b95214a 100644
+index 7a8ab7d40..4f02a9cf5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -793,6 +793,7 @@ public final class CraftServer implements Server {
@@ -330,7 +330,7 @@ index c60e90d..b95214a 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2040,6 +2044,13 @@ public final class CraftServer implements Server {
+@@ -2041,6 +2045,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -345,7 +345,7 @@ index c60e90d..b95214a 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 1fa8190..8b6717c 100644
+index 008fb8444..6397f68a6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -144,6 +144,14 @@ public class Main {
@@ -364,5 +364,5 @@ index 1fa8190..8b6717c 100644
          };
  
 -- 
-2.7.4
+2.22.0
 

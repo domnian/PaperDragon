@@ -1,26 +1,26 @@
-From 76ca66717e53d121ff2d005758c8975d154c7c01 Mon Sep 17 00:00:00 2001
+From 11c4f14a5565df274302ac55a3009f93fb4e7167 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
 
 Entity, TileEntity, World, Chunk, Block, Inventory API's
 ---
- .../com/domnian/paperdragon/api/DragonAPI.java     |   2 +
- .../java/com/domnian/paperdragon/api/Vector3i.java |  64 ++
- .../domnian/paperdragon/api/meta/DAPI_Meta.java    |  52 ++
- .../com/domnian/paperdragon/api/meta/Meta.java     | 885 +++++++++++++++++++++
- .../com/domnian/paperdragon/api/meta/MetaKey.java  |  51 ++
- .../com/domnian/paperdragon/api/meta/MetaMap.java  |  96 +++
- .../paperdragon/api/meta/PersistentKeyImpl.java    |  44 +
- .../paperdragon/api/meta/PersistentMetaList.java   |  73 ++
- .../paperdragon/api/meta/PersistentMetaMap.java    |  93 +++
- .../domnian/paperdragon/api/meta/TempKeyImpl.java  |  44 +
- .../domnian/paperdragon/api/meta/TempMetaMap.java  |  29 +
- .../BlockWithPersistentMetaClearedEvent.java       |  49 ++
- src/main/java/org/bukkit/Chunk.java                |   5 +
- src/main/java/org/bukkit/block/BlockState.java     |   2 +
- src/main/java/org/bukkit/entity/Entity.java        |   2 +
- src/main/java/org/bukkit/inventory/Inventory.java  |   2 +
+ .../domnian/paperdragon/api/DragonAPI.java    |   2 +
+ .../com/domnian/paperdragon/api/Vector3i.java |  64 ++
+ .../paperdragon/api/meta/DAPI_Meta.java       |  52 +
+ .../domnian/paperdragon/api/meta/Meta.java    | 885 ++++++++++++++++++
+ .../domnian/paperdragon/api/meta/MetaKey.java |  51 +
+ .../domnian/paperdragon/api/meta/MetaMap.java |  96 ++
+ .../api/meta/PersistentKeyImpl.java           |  44 +
+ .../api/meta/PersistentMetaList.java          |  73 ++
+ .../api/meta/PersistentMetaMap.java           |  93 ++
+ .../paperdragon/api/meta/TempKeyImpl.java     |  44 +
+ .../paperdragon/api/meta/TempMetaMap.java     |  29 +
+ .../BlockWithPersistentMetaClearedEvent.java  |  49 +
+ src/main/java/org/bukkit/Chunk.java           |   5 +
+ .../java/org/bukkit/block/BlockState.java     |   2 +
+ src/main/java/org/bukkit/entity/Entity.java   |   2 +
+ .../java/org/bukkit/inventory/Inventory.java  |   2 +
  16 files changed, 1493 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/Vector3i.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
@@ -35,7 +35,7 @@ Entity, TileEntity, World, Chunk, Block, Inventory API's
  create mode 100644 src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 74c4c59..f78acdd 100644
+index 74c4c59e..f78acdd6 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -1,11 +1,13 @@
@@ -54,7 +54,7 @@ index 74c4c59..f78acdd 100644
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
-index 0000000..117f8e4
+index 00000000..117f8e4c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 @@ -0,0 +1,64 @@
@@ -124,7 +124,7 @@ index 0000000..117f8e4
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
 new file mode 100644
-index 0000000..3844b49
+index 00000000..3844b493
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
 @@ -0,0 +1,52 @@
@@ -182,7 +182,7 @@ index 0000000..3844b49
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
 new file mode 100644
-index 0000000..07bc124
+index 00000000..07bc1240
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
 @@ -0,0 +1,885 @@
@@ -1073,7 +1073,7 @@ index 0000000..07bc124
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaKey.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaKey.java
 new file mode 100644
-index 0000000..3a5d8c6
+index 00000000..3a5d8c68
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaKey.java
 @@ -0,0 +1,51 @@
@@ -1130,7 +1130,7 @@ index 0000000..3a5d8c6
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
 new file mode 100644
-index 0000000..01841f2
+index 00000000..01841f27
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
 @@ -0,0 +1,96 @@
@@ -1232,7 +1232,7 @@ index 0000000..01841f2
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/PersistentKeyImpl.java b/src/main/java/com/domnian/paperdragon/api/meta/PersistentKeyImpl.java
 new file mode 100644
-index 0000000..73a01d0
+index 00000000..73a01d08
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/PersistentKeyImpl.java
 @@ -0,0 +1,44 @@
@@ -1282,7 +1282,7 @@ index 0000000..73a01d0
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaList.java b/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaList.java
 new file mode 100644
-index 0000000..7758329
+index 00000000..77583292
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaList.java
 @@ -0,0 +1,73 @@
@@ -1361,7 +1361,7 @@ index 0000000..7758329
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaMap.java b/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaMap.java
 new file mode 100644
-index 0000000..19f7a21
+index 00000000..19f7a215
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/PersistentMetaMap.java
 @@ -0,0 +1,93 @@
@@ -1460,7 +1460,7 @@ index 0000000..19f7a21
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/TempKeyImpl.java b/src/main/java/com/domnian/paperdragon/api/meta/TempKeyImpl.java
 new file mode 100644
-index 0000000..0efd1c2
+index 00000000..0efd1c2d
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/TempKeyImpl.java
 @@ -0,0 +1,44 @@
@@ -1510,7 +1510,7 @@ index 0000000..0efd1c2
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/TempMetaMap.java b/src/main/java/com/domnian/paperdragon/api/meta/TempMetaMap.java
 new file mode 100644
-index 0000000..0ab3029
+index 00000000..0ab30295
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/TempMetaMap.java
 @@ -0,0 +1,29 @@
@@ -1545,7 +1545,7 @@ index 0000000..0ab3029
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java
 new file mode 100644
-index 0000000..dcf4a45
+index 00000000..dcf4a459
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java
 @@ -0,0 +1,49 @@
@@ -1599,16 +1599,17 @@ index 0000000..dcf4a45
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 0abd437..61bca25 100644
+index 7909caef..96129794 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -1,11 +1,13 @@
+@@ -1,12 +1,14 @@
  package org.bukkit;
  
  import java.util.Collection;
 +import com.domnian.paperdragon.api.meta.TempMetaMap;
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockState;
+ import org.bukkit.block.data.BlockData;
  import org.bukkit.entity.Entity;
  import org.bukkit.plugin.Plugin;
  import org.jetbrains.annotations.NotNull;
@@ -1616,7 +1617,7 @@ index 0abd437..61bca25 100644
  
  /**
   * Represents a chunk of blocks
-@@ -122,6 +124,9 @@ public interface Chunk {
+@@ -123,6 +125,9 @@ public interface Chunk {
      BlockState[] getTileEntities(boolean useSnapshot);
      // Paper end
  
@@ -1627,7 +1628,7 @@ index 0abd437..61bca25 100644
       * Checks if the chunk is loaded.
       *
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 631cbf2..d5a390d 100644
+index 631cbf2b..d5a390d9 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
 @@ -221,4 +221,6 @@ public interface BlockState extends Metadatable {
@@ -1638,7 +1639,7 @@ index 631cbf2..d5a390d 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index e6fc31c..076fc9a 100644
+index e81c97ce..229ef33b 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -257,6 +257,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
@@ -1651,7 +1652,7 @@ index e6fc31c..076fc9a 100644
       * Returns true if the entity gets persisted.
       * <p>
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 6040d97..fdd178a 100644
+index 6040d971..fdd178a3 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,8 @@ import org.jetbrains.annotations.Nullable;
@@ -1664,5 +1665,5 @@ index 6040d97..fdd178a 100644
       * Returns the size of the inventory
       *
 -- 
-2.7.4
+2.22.0
 
