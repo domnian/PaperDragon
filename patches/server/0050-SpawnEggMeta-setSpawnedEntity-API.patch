@@ -1,4 +1,4 @@
-From 675abf386143402f6997f4bcc232a9571cdaf1ed Mon Sep 17 00:00:00 2001
+From 6575e5549491d966ab0fd2da8c8faa352bcddabe Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 22:03:33 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API

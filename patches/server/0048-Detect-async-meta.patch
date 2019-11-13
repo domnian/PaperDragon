@@ -1,4 +1,4 @@
-From 4e3528fe85d0f42b8a03752ca6c0cc5ec3bee7d5 Mon Sep 17 00:00:00 2001
+From 22466804f917a4b466f96646462da7cf2d57dc2d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 8 Jul 2018 23:21:47 -0400
 Subject: [PATCH] Detect async meta

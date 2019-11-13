@@ -1,4 +1,4 @@
-From 98593e67c2f0e41f52cdb6f4b701d12d2267b67c Mon Sep 17 00:00:00 2001
+From a7d23d3a46a673215553f54e58a31a8d5ea55d1f Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)

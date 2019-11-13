@@ -1,4 +1,4 @@
-From 57282dc9f4ca71aa87d1edc5186f89c129f970fb Mon Sep 17 00:00:00 2001
+From ee2440fea2f0a3caa35c3e0088b866ed0a021ff9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 4 Jul 2018 15:49:34 -0400
 Subject: [PATCH] Fire PlayerKickEvent during server shutdown

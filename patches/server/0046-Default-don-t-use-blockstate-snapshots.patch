@@ -1,4 +1,4 @@
-From 441d4ea13acb22fa5a25dfce9fb2adc3fe9144f4 Mon Sep 17 00:00:00 2001
+From 105e3192b7ddd907870d0bf977e1b86b8c0532f4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 28 Jun 2018 22:13:44 -0400
 Subject: [PATCH] Default don't use blockstate snapshots
