@@ -1,27 +1,29 @@
-From eb6279615d96649b6ee3372673083c0974edda07 Mon Sep 17 00:00:00 2001
+From c122d5e3c69b2d11e51c8e69174c949ebc5148da Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
 
 ---
- src/main/java/com/domnian/paperdragon/DragonConfig.java  | 5 ++++-
+ src/main/java/com/domnian/paperdragon/DragonConfig.java  | 6 ++++++
  .../java/com/domnian/paperdragon/DragonWorldConfig.java  | 4 ++++
  .../java/net/minecraft/server/AdvancementDataPlayer.java | 9 +++++++++
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ 3 files changed, 19 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 2dc10fe53..ca18cb487 100644
+index d5faa114c..7bf263608 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-@@ -168,6 +168,9 @@ public class DragonConfig {
-     private static void expoits() {
-         blockEnderpearlTravelExploit = getBoolean("settings.block-enderpearl-travel-exploit", blockEnderpearlTravelExploit);
+@@ -163,6 +163,12 @@ public class DragonConfig {
+     private static void requiredPlugins() {
+         requiredPlugins = getList("settings.required-plugins", requiredPlugins);
      }
--    // TODO Add New Settings!! :D
++
 +    public static boolean broadcastAdvancementsToServer = false;
 +    private static void advancements() {
 +        broadcastAdvancementsToServer = getBoolean("settings.broadcast-advancements-to-server", false);
 +    }
++
+     // TODO Add New Settings!! :D
  
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
