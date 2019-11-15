@@ -1,4 +1,4 @@
-From 98062a6aa97a74cee4911022a3a6f2faa19452b5 Mon Sep 17 00:00:00 2001
+From 8a857bb3d2dc452faa53c3efda7a7d35b656ef57 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 19 May 2013 21:09:31 -0400
 Subject: [PATCH] ArrowHitBlock Event
@@ -8,14 +8,14 @@ Subject: [PATCH] ArrowHitBlock Event
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 5f3e1ccb4..050ed1bf1 100644
+index 5f3e1ccb4..bdb44e29b 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -307,6 +307,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
              this.a(SoundEffects.ENTITY_ARROW_HIT);
              this.o(false);
              this.w();
-+            if (new com.destroystokyo.paper.event.entity.ArrowHitBlockEvent((org.bukkit.entity.Arrow)this.getBukkitEntity(), world.getWorld().getBlockAt(movingobjectpositionblock.getBlockPosition().getX(), movingobjectpositionblock.getBlockPosition().getY(), movingobjectpositionblock.getBlockPosition().getZ())).callEvent())
++            if (new com.destroystokyo.paper.event.entity.ArrowHitBlockEvent((org.bukkit.entity.AbstractArrow)this.getBukkitEntity(), world.getWorld().getBlockAt(movingobjectpositionblock.getBlockPosition().getX(), movingobjectpositionblock.getBlockPosition().getY(), movingobjectpositionblock.getBlockPosition().getZ())).callEvent())
              iblockdata.a(this.world, iblockdata, movingobjectpositionblock, this);
          }
  
