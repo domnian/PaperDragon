@@ -1,4 +1,4 @@
-From 11c4f14a5565df274302ac55a3009f93fb4e7167 Mon Sep 17 00:00:00 2001
+From 9b4bca3ec10535208b2c5226b74b3d8e0794a878 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -1599,7 +1599,7 @@ index 00000000..dcf4a459
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 7909caef..96129794 100644
+index 11b691cf..7e35fa5d 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -1,12 +1,14 @@
@@ -1639,10 +1639,10 @@ index 631cbf2b..d5a390d9 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index e81c97ce..229ef33b 100644
+index 8ccee8b8..20d96678 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -257,6 +257,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -255,6 +255,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
      public Server getServer();
  

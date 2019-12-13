@@ -1,4 +1,4 @@
-From 83b41cc400d499c5d6952cf5edf97434d6058e00 Mon Sep 17 00:00:00 2001
+From 6b49d52c940b9e21ba78001e72aa5f909b9979f5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -9,10 +9,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
  2 files changed, 16 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 6db69159..dfb9e289 100644
+index 231bc6e3..77bbba2f 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1606,4 +1606,13 @@ public final class Bukkit {
+@@ -1610,4 +1610,13 @@ public final class Bukkit {
      {
          return server.spigot();
      }
@@ -27,12 +27,12 @@ index 6db69159..dfb9e289 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 6014d42c..00091ca1 100644
+index 870ac215..ab16eaab 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1410,4 +1410,11 @@ public interface Server extends PluginMessageRecipient {
-     @NotNull
-     com.destroystokyo.paper.profile.PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name);
+@@ -1417,4 +1417,11 @@ public interface Server extends PluginMessageRecipient {
+      */
+     int getCurrentTick();
      // Paper end
 +
 +    // PaperDragon start - Expose BungeeCord Setting
