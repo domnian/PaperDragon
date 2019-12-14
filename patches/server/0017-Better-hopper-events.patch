@@ -1,12 +1,12 @@
-From e8ab1a1fc95c7a2486dc7d3a0465e0390c03ea72 Mon Sep 17 00:00:00 2001
+From 49275efbe141ca98eb415baf99002d91c45c4e3f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Sep 2013 19:41:07 -0400
 Subject: [PATCH] Better hopper events
 
 ---
  .../domnian/paperdragon/api/HopperEvents.java | 32 +++++++++++++++++++
- .../minecraft/server/TileEntityHopper.java    | 13 +++++---
- 2 files changed, 41 insertions(+), 4 deletions(-)
+ .../minecraft/server/TileEntityHopper.java    | 10 ++++--
+ 2 files changed, 40 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HopperEvents.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HopperEvents.java b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
@@ -48,7 +48,7 @@ index 000000000..84f23c673
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 15588103b..9fcb5eeff 100644
+index e08faf538..4c0baadde 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -8,7 +8,9 @@ import java.util.stream.IntStream;
@@ -61,36 +61,28 @@ index 15588103b..9fcb5eeff 100644
  import org.bukkit.craftbukkit.inventory.CraftItemStack;
  import org.bukkit.entity.HumanEntity;
  import org.bukkit.event.inventory.InventoryMoveItemEvent;
-@@ -323,7 +325,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -175,7 +177,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              return false;
          } else {
              EnumDirection enumdirection = ((EnumDirection) this.getBlock().get(BlockHopper.FACING)).opposite();
 -
-+            if (HopperEvents.fill(((WorldServer)world).getWorld(), this.getOwner(false).getInventory(), this.position, enumdirection)) { return false; } // PaperDragon
++            if (HopperEvents.fill(world.getWorld(), this.getOwner(false).getInventory(), this.position, enumdirection)) { return false; } // PaperDragon
              if (this.b(iinventory, enumdirection)) {
                  return false;
              } else {
-@@ -393,8 +395,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
- 
+@@ -245,7 +247,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
          if (iinventory != null) {
              EnumDirection enumdirection = EnumDirection.DOWN;
--
+ 
 -            return c(iinventory, enumdirection) ? false : a(iinventory, enumdirection).anyMatch((i) -> {
 +            // PaperDragon start
 +            if (c(iinventory, enumdirection)) return false;
 +            if (HopperEvents.drain(ihopper.getWorld().getWorld(), new CraftInventory(ihopper), ihopper.getLocation().getX(), ihopper.getLocation().getY(), ihopper.getLocation().getZ())) { return false; } // PaperDragon
 +            return a(iinventory, enumdirection).anyMatch((i) -> {
 +                // PaperDragon end
-                 skipPullModeEventFire = skipHopperEvents; // Paper
                  return a(ihopper, iinventory, i, enumdirection);
              });
-@@ -672,4 +677,4 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
-     protected Container createContainer(int i, PlayerInventory playerinventory) {
-         return new ContainerHopper(i, playerinventory, this);
-     }
--}
-+}
-\ No newline at end of file
+         } else {
 -- 
 2.22.0
 

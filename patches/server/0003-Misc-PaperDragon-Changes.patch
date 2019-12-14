@@ -1,4 +1,4 @@
-From 62e9978d356b10f8a047ce1586cbbfa7075787d1 Mon Sep 17 00:00:00 2001
+From 873cc431664ab5cf51ddaf6dfb885019b2c8069a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -211,10 +211,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index edb3a6035..5cf94300c 100644
+index 664c48d68..5efd49afa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1462,10 +1462,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1461,10 +1461,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -227,7 +227,7 @@ index edb3a6035..5cf94300c 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1474,7 +1476,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1473,7 +1475,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {

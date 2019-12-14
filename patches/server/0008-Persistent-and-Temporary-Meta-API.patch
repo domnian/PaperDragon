@@ -1,4 +1,4 @@
-From 07cfa6d647d09572257ec68c48111f4a6e420c5c Mon Sep 17 00:00:00 2001
+From 439358e5473f654dbf18299484f9ad9f7b35ef0b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -751,10 +751,10 @@ index 6bcb19b56..73bc4103b 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index a8e64dfda..1d0846a38 100644
+index 958279249..984f95a1b 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -80,6 +80,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -79,6 +79,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
      }
  
      public void load(NBTTagCompound nbttagcompound) {
@@ -762,7 +762,7 @@ index a8e64dfda..1d0846a38 100644
          this.position = new BlockPosition(nbttagcompound.getInt("x"), nbttagcompound.getInt("y"), nbttagcompound.getInt("z"));
          // CraftBukkit start - read container
          this.persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
-@@ -102,6 +103,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -101,6 +102,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
              throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
          } else {
              nbttagcompound.setString("id", minecraftkey.toString());
@@ -770,7 +770,7 @@ index a8e64dfda..1d0846a38 100644
              nbttagcompound.setInt("x", this.position.getX());
              nbttagcompound.setInt("y", this.position.getY());
              nbttagcompound.setInt("z", this.position.getZ());
-@@ -232,6 +234,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -230,6 +232,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
          }
      }
  
@@ -819,7 +819,7 @@ index 4e35846a3..3692b3b2b 100644
          if (nbttagcompound1 != null) {
              nbttagcompound.set("Player", nbttagcompound1);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 722384a91..22b1ee288 100644
+index 83fb8737a..c1e2fdbd7 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -53,7 +53,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
