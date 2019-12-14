@@ -1,4 +1,4 @@
-From d0441dba06bd92b42a0bb1e847791231207c9a19 Mon Sep 17 00:00:00 2001
+From 90188da9ee32b13732ad5a65a4bb36764987f8b8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 29 Apr 2014 20:27:43 -0400
 Subject: [PATCH] All blocks extinguish at same rate
@@ -10,16 +10,16 @@ This is so that blocks that have ignite/burn events cancelled will actually burn
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockFire.java b/src/main/java/net/minecraft/server/BlockFire.java
-index 135c6ae47..1228717da 100644
+index 3400e7ce3..3ee9eb693 100644
 --- a/src/main/java/net/minecraft/server/BlockFire.java
 +++ b/src/main/java/net/minecraft/server/BlockFire.java
 @@ -134,7 +134,7 @@ public class BlockFire extends Block {
                          return;
                      }
  
--                    if (i == 15 && random.nextInt(4) == 0 && !this.j(world.getType(blockposition.down()))) {
-+                    if (i == 15 && random.nextInt(4) == 0/* && !this.j(world.getType(blockposition.down()))*/) { // PaperDragon - comment out getType
-                         fireExtinguished(world, blockposition); // CraftBukkit
+-                    if (i == 15 && random.nextInt(4) == 0 && !this.h(worldserver.getType(blockposition.down()))) {
++                    if (i == 15 && random.nextInt(4) == 0/* && !this.h(worldserver.getType(blockposition.down()))*/) { // PaperDragon - comment out getType
+                         fireExtinguished(worldserver, blockposition); // CraftBukkit
                          return;
                      }
 -- 

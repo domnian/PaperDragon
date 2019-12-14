@@ -1,4 +1,4 @@
-From 5197022bb6f082cc0c8295fd4a67e6105138acd2 Mon Sep 17 00:00:00 2001
+From aa9a308e5625214f4e0f6278d46daffe14a67765 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,10 +10,10 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 77 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index f675ad2f5..19debfe03 100644
+index 80219f2df..06bcb92af 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1874,7 +1874,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1897,7 +1897,7 @@ public abstract class EntityLiving extends Entity {
          }
      }
  
@@ -23,10 +23,10 @@ index f675ad2f5..19debfe03 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index bc03a82b7..9786e52ac 100644
+index cc77dd8e5..8e170150b 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-@@ -383,6 +383,14 @@ public class PlayerInteractManager {
+@@ -391,6 +391,14 @@ public class PlayerInteractManager {
      }
  
      public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand) {
@@ -41,7 +41,7 @@ index bc03a82b7..9786e52ac 100644
          if (this.gamemode == EnumGamemode.SPECTATOR) {
              return EnumInteractionResult.PASS;
          } else if (entityhuman.getCooldownTracker().hasCooldown(itemstack.getItem())) {
-@@ -390,27 +398,53 @@ public class PlayerInteractManager {
+@@ -398,27 +406,53 @@ public class PlayerInteractManager {
          } else {
              int i = itemstack.getCount();
              int j = itemstack.getDamage();
@@ -74,7 +74,7 @@ index bc03a82b7..9786e52ac 100644
 -                if (this.isCreative()) {
 +                if (!event.shouldConsumeItem() || this.isCreative()) {  // Paper - add getConsumeItem - moved up
                      itemstack1.setCount(i);
-                     if (itemstack1.e()) {
+                     if (itemstack1.e() && itemstack1.getDamage() != j) {
                          itemstack1.setDamage(j);
                      }
                  }
@@ -101,7 +101,7 @@ index bc03a82b7..9786e52ac 100644
                      ((EntityPlayer) entityhuman).updateInventory(entityhuman.defaultContainer);
                  }
  
-@@ -424,6 +458,7 @@ public class PlayerInteractManager {
+@@ -432,6 +466,7 @@ public class PlayerInteractManager {
      public boolean firedInteract = false;
      public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
          BlockPosition blockposition = movingobjectpositionblock.getBlockPosition();
@@ -109,7 +109,7 @@ index bc03a82b7..9786e52ac 100644
          IBlockData iblockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.PASS;
          boolean cancelledBlock = false;
-@@ -487,17 +522,45 @@ public class PlayerInteractManager {
+@@ -499,17 +534,45 @@ public class PlayerInteractManager {
              }
  
              if (!itemstack.isEmpty() && enuminteractionresult != EnumInteractionResult.SUCCESS && !interactResult) { // add !interactResult SPIGOT-764

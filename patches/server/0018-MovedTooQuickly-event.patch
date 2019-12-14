@@ -1,4 +1,4 @@
-From f45a47638ef050fc964831d4b20f3d5f2464af5f Mon Sep 17 00:00:00 2001
+From 76b8d537525b2bb1fa1ded55b1b1339f589bdf68 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Sep 2013 22:01:47 -0400
 Subject: [PATCH] MovedTooQuickly event
@@ -9,16 +9,16 @@ also make creative immune to this event
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index ae17cdf23..e7c373d61 100644
+index c559a7b95..9cab88481 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -992,9 +992,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1000,9 +1000,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
                                  if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && !this.isExemptPlayer()) {
                                  // CraftBukkit end
 +                                    if (new com.domnian.paperdragon.events.MovedTooQuicklyEvent(d10, getPlayer()).callEvent()) { // PaperDragon
                                      PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getDisplayName().getString(), d7, d8, d9);
-                                     this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
+                                     this.a(this.player.locX(), this.player.locY(), this.player.locZ(), this.player.yaw, this.player.pitch);
                                      return;
 +                                    } // PaperDragon
                                  }

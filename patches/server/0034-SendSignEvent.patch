@@ -1,4 +1,4 @@
-From 732f603f2ab588fd73a83ead1d4ef88e3e5baedf Mon Sep 17 00:00:00 2001
+From de5c88302b337bdbcf73cd28c5bb0fac3ac451d3 Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
@@ -66,10 +66,10 @@ index 000000000..a289065f6
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index d3acf5a75..cc35e4855 100644
+index 2a5098d57..551412817 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
-@@ -28,10 +28,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+@@ -25,10 +25,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
  
      @Override
      public NBTTagCompound save(NBTTagCompound nbttagcompound) {
@@ -87,10 +87,10 @@ index d3acf5a75..cc35e4855 100644
              nbttagcompound.setString("Text" + (i + 1), s);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index e920545df..d45010c25 100644
+index 712056cad..ea7108599 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -678,7 +678,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -677,7 +677,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          sign.setColor(EnumColor.fromColorIndex(dyeColor.getWoolData()));
          System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
  

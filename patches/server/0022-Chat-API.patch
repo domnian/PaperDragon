@@ -1,4 +1,4 @@
-From 7bce976db43462e4243a62f425a6daf04a89454f Mon Sep 17 00:00:00 2001
+From 8690f33b0a37a2988dd376232f5c4b789c8553fe Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -35,7 +35,7 @@ index 8889fb45a..a9959999c 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 new file mode 100644
-index 000000000..675334319
+index 000000000..e72730dfa
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 @@ -0,0 +1,267 @@
@@ -135,7 +135,7 @@ index 000000000..675334319
 +                for (int i = 0; i < lore.size(); i++) {
 +                    String line = lore.getString(i);
 +                    String newline = (line.isEmpty() ? " " : line).replace("\"", "\\\"");
-+                    newlore.add(new NBTTagString(newline));
++                    newlore.add(NBTTagString.a(newline));
 +                }
 +                display.set("Lore", newlore);
 +            }

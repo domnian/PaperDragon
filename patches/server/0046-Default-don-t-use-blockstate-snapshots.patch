@@ -1,4 +1,4 @@
-From 105e3192b7ddd907870d0bf977e1b86b8c0532f4 Mon Sep 17 00:00:00 2001
+From 2af4f3cc90dc00b0d1ebd2d1ffd2ba9c2aafb16f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 28 Jun 2018 22:13:44 -0400
 Subject: [PATCH] Default don't use blockstate snapshots
@@ -8,10 +8,10 @@ Subject: [PATCH] Default don't use blockstate snapshots
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index fc65cef63..d411cbe77 100644
+index a667e58ed..111c93e34 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-@@ -313,7 +313,7 @@ public class CraftBlock implements Block {
+@@ -310,7 +310,7 @@ public class CraftBlock implements Block {
      @Override
      public BlockState getState() {
          // Paper start - allow disabling the use of snapshots

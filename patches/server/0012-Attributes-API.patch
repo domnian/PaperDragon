@@ -1,4 +1,4 @@
-From c9e8b382fe35c0bffa8f8b3a0cc2f7b9a0abefb5 Mon Sep 17 00:00:00 2001
+From 9ea2ca4592f637a5b0f536e5b9802c15ac3836b3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
@@ -8,13 +8,12 @@ Subject: [PATCH] Attributes API
  .../api/meta/CraftDAPI_Attributes.java        | 134 ++++++++++++++++++
  .../minecraft/server/AttributeInstance.java   |   2 +-
  .../minecraft/server/AttributeMapBase.java    |   4 +-
- .../minecraft/server/AttributesAccessor.java  |  47 ++++++
+ .../minecraft/server/AttributesAccessor.java  |  48 +++++++
  .../minecraft/server/EntityInsentient.java    |   1 +
  .../net/minecraft/server/EntityLiving.java    |   1 +
  .../minecraft/server/GenericAttributes.java   |   1 +
- .../java/net/minecraft/server/NBTTagList.java |   2 +-
  .../server/PathfinderGoalTarget.java          |   2 +-
- 10 files changed, 191 insertions(+), 5 deletions(-)
+ 9 files changed, 191 insertions(+), 4 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java
  create mode 100644 src/main/java/net/minecraft/server/AttributesAccessor.java
 
@@ -179,12 +178,12 @@ index 000000000..bf42e5569
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/AttributeInstance.java b/src/main/java/net/minecraft/server/AttributeInstance.java
-index c2430df04..ba5904e61 100644
+index 5df625b5d..0405ce07e 100644
 --- a/src/main/java/net/minecraft/server/AttributeInstance.java
 +++ b/src/main/java/net/minecraft/server/AttributeInstance.java
 @@ -16,7 +16,7 @@ public interface AttributeInstance {
  
-     Collection<AttributeModifier> getModifiers();
+     Set<AttributeModifier> getModifiers();
  
 -    boolean a(AttributeModifier attributemodifier);
 +    boolean a(AttributeModifier attributemodifier);default boolean configureAttribute(AttributeModifier attributeModifier) { return a(attributeModifier); } // PaperDragon - OBF HELPER
@@ -208,10 +207,10 @@ index 9617be965..b70600412 100644
              AttributeInstance attributeinstance = this.c(iattribute);
 diff --git a/src/main/java/net/minecraft/server/AttributesAccessor.java b/src/main/java/net/minecraft/server/AttributesAccessor.java
 new file mode 100644
-index 000000000..34dc07031
+index 000000000..193b5b8e6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AttributesAccessor.java
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,48 @@
 +package net.minecraft.server;
 +
 +import com.domnian.paperdragon.api.DragonAPI;
@@ -233,6 +232,7 @@ index 000000000..34dc07031
 +        attributeMap.put(Attribute.MOVEMENT_SPEED, GenericAttributes.MOVEMENT_SPEED);
 +        attributeMap.put(Attribute.FLYING_SPEED, GenericAttributes.FLYING_SPEED);
 +        attributeMap.put(Attribute.ATTACK_DAMAGE, GenericAttributes.ATTACK_DAMAGE);
++        attributeMap.put(Attribute.ATTACK_KNOCKBACK, GenericAttributes.ATTACK_KNOCKBACK);
 +        attributeMap.put(Attribute.ATTACK_SPEED, GenericAttributes.ATTACK_SPEED);
 +        attributeMap.put(Attribute.ARMOR, GenericAttributes.ARMOR);
 +        attributeMap.put(Attribute.ARMOR_TOUGHNESS, GenericAttributes.ARMOR_TOUGHNESS);
@@ -260,10 +260,10 @@ index 000000000..34dc07031
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index d00e99cdb..1115d32e1 100644
+index 6bad1687f..353b62bca 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -978,6 +978,7 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -984,6 +984,7 @@ public abstract class EntityInsentient extends EntityLiving {
      @Nullable
      public GroupDataEntity prepare(GeneratorAccess generatoraccess, DifficultyDamageScaler difficultydamagescaler, EnumMobSpawn enummobspawn, @Nullable GroupDataEntity groupdataentity, @Nullable NBTTagCompound nbttagcompound) {
          this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).addModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05D, AttributeModifier.Operation.MULTIPLY_BASE));
@@ -272,13 +272,13 @@ index d00e99cdb..1115d32e1 100644
              this.p(true);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 19debfe03..6e688e2a2 100644
+index 06bcb92af..306a0b5f1 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -162,6 +162,7 @@ public abstract class EntityLiving extends Entity {
-         this.aM = this.yaw;
-         this.K = 0.6F;
-         this.br = this.a(new Dynamic(DynamicOpsNBT.a, new NBTTagCompound()));
+@@ -165,6 +165,7 @@ public abstract class EntityLiving extends Entity {
+         this.aK = this.yaw;
+         this.H = 0.6F;
+         this.bo = this.a(new Dynamic(DynamicOpsNBT.a, new NBTTagCompound()));
 +        AttributesAccessor.initializeAttributes(this, attributeMap); // PaperDragon
      }
  
@@ -295,21 +295,8 @@ index 469e293c2..44f26b3bd 100644
      public static NBTTagCompound a(AttributeModifier attributemodifier) {
          NBTTagCompound nbttagcompound = new NBTTagCompound();
  
-diff --git a/src/main/java/net/minecraft/server/NBTTagList.java b/src/main/java/net/minecraft/server/NBTTagList.java
-index 80eea5dfb..5fd69bcb8 100644
---- a/src/main/java/net/minecraft/server/NBTTagList.java
-+++ b/src/main/java/net/minecraft/server/NBTTagList.java
-@@ -11,7 +11,7 @@ import java.util.Objects;
- 
- public class NBTTagList extends NBTList<NBTBase> {
- 
--    List<NBTBase> list = Lists.newArrayList(); // Paper - private -> package
-+    public List<NBTBase> list = Lists.newArrayList(); // Paper - private -> package // PaperDragon package -> public
-     private byte type = 0;
- 
-     public NBTTagList() {}
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java b/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
-index f15d8bf83..b2dc62b7d 100644
+index 02cdfb434..c73db6da3 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
 @@ -69,7 +69,7 @@ public abstract class PathfinderGoalTarget extends PathfinderGoal {

@@ -1,4 +1,4 @@
-From 3c6c9a26e63dc80ff18653a014b0055069f61cf3 Mon Sep 17 00:00:00 2001
+From afc742749b009120cd56a25ad24b7f319c8264b4 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Mar 2018 02:23:21 -0400
 Subject: [PATCH] Shutdown the Server if the Required Plugins fail to Load
@@ -33,10 +33,10 @@ index 2f7bc8187..0e7ea1f26 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 47655e120..5028e2e7c 100644
+index f3cb5b4d6..d6cde965b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -246,6 +246,25 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -251,6 +251,25 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          persistentscoreboard.a((Scoreboard) this.getScoreboard());
          this.getScoreboard().a((Runnable) (new RunnableSaveScoreboard(persistentscoreboard)));

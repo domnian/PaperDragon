@@ -1,4 +1,4 @@
-From 9c1007496b3181b4580e3cc778c8bd97daf058c5 Mon Sep 17 00:00:00 2001
+From 06fe6e7bc268689156883bad02b6a2849fd6b54d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 30 Apr 2015 00:46:26 -0400
 Subject: [PATCH] Don't require flag for sign conversion
@@ -8,10 +8,10 @@ Subject: [PATCH] Don't require flag for sign conversion
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 0a8d9b52d..d3acf5a75 100644
+index 5eb86c434..2a5098d57 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
-@@ -18,7 +18,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+@@ -15,7 +15,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
      private static final boolean keepInvalidUnicode = Boolean.getBoolean("Paper.keepInvalidUnicode"); // Allow people to keep their bad unicode if they really want it
      private boolean privateUnicodeRemoved = false;
      public java.util.UUID signEditor;
@@ -20,7 +20,7 @@ index 0a8d9b52d..d3acf5a75 100644
      // Paper end
  
      public TileEntitySign() {
-@@ -67,7 +67,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+@@ -64,7 +64,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
          // This is done with a flag instead of all the time because
          // we have no way to tell whether a sign is from 1.7.10 or 1.8
  

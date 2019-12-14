@@ -1,4 +1,4 @@
-From a200aa4a9f97a90a15e76dc6b156ca3c7d2dc7d1 Mon Sep 17 00:00:00 2001
+From 03f8d9eb555cf2276cacbea5151abcc670e49904 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 May 2015 21:58:24 -0400
 Subject: [PATCH] Improve Hopper Performance
@@ -12,10 +12,10 @@ Only do an item "suck in" action once per second
  4 files changed, 56 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index d20860699..a1d8107c2 100644
+index 341831c15..5211c177a 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -139,10 +139,24 @@ public class EntityItem extends Entity {
+@@ -140,10 +140,24 @@ public class EntityItem extends Entity {
                  // CraftBukkit end
                  this.die();
              }
@@ -40,7 +40,7 @@ index d20860699..a1d8107c2 100644
      // Spigot start - copied from above
      @Override
      public void inactiveTick() {
-@@ -163,6 +177,7 @@ public class EntityItem extends Entity {
+@@ -164,6 +178,7 @@ public class EntityItem extends Entity {
              // CraftBukkit end
              this.die();
          }
@@ -49,7 +49,7 @@ index d20860699..a1d8107c2 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityMinecartHopper.java b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
-index c7eaca719..245c495c4 100644
+index 7416694ce..08297e1b1 100644
 --- a/src/main/java/net/minecraft/server/EntityMinecartHopper.java
 +++ b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
 @@ -56,6 +56,8 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
@@ -81,7 +81,7 @@ index c7eaca719..245c495c4 100644
 +    // PaperDragon stop
  }
 diff --git a/src/main/java/net/minecraft/server/IHopper.java b/src/main/java/net/minecraft/server/IHopper.java
-index bafa615df..2241dac46 100644
+index e1aa272e5..9ac507f9b 100644
 --- a/src/main/java/net/minecraft/server/IHopper.java
 +++ b/src/main/java/net/minecraft/server/IHopper.java
 @@ -15,9 +15,11 @@ public interface IHopper extends IInventory {
@@ -100,10 +100,10 @@ index bafa615df..2241dac46 100644
 +    long getAndIncrementAttemptCounter(); // PaperDragon
  }
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index c9aa7b9ee..fe51fc815 100644
+index 9fcb5eeff..05f029005 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -424,7 +424,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -403,7 +403,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  skipPullModeEventFire = skipHopperEvents; // Paper
                  return a(ihopper, iinventory, i, enumdirection);
              });
@@ -112,7 +112,7 @@ index c9aa7b9ee..fe51fc815 100644
              Iterator iterator = c(ihopper).iterator();
  
              EntityItem entityitem;
-@@ -439,6 +439,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -418,6 +418,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
  
              return true;
          }
@@ -120,7 +120,7 @@ index c9aa7b9ee..fe51fc815 100644
      }
  
      private static boolean a(IHopper ihopper, IInventory iinventory, int i, EnumDirection enumdirection) {
-@@ -698,4 +699,22 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -677,4 +678,22 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
      protected Container createContainer(int i, PlayerInventory playerinventory) {
          return new ContainerHopper(i, playerinventory, this);
      }

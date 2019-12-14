@@ -1,4 +1,4 @@
-From 1f34bb4665f1b5fb84b24bb3ac29d81ab98f99fc Mon Sep 17 00:00:00 2001
+From d3eb6a3f731c681af7f6607819527878d6c008d7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c638104..1e903fe5c 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 31c9a67df..362bf0c74 100644
+index 7e3abd8d5..60138ee8e 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -49,8 +49,8 @@ index 31c9a67df..362bf0c74 100644
      public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
 +    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
      private static final int CURRENT_LEVEL = 2;
-     // Paper start
-     public static Random SHARED_RANDOM = new Random() {
+     static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
+         return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
 index 000000000..fafea6e08
@@ -100,10 +100,10 @@ index 000000000..fafea6e08
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c0c11ff75..4a62c765c 100644
+index 22b1ee288..9cd8565c7 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -683,6 +683,7 @@ public class WorldServer extends World {
+@@ -690,6 +690,7 @@ public class WorldServer extends World {
              // Spigot start
              if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
                  entity.ticksLived++;
@@ -111,7 +111,7 @@ index c0c11ff75..4a62c765c 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -696,6 +697,7 @@ public class WorldServer extends World {
+@@ -701,6 +702,7 @@ public class WorldServer extends World {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -120,10 +120,10 @@ index c0c11ff75..4a62c765c 100644
                      return IRegistry.ENTITY_TYPE.getKey(entity.getEntityType()).toString();
                  });
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3e6a8370f..0895094e6 100644
+index e53819a82..d03b78577 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -861,6 +861,7 @@ public final class CraftServer implements Server {
+@@ -862,6 +862,7 @@ public final class CraftServer implements Server {
          }
          // PaperDragon start
          net.minecraft.server.MetaApiAccessor.reload();

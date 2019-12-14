@@ -1,4 +1,4 @@
-From 4c568be07051c8230422f64d982a65ee6b14be14 Mon Sep 17 00:00:00 2001
+From 62e9978d356b10f8a047ce1586cbbfa7075787d1 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -211,10 +211,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0b0058138..25e42dd4c 100644
+index edb3a6035..5cf94300c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1450,10 +1450,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1462,10 +1462,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -227,7 +227,7 @@ index 0b0058138..25e42dd4c 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1462,7 +1464,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1474,7 +1476,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -237,10 +237,10 @@ index 0b0058138..25e42dd4c 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4f02a9cf5..1bf59e269 100644
+index b7fd7ad7f..7e5dde170 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -200,7 +200,7 @@ import javax.annotation.Nullable; // Paper
+@@ -201,7 +201,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -250,7 +250,7 @@ index 4f02a9cf5..1bf59e269 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 921c16dff..5a2d86614 100644
+index 21bfdf9e7..1392dfd06 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -296,7 +296,7 @@ public final class CraftMagicNumbers implements UnsafeValues {

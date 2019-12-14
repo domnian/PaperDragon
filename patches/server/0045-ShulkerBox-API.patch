@@ -1,4 +1,4 @@
-From 8ac8e3d801c816ec58bf431d5658636fa2aa444a Mon Sep 17 00:00:00 2001
+From ca2121bc55e47355255f9b009678ef3f939d437c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 1 Jan 2017 20:36:31 -0500
 Subject: [PATCH] ShulkerBox API
@@ -77,10 +77,10 @@ index ab3428a68..7c469c052 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index aae99a9d9..39e228b7a 100644
+index f50361af1..ba966c9af 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -136,6 +136,7 @@ public final class ItemStack {
+@@ -141,6 +141,7 @@ public final class ItemStack {
          this.checkEmpty();
      }
  

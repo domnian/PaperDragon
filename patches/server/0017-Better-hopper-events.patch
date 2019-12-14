@@ -1,4 +1,4 @@
-From 303398acf1d85723e3f2c02efbed868c192f749d Mon Sep 17 00:00:00 2001
+From e8ab1a1fc95c7a2486dc7d3a0465e0390c03ea72 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Sep 2013 19:41:07 -0400
 Subject: [PATCH] Better hopper events
@@ -48,7 +48,7 @@ index 000000000..84f23c673
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 6f6519f6c..c9aa7b9ee 100644
+index 15588103b..9fcb5eeff 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -8,7 +8,9 @@ import java.util.stream.IntStream;
@@ -61,7 +61,7 @@ index 6f6519f6c..c9aa7b9ee 100644
  import org.bukkit.craftbukkit.inventory.CraftItemStack;
  import org.bukkit.entity.HumanEntity;
  import org.bukkit.event.inventory.InventoryMoveItemEvent;
-@@ -344,7 +346,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -323,7 +325,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              return false;
          } else {
              EnumDirection enumdirection = ((EnumDirection) this.getBlock().get(BlockHopper.FACING)).opposite();
@@ -70,7 +70,7 @@ index 6f6519f6c..c9aa7b9ee 100644
              if (this.b(iinventory, enumdirection)) {
                  return false;
              } else {
-@@ -414,8 +416,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -393,8 +395,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
  
          if (iinventory != null) {
              EnumDirection enumdirection = EnumDirection.DOWN;
@@ -84,7 +84,7 @@ index 6f6519f6c..c9aa7b9ee 100644
                  skipPullModeEventFire = skipHopperEvents; // Paper
                  return a(ihopper, iinventory, i, enumdirection);
              });
-@@ -693,4 +698,4 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -672,4 +677,4 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
      protected Container createContainer(int i, PlayerInventory playerinventory) {
          return new ContainerHopper(i, playerinventory, this);
      }

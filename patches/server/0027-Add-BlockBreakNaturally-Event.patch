@@ -1,4 +1,4 @@
-From 6c67c6082e081500ca693dbc9817709635de6385 Mon Sep 17 00:00:00 2001
+From ad1a8609cf26b970e1b5fae7d34de684301fbcda Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -11,7 +11,7 @@ To give reliable control over all blocks dropping to world to restore custom ite
  3 files changed, 4 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 619237d68..4b615d70d 100644
+index 54a61283e..788c8ccb0 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -505,9 +505,11 @@ public class Block implements IMaterial {
@@ -27,10 +27,10 @@ index 619237d68..4b615d70d 100644
              // CraftBukkit end
          }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 6ad4e05ef..d20860699 100644
+index 6ca9a674d..341831c15 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -16,6 +16,7 @@ public class EntityItem extends Entity {
+@@ -17,6 +17,7 @@ public class EntityItem extends Entity {
      private static final DataWatcherObject<ItemStack> ITEM = DataWatcher.a(EntityItem.class, DataWatcherRegistry.g);
      public int age;
      public boolean canDespawn = true; // PaperDragon
@@ -39,7 +39,7 @@ index 6ad4e05ef..d20860699 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 1310b72fd..6dceec853 100644
+index 14c7f7d2b..68d1a2af2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -340,6 +340,7 @@ public class CraftEventFactory {

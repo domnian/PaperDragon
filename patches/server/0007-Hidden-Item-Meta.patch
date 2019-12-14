@@ -1,4 +1,4 @@
-From b0e0aab5a9cd233aded4b183d4662bbc1bac7855 Mon Sep 17 00:00:00 2001
+From 283a334a43affb3e8dcd662211490999aa7f1e9d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -21,7 +21,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 000000000..e4d6e2c61
+index 000000000..cb9e8fbb2
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,95 @@
@@ -64,7 +64,7 @@ index 000000000..e4d6e2c61
 +                if (hasSpecial) {
 +                    NBTTagList newlore = new NBTTagList();
 +                    for (int x = 0; x < lastLine; x++) {
-+                        newlore.add(new NBTTagString(lore.getString(x)));
++                        newlore.add(NBTTagString.a(lore.getString(x)));
 +                    }
 +
 +                    nbttagcompound = (NBTTagCompound) nbttagcompound.clone();
@@ -121,7 +121,7 @@ index 000000000..e4d6e2c61
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 0e164840f..581016ae1 100644
+index df85f9df0..ddb7c8fb1 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -54,7 +54,7 @@ public final class ItemStack {
@@ -134,7 +134,7 @@ index 0e164840f..581016ae1 100644
      private EntityItemFrame i;
      private ShapeDetectorBlock j;
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index dac560c63..9c40cdb28 100644
+index fb9186b3f..b2745cd04 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -256,6 +256,7 @@ public class PacketDataSerializer extends ByteBuf {

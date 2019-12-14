@@ -1,4 +1,4 @@
-From d80deaa265b390a8e20a4199c70126648784ab17 Mon Sep 17 00:00:00 2001
+From 381749a9872bcdb7ad76d287250d41b277746e09 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 8 May 2015 19:56:21 -0400
 Subject: [PATCH] ServerShutdownEvent and move disablePlugins
@@ -8,7 +8,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 25e42dd4c..47655e120 100644
+index 5cf94300c..f3cb5b4d6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -99,6 +99,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -19,7 +19,7 @@ index 25e42dd4c..47655e120 100644
      private boolean pvpMode;
      private boolean allowFlight;
      @Nullable
-@@ -730,7 +731,8 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -738,7 +739,8 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -29,7 +29,7 @@ index 25e42dd4c..47655e120 100644
          }
          // CraftBukkit end
          if (this.getServerConnection() != null) {
-@@ -769,6 +771,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -777,6 +779,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  }
              }
          }
@@ -37,7 +37,7 @@ index 25e42dd4c..47655e120 100644
  
          if (this.snooper.d()) {
              this.snooper.e();
-@@ -800,6 +803,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -808,6 +811,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.safeShutdown(flag, false);
      }
      public void safeShutdown(boolean flag, boolean isRestarting) {

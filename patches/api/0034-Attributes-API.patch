@@ -1,15 +1,15 @@
-From 4dc0395266e4115a13229f5af9d1f46ef70d2345 Mon Sep 17 00:00:00 2001
+From aa0e1e58613f4aafdfaff9b59dc37d7ea78560b8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:31:31 -0500
 Subject: [PATCH] Attributes API
 
 ---
  .../domnian/paperdragon/api/DragonAPI.java    |   2 +
- .../paperdragon/api/attributes/Attribute.java |  46 ++++++
+ .../paperdragon/api/attributes/Attribute.java |  47 ++++++
  .../api/attributes/AttributeSlot.java         |  81 +++++++++++
  .../api/attributes/DAPI_Attributes.java       | 134 ++++++++++++++++++
  .../paperdragon/api/attributes/Operation.java |  50 +++++++
- 5 files changed, 313 insertions(+)
+ 5 files changed, 314 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/AttributeSlot.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/attributes/DAPI_Attributes.java
@@ -36,10 +36,10 @@ index c348aef5..191b8d9b 100644
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
 new file mode 100644
-index 00000000..94576366
+index 00000000..eeb9b105
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/attributes/Attribute.java
-@@ -0,0 +1,46 @@
+@@ -0,0 +1,47 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -76,6 +76,7 @@ index 00000000..94576366
 +    MOVEMENT_SPEED,
 +    FLYING_SPEED,
 +    ATTACK_DAMAGE,
++    ATTACK_KNOCKBACK,
 +    ATTACK_SPEED,
 +    ARMOR,
 +    ARMOR_TOUGHNESS,

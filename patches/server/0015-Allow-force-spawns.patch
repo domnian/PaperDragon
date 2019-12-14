@@ -1,4 +1,4 @@
-From 5b056608bd4ad96e0b3b7874211bf4e7b5ca8d23 Mon Sep 17 00:00:00 2001
+From 1dd5451f65f644551ab230021a9b62585943b130 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,7 +11,7 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 4b7c608f0..c69107fde 100644
+index 429dbdf1f..572ac99b5 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1079,7 +1079,7 @@ public class WorldServer extends World {
@@ -25,7 +25,7 @@ index 4b7c608f0..c69107fde 100644
      }
 @@ -1159,7 +1159,7 @@ public class WorldServer extends World {
              // CraftBukkit end
-             IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX / 16.0D), MathHelper.floor(entity.locZ / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
+             IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
 -            if (!(ichunkaccess instanceof Chunk)) {
 +            if (spawnReason != CreatureSpawnEvent.SpawnReason.FORCE && !(ichunkaccess instanceof Chunk)) { // PaperDragon
@@ -33,10 +33,10 @@ index 4b7c608f0..c69107fde 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index bf3793a40..4f35d43b8 100644
+index 1ce6436e4..cd6706616 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -585,7 +585,7 @@ public class CraftEventFactory {
+@@ -584,7 +584,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  
