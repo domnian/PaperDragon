@@ -1,4 +1,4 @@
-From 873cc431664ab5cf51ddaf6dfb885019b2c8069a Mon Sep 17 00:00:00 2001
+From 81667df5bac54bfae86d7d34244defd97a0dc5e0 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -250,7 +250,7 @@ index b7fd7ad7f..7e5dde170 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 21bfdf9e7..1392dfd06 100644
+index ab3ebc79e..7b72fbe7c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -296,7 +296,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -258,10 +258,10 @@ index 21bfdf9e7..1392dfd06 100644
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
 -        return new com.destroystokyo.paper.PaperVersionFetcher();
-+        return new com.domnian.paperdragon.DragonVersionFetcher(); // PaperDragon
++        return new com.domnian.paperdragon.DragonVersionFetcher();
      }
-     // Paper end
  
+     @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
 index 6ca0ebfde..4dfd6f306 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
@@ -312,5 +312,5 @@ index 6ca0ebfde..4dfd6f306 100644
  
  
 -- 
-2.22.0
+2.17.1
 

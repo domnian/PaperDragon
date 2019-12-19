@@ -1,4 +1,4 @@
-From d8a8c78c003d5e298fb93664e17a4fa0bb9bd4b3 Mon Sep 17 00:00:00 2001
+From 6b15d6235a11379deab3b8521d79886ead82ebb4 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -282,7 +282,7 @@ index 3ed74ae0e..3a2074cd6 100644
          this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
          this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 985f30372..21a958023 100644
+index 2c33ba49c..892bbf605 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -293,7 +293,7 @@ index 985f30372..21a958023 100644
      public static BlockPosition lastPhysicsProblem; // Spigot
      private org.spigotmc.TickLimiter entityLimiter;
      private org.spigotmc.TickLimiter tileLimiter;
-@@ -137,6 +138,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -145,6 +146,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig( worlddata.getName() ); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(worlddata.getName(), this.spigotConfig); // Paper
          this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this.paperConfig) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
@@ -364,5 +364,5 @@ index 140b82275..dc7d2f555 100644
          };
  
 -- 
-2.22.0
+2.17.1
 

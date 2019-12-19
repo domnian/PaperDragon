@@ -1,4 +1,4 @@
-From 8a0d547d56dac06b80f0ef801e701800728e6607 Mon Sep 17 00:00:00 2001
+From dbcb5bf55b1a13f05f9a6c1013bbd017503801f9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 29 Nov 2012 10:48:07 -0500
 Subject: [PATCH] SpawnerInitiateEvent
@@ -10,7 +10,7 @@ Subject: [PATCH] SpawnerInitiateEvent
  3 files changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 4bb24de9d..907cbf4e7 100644
+index 3c0621e65..17f2d109a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -73,6 +73,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -56,10 +56,10 @@ index b96f6461d..2d158757a 100644
  
      public void c() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 21a958023..0a9f81b05 100644
+index 892bbf605..f224a94dc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -232,6 +232,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -240,6 +240,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          return this.isClientSide;
      }
  
@@ -68,5 +68,5 @@ index 21a958023..0a9f81b05 100644
      public MinecraftServer getMinecraftServer() {
          return null;
 -- 
-2.22.0
+2.17.1
 

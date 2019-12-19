@@ -1,4 +1,4 @@
-From 439358e5473f654dbf18299484f9ad9f7b35ef0b Mon Sep 17 00:00:00 2001
+From a2f53362468259355d1eb2c74856fb5a6e01fb9e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -169,7 +169,7 @@ index 26f1a4b09..ee8b2b7d4 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index f0d1a5b14..7e3abd8d5 100644
+index 8c88cf637..3e957d4b1 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
@@ -779,10 +779,10 @@ index 958279249..984f95a1b 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0a9f81b05..e9ff61005 100644
+index f224a94dc..ecd3098ba 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -411,6 +411,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -424,6 +424,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                      this.a(blockposition, iblockdata1, iblockdata2);
                  }
                  */
@@ -819,7 +819,7 @@ index 4e35846a3..3692b3b2b 100644
          if (nbttagcompound1 != null) {
              nbttagcompound.set("Player", nbttagcompound1);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 83fb8737a..c1e2fdbd7 100644
+index 3739a95c5..500d22720 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -53,7 +53,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
@@ -943,5 +943,5 @@ index 026a0c399..70d1a5c08 100644
          this.inventory = inventory;
      }
 -- 
-2.22.0
+2.17.1
 

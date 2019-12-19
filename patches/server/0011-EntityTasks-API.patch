@@ -1,4 +1,4 @@
-From d3eb6a3f731c681af7f6607819527878d6c008d7 Mon Sep 17 00:00:00 2001
+From d0ad6ac5f67f610f9936a9e5dd03f0e2566f8dea Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c638104..1e903fe5c 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7e3abd8d5..60138ee8e 100644
+index 3e957d4b1..f67040f10 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -100,10 +100,10 @@ index 000000000..fafea6e08
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 22b1ee288..9cd8565c7 100644
+index 500d22720..3d50e7f86 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -690,6 +690,7 @@ public class WorldServer extends World {
+@@ -696,6 +696,7 @@ public class WorldServer extends World {
              // Spigot start
              if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
                  entity.ticksLived++;
@@ -111,7 +111,7 @@ index 22b1ee288..9cd8565c7 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -701,6 +702,7 @@ public class WorldServer extends World {
+@@ -707,6 +708,7 @@ public class WorldServer extends World {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -132,5 +132,5 @@ index e53819a82..d03b78577 100644
          loadPlugins();
          enablePlugins(PluginLoadOrder.STARTUP);
 -- 
-2.22.0
+2.17.1
 
