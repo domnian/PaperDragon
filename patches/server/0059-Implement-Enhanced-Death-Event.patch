@@ -1,0 +1,47 @@
+From 53e7035478dc18004189254aa9388b196b09d285 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 3 May 2018 21:42:07 -0400
+Subject: [PATCH] Implement Enhanced Death Event
+
+---
+ src/main/java/net/minecraft/server/EntityPlayer.java         | 5 ++++-
+ .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index 1ec29f157..2136d8c79 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -583,7 +583,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+         IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
+ 
+         String deathmessage = defaultMessage.getString();
+-        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory);
++        // PaperDragon start - Enhanced Player Death Event
++        String deathKey = (defaultMessage instanceof ChatMessage) ? ((ChatMessage) defaultMessage).getKey() : "death.attack.generic";
++        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory, deathKey);
++        // PaperDragon stop
+         // Paper start - cancellable death event
+         if (event.isCancelled()) {
+             // make compatible with plugins that might have already set the health in an event listener
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 7bdd391c2..958ecca89 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -780,11 +780,12 @@ public class CraftEventFactory {
+         return event;
+     }
+ 
+-    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage, boolean keepInventory) {
++    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage, boolean keepInventory, String key) { // PaperDragon - Pass Translation Key to Death Event
+         CraftPlayer entity = victim.getBukkitEntity();
+         PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage);
+         event.setKeepInventory(keepInventory);
+         populateFields(victim, event); // Paper - make cancellable
++        event.setSourceKey(key);
+         org.bukkit.World world = entity.getWorld();
+         Bukkit.getServer().getPluginManager().callEvent(event);
+         // Paper start - make cancellable
+-- 
+2.20.1.windows.1
+

@@ -1,4 +1,4 @@
-From 81667df5bac54bfae86d7d34244defd97a0dc5e0 Mon Sep 17 00:00:00 2001
+From e4c8e558d524b3b4943a6d438f9defb92ec50270 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -211,10 +211,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 664c48d68..5efd49afa 100644
+index 0365cebcf..a22cb7a27 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1461,10 +1461,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1462,10 +1462,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -227,7 +227,7 @@ index 664c48d68..5efd49afa 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1473,7 +1475,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1474,7 +1476,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -237,7 +237,7 @@ index 664c48d68..5efd49afa 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b7fd7ad7f..7e5dde170 100644
+index 5d95b5611..21004bbc9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -201,7 +201,7 @@ import javax.annotation.Nullable; // Paper
@@ -263,7 +263,7 @@ index ab3ebc79e..7b72fbe7c 100644
  
      @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 6ca0ebfde..4dfd6f306 100644
+index fe68df45b..907066bdc 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -25,7 +25,7 @@ public class WatchdogThread extends Thread
@@ -275,7 +275,7 @@ index 6ca0ebfde..4dfd6f306 100644
          this.timeoutTime = timeoutTime;
          this.restart = restart;
          earlyWarningEvery = Math.min(PaperConfig.watchdogPrintEarlyWarningEvery, timeoutTime); // Paper
-@@ -81,9 +81,9 @@ public class WatchdogThread extends Thread
+@@ -82,9 +82,9 @@ public class WatchdogThread extends Thread
                  log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
                  log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
                  log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
@@ -287,7 +287,7 @@ index 6ca0ebfde..4dfd6f306 100644
                  ChunkTaskManager.dumpAllChunkLoadInfo(); // Paper
                  //
                  if ( net.minecraft.server.World.lastPhysicsProblem != null )
-@@ -107,12 +107,12 @@ public class WatchdogThread extends Thread
+@@ -108,12 +108,12 @@ public class WatchdogThread extends Thread
                  // Paper end
                  } else
                  {
@@ -302,7 +302,7 @@ index 6ca0ebfde..4dfd6f306 100644
                  log.log( Level.SEVERE, "The server is waiting on these chunks: " + ChunkTaskManager.getChunkWaitInfo() ); // Paper - async chunk debug
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
                  log.log( Level.SEVERE, "------------------------------" );
-@@ -127,7 +127,7 @@ public class WatchdogThread extends Thread
+@@ -128,7 +128,7 @@ public class WatchdogThread extends Thread
                      dumpThread( thread, log );
                  }
                  } else {
@@ -312,5 +312,5 @@ index 6ca0ebfde..4dfd6f306 100644
  
  
 -- 
-2.17.1
+2.20.1.windows.1
 

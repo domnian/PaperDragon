@@ -78,6 +78,7 @@ done
 
 # import Foo
 import PathfinderGoalWrapped
+import PacketPlayOutTileEntityData
 
 ################
 (
