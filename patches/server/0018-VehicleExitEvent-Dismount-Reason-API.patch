@@ -1,0 +1,123 @@
+From cdbd0f80fd9070d55eb699e79e00ae84418e6e05 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 7 Aug 2013 19:52:14 -0400
+Subject: [PATCH] VehicleExitEvent Dismount Reason API
+
+---
+ src/main/java/net/minecraft/server/Entity.java      | 13 ++++++++++++-
+ src/main/java/net/minecraft/server/EntityHuman.java |  1 +
+ .../java/net/minecraft/server/EntityLiving.java     |  2 ++
+ src/main/java/net/minecraft/server/PlayerList.java  |  1 +
+ 4 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 8d7f25aba..39fb06988 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -200,6 +200,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+     public boolean fromMobSpawner;
+     public boolean spawnedViaMobSpawner; // Paper - Yes this name is similar to above, upstream took the better one
+     protected int numCollisions = 0; // Paper
++    VehicleExitEvent.DismountReason dismountReason = VehicleExitEvent.DismountReason.UNKNOWN; // PaperDragon
+     public void inactiveTick() { }
+     // Spigot end
+     public boolean shouldBeRemoved; // Paper
+@@ -259,11 +260,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+     }
+ 
+     public final void decouple() {
++        // TODO PaperDragon - Test This!
+         if (this.isVehicle()) {
+             this.ejectPassengers();
+         }
+ 
+         if (this.isPassenger()) {
++            if (this.dead) this.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.DEAD; // PaperDragon
+             this.stopRiding();
+         }
+ 
+@@ -2044,6 +2047,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+             return false;
+         } else {
+             if (this.isPassenger()) {
++                dismountReason = VehicleExitEvent.DismountReason.TRANSFER; // PaperDragon
+                 this.stopRiding();
+             }
+ 
+@@ -2063,7 +2067,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+ 
+     public void ejectPassengers() {
+         for (int i = this.passengers.size() - 1; i >= 0; --i) {
+-            ((Entity) this.passengers.get(i)).stopRiding();
++            // PaperDragon start
++            Entity entity = this.passengers.get(i);
++            if (this.dead) entity.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.DEAD;
++            entity.stopRiding();
++            // PaperDragon end
+         }
+ 
+     }
+@@ -2130,6 +2138,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+     // Paper start
+     protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
+     protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
++        VehicleExitEvent.DismountReason reason = dismountReason; // PaperDragon
++        dismountReason = VehicleExitEvent.DismountReason.UNKNOWN; // PaperDragon
+         // Paper end
+         if (entity.getVehicle() == this) {
+             throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
+@@ -2142,6 +2152,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+                         (Vehicle) getBukkitEntity(),
+                         (LivingEntity) entity.getBukkitEntity(), !suppressCancellation // Paper
+                 );
++                event.reason = reason; // PaperDragon
+                 Bukkit.getPluginManager().callEvent(event);
+                 CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
+                 Entity n = craftn == null ? null : craftn.getHandle();
+diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
+index 3859b0300..addb6c766 100644
+--- a/src/main/java/net/minecraft/server/EntityHuman.java
++++ b/src/main/java/net/minecraft/server/EntityHuman.java
+@@ -378,6 +378,7 @@ public abstract class EntityHuman extends EntityLiving {
+     @Override
+     public void passengerTick() {
+         if (!this.world.isClientSide && this.dU() && this.isPassenger()) {
++            this.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.PLAYER; // PaperDragon
+             this.stopRiding();
+             this.setSneaking(false);
+         } else {
+diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
+index 6a50c46a8..9a36b3951 100644
+--- a/src/main/java/net/minecraft/server/EntityLiving.java
++++ b/src/main/java/net/minecraft/server/EntityLiving.java
+@@ -289,6 +289,7 @@ public abstract class EntityLiving extends Entity {
+                 }
+ 
+                 if (!this.world.isClientSide && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().bi()) {
++                    this.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.WATER; // PaperDragon
+                     this.stopRiding();
+                 }
+             } else if (this.getAirTicks() < this.bw()) {
+@@ -3178,6 +3179,7 @@ public abstract class EntityLiving extends Entity {
+ 
+     public void entitySleep(BlockPosition blockposition) {
+         if (this.isPassenger()) {
++            if (this instanceof EntityHuman) this.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.PLAYER; // PaperDragon
+             this.stopRiding();
+         }
+ 
+diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
+index 7b79ee4fe..63069e30c 100644
+--- a/src/main/java/net/minecraft/server/PlayerList.java
++++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -429,6 +429,7 @@ public abstract class PlayerList {
+ 
+             if (entity.hasSinglePlayerPassenger()) {
+                 PlayerList.LOGGER.debug("Removing player mount");
++                entityplayer.dismountReason = org.bukkit.event.vehicle.VehicleExitEvent.DismountReason.DISCONNECT; // PaperDragon
+                 entityplayer.stopRiding();
+                 worldserver.removeEntity(entity);
+                 Iterator iterator = entity.getAllPassengers().iterator();
+-- 
+2.20.1.windows.1
+
