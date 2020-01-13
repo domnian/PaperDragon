@@ -1,4 +1,4 @@
-From 93e0fc0e1f34d14c4f09c0825f0d006d1d356c80 Mon Sep 17 00:00:00 2001
+From dfd8603b9300047e1951121272cc40abd956286b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -9,7 +9,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  src/main/java/net/minecraft/server/Chunk.java |   2 +
  .../minecraft/server/ChunkRegionLoader.java   |   2 +
  .../java/net/minecraft/server/Entity.java     |   3 +
- .../net/minecraft/server/MetaApiAccessor.java | 511 ++++++++++++++++++
+ .../net/minecraft/server/MetaApiAccessor.java | 514 ++++++++++++++++++
  .../java/net/minecraft/server/NBTTagList.java |   2 +-
  .../server/PacketPlayOutMapChunk.java         |   1 +
  .../server/PacketPlayOutTileEntityData.java   |   1 +
@@ -24,7 +24,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
  .../craftbukkit/inventory/CraftInventory.java |  12 +
- 20 files changed, 650 insertions(+), 2 deletions(-)
+ 20 files changed, 653 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -198,10 +198,10 @@ index 8c88cf637..3e957d4b1 100644
                  origin = new Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 000000000..02ca37e94
+index 000000000..0b6028fc7
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -0,0 +1,511 @@
+@@ -0,0 +1,514 @@
 +package net.minecraft.server;
 +
 +import org.bukkit.Bukkit;
@@ -537,7 +537,7 @@ index 000000000..02ca37e94
 +            }
 +            PersistentMetaList<Object> list = new PersistentMetaList<>();
 +            for (int i = 0; i < nbtlist.size(); i++) {
-+                final Object obj = getObjectFromNbt(nbtlist.list.get(i));
++                final Object obj = getObjectFromNbt(nbtlist.get(i));
 +                if (obj != null) {
 +                    list.add(obj);
 +                }
@@ -713,6 +713,10 @@ index 000000000..02ca37e94
 +
 +        public ChunkPersistentMeta clone() {
 +            return new ChunkPersistentMeta(this);
++        }
++    }
++}
+\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/NBTTagList.java b/src/main/java/net/minecraft/server/NBTTagList.java
 index d778eac45..654a68a46 100644
 --- a/src/main/java/net/minecraft/server/NBTTagList.java
