@@ -1,0 +1,25 @@
+From 74047c0525b92c10b13ee72b3e07710b1672a638 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 12 Jan 2020 19:49:00 -0500
+Subject: [PATCH] Add getLocation() to OfflinePlayer
+
+---
+ src/main/java/org/bukkit/OfflinePlayer.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
+index 3ab914fb..64d51ad3 100644
+--- a/src/main/java/org/bukkit/OfflinePlayer.java
++++ b/src/main/java/org/bukkit/OfflinePlayer.java
+@@ -193,4 +193,8 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
+     public long getLastSeen();
+     // Paper end
+ 
++    // PaperDragon start
++    public Location getLocation();
++    // PaperDragon end
++
+ }
+-- 
+2.20.1.windows.1
+
