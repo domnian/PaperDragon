@@ -1,4 +1,4 @@
-From b77c4a4fa35b8e0df8f224f14c88174cad572dfc Mon Sep 17 00:00:00 2001
+From 0e5b05587a97ce75559009cad9eb0315450c6cca Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -9,10 +9,12 @@ Subject: [PATCH] Persistent and Temporary Meta API
  src/main/java/net/minecraft/server/Chunk.java |   2 +
  .../minecraft/server/ChunkRegionLoader.java   |   2 +
  .../java/net/minecraft/server/Entity.java     |   3 +
- .../net/minecraft/server/MetaApiAccessor.java | 514 ++++++++++++++++++
- .../java/net/minecraft/server/NBTTagList.java |   2 +-
+ .../net/minecraft/server/MetaApiAccessor.java | 567 ++++++++++++++++++
  .../server/PacketPlayOutMapChunk.java         |   1 +
  .../server/PacketPlayOutTileEntityData.java   |   1 +
+ .../net/minecraft/server/PlayerChunkMap.java  |   1 +
+ .../java/net/minecraft/server/ProtoChunk.java |   2 +
+ .../minecraft/server/ProtoChunkExtension.java |   1 +
  .../java/net/minecraft/server/TileEntity.java |   3 +
  src/main/java/net/minecraft/server/World.java |   1 +
  .../java/net/minecraft/server/WorldData.java  |   3 +
@@ -23,8 +25,8 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../craftbukkit/block/CraftBlockState.java    |   7 +
  .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
- .../craftbukkit/inventory/CraftInventory.java |  12 +
- 20 files changed, 653 insertions(+), 2 deletions(-)
+ .../craftbukkit/inventory/CraftInventory.java |  11 +
+ 22 files changed, 708 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -149,14 +151,14 @@ index f2a04cb6a..6c64a8629 100644
      public boolean needsDecoration;
      // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 4349d22cc..2d843a393 100644
+index 4349d22cc..27ce97021 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -201,6 +201,7 @@ public class ChunkRegionLoader {
          }
  
          HeightMap.a((IChunkAccess) object, enumset);
-+        MetaApiAccessor.loadChunkMetaNbt(nbttagcompound, (IChunkAccess) object); // PaperDragon
++        MetaApiAccessor.loadChunkMetaNbt(nbttagcompound1, (IChunkAccess) object); // PaperDragon
          NBTTagCompound nbttagcompound4 = nbttagcompound1.getCompound("Structures");
  
          ((IChunkAccess) object).a(a(chunkgenerator, definedstructuremanager, nbttagcompound4));
@@ -164,7 +166,7 @@ index 4349d22cc..2d843a393 100644
          nbttagcompound.set("Level", nbttagcompound1);
          nbttagcompound1.setInt("xPos", chunkcoordintpair.x);
          nbttagcompound1.setInt("zPos", chunkcoordintpair.z);
-+        MetaApiAccessor.saveChunkMetaNbt(nbttagcompound, ichunkaccess); // PaperDragon
++        MetaApiAccessor.saveChunkMetaNbt(nbttagcompound1, ichunkaccess); // PaperDragon
          nbttagcompound1.setLong("LastUpdate", asyncsavedata != null ? asyncsavedata.worldTime : worldserver.getTime()); // Paper - async chunk unloading
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
@@ -198,10 +200,10 @@ index 77d7e6885..a16fcd906 100644
                  origin = new Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 000000000..0b6028fc7
+index 000000000..63a3da5bf
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -0,0 +1,514 @@
+@@ -0,0 +1,567 @@
 +package net.minecraft.server;
 +
 +import org.bukkit.Bukkit;
@@ -367,7 +369,10 @@ index 000000000..0b6028fc7
 +            chunk = (Chunk) chunkAccess;
 +        } else if (chunkAccess instanceof PlayerChunk) {
 +            chunk = ((PlayerChunk) chunkAccess).getChunk();
++        } else if (chunkAccess instanceof ProtoChunkExtension) {
++            chunk = ((ProtoChunkExtension) chunkAccess).getChunk();
 +        } else if (chunkAccess instanceof ProtoChunk) {
++            saveChunkMetaNbt(cmp, (ProtoChunk) chunkAccess);
 +            return;
 +        }
 +        if (chunk == null) throw new IllegalArgumentException("Failed to get chunk to save meta for");
@@ -400,21 +405,50 @@ index 000000000..0b6028fc7
 +    }
 +
 +    /**
++     * Saves this protoChunk's Meta Data into NBT
++     * @param cmp
++     * @param protoChunk
++     */
++    static void saveChunkMetaNbt(NBTTagCompound cmp, ProtoChunk protoChunk) {
++        if (protoChunk.chunkMeta != null) {
++            cmp.set(CHUNK_META, protoChunk.chunkMeta);
++        } else if (protoChunk.chunkMetaList != null) {
++            cmp.set(CHUNK_META_LIST, protoChunk.chunkMetaList);
++        }
++    }
++
++    /**
 +     * Loads this chunks Meta Data from NBT
 +     * @param cmp
 +     * @param chunkAccess
-+    */
++     */
 +    static void loadChunkMetaNbt(NBTTagCompound cmp, IChunkAccess chunkAccess) {
 +        Chunk chunk = null;
 +        if (chunkAccess instanceof Chunk) {
 +            chunk = (Chunk) chunkAccess;
 +        } else if (chunkAccess instanceof PlayerChunk) {
 +            chunk = ((PlayerChunk) chunkAccess).getChunk();
++        } else if (chunkAccess instanceof ProtoChunkExtension) {
++            chunk = ((ProtoChunkExtension) chunkAccess).getChunk();
 +        } else if (chunkAccess instanceof ProtoChunk) {
++            storeChunkMetaNbt(cmp, (ProtoChunk) chunkAccess);
 +            return;
 +        }
 +        if (chunk == null) throw new IllegalArgumentException("Failed to get chunk to load meta for");
 +        loadChunkMetaNbt(cmp, chunk);
++    }
++
++    /**
++     * Save the chunk Meta Data to be loaded later
++     * @param cmp
++     * @param protoChunk
++     */
++    static void storeChunkMetaNbt(NBTTagCompound cmp, ProtoChunk protoChunk) {
++        if (cmp.hasKey(CHUNK_META)) {
++            protoChunk.chunkMeta = cmp.getCompound(CHUNK_META);
++        } else if (cmp.hasKey(CHUNK_META_LIST)) {
++            protoChunk.chunkMetaList = cmp.getList(CHUNK_META_LIST, 10);
++        }
 +    }
 +
 +    /**
@@ -423,22 +457,43 @@ index 000000000..0b6028fc7
 +     * @param chunk
 +     */
 +    static void loadChunkMetaNbt(NBTTagCompound cmp, Chunk chunk) {
-+        ChunkPersistentMeta meta = chunk.chunkMeta;
 +        if (cmp.hasKey(CHUNK_META)) {
-+            NBTTagCompound chunkMeta = cmp.getCompound(CHUNK_META);
-+            for (String key : chunkMeta.getKeys()) {
-+                NBTTagCompound e = chunkMeta.getCompound(key);
-+                meta = loadBlockMeta(meta, deserializeOldLoc(key), e);
-+            }
++            loadChunkMeta(cmp.getCompound(CHUNK_META), chunk);
 +        } else if (cmp.hasKey(CHUNK_META_LIST)) {
-+            NBTTagList chunkMeta = cmp.getList(CHUNK_META_LIST, 10);
-+            final int size = chunkMeta.size();
-+            for (int i = 0; i < size; i++) {
-+                NBTTagCompound e = chunkMeta.getCompound(i);
-+                if (e.hasKey(BLOCK_POS)) {
-+                    NBTTagCompound blockPos = e.getCompound(BLOCK_POS);
-+                    meta = loadBlockMeta(meta, getBlockPosFromCompound(blockPos), e);
-+                }
++            loadChunkMetaList(cmp.getList(CHUNK_META_LIST, 10), chunk);
++        }
++    }
++
++    /**
++     * Loads this chunks Meta Data from a ProtoChunk
++     * @param protoChunk
++     * @param chunk
++     */
++    static void loadChunkMetaNbt(ProtoChunk protoChunk, Chunk chunk) {
++        if (protoChunk.chunkMeta != null) {
++            loadChunkMeta(protoChunk.chunkMeta, chunk);
++        } else if (protoChunk.chunkMetaList != null) {
++            loadChunkMetaList(protoChunk.chunkMetaList, chunk);
++        }
++    }
++
++    private static void loadChunkMeta(NBTTagCompound chunkMeta, Chunk chunk) {
++        ChunkPersistentMeta meta = chunk.chunkMeta;
++        for (String key : chunkMeta.getKeys()) {
++            NBTTagCompound e = chunkMeta.getCompound(key);
++            meta = loadBlockMeta(meta, deserializeOldLoc(key), e);
++        }
++        chunk.chunkMeta = meta;
++    }
++
++    private static void loadChunkMetaList(NBTTagList chunkMeta, Chunk chunk) {
++        ChunkPersistentMeta meta = chunk.chunkMeta;
++        final int size = chunkMeta.size();
++        for (int i = 0; i < size; i++) {
++            NBTTagCompound e = chunkMeta.getCompound(i);
++            if (e.hasKey(BLOCK_POS)) {
++                NBTTagCompound blockPos = e.getCompound(BLOCK_POS);
++                meta = loadBlockMeta(meta, getBlockPosFromCompound(blockPos), e);
 +            }
 +        }
 +        chunk.chunkMeta = meta;
@@ -716,20 +771,6 @@ index 000000000..0b6028fc7
 +        }
 +    }
 +}
-\ No newline at end of file
-diff --git a/src/main/java/net/minecraft/server/NBTTagList.java b/src/main/java/net/minecraft/server/NBTTagList.java
-index d778eac45..654a68a46 100644
---- a/src/main/java/net/minecraft/server/NBTTagList.java
-+++ b/src/main/java/net/minecraft/server/NBTTagList.java
-@@ -52,7 +52,7 @@ public class NBTTagList extends NBTList<NBTBase> {
-         }
-     };
-     private static final ByteSet b = new ByteOpenHashSet(Arrays.asList((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6)); // Paper - decompiler fix
--    private final List<NBTBase> list;
-+    public final List<NBTBase> list; // PaperDragon - private -> public
-     private byte type;
- 
-     private NBTTagList(List<NBTBase> list, byte b0) {
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 index ef7ade797..b3fb2fe23 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
@@ -754,6 +795,43 @@ index 6bcb19b56..73bc4103b 100644
          this.a = blockposition;
          this.b = i;
          this.c = nbttagcompound;
+diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+index f8a65b3df..fd82afaa5 100644
+--- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+@@ -728,6 +728,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+                     chunk = ((ProtoChunkExtension) ichunkaccess).u();
+                 } else {
+                     chunk = new Chunk(this.world, (ProtoChunk) ichunkaccess);
++                    MetaApiAccessor.loadChunkMetaNbt((ProtoChunk) ichunkaccess, chunk); // PaperDragon
+                     playerchunk.a(new ProtoChunkExtension(chunk));
+                 }
+ 
+diff --git a/src/main/java/net/minecraft/server/ProtoChunk.java b/src/main/java/net/minecraft/server/ProtoChunk.java
+index f376e2106..b92742fab 100644
+--- a/src/main/java/net/minecraft/server/ProtoChunk.java
++++ b/src/main/java/net/minecraft/server/ProtoChunk.java
+@@ -46,6 +46,8 @@ public class ProtoChunk implements IChunkAccess {
+     private final Map<WorldGenStage.Features, BitSet> t;
+     private volatile boolean u;
+     private final GeneratorAccess world; // Paper - Anti-Xray
++    public NBTTagCompound chunkMeta; // PaperDragon
++    public NBTTagList chunkMetaList; // PaperDragon
+ 
+     public ProtoChunk(ChunkCoordIntPair chunkcoordintpair, ChunkConverter chunkconverter) {
+         // Paper start - add world parameter
+diff --git a/src/main/java/net/minecraft/server/ProtoChunkExtension.java b/src/main/java/net/minecraft/server/ProtoChunkExtension.java
+index 01bf28dc3..b43ea21ba 100644
+--- a/src/main/java/net/minecraft/server/ProtoChunkExtension.java
++++ b/src/main/java/net/minecraft/server/ProtoChunkExtension.java
+@@ -182,6 +182,7 @@ public class ProtoChunkExtension extends ProtoChunk {
+         return this.a.a(worldgenstage_features);
+     }
+ 
++    public Chunk getChunk() { return this.u(); } // PaperDragon - OBFHELPER
+     public Chunk u() {
+         return this.a;
+     }
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
 index a8e64dfda..1d0846a38 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
@@ -924,10 +1002,10 @@ index 39ce40bd5..40e766724 100644
  
      public static ItemStack handleEditBookEvent(EntityPlayer player, EnumItemSlot slot, ItemStack itemInHand, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index 026a0c399..70d1a5c08 100644
+index 026a0c399..a5f13b606 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-@@ -31,6 +31,18 @@ import org.bukkit.inventory.ItemStack;
+@@ -31,6 +31,17 @@ import org.bukkit.inventory.ItemStack;
  public class CraftInventory implements Inventory {
      protected final IInventory inventory;
  
@@ -940,12 +1018,11 @@ index 026a0c399..70d1a5c08 100644
 +            meta.put(inventory, metaMap);
 +        }
 +        return metaMap;
-+    }
-+    // PaperDragon end
++    } // PaperDragon end
 +
      public CraftInventory(IInventory inventory) {
          this.inventory = inventory;
      }
 -- 
-2.20.1.windows.1
+2.17.1
 
