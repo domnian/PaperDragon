@@ -1,4 +1,4 @@
-From 7f9e7075e130c7340aa30ea61057ecb5f842a5aa Mon Sep 17 00:00:00 2001
+From a8a9670825979218e36d7710af4b256988456f6e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 15 Jun 2016 22:06:57 -0400
 Subject: [PATCH] Don't trigger Lootable Refresh for non player interaction

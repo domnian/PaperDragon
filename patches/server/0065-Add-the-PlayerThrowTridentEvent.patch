@@ -1,4 +1,4 @@
-From cf0b810f6a96cdef3fdd644f63eacc933bd3beb5 Mon Sep 17 00:00:00 2001
+From 48e7392a6feee1e023fcd1e5e1783c69beed00ee Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Fri, 29 Nov 2019 02:48:17 -0600
 Subject: [PATCH] Add the PlayerThrowTridentEvent

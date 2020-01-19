@@ -1,4 +1,4 @@
-From eb4327c4620bf3c25c9002fa3ed33f1080a94ba4 Mon Sep 17 00:00:00 2001
+From caa145042f91545ed13872354a7f5d814a8ba804 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jun 2015 23:51:20 -0400
 Subject: [PATCH] getTick API

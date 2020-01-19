@@ -1,4 +1,4 @@
-From 1934889132c7a89ab953cfd4e04abf59b62fc136 Mon Sep 17 00:00:00 2001
+From 435b575b6dc77dfdf85a3f0467d816a93f456ddd Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 19:16:19 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API

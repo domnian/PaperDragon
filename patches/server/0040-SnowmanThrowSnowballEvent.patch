@@ -1,4 +1,4 @@
-From 6bfa23ac1d3d236e37f4c96832744a1b34d0e57a Mon Sep 17 00:00:00 2001
+From 18354d66bb3e2e9c6af2d759a05158381216ebec Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Dec 2015 13:33:00 -0500
 Subject: [PATCH] SnowmanThrowSnowballEvent

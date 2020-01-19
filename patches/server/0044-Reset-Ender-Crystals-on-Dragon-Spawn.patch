@@ -1,4 +1,4 @@
-From 99c77a2036d74a0c5571bdbc3617447e2f6c722f Mon Sep 17 00:00:00 2001
+From 056f5067236ecc8d8938fa27525dfa046cee6847 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 1 Jun 2016 23:29:17 -0400
 Subject: [PATCH] Reset Ender Crystals on Dragon Spawn

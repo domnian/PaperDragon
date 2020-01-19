@@ -1,4 +1,4 @@
-From 39bb1798c0cba337e2b724f9344a64a79f64a5c7 Mon Sep 17 00:00:00 2001
+From 5e46a49ae5ce4ff4710c36aa73c9ad92dd0d01ed Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 Jan 2016 03:42:03 -0500
 Subject: [PATCH] Player Death fires PlayerDropItem event

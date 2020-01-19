@@ -1,4 +1,4 @@
-From c1c313aede8075b32f1efde827cdeb8a7cdbe2c1 Mon Sep 17 00:00:00 2001
+From 65d40a53ed8bb50ac23676632115ea8421eb1bd7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 25 Jun 2015 21:00:09 -0400
 Subject: [PATCH] ServerReloadEvent

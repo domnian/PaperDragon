@@ -1,4 +1,4 @@
-From e62606106b52821e50fe8306ad87f70c1c1a4151 Mon Sep 17 00:00:00 2001
+From 7880fc3d60a31ea4329c8ef535730ccc5bc546da Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 29 Dec 2016 23:27:50 -0500
 Subject: [PATCH] Make CraftMetaItem not crash on HideFlags error

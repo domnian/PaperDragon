@@ -1,4 +1,4 @@
-From f0322cae5241edf84f835bc964d65694b3b50c13 Mon Sep 17 00:00:00 2001
+From 5a0b4c77206679b7a04673cf5c31cd45ca18120e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 12 Jul 2019 03:48:22 -0400
 Subject: [PATCH] Implement method to get player skin hash

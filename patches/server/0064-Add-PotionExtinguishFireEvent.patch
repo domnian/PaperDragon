@@ -1,4 +1,4 @@
-From d2a99b76549a9244c50407be08b7c2e7b918a1d7 Mon Sep 17 00:00:00 2001
+From 49be8ff194fd5ab1f213d92fab08e61b899d7da4 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Thu, 28 Nov 2019 20:37:44 -0600
 Subject: [PATCH] Add PotionExtinguishFireEvent

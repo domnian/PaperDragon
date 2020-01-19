@@ -1,4 +1,4 @@
-From c2d50004936415de1a6d9c90241afc296350c92f Mon Sep 17 00:00:00 2001
+From dc27a88d25058c8912425cea7ffd73e79736b768 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 16 Aug 2019 22:18:35 -0400
 Subject: [PATCH] Fix Bukkit.createInventory() with type LECTERN
