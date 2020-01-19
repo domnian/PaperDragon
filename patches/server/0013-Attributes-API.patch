@@ -1,4 +1,4 @@
-From a745550d67c183d3207cb7cc00d04765fe57fb72 Mon Sep 17 00:00:00 2001
+From 432d8f8dbd87b60fa8f2d41926dfc8942d9306ff Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
@@ -12,8 +12,9 @@ Subject: [PATCH] Attributes API
  .../minecraft/server/EntityInsentient.java    |   1 +
  .../net/minecraft/server/EntityLiving.java    |   1 +
  .../minecraft/server/GenericAttributes.java   |   1 +
+ .../java/net/minecraft/server/NBTTagList.java |   2 +-
  .../server/PathfinderGoalTarget.java          |   2 +-
- 9 files changed, 191 insertions(+), 4 deletions(-)
+ 10 files changed, 192 insertions(+), 5 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java
  create mode 100644 src/main/java/net/minecraft/server/AttributesAccessor.java
 
@@ -295,6 +296,19 @@ index 469e293c2..44f26b3bd 100644
      public static NBTTagCompound a(AttributeModifier attributemodifier) {
          NBTTagCompound nbttagcompound = new NBTTagCompound();
  
+diff --git a/src/main/java/net/minecraft/server/NBTTagList.java b/src/main/java/net/minecraft/server/NBTTagList.java
+index d778eac45..654a68a46 100644
+--- a/src/main/java/net/minecraft/server/NBTTagList.java
++++ b/src/main/java/net/minecraft/server/NBTTagList.java
+@@ -52,7 +52,7 @@ public class NBTTagList extends NBTList<NBTBase> {
+         }
+     };
+     private static final ByteSet b = new ByteOpenHashSet(Arrays.asList((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6)); // Paper - decompiler fix
+-    private final List<NBTBase> list;
++    public final List<NBTBase> list; // PaperDragon - private -> public
+     private byte type;
+ 
+     private NBTTagList(List<NBTBase> list, byte b0) {
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java b/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
 index 02cdfb434..c73db6da3 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalTarget.java
