@@ -1,4 +1,4 @@
-From dfd8603b9300047e1951121272cc40abd956286b Mon Sep 17 00:00:00 2001
+From b77c4a4fa35b8e0df8f224f14c88174cad572dfc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -169,7 +169,7 @@ index 4349d22cc..2d843a393 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8c88cf637..3e957d4b1 100644
+index 77d7e6885..a16fcd906 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
@@ -908,10 +908,10 @@ index dfa15372b..47915e8cb 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index c0fd2948e..c1628a7ab 100644
+index 39ce40bd5..40e766724 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1368,6 +1368,11 @@ public class CraftEventFactory {
+@@ -1369,6 +1369,11 @@ public class CraftEventFactory {
          // Paper end
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());

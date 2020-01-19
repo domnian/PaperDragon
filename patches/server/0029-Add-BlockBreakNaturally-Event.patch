@@ -1,4 +1,4 @@
-From a1a12a67b6bd07e06a9fd9533a59c92113c5148c Mon Sep 17 00:00:00 2001
+From 4e0699e569b4580cba33a8e0d3320c214e9b7c6c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -39,10 +39,10 @@ index 6ca9a674d..341831c15 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 70ad05b21..fe054c630 100644
+index fceb5c82b..55114d2d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -340,6 +340,7 @@ public class CraftEventFactory {
+@@ -341,6 +341,7 @@ public class CraftEventFactory {
  
          if (!event.isCancelled()) {
              for (EntityItem item : items) {

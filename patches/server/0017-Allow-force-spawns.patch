@@ -1,4 +1,4 @@
-From bd99e657471903a9e5b2e6ac807bb42db08169fa Mon Sep 17 00:00:00 2001
+From 97b67e0efb7bd3757728e0e3685baf131b3b1c9b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -33,10 +33,10 @@ index 4a12054ce..938d3e954 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index c1628a7ab..5b89eae38 100644
+index 40e766724..4cc4469f1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -588,7 +588,7 @@ public class CraftEventFactory {
+@@ -589,7 +589,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  

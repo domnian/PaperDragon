@@ -1,4 +1,4 @@
-From e3aa11b7d2c43e19a2daa5373d3398679d4780ec Mon Sep 17 00:00:00 2001
+From 99a2544b316a4eecc6f926537b02cad415eb4a89 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -503,7 +503,7 @@ index 193b5b8e6..014329d98 100644
              map.registerAttribute(targetRange);
              if (entity instanceof Wither) {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index f67040f10..47ad569c4 100644
+index d465d61eb..dc56492fb 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -149,6 +149,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -607,7 +607,7 @@ index f67040f10..47ad569c4 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2952,6 +2963,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2960,6 +2971,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
