@@ -1,4 +1,4 @@
-From 0059f6135d93dddcc9136631362304547e598f45 Mon Sep 17 00:00:00 2001
+From a2b5e5f967aaa19ce2f75b7a5f8b06ed7b9c3a3e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 22 Sep 2017 00:45:30 -0400
 Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
@@ -8,10 +8,10 @@ Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
  1 file changed, 4 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 951ef5954..ce3d77e14 100644
+index 69e62e340..115a8c8dc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2083,6 +2083,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2078,6 +2078,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public <T> T getUserObject(org.bukkit.NamespacedKey key) {
          return (T) userObjects.getOrDefault(key, null);
      }

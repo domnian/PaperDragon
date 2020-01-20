@@ -1,13 +1,12 @@
-From 38b826c5c093f621175cf66c6369830b68420027 Mon Sep 17 00:00:00 2001
+From b7d2548f8ad2f3dbae1ab453c1f4e15ecd43ca4e Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:59:04 -0500
 Subject: [PATCH] SendSignEvent
 
 ---
  .../paperdragon/api/SendSignEventImpl.java    | 49 +++++++++++++++++++
- .../net/minecraft/server/TileEntitySign.java  |  7 ++-
- .../craftbukkit/entity/CraftPlayer.java       |  7 ++-
- 3 files changed, 61 insertions(+), 2 deletions(-)
+ .../net/minecraft/server/TileEntitySign.java  | 13 ++++-
+ 2 files changed, 60 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
@@ -66,7 +65,7 @@ index 000000000..a289065f6
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 2a5098d57..551412817 100644
+index 2a5098d57..54b31d869 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
 @@ -25,10 +25,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
@@ -86,21 +85,16 @@ index 2a5098d57..551412817 100644
  
              nbttagcompound.setString("Text" + (i + 1), s);
          }
-diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 3afcfeae1..565a43f7c 100644
---- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-+++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -677,7 +677,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
-         sign.setColor(EnumColor.fromColorIndex(dyeColor.getWoolData()));
-         System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
+@@ -127,7 +132,11 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
  
--        getHandle().playerConnection.sendPacket(sign.getUpdatePacket());
-+        com.domnian.paperdragon.api.SendSignEventImpl event = new com.domnian.paperdragon.api.SendSignEventImpl(sign.getWorld(), sign.getPosition(), sign.lines, this);
+     @Override
+     public NBTTagCompound b() {
+-        return this.save(new NBTTagCompound());
++        // PaperDragon start
++        com.domnian.paperdragon.api.SendSignEventImpl event = new com.domnian.paperdragon.api.SendSignEventImpl(this.world, this.getPosition(), this.lines, null);
 +        event.callEvent();
-+        net.minecraft.server.NBTTagCompound component = sign.save(new net.minecraft.server.NBTTagCompound(), event.lines);
-+        net.minecraft.server.PacketPlayOutTileEntityData packet = new net.minecraft.server.PacketPlayOutTileEntityData(sign.getPosition(), 9, component);
-+
-+        getHandle().playerConnection.sendPacket(packet);
++        return this.save(new NBTTagCompound(), event.lines);
++        // PaperDragon end
      }
  
      @Override
