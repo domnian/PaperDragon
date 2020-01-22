@@ -1,4 +1,4 @@
-From ea01283f99527c6136ed25174d0957d42ca1c0f4 Mon Sep 17 00:00:00 2001
+From 55e31923e4c3419d3a51ea1392d35801e3ac243a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 27 Jul 2017 00:09:21 -0400
 Subject: [PATCH] Export Dragon Config to Timings
@@ -23,10 +23,10 @@ index 23eb8c65..221998d2 100644
  
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9bc96d62..c49d21d1 100644
+index ba20bbfe..db00676f 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -2054,6 +2054,8 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -2079,6 +2079,8 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
  
      @Nullable
      public <T> T getUserObject(@NotNull org.bukkit.NamespacedKey key);
@@ -36,5 +36,5 @@ index 9bc96d62..c49d21d1 100644
  
  }
 -- 
-2.22.0
+2.20.1.windows.1
 

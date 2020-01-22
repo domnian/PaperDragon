@@ -1,4 +1,4 @@
-From cdbd0f80fd9070d55eb699e79e00ae84418e6e05 Mon Sep 17 00:00:00 2001
+From df7fae2ad705b50a17d0107ce153d49fc037c1e7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8d7f25aba..39fb06988 100644
+index 0bd35c848..5fa2101d6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -200,6 +200,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -36,7 +36,7 @@ index 8d7f25aba..39fb06988 100644
              this.stopRiding();
          }
  
-@@ -2044,6 +2047,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2045,6 +2048,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              return false;
          } else {
              if (this.isPassenger()) {
@@ -44,7 +44,7 @@ index 8d7f25aba..39fb06988 100644
                  this.stopRiding();
              }
  
-@@ -2063,7 +2067,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2064,7 +2068,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      public void ejectPassengers() {
          for (int i = this.passengers.size() - 1; i >= 0; --i) {
@@ -57,7 +57,7 @@ index 8d7f25aba..39fb06988 100644
          }
  
      }
-@@ -2130,6 +2138,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2131,6 +2139,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      // Paper start
      protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
      protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
@@ -66,7 +66,7 @@ index 8d7f25aba..39fb06988 100644
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2142,6 +2152,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2143,6 +2153,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                          (Vehicle) getBukkitEntity(),
                          (LivingEntity) entity.getBukkitEntity(), !suppressCancellation // Paper
                  );
@@ -75,7 +75,7 @@ index 8d7f25aba..39fb06988 100644
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
                  Entity n = craftn == null ? null : craftn.getHandle();
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 3859b0300..addb6c766 100644
+index 04ddd3967..1fd3b90e9 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -378,6 +378,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -87,7 +87,7 @@ index 3859b0300..addb6c766 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6a50c46a8..9a36b3951 100644
+index 9a70e8d51..b9a89fe3a 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -289,6 +289,7 @@ public abstract class EntityLiving extends Entity {
@@ -98,7 +98,7 @@ index 6a50c46a8..9a36b3951 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bw()) {
-@@ -3178,6 +3179,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3180,6 +3181,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {

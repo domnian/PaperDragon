@@ -1,4 +1,4 @@
-From 75f2dc085bb11180439583b54835c308a29c317b Mon Sep 17 00:00:00 2001
+From 4e178e4cfa891aea24512e4e3465e76581f1d8c0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 Mar 2019 21:45:09 -0400
 Subject: [PATCH] amend ensureServerConversions
@@ -39,10 +39,10 @@ index 03ba2265..32d2ce35 100644
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index b58c5347..02245530 100644
+index bc486fd3..09ed5bc0 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -26,6 +26,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      private int amount = 0;
      private MaterialData data = null;
      private ItemMeta meta;
@@ -74,7 +74,7 @@ index b58c5347..02245530 100644
  
      @Utility
      protected ItemStack() {}
-@@ -490,7 +515,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -508,7 +533,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      public Map<String, Object> serialize() {
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
@@ -83,7 +83,7 @@ index b58c5347..02245530 100644
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
-@@ -542,6 +567,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -560,6 +585,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
          }
  
          ItemStack result = new ItemStack(type, amount, damage);
@@ -91,7 +91,7 @@ index b58c5347..02245530 100644
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -633,13 +659,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -651,13 +677,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      }
  
      // Paper start
@@ -111,5 +111,5 @@ index b58c5347..02245530 100644
      @NotNull
      public ItemStack ensureServerConversions() {
 -- 
-2.22.0
+2.20.1.windows.1
 

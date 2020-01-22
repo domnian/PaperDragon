@@ -1,4 +1,4 @@
-From 48e7392a6feee1e023fcd1e5e1783c69beed00ee Mon Sep 17 00:00:00 2001
+From 6bed0fbfd3c7d196f0a8a0e294b7975b5f443ef5 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Fri, 29 Nov 2019 02:48:17 -0600
 Subject: [PATCH] Add the PlayerThrowTridentEvent
@@ -8,7 +8,7 @@ Subject: [PATCH] Add the PlayerThrowTridentEvent
  1 file changed, 3 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ItemTrident.java b/src/main/java/net/minecraft/server/ItemTrident.java
-index 1cbaed9da..a6645dc08 100644
+index f571a1586..2997c0e98 100644
 --- a/src/main/java/net/minecraft/server/ItemTrident.java
 +++ b/src/main/java/net/minecraft/server/ItemTrident.java
 @@ -1,6 +1,8 @@
@@ -27,7 +27,7 @@ index 1cbaed9da..a6645dc08 100644
 +                            (new com.destroystokyo.paper.event.player.PlayerThrowTridentEvent((Player) entityhuman.getBukkitEntity(), CraftItemStack.asCraftMirror(itemstack), entitythrowntrident.getBukkitEntity())).callEvent(); // Paper
  
                              itemstack.damage(1, entityhuman, (entityhuman1) -> {
-                                 entityhuman1.d(entityliving.getRaisedHand());
+                                 entityhuman1.broadcastItemBreak(entityliving.getRaisedHand());
 -- 
 2.20.1.windows.1
 

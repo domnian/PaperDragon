@@ -1,4 +1,4 @@
-From ced59903522f5e810b47307e6cb65b38e057869c Mon Sep 17 00:00:00 2001
+From 8e585ea9fda3b680c7c9b84ab737a12ba867a9c5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Dec 2013 21:25:06 -0500
 Subject: [PATCH] Don't save Fireworks
@@ -13,10 +13,10 @@ fireworks in this case.
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 39fb06988..8e369bf07 100644
+index 5fa2101d6..2ef7d6e97 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1543,6 +1543,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1544,6 +1544,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon // OBF HELPER
      public boolean d(NBTTagCompound nbttagcompound) {

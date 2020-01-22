@@ -1,4 +1,4 @@
-From e6a20c8d1b15769a62d4e3d1ff9271d1479768f7 Mon Sep 17 00:00:00 2001
+From fbcfa4127c71ad32cb360b40e66e4ae523f8b928 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -211,10 +211,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0365cebcf..a22cb7a27 100644
+index 346664cee..67508c133 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1462,10 +1462,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1472,10 +1472,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -227,7 +227,7 @@ index 0365cebcf..a22cb7a27 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1474,7 +1476,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1484,7 +1486,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -250,10 +250,10 @@ index 5d95b5611..21004bbc9 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index ab3ebc79e..7b72fbe7c 100644
+index 6a6e4fe48..55393bef6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -296,7 +296,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -298,7 +298,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

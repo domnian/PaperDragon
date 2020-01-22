@@ -1,4 +1,4 @@
-From 1c19fd9388ae4921cef4c2f5c29d4d18d62d0479 Mon Sep 17 00:00:00 2001
+From c5cd221cd5e1e9c4fe01125d7752858ae2c6252b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c638104..1e903fe5c 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 3e957d4b1..f67040f10 100644
+index 3c78d825a..145c2730f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -100,7 +100,7 @@ index 000000000..fafea6e08
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index fd359374c..527c20478 100644
+index 7ecc16c73..08c62ea92 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -714,6 +714,7 @@ public class WorldServer extends World {
@@ -111,12 +111,12 @@ index fd359374c..527c20478 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -725,6 +726,7 @@ public class WorldServer extends World {
-             entity.lastPitch = entity.pitch;
-             if (entity.inChunk) {
+@@ -727,6 +728,7 @@ public class WorldServer extends World {
                  ++entity.ticksLived;
+                 GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
+ 
 +                EntityTasksHandler.tickHandler(entity); // PaperDragon
-                 this.getMethodProfiler().a(() -> {
+                 gameprofilerfiller.a(() -> {
                      return IRegistry.ENTITY_TYPE.getKey(entity.getEntityType()).toString();
                  });
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java

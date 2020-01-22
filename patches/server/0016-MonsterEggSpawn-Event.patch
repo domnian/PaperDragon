@@ -1,4 +1,4 @@
-From 0e7a7c76c0c3d5fd6948a70952c513182d36075e Mon Sep 17 00:00:00 2001
+From bac2ee41861a118f5d4ffbc1452c7531195cd144 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -9,7 +9,7 @@ Get the itemstack used to spawn an entity
  1 file changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index 2fb04e3e9..dd2c1a169 100644
+index 4100e367a..d83bf8e5a 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
 +++ b/src/main/java/net/minecraft/server/EntityTypes.java
 @@ -11,6 +11,7 @@ import java.util.stream.Stream;
@@ -47,7 +47,7 @@ index 2fb04e3e9..dd2c1a169 100644
 +    }
 +    public T spawnCreature(World world, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
 +        // PaperDragon end - add itemstack to methods
-         T t0 = this.b(world, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
+         T t0 = this.createCreature(world, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
 +        // PaperDragon start - if false the spawn was cancelled, add new event
 +        if (spawnReason == org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG && itemstack != null && t0 != null) {
 +            final com.domnian.paperdragon.events.MonsterEggSpawnEvent event = new com.domnian.paperdragon.events.MonsterEggSpawnEvent(entityhuman != null ? entityhuman.getBukkitEntity() : null, (org.bukkit.entity.LivingEntity) t0.getBukkitEntity(), org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack));

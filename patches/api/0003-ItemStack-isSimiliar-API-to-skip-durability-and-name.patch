@@ -1,4 +1,4 @@
-From c05af04fe2d98a8412449e32c54693781b4fd3c9 Mon Sep 17 00:00:00 2001
+From 5fc64980fdad6b49ce38df37eacb44d681f13deb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 15 Jun 2013 23:19:03 -0400
 Subject: [PATCH] ItemStack isSimiliar API to skip durability and name checks
@@ -8,10 +8,10 @@ Subject: [PATCH] ItemStack isSimiliar API to skip durability and name checks
  1 file changed, 52 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 495161f6..b58c5347 100644
+index 5426e7c2..bc486fd3 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -263,8 +263,36 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -281,8 +281,36 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
       * @param stack the item stack to compare to
       * @return true if the two stacks are equal, ignoring the amount
       */
@@ -48,7 +48,7 @@ index 495161f6..b58c5347 100644
          if (stack == null) {
              return false;
          }
-@@ -272,7 +300,30 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -290,7 +318,30 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
              return true;
          }
          Material comparisonType = (this.type.isLegacy()) ? Bukkit.getUnsafe().fromLegacy(this.getData(), true) : this.type; // This may be called from legacy item stacks, try to get the right material
@@ -81,5 +81,5 @@ index 495161f6..b58c5347 100644
  
      @NotNull
 -- 
-2.22.0
+2.20.1.windows.1
 
