@@ -1,0 +1,45 @@
+From 66a3238049df2dc66bcf4027625838086babe990 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 27 Jan 2020 00:56:50 -0500
+Subject: [PATCH] Implement teleport() for offline players
+
+---
+ .../craftbukkit/CraftOfflinePlayer.java       | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+index 2751664aa..2ac265968 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -369,6 +369,28 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+             return false;
+         }
+     }
++
++    @Override
++    public boolean teleport(Location loc) {
++        NBTTagCompound data = getData();
++
++        net.minecraft.server.NBTTagList rot = new net.minecraft.server.NBTTagList();
++        rot.add(0, net.minecraft.server.NBTTagFloat.a(loc.getYaw()));
++        rot.add(1, net.minecraft.server.NBTTagFloat.a(loc.getPitch()));
++        data.set("Rotation", rot);
++
++        net.minecraft.server.NBTTagList pos = new net.minecraft.server.NBTTagList();
++        pos.add(0, net.minecraft.server.NBTTagDouble.a(loc.getX()));
++        pos.add(1, net.minecraft.server.NBTTagDouble.a(loc.getY()));
++        pos.add(2, net.minecraft.server.NBTTagDouble.a(loc.getZ()));
++        data.set("Pos", pos);
++
++        UUID worldUUID = loc.getWorld().getUID();
++        data.set("WorldUUIDMost", net.minecraft.server.NBTTagLong.a(worldUUID.getMostSignificantBits()));
++        data.set("WorldUUIDLeast", net.minecraft.server.NBTTagLong.a(worldUUID.getLeastSignificantBits()));
++
++        return saveData(data);
++    }
+     // PaperDragon end
+ 
+ }
+-- 
+2.20.1.windows.1
+

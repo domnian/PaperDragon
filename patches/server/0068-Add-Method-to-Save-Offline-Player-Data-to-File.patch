@@ -1,0 +1,38 @@
+From a48e9840b5093b3f26f26f9d030366dc9a2bcbd0 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 27 Jan 2020 00:54:51 -0500
+Subject: [PATCH] Add Method to Save Offline Player Data to File
+
+WARNING: This is a dangerous operation!
+---
+ .../org/bukkit/craftbukkit/CraftOfflinePlayer.java | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+index be7bf2894..2751664aa 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -355,6 +355,20 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+                 ((net.minecraft.server.NBTTagFloat) rot.get(1)).asFloat() // Pitch
+         );
+     }
++
++    private boolean saveData(NBTTagCompound data) {
++        try {
++            File file = new File(getStorageLazy().getPlayerDir(), getUniqueId().toString() + ".dat.tmp");
++            File file1 = new File(getStorageLazy().getPlayerDir(), getUniqueId().toString() + ".dat");
++
++            net.minecraft.server.NBTCompressedStreamTools.a(data, new java.io.FileOutputStream(file));
++            if (file1.exists()) file1.delete();
++            return file.renameTo(file1);
++        } catch (Exception exception) {
++            exception.printStackTrace();
++            return false;
++        }
++    }
+     // PaperDragon end
+ 
+ }
+-- 
+2.20.1.windows.1
+
