@@ -1,25 +1,25 @@
-From 9134f2f085fc7c9ed7d841733bbf4c634b09593d Mon Sep 17 00:00:00 2001
+From ca79d1c798f537b5dddcd2cbb374218a98b986ae Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:50:51 -0500
 Subject: [PATCH] Implement getLocation() for offline players
 
 ---
- .../net/minecraft/server/PlayerConnection.java   |  1 +
+ src/main/java/net/minecraft/server/Entity.java   |  1 +
  .../bukkit/craftbukkit/CraftOfflinePlayer.java   | 16 ++++++++++++++++
  2 files changed, 17 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 456d0c043..3d6323d8b 100644
---- a/src/main/java/net/minecraft/server/PlayerConnection.java
-+++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -892,6 +892,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
- 
-             if (entity != null) {
-                 NBTTagCompound nbttagcompound = entity.save(new NBTTagCompound());
-+                nbttagcompound.setString("Dragon.DisconnectWorld", this.player.getWorld().getWorldData().getName()); // PaparDragon - save world disconnected from
- 
-                 this.player.playerConnection.sendPacket(new PacketPlayOutNBTQuery(packetplayinentitynbtquery.b(), nbttagcompound));
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 2ef7d6e97..61ccaacdd 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -1657,6 +1657,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+                 nbttagcompound.setBoolean("Paper.FromMobSpawner", true);
              }
+             // Paper end
++            nbttagcompound.setString("Dragon.DisconnectWorld", world.worldData.getName()); // PaperDragon start - save disconnect world
+             return nbttagcompound;
+         } catch (Throwable throwable) {
+             CrashReport crashreport = CrashReport.a(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 index 3824180ee..be7bf2894 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
