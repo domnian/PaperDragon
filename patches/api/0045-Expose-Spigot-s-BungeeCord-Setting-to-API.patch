@@ -1,0 +1,47 @@
+From d7e3d7430ebc38eef91e1afab7896f3c9cfc10d0 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 3 Jul 2016 18:48:29 -0400
+Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
+
+---
+ src/main/java/org/bukkit/Bukkit.java | 9 +++++++++
+ src/main/java/org/bukkit/Server.java | 7 +++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index 355bd2e2..0141fcc5 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -1623,4 +1623,13 @@ public final class Bukkit {
+     public static Server.Spigot spigot() {
+         return server.spigot();
+     }
++
++    // PaperDragon start - Expose BungeeCord Setting
++    /**
++     * Get whether this server is in Bungeecord Mode or not.
++     */
++    public static boolean isBungeeEnabled() {
++        return server.isBungeeEnabled();
++    }
++    // PaperDragon end
+ }
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 0693e0e0..1c01e9f6 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -1427,4 +1427,11 @@ public interface Server extends PluginMessageRecipient {
+      */
+     int getCurrentTick();
+     // Paper end
++
++    // PaperDragon start - Expose BungeeCord Setting
++    /**
++     * Get whether this server is in Bungeecord Mode or not.
++     */
++    boolean isBungeeEnabled();
++    // PaperDragon end
+ }
+-- 
+2.20.1.windows.1
+

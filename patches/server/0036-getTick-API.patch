@@ -1,0 +1,24 @@
+From 100bb78883a37468101ed3a2785600308cb7d2dc Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 12 Jun 2015 23:51:20 -0400
+Subject: [PATCH] getTick API
+
+---
+ src/main/java/org/bukkit/craftbukkit/CraftServer.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index e5f964c94..49cea2059 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -2043,6 +2043,7 @@ public final class CraftServer implements Server {
+ 
+     private final Spigot spigot = new Spigot()
+     {
++        public int getTick() { return net.minecraft.server.MinecraftServer.currentTick; } // PaperDragon
+ 
+         @Deprecated
+         @Override
+-- 
+2.20.1.windows.1
+

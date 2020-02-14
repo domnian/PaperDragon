@@ -1,4 +1,4 @@
-From 028b3a7fdb4c3132d72aa1348c43c7102baa801c Mon Sep 17 00:00:00 2001
+From 3711cb6b304a6ff605eaad9994d93d32fe2e6787 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,7 +10,7 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 77 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6184cced7..5762390fb 100644
+index ad474500e..671fa0693 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -1899,7 +1899,7 @@ public abstract class EntityLiving extends Entity {
@@ -23,7 +23,7 @@ index 6184cced7..5762390fb 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 8f7b08a6d..2aa5180e1 100644
+index ce4340a47..138b14c5a 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -391,6 +391,14 @@ public class PlayerInteractManager {
@@ -105,7 +105,7 @@ index 8f7b08a6d..2aa5180e1 100644
      public boolean firedInteract = false;
      public EnumInteractionResult a(EntityHuman entityhuman, World world, ItemStack itemstack, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
          BlockPosition blockposition = movingobjectpositionblock.getBlockPosition();
-+        org.bukkit.util.Vector hitVector = new org.bukkit.util.Vector(movingobjectpositionblock.pos.x, movingobjectpositionblock.pos.y, movingobjectpositionblock.pos.z); // Paper - Ensure last 3 floats line up as vector params
++        org.bukkit.util.Vector hitVector = new org.bukkit.util.Vector(movingobjectpositionblock.getPos().x, movingobjectpositionblock.getPos().y, movingobjectpositionblock.getPos().z); // Paper - Ensure last 3 floats line up as vector params
          IBlockData iblockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.PASS;
          boolean cancelledBlock = false;

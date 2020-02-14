@@ -1,4 +1,4 @@
-From 58caf66d2516dac6da1392e09aa47761c633349d Mon Sep 17 00:00:00 2001
+From d67d201e725e6e876e87b5564dc932066284b046 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -503,7 +503,7 @@ index 193b5b8e6..014329d98 100644
              map.registerAttribute(targetRange);
              if (entity instanceof Wither) {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 145c2730f..9b0a7fdb5 100644
+index cb0d36e80..e9cab414f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -149,6 +149,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -558,7 +558,7 @@ index 145c2730f..9b0a7fdb5 100644
      }
  
      public boolean b(float f, float f1) {
-@@ -1329,6 +1335,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1330,6 +1336,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -566,7 +566,7 @@ index 145c2730f..9b0a7fdb5 100644
          double d3 = MathHelper.a(d0, -3.0E7D, 3.0E7D);
          double d4 = MathHelper.a(d2, -3.0E7D, 3.0E7D);
  
-@@ -1348,6 +1355,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1349,6 +1356,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -574,7 +574,7 @@ index 145c2730f..9b0a7fdb5 100644
          this.f(d0, d1, d2);
          this.yaw = f;
          this.pitch = f1;
-@@ -1395,6 +1403,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1396,6 +1404,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public void pickup(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -582,7 +582,7 @@ index 145c2730f..9b0a7fdb5 100644
          if (!this.isSameVehicle(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX() - this.locX();
-@@ -1431,6 +1440,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1432,6 +1441,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void h(double d0, double d1, double d2) {
@@ -590,7 +590,7 @@ index 145c2730f..9b0a7fdb5 100644
          this.setMot(this.getMot().add(d0, d1, d2));
          this.impulse = true;
      }
-@@ -1440,6 +1450,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1441,6 +1451,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -598,7 +598,7 @@ index 145c2730f..9b0a7fdb5 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2547,7 +2558,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2548,7 +2559,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -607,7 +607,7 @@ index 145c2730f..9b0a7fdb5 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2961,6 +2972,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2967,6 +2978,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -817,7 +817,7 @@ index 000000000..d0ee7f304
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index d15a9fcfb..0a59e11f0 100644
+index 2926fbb95..5cfc81c55 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -16,6 +16,7 @@ public class EntityItem extends Entity {
@@ -838,7 +838,7 @@ index d15a9fcfb..0a59e11f0 100644
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index de4f0ba9b..9a70e8d51 100644
+index f2ada6b94..a6fbd5aef 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -435,6 +435,7 @@ public abstract class EntityLiving extends Entity {
@@ -995,7 +995,7 @@ index c6a4df1c5..7753c17d2 100644
              return false;
          } else {
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
-index f8944f860..a42f67b43 100644
+index 935136771..58fcd27f7 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
 @@ -23,8 +23,8 @@ public class PathfinderGoalSelector {
@@ -1003,9 +1003,9 @@ index f8944f860..a42f67b43 100644
          }
      };
 -    private final Map<PathfinderGoal.Type, PathfinderGoalWrapped> c = new EnumMap(PathfinderGoal.Type.class);
--    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet();private Set<PathfinderGoalWrapped> getExecutingTasks() { return d; }// Paper - OBFHELPER
+-    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet();private Set<PathfinderGoalWrapped> getTasks() { return d; }// Paper - OBFHELPER
 +    private final Map<PathfinderGoal.Type, PathfinderGoalWrapped> c = new EnumMap(PathfinderGoal.Type.class);public Set<PathfinderGoalWrapped> getTasks() { return new java.util.HashSet<>(c.values()); }// PaperDragon - OBF HELPER
-+    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet();public Set<PathfinderGoalWrapped> getExecutingTasks() { return d; }// Paper - OBFHELPER // PaperDragon - private -> public
++    private final Set<PathfinderGoalWrapped> d = Sets.newLinkedHashSet();public Set<PathfinderGoalWrapped> getExecutingTasks() { return d; }// Paper - OBFHELPER // PaperDragon - private -> public, rename method
      private final GameProfilerFiller e;
      private final EnumSet<PathfinderGoal.Type> f = EnumSet.noneOf(PathfinderGoal.Type.class);
      private int g = 3;private int getTickRate() { return g; } // Paper - OBFHELPER
@@ -1019,7 +1019,7 @@ index f8944f860..a42f67b43 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java b/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
-index 5a8c60ad9..540bcc071 100644
+index 29657fed7..959602b6c 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalWrapped.java
 @@ -5,7 +5,7 @@ import javax.annotation.Nullable;
@@ -1032,10 +1032,10 @@ index 5a8c60ad9..540bcc071 100644
      private boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 08c62ea92..383647435 100644
+index 510998dda..43d727185 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -724,7 +724,7 @@ public class WorldServer extends World {
+@@ -749,7 +749,7 @@ public class WorldServer extends World {
              entity.f(entity.locX(), entity.locY(), entity.locZ());
              entity.lastYaw = entity.yaw;
              entity.lastPitch = entity.pitch;
@@ -1044,7 +1044,7 @@ index 08c62ea92..383647435 100644
                  ++entity.ticksLived;
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
-@@ -1403,6 +1403,7 @@ public class WorldServer extends World {
+@@ -1430,6 +1430,7 @@ public class WorldServer extends World {
              }
              // Paper end
              entity.shouldBeRemoved = false; // Paper - shouldn't be removed after being re-added
