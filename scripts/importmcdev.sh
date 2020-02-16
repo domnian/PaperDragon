@@ -47,7 +47,7 @@ function import {
 (
     cd Paper/Paper-Server/
     lastlog=$(git log -1 --oneline)
-    if [[ "$lastlog" = *"EMC-Extra mc-dev Imports"* ]]; then
+    if [[ "$lastlog" = *"PD-Extra mc-dev Imports"* ]]; then
         git reset --hard HEAD^
     fi
 )
