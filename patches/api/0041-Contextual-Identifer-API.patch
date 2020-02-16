@@ -1,4 +1,4 @@
-From 977e103c66af9b7a51ffc5ade6d80705cddbf961 Mon Sep 17 00:00:00 2001
+From add8efdaf99372a0b0a5492f36004a4161c28972 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:38:55 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -63,10 +63,10 @@ index 00000000..c0ade55b
 +
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 7e35fa5d..c0e0d00a 100644
+index 2b34854c..ef518f31 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -15,6 +15,9 @@ import org.jetbrains.annotations.Nullable;
+@@ -13,6 +13,9 @@ import org.jetbrains.annotations.NotNull;
   */
  public interface Chunk {
  
@@ -77,5 +77,5 @@ index 7e35fa5d..c0e0d00a 100644
       * Gets the X-coordinate of this chunk
       *
 -- 
-2.20.1.windows.1
+2.17.1
 

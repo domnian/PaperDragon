@@ -1,4 +1,4 @@
-From 2d69cf8484df7d9643ab58e7fc5c837343f575ca Mon Sep 17 00:00:00 2001
+From a35feef22971cd30e3ea4f7a59fe69d38e6fd34b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
@@ -6,22 +6,22 @@ Subject: [PATCH] Persistent and Temporary Metadata API
 Entity, TileEntity, World, Chunk, Block, Inventory API's
 ---
  .../domnian/paperdragon/api/DragonAPI.java    |   2 +
- .../com/domnian/paperdragon/api/Vector3i.java |  64 ++
- .../paperdragon/api/meta/DAPI_Meta.java       |  52 +
- .../domnian/paperdragon/api/meta/Meta.java    | 885 ++++++++++++++++++
- .../domnian/paperdragon/api/meta/MetaKey.java |  51 +
- .../domnian/paperdragon/api/meta/MetaMap.java |  96 ++
+ .../com/domnian/paperdragon/api/Vector3i.java |  66 ++
+ .../paperdragon/api/meta/DAPI_Meta.java       |  53 ++
+ .../domnian/paperdragon/api/meta/Meta.java    | 760 ++++++++++++++++++
+ .../domnian/paperdragon/api/meta/MetaKey.java |  51 ++
+ .../domnian/paperdragon/api/meta/MetaMap.java |  96 +++
  .../api/meta/PersistentKeyImpl.java           |  44 +
  .../api/meta/PersistentMetaList.java          |  73 ++
- .../api/meta/PersistentMetaMap.java           |  93 ++
+ .../api/meta/PersistentMetaMap.java           |  93 +++
  .../paperdragon/api/meta/TempKeyImpl.java     |  44 +
  .../paperdragon/api/meta/TempMetaMap.java     |  29 +
- .../BlockWithPersistentMetaClearedEvent.java  |  49 +
- src/main/java/org/bukkit/Chunk.java           |   5 +
+ .../BlockWithPersistentMetaClearedEvent.java  |  49 ++
+ src/main/java/org/bukkit/Chunk.java           |   2 +
  .../java/org/bukkit/block/BlockState.java     |   2 +
  src/main/java/org/bukkit/entity/Entity.java   |   2 +
  .../java/org/bukkit/inventory/Inventory.java  |   2 +
- 16 files changed, 1493 insertions(+)
+ 16 files changed, 1368 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/Vector3i.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/Meta.java
@@ -54,10 +54,10 @@ index 74c4c59e..f78acdd6 100644
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
-index 00000000..117f8e4c
+index 00000000..5b38ee3e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,66 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -82,6 +82,8 @@ index 00000000..117f8e4c
 + */
 +
 +package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.api.meta.Meta;
 +
 +@SuppressWarnings("PublicInnerClass")
 +public final class Vector3i {
@@ -124,10 +126,10 @@ index 00000000..117f8e4c
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
 new file mode 100644
-index 00000000..3844b493
+index 00000000..9492b967
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,53 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -154,6 +156,7 @@ index 00000000..3844b493
 +package com.domnian.paperdragon.api.meta;
 +
 +import com.domnian.paperdragon.api.Vector3i;
++import com.domnian.paperdragon.api.meta.MetaKey.TempKey;
 +import org.bukkit.Chunk;
 +import org.bukkit.Location;
 +import org.bukkit.World;
@@ -182,10 +185,10 @@ index 00000000..3844b493
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
 new file mode 100644
-index 00000000..07bc1240
+index 00000000..f400ddc3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/Meta.java
-@@ -0,0 +1,885 @@
+@@ -0,0 +1,760 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -223,6 +226,8 @@ index 00000000..07bc1240
 +import org.bukkit.entity.Entity;
 +import org.bukkit.inventory.Inventory;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +import java.util.Map;
 +
@@ -248,9 +253,9 @@ index 00000000..07bc1240
 +     */
 +    public static boolean isValidPersistentMeta(Object value) {
 +        return (value instanceof String) || (value instanceof Long) ||
-+            (value instanceof Integer) || (value instanceof ItemStack) ||
-+            (value instanceof Float) || (value instanceof Double) ||
-+            (value instanceof PersistentMetaMap) || (value instanceof PersistentMetaList);
++                (value instanceof Integer) || (value instanceof ItemStack) ||
++                (value instanceof Float) || (value instanceof Double) ||
++                (value instanceof PersistentMetaMap) || (value instanceof PersistentMetaList);
 +    }
 +
 +    /**
@@ -279,150 +284,153 @@ index 00000000..07bc1240
 +    //// PERSISTENT WORLD META
 +    //////////////////////////////////////////////////
 +
-+    public static PersistentMetaMap getWorldPersistentMetaMap(World world) {
-+        return world != null ? DragonAPI.meta.getWorldMetaMap(world) : null;
++    @NotNull
++    public static PersistentMetaMap getWorldPersistentMetaMap(@NotNull World world) {
++        return DragonAPI.meta.getWorldMetaMap(world);
 +    }
 +
-+    public static <T> T getWorldMeta(World world, PersistentKey key) {
++    @Nullable
++    public static <T> T getWorldMeta(@NotNull World world, @NotNull PersistentKey key) {
 +        return getWorldMeta(world, key, null);
 +    }
 +
-+    public static <T> T getWorldMeta(World world, PersistentKey key, T def) {
++    public static <T> T getWorldMeta(@NotNull World world, @NotNull PersistentKey key, @Nullable T def) {
 +        final PersistentMetaMap worldMetaMap = getWorldPersistentMetaMap(world);
-+        T ret = worldMetaMap != null && !worldMetaMap.isEmpty() ? (T) worldMetaMap.get(key.key()) : null;
++        T ret = !worldMetaMap.isEmpty() ? (T) worldMetaMap.get(key.key()) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static boolean hasWorldMeta(World world, PersistentKey key) {
++    public static boolean hasWorldMeta(@NotNull World world, @NotNull PersistentKey key) {
 +        final PersistentMetaMap worldMetaMap = getWorldPersistentMetaMap(world);
-+        return worldMetaMap != null && !worldMetaMap.isEmpty() && worldMetaMap.containsKey(key.key());
++        return !worldMetaMap.isEmpty() && worldMetaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T setWorldMeta(World world, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setWorldMeta(@NotNull World world, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setMetaMapValue(getWorldPersistentMetaMap(world), key, val);
 +    }
 +
-+    public static <T> T removeWorldMeta(World world, PersistentKey key) {
++    @Nullable
++    public static <T> T removeWorldMeta(@NotNull World world, @NotNull PersistentKey key) {
 +        return setWorldMeta(world, key, null);
 +    }
 +
-+    public static Integer getIntegerWorldMeta(World world, PersistentKey key) {
-+        Number worldMeta = getWorldMeta(world, key, null);
-+        return worldMeta != null ? worldMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerWorldMeta(World world, PersistentKey key, Integer def) {
-+        Number worldMeta = getWorldMeta(world, key, def);
-+        return worldMeta != null ? worldMeta.intValue() : def;
-+    }
-+    public static Long getLongWorldMeta(World world, PersistentKey key) {
-+        Number worldMeta = getWorldMeta(world, key, null);
-+        return worldMeta != null ? worldMeta.longValue() : null;
-+    }
-+    public static Long getLongWorldMeta(World world, PersistentKey key, Long def) {
-+        Number worldMeta = getWorldMeta(world, key, def);
-+        return worldMeta != null ? worldMeta.longValue() : def;
-+    }
-+    public static Double getDoubleWorldMeta(World world, PersistentKey key) {
-+        Number worldMeta = getWorldMeta(world, key, null);
-+        return worldMeta != null ? worldMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleWorldMeta(World world, PersistentKey key, Double def) {
-+        Number worldMeta = getWorldMeta(world, key, def);
-+        return worldMeta != null ? worldMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatWorldMeta(World world, PersistentKey key) {
-+        Number worldMeta = getWorldMeta(world, key, null);
-+        return worldMeta != null ? worldMeta.floatValue() : null;
-+    }
-+    public static Float getFloatWorldMeta(World world, PersistentKey key, Float def) {
-+        Number worldMeta = getWorldMeta(world, key, def);
-+        return worldMeta != null ? worldMeta.floatValue() : def;
++    public static int getWorldMeta(@NotNull World world, @NotNull PersistentKey key, int def) {
++        Number val = getWorldMeta(world, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
-+
-+    public static double incrementWorldMeta(World world, PersistentKey key, double val) {
-+        return incrementWorldMeta(world, key, val, 0D);
++    public static long getWorldMeta(@NotNull World world, @NotNull PersistentKey key, long def) {
++        Number val = getWorldMeta(world, key);
++        return val != null ? val.longValue() : def;
 +    }
 +
-+    public static double incrementWorldMeta(World world, PersistentKey key, double val, double start) {
-+        Number orig = getWorldMeta(world, key, start);
-+        setWorldMeta(world, key, orig.doubleValue() + val);
-+        return orig.doubleValue();
++    public static double getWorldMeta(@NotNull World world, @NotNull PersistentKey key, double def) {
++        Number val = getWorldMeta(world, key);
++        return val != null ? val.doubleValue() : def;
 +    }
-+    
++
++    public static float getWorldMeta(@NotNull World world, @NotNull PersistentKey key, float def) {
++        Number val = getWorldMeta(world, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static double incrementWorldMeta(@NotNull World world, @NotNull PersistentKey key, double amount) {
++        return incrementWorldMeta(world, key, amount, 0D);
++    }
++
++    public static double incrementWorldMeta(@NotNull World world, @NotNull PersistentKey key, double amount, double start) {
++        double val = getWorldMeta(world, key, start);
++        val += amount;
++        setWorldMeta(world, key, val);
++        return val;
++    }
++
++    public static long incrementWorldMeta(@NotNull World world, @NotNull PersistentKey key, long amount) {
++        return incrementWorldMeta(world, key, amount, 0L);
++    }
++
++    public static long incrementWorldMeta(@NotNull World world, @NotNull PersistentKey key, long amount, long start) {
++        long val = getWorldMeta(world, key, start);
++        val += amount;
++        setWorldMeta(world, key, val);
++        return val;
++    }
++
 +    //////////////////////////////////////////////////
 +    //// PERSISTENT ENTITY META
 +    //////////////////////////////////////////////////
 +
-+    public static PersistentMetaMap getEntityPersistentMetaMap(Entity entity, boolean isWrite) {
-+        return entity != null ? DragonAPI.meta.getEntityMetaMap(entity, isWrite) : null;
++    public static PersistentMetaMap getEntityPersistentMetaMap(@NotNull Entity entity, boolean isWrite) {
++        return DragonAPI.meta.getEntityMetaMap(entity, isWrite);
 +    }
 +
-+    public static <T> T getEntityMeta(Entity entity, PersistentKey key) {
++    @Nullable
++    public static <T> T getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key) {
 +        return getEntityMeta(entity, key, null);
 +    }
 +
-+    public static <T> T getEntityMeta(Entity entity, PersistentKey key, T def) {
++    public static <T> T getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, @Nullable T def) {
 +        final PersistentMetaMap entityMetaMap = getEntityPersistentMetaMap(entity, false);
 +        T ret = entityMetaMap != null && !entityMetaMap.isEmpty() ? (T) entityMetaMap.get(key.key()) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static boolean hasEntityMeta(Entity entity, PersistentKey key) {
++    public static boolean hasEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key) {
 +        final PersistentMetaMap entityMetaMap = getEntityPersistentMetaMap(entity, false);
 +        return entityMetaMap != null && !entityMetaMap.isEmpty() && entityMetaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T setEntityMeta(Entity entity, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setMetaMapValue(getEntityPersistentMetaMap(entity, true), key, val);
 +    }
 +
-+    public static <T> T removeEntityMeta(Entity entity, PersistentKey key) {
++    @Nullable
++    public static <T> T removeEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key) {
 +        return setMetaMapValue(getEntityPersistentMetaMap(entity, false), key, null);
 +    }
 +
-+    public static Integer getIntegerEntityMeta(Entity entity, PersistentKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerEntityMeta(Entity entity, PersistentKey key, Integer def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.intValue() : def;
-+    }
-+    public static Long getLongEntityMeta(Entity entity, PersistentKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.longValue() : null;
-+    }
-+    public static Long getLongEntityMeta(Entity entity, PersistentKey key, Long def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.longValue() : def;
-+    }
-+    public static Double getDoubleEntityMeta(Entity entity, PersistentKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleEntityMeta(Entity entity, PersistentKey key, Double def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatEntityMeta(Entity entity, PersistentKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.floatValue() : null;
-+    }
-+    public static Float getFloatEntityMeta(Entity entity, PersistentKey key, Float def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.floatValue() : def;
++    public static int getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, int def) {
++        Number val =  getEntityMeta(entity, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, long def) {
++        Number val =  getEntityMeta(entity, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static double incrementEntityMeta(Entity entity, PersistentKey key, double val) {
++    public static double getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, double def) {
++        Number val =  getEntityMeta(entity, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, float def) {
++        Number val =  getEntityMeta(entity, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static double incrementEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, double val) {
 +        return incrementEntityMeta(entity, key, val, 0D);
 +    }
 +
-+    public static double incrementEntityMeta(Entity entity, PersistentKey key, double val, double start) {
-+        Number orig = getEntityMeta(entity, key, start);
-+        setEntityMeta(entity, key, orig.doubleValue() + val);
-+        return orig.doubleValue();
++    public static double incrementEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, double amount, double start) {
++        double val = getEntityMeta(entity, key, start);
++        val += amount;
++        setEntityMeta(entity, key, val);
++        return val;
++    }
++
++    public static long incrementEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, long val) {
++        return incrementEntityMeta(entity, key, val, 0L);
++    }
++
++    public static long incrementEntityMeta(@NotNull Entity entity, @NotNull PersistentKey key, long amount, long start) {
++        long val = getEntityMeta(entity, key, start);
++        val += amount;
++        setEntityMeta(entity, key, val);
++        return val;
 +    }
 +
 +    //////////////////////////////////////////////////
@@ -439,181 +447,145 @@ index 00000000..07bc1240
 +        return DragonAPI.meta.getChunkMetaData(chunk);
 +    }
 +
-+    public static PersistentMetaMap getChunkPersistentMetaMap(Chunk chunk, boolean isWrite) {
-+        return chunk != null ? DragonAPI.meta.getChunkMetaMap(chunk, isWrite) : null;
++    public static PersistentMetaMap getChunkPersistentMetaMap(@NotNull Chunk chunk, boolean isWrite) {
++        return DragonAPI.meta.getChunkMetaMap(chunk, isWrite);
 +    }
 +
-+    public static boolean hasChunkMeta(Chunk chunk, PersistentKey key) {
++    public static boolean hasChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key) {
 +        final PersistentMetaMap chunkMetaMap = getChunkPersistentMetaMap(chunk, false);
 +        return chunkMetaMap != null && !chunkMetaMap.isEmpty() && chunkMetaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T getChunkMeta(Chunk chunk, PersistentKey key) {
++    @Nullable
++    public static <T> T getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key) {
 +        return getChunkMeta(chunk, key, null);
 +    }
 +
-+    public static <T> T getChunkMeta(Chunk chunk, PersistentKey key, T def) {
++    public static <T> T getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, @Nullable T def) {
 +        final PersistentMetaMap chunkMetaMap = getChunkPersistentMetaMap(chunk, false);
-+        T ret = chunkMetaMap != null && !chunkMetaMap.isEmpty() ? (T) getChunkPersistentMetaMap(chunk, false).get(key.key()) : null;
++        T ret = chunkMetaMap != null && !chunkMetaMap.isEmpty() ? (T) chunkMetaMap.get(key.key()) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static <T> T setChunkMeta(Chunk chunk, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setMetaMapValue(getChunkPersistentMetaMap(chunk, true), key, val);
 +    }
 +
-+    public static <T> T removeChunkMeta(Chunk chunk, PersistentKey key) {
++    @Nullable
++    public static <T> T removeChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key) {
 +        return setMetaMapValue(getChunkPersistentMetaMap(chunk, false), key, null);
 +    }
-+    public static Integer getIntegerChunkMeta(Chunk chunk, PersistentKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerChunkMeta(Chunk chunk, PersistentKey key, Integer def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.intValue() : def;
-+    }
-+    public static Long getLongChunkMeta(Chunk chunk, PersistentKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.longValue() : null;
-+    }
-+    public static Long getLongChunkMeta(Chunk chunk, PersistentKey key, Long def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.longValue() : def;
-+    }
-+    public static Double getDoubleChunkMeta(Chunk chunk, PersistentKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleChunkMeta(Chunk chunk, PersistentKey key, Double def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatChunkMeta(Chunk chunk, PersistentKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.floatValue() : null;
-+    }
-+    public static Float getFloatChunkMeta(Chunk chunk, PersistentKey key, Float def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.floatValue() : def;
++
++    public static int getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, int def) {
++        Number val =  getChunkMeta(chunk, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, long def) {
++        Number val =  getChunkMeta(chunk, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static Long incrementChunkMeta(Chunk chunk, PersistentKey key, Long amount) {
++    public static double getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, double def) {
++        Number val =  getChunkMeta(chunk, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, float def) {
++        Number val =  getChunkMeta(chunk, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, long amount) {
 +        return incrementChunkMeta(chunk, key, amount, 0L);
 +    }
-+    public static Long incrementChunkMeta(Chunk chunk, PersistentKey key, Long amount, Long start) {
-+        Long val = getChunkMeta(chunk, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, long amount, long start) {
++        long val = getChunkMeta(chunk, key, start);
 +        val += amount;
 +        setChunkMeta(chunk, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementChunkMeta(Chunk chunk, PersistentKey key, Double amount) {
++    public static double incrementChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, double amount) {
 +        return incrementChunkMeta(chunk, key, amount, 0D);
 +    }
-+    public static Double incrementChunkMeta(Chunk chunk, PersistentKey key, Double amount, Double start) {
-+        Double val = getChunkMeta(chunk, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementChunkMeta(@NotNull Chunk chunk, @NotNull PersistentKey key, double amount, double start) {
++        double val = getChunkMeta(chunk, key, start);
 +        val += amount;
 +        setChunkMeta(chunk, key, val);
 +        return val;
 +    }
++
 +    //////////////////////////////////////////////////
 +    //// PERSISTENT BLOCK META
 +    //////////////////////////////////////////////////
 +
-+    public static PersistentMetaMap getBlockPersistentMetaMap(Location loc, boolean isWrite) {
-+        return loc != null ? DragonAPI.meta.getBlockMetaMap(loc, isWrite) : null;
++    public static PersistentMetaMap getBlockPersistentMetaMap(@NotNull Location loc, boolean isWrite) {
++        return DragonAPI.meta.getBlockMetaMap(loc, isWrite);
 +    }
 +
-+    public static boolean hasBlockMeta(Location loc, PersistentKey key) {
++    public static boolean hasBlockMeta(@NotNull Location loc, @NotNull PersistentKey key) {
 +        final PersistentMetaMap blockMetaMap = getBlockPersistentMetaMap(loc, false);
 +        return blockMetaMap != null && !blockMetaMap.isEmpty() && blockMetaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T getBlockMeta(Location loc, PersistentKey key) {
++    @Nullable
++    public static <T> T getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key) {
 +        return getBlockMeta(loc, key, null);
 +    }
 +
-+    public static <T> T getBlockMeta(Location loc, PersistentKey key, T def) {
++    public static <T> T getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, @Nullable T def) {
 +        final PersistentMetaMap blockMetaMap = getBlockPersistentMetaMap(loc, false);
 +        T ret = blockMetaMap != null && !blockMetaMap.isEmpty() ? (T) blockMetaMap.get(key.key()) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static <T> T setBlockMeta(Location loc, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setMetaMapValue(getBlockPersistentMetaMap(loc, true), key, val);
 +    }
 +
-+    public static <T> T removeBlockMeta(Location loc, PersistentKey key) {
++    @Nullable
++    public static <T> T removeBlockMeta(@NotNull Location loc, @NotNull PersistentKey key) {
 +        return setMetaMapValue(getBlockPersistentMetaMap(loc, false), key, null);
 +    }
 +
-+    public static Integer getIntegerBlockMeta(Location loc, PersistentKey key) {
-+        Number blockMeta = getBlockMeta(loc, key, null);
-+        return blockMeta != null ? blockMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerBlockMeta(Location loc, PersistentKey key, Integer def) {
-+        Number blockMeta = getBlockMeta(loc, key, def);
-+        return blockMeta != null ? blockMeta.intValue() : def;
-+    }
-+    public static Long getLongBlockMeta(Location loc, PersistentKey key) {
-+        Number blockMeta = getBlockMeta(loc, key, null);
-+        return blockMeta != null ? blockMeta.longValue() : null;
-+    }
-+    public static Long getLongBlockMeta(Location loc, PersistentKey key, Long def) {
-+        Number blockMeta = getBlockMeta(loc, key, def);
-+        return blockMeta != null ? blockMeta.longValue() : def;
-+    }
-+    public static Double getDoubleBlockMeta(Location loc, PersistentKey key) {
-+        Number blockMeta = getBlockMeta(loc, key, null);
-+        return blockMeta != null ? blockMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleBlockMeta(Location loc, PersistentKey key, Double def) {
-+        Number blockMeta = getBlockMeta(loc, key, def);
-+        return blockMeta != null ? blockMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatBlockMeta(Location loc, PersistentKey key) {
-+        Number blockMeta = getBlockMeta(loc, key, null);
-+        return blockMeta != null ? blockMeta.floatValue() : null;
-+    }
-+    public static Float getFloatBlockMeta(Location loc, PersistentKey key, Float def) {
-+        Number blockMeta = getBlockMeta(loc, key, def);
-+        return blockMeta != null ? blockMeta.floatValue() : def;
++    public static int getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, int def) {
++        Number val =  getBlockMeta(loc, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, long def) {
++        Number val =  getBlockMeta(loc, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static Long incrementBlockMeta(Location loc, PersistentKey key, Long amount) {
++    public static double getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, double def) {
++        Number val =  getBlockMeta(loc, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, float def) {
++        Number val =  getBlockMeta(loc, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, long amount) {
 +        return incrementBlockMeta(loc, key, amount, 0L);
 +    }
-+    public static Long incrementBlockMeta(Location loc, PersistentKey key, Long amount, Long start) {
-+        Long val = getBlockMeta(loc, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, long amount, long start) {
++        long val = getBlockMeta(loc, key, start);
 +        val += amount;
 +        setBlockMeta(loc, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementBlockMeta(Location loc, PersistentKey key, Double amount) {
++    public static double incrementBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, double amount) {
 +        return incrementBlockMeta(loc, key, amount, 0D);
 +    }
-+    public static Double incrementBlockMeta(Location loc, PersistentKey key, Double amount, Double start) {
-+        Double val = getBlockMeta(loc, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementBlockMeta(@NotNull Location loc, @NotNull PersistentKey key, double amount, double start) {
++        double val = getBlockMeta(loc, key, start);
 +        val += amount;
 +        setBlockMeta(loc, key, val);
 +        return val;
@@ -623,54 +595,60 @@ index 00000000..07bc1240
 +    //// PERSISTENT TILE ENTITY META
 +    //////////////////////////////////////////////////
 +
-+    public static PersistentMetaMap getTileEntityPersistentMetaMap(Location tileEntity, boolean isWrite) {
++    public static PersistentMetaMap getTileEntityPersistentMetaMap(@NotNull Location tileEntity, boolean isWrite) {
 +        return DragonAPI.meta.getTileEntityMetaMap(tileEntity.getBlock().getState(), isWrite);
 +    }
 +
-+    public static PersistentMetaMap getTileEntityPersistentMetaMap(BlockState tileEntity, boolean isWrite) {
++    public static PersistentMetaMap getTileEntityPersistentMetaMap(@NotNull BlockState tileEntity, boolean isWrite) {
 +        return DragonAPI.meta.getTileEntityMetaMap(tileEntity, isWrite);
 +    }
 +
-+    public static boolean hasTileEntityMeta(Location tileEntity, PersistentKey key) {
++    public static boolean hasTileEntityMeta(@NotNull Location tileEntity, @NotNull PersistentKey key) {
 +        return hasTileEntityMeta(tileEntity.getBlock().getState(), key);
 +    }
 +
-+    public static boolean hasTileEntityMeta(BlockState tileEntity, PersistentKey key) {
++    public static boolean hasTileEntityMeta(@NotNull BlockState tileEntity, @NotNull PersistentKey key) {
 +        final PersistentMetaMap tileEntityMetaMap = getTileEntityPersistentMetaMap(tileEntity, false);
 +        return tileEntityMetaMap != null && !tileEntityMetaMap.isEmpty() && tileEntityMetaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T getTileEntityMeta(Location tileEntity, PersistentKey key) {
++    @Nullable
++    public static <T> T getTileEntityMeta(@NotNull Location tileEntity, @NotNull PersistentKey key) {
 +        return getTileEntityMeta(tileEntity.getBlock().getState(), key, null);
 +    }
 +
-+    public static <T> T getTileEntityMeta(BlockState tileEntity, PersistentKey key) {
++    @Nullable
++    public static <T> T getTileEntityMeta(@NotNull BlockState tileEntity, @NotNull PersistentKey key) {
 +        return getTileEntityMeta(tileEntity, key, null);
 +    }
 +
-+    public static <T> T getTileEntityMeta(Location tileEntity, PersistentKey key, T def) {
++    public static <T> T getTileEntityMeta(@NotNull Location tileEntity, @NotNull PersistentKey key, @Nullable T def) {
 +        return getTileEntityMeta(tileEntity.getBlock().getState(), key, def);
 +    }
 +
-+    public static <T> T getTileEntityMeta(BlockState tileEntity, PersistentKey key, T def) {
++    public static <T> T getTileEntityMeta(@NotNull BlockState tileEntity, @NotNull PersistentKey key, @Nullable T def) {
 +        final PersistentMetaMap tileEntityMetaMap = getTileEntityPersistentMetaMap(tileEntity, false);
 +        T ret = tileEntityMetaMap != null && !tileEntityMetaMap.isEmpty() ? (T) tileEntityMetaMap.get(key.key()) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static <T> T setTileEntityMeta(Location tileEntity, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setTileEntityMeta(@NotNull Location tileEntity, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setTileEntityMeta(tileEntity.getBlock().getState(), key, val);
 +    }
 +
-+    public static <T> T setTileEntityMeta(BlockState tileEntity, PersistentKey key, Object val) {
++    @Nullable
++    public static <T> T setTileEntityMeta(@NotNull BlockState tileEntity, @NotNull PersistentKey key, @Nullable Object val) {
 +        return setMetaMapValue(getTileEntityPersistentMetaMap(tileEntity, true), key, val);
 +    }
 +
-+    public static <T> T removeTileEntityMeta(Location tileEntity, PersistentKey key) {
++    @Nullable
++    public static <T> T removeTileEntityMeta(@NotNull Location tileEntity, @NotNull PersistentKey key) {
 +        return removeTileEntityMeta(tileEntity.getBlock().getState(), key);
 +    }
 +
-+    public static <T> T removeTileEntityMeta(BlockState tileEntity, PersistentKey key) {
++    @Nullable
++    public static <T> T removeTileEntityMeta(@NotNull BlockState tileEntity, @NotNull PersistentKey key) {
 +        return setMetaMapValue(getTileEntityPersistentMetaMap(tileEntity, false), key, null);
 +    }
 +
@@ -678,329 +656,251 @@ index 00000000..07bc1240
 +    //// TEMP ENTITY META
 +    //////////////////////////////////////////////////
 +
-+    public static TempMetaMap getEntityTempMetaMap(Entity entity) {
-+        return entity != null ? entity.getTempMeta() : null;
++    @NotNull
++    public static TempMetaMap getEntityTempMetaMap(@NotNull Entity entity) {
++        return entity.getTempMeta();
 +    }
 +
-+    public static boolean hasEntityMeta(Entity entity, TempKey key) {
++    public static boolean hasEntityMeta(@NotNull Entity entity, @NotNull TempKey key) {
 +        TempMetaMap metaMap = getEntityTempMetaMap(entity);
-+        if (metaMap == null) {
-+            return false;
-+        }
 +        return metaMap.containsKey(key.key());
 +    }
 +
-+    public static <T> T setEntityMeta(Entity entity, TempKey key, Object val) {
++    @Nullable
++    public static <T> T setEntityMeta(@NotNull Entity entity, @NotNull TempKey key, @Nullable Object val) {
 +        TempMetaMap metaMap = getEntityTempMetaMap(entity);
-+        if (metaMap == null) {
-+            return null;
-+        }
 +        return (T) metaMap.put(key.key(), val);
 +    }
 +
-+
-+    public static <T> T removeEntityMeta(Entity entity, TempKey key) {
++    @Nullable
++    public static <T> T removeEntityMeta(@NotNull Entity entity, @NotNull TempKey key) {
 +        TempMetaMap metaMap = getEntityTempMetaMap(entity);
-+        if (metaMap == null) {
-+            return null;
-+        }
 +        return (T) metaMap.remove(key.key());
 +    }
 +
-+    public static <T> T getEntityMeta(Entity entity, TempKey key) {
++    @Nullable
++    public static <T> T getEntityMeta(@NotNull Entity entity, @NotNull TempKey key) {
 +        return getEntityMeta(entity, key, null);
 +    }
 +
-+    public static <T> T getEntityMeta(Entity entity, TempKey key, T def) {
++    public static <T> T getEntityMeta(@NotNull Entity entity, @NotNull TempKey key, @Nullable T def) {
 +        TempMetaMap metaMap = getEntityTempMetaMap(entity);
-+        if (metaMap == null) {
-+            return def;
-+        }
-+        Object val = metaMap.get(key.key());
-+        if (val != null) {
-+            return (T) val;
-+        }
-+        return def;
++        T val = (T) metaMap.get(key.key());
++        return val != null ? val : def;
 +    }
 +
-+    public static Integer getIntegerEntityMeta(Entity entity, TempKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerEntityMeta(Entity entity, TempKey key, Integer def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.intValue() : def;
-+    }
-+    public static Long getLongEntityMeta(Entity entity, TempKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.longValue() : null;
-+    }
-+    public static Long getLongEntityMeta(Entity entity, TempKey key, Long def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.longValue() : def;
-+    }
-+    public static Double getDoubleEntityMeta(Entity entity, TempKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleEntityMeta(Entity entity, TempKey key, Double def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatEntityMeta(Entity entity, TempKey key) {
-+        Number entityMeta = getEntityMeta(entity, key, null);
-+        return entityMeta != null ? entityMeta.floatValue() : null;
-+    }
-+    public static Float getFloatEntityMeta(Entity entity, TempKey key, Float def) {
-+        Number entityMeta = getEntityMeta(entity, key, def);
-+        return entityMeta != null ? entityMeta.floatValue() : def;
++    public static int getEntityMeta(@NotNull Entity entity, @NotNull TempKey key, int def) {
++        Number val = getEntityMeta(entity, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
-+    public static Long incrementEntityMeta(Entity entity, TempKey key, Long amount) {
++    public static long getEntityMeta(@NotNull Entity entity, @NotNull TempKey key, long def) {
++        Number val = getEntityMeta(entity, key);
++        return val != null ? val.longValue() : def;
++    }
++
++    public static double getEntityMeta(@NotNull Entity entity, @NotNull TempKey key, double def) {
++        Number val = getEntityMeta(entity, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getEntityMeta(@NotNull Entity entity, @NotNull TempKey key, float def) {
++        Number val =  getEntityMeta(entity, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementEntityMeta(@NotNull Entity entity, @NotNull TempKey key, long amount) {
 +        return incrementEntityMeta(entity, key, amount, 0L);
 +    }
-+    public static Long incrementEntityMeta(Entity entity, TempKey key, Long amount, Long start) {
-+        Long val = getEntityMeta(entity, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementEntityMeta(@NotNull Entity entity, @NotNull TempKey key, long amount, long start) {
++        long val = getEntityMeta(entity, key, start);
 +        val += amount;
 +        setEntityMeta(entity, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementEntityMeta(Entity entity, TempKey key, Double amount) {
++    public static double incrementEntityMeta(@NotNull Entity entity, @NotNull TempKey key, double amount) {
 +        return incrementEntityMeta(entity, key, amount, 0D);
 +    }
-+    public static Double incrementEntityMeta(Entity entity, TempKey key, Double amount, Double start) {
-+        Double val = getEntityMeta(entity, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementEntityMeta(@NotNull Entity entity, @NotNull TempKey key, double amount, double start) {
++        double val = getEntityMeta(entity, key, start);
 +        val += amount;
 +        setEntityMeta(entity, key, val);
 +        return val;
 +    }
-+
-+
 +
 +    //////////////////////////////////////////////////
 +    //// TEMP BLOCK META
 +    //////////////////////////////////////////////////
 +
-+    public static boolean hasBlockMeta(Block block, TempKey key) {
++    public static boolean hasBlockMeta(@NotNull Block block, @NotNull TempKey key) {
 +        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, false);
 +        return blockMeta != null && blockMeta.containsKey(key.key());
 +    }
 +
-+    public static <T> T setBlockMeta(Block block, TempKey key, Object val) {
++    @Nullable
++    public static <T> T setBlockMeta(@NotNull Block block, @NotNull TempKey key, @Nullable Object val) {
 +        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, true);
 +        return (T) blockMeta.put(key.key(), val);
 +    }
 +
-+    public static <T> T removeBlockMeta(Block block, TempKey key) {
++    @Nullable
++    public static <T> T removeBlockMeta(@NotNull Block block, @NotNull TempKey key) {
 +        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, true);
 +        return (T) blockMeta.remove(key.key());
 +    }
 +
-+    public static <T> T getBlockMeta(Block block, TempKey key) {
++    @Nullable
++    public static <T> T getBlockMeta(@NotNull Block block, @NotNull TempKey key) {
 +        return getBlockMeta(block, key, null);
 +    }
 +
-+    public static <T> T getBlockMeta(Block block, TempKey key, T def) {
++    public static <T> T getBlockMeta(@NotNull Block block, @NotNull TempKey key, @Nullable T def) {
 +        Map<String, Object> blockMeta = DragonAPI.meta.getBlockTempMeta(block, false);
-+        if (blockMeta == null) {
-+            return null;
-+        }
-+        Object val = blockMeta.get(key.key());
-+        if (val != null) {
-+            return (T) val;
-+        }
-+        return def;
++        T val = blockMeta != null ? (T) blockMeta.get(key.key()) : null;
++        return val != null ? val : def;
 +    }
 +
-+    public static Integer getIntegerBlockMeta(Block block, TempKey key) {
-+        Number blockMeta = getBlockMeta(block, key, null);
-+        return blockMeta != null ? blockMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerBlockMeta(Block block, TempKey key, Integer def) {
-+        Number blockMeta = getBlockMeta(block, key, def);
-+        return blockMeta != null ? blockMeta.intValue() : def;
-+    }
-+    public static Long getLongBlockMeta(Block block, TempKey key) {
-+        Number blockMeta = getBlockMeta(block, key, null);
-+        return blockMeta != null ? blockMeta.longValue() : null;
-+    }
-+    public static Long getLongBlockMeta(Block block, TempKey key, Long def) {
-+        Number blockMeta = getBlockMeta(block, key, def);
-+        return blockMeta != null ? blockMeta.longValue() : def;
-+    }
-+    public static Double getDoubleBlockMeta(Block block, TempKey key) {
-+        Number blockMeta = getBlockMeta(block, key, null);
-+        return blockMeta != null ? blockMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleBlockMeta(Block block, TempKey key, Double def) {
-+        Number blockMeta = getBlockMeta(block, key, def);
-+        return blockMeta != null ? blockMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatBlockMeta(Block block, TempKey key) {
-+        Number blockMeta = getBlockMeta(block, key, null);
-+        return blockMeta != null ? blockMeta.floatValue() : null;
-+    }
-+    public static Float getFloatBlockMeta(Block block, TempKey key, Float def) {
-+        Number blockMeta = getBlockMeta(block, key, def);
-+        return blockMeta != null ? blockMeta.floatValue() : def;
++    public static int getBlockMeta(@NotNull Block block, @NotNull TempKey key, int def) {
++        Number val = getBlockMeta(block, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getBlockMeta(@NotNull Block block, @NotNull TempKey key, long def) {
++        Number val = getBlockMeta(block, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static Long incrementBlockMeta(Block block, TempKey key, Long amount) {
++    public static double getBlockMeta(@NotNull Block block, @NotNull TempKey key, double def) {
++        Number val = getBlockMeta(block, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getBlockMeta(@NotNull Block block, @NotNull TempKey key, float def) {
++        Number val = getBlockMeta(block, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementBlockMeta(@NotNull Block block, @NotNull TempKey key, long amount) {
 +        return incrementBlockMeta(block, key, amount, 0L);
 +    }
-+    public static Long incrementBlockMeta(Block block, TempKey key, Long amount, Long start) {
-+        Long val = getBlockMeta(block, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementBlockMeta(@NotNull Block block, @NotNull TempKey key, long amount, long start) {
++        long val = getBlockMeta(block, key, start);
 +        val += amount;
 +        setBlockMeta(block, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementBlockMeta(Block block, TempKey key, Double amount) {
++    public static double incrementBlockMeta(@NotNull Block block, @NotNull TempKey key, double amount) {
 +        return incrementBlockMeta(block, key, amount, 0D);
 +    }
-+    public static Double incrementBlockMeta(Block block, TempKey key, Double amount, Double start) {
-+        Double val = getBlockMeta(block, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementBlockMeta(@NotNull Block block, @NotNull TempKey key, double amount, double start) {
++        double val = getBlockMeta(block, key, start);
 +        val += amount;
 +        setBlockMeta(block, key, val);
 +        return val;
 +    }
-+
-+
 +
 +    //////////////////////////////////////////////////
 +    //// TEMP CHUNK META
 +    //////////////////////////////////////////////////
 +
-+
-+    public static TempMetaMap getChunkTempMetaMap(Chunk chunk, boolean isWrite) {
++    public static TempMetaMap getChunkTempMetaMap(@NotNull Chunk chunk, boolean isWrite) {
 +        return DragonAPI.meta.getChunkTempMetaMap(chunk, isWrite);
 +    }
 +
-+    public static boolean hasChunkMeta(Chunk chunk, TempKey key) {
++    public static boolean hasChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key) {
 +        final TempMetaMap chunkMetaMap = getChunkTempMetaMap(chunk, false);
 +        return chunkMetaMap != null && !chunkMetaMap.isEmpty() && chunkMetaMap.containsKey(key);
 +    }
 +
-+    public static <T> T getChunkMeta(Chunk chunk, TempKey key) {
++    @Nullable
++    public static <T> T getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key) {
 +        return getChunkMeta(chunk, key, null);
 +    }
 +
-+    public static <T> T getChunkMeta(Chunk chunk, TempKey key, T def) {
++    public static <T> T getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, @Nullable T def) {
 +        final TempMetaMap chunkMetaMap = getChunkTempMetaMap(chunk, false);
-+        T ret = chunkMetaMap != null && !chunkMetaMap.isEmpty() ? (T) getChunkTempMetaMap(chunk, false).get(key) : null;
++        T ret = chunkMetaMap != null && !chunkMetaMap.isEmpty() ? (T) chunkMetaMap.get(key) : null;
 +        return ret != null ? ret : def;
 +    }
 +
-+    public static <T> T setChunkMeta(Chunk chunk, TempKey key, Object val) {
++    @Nullable
++    public static <T> T setChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, @Nullable Object val) {
 +        TempMetaMap chunkMap = getChunkTempMetaMap(chunk, true);
 +        return setMetaMapValue(chunkMap, key, val);
 +    }
 +
-+    public static <T> T removeChunkMeta(Chunk chunk, TempKey key) {
++    @Nullable
++    public static <T> T removeChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key) {
 +        TempMetaMap chunkMap = getChunkTempMetaMap(chunk, false);
 +        return setMetaMapValue(chunkMap, key, null);
 +    }
 +
-+    public static Integer getIntegerChunkMeta(Chunk chunk, TempKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerChunkMeta(Chunk chunk, TempKey key, Integer def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.intValue() : def;
-+    }
-+    public static Long getLongChunkMeta(Chunk chunk, TempKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.longValue() : null;
-+    }
-+    public static Long getLongChunkMeta(Chunk chunk, TempKey key, Long def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.longValue() : def;
-+    }
-+    public static Double getDoubleChunkMeta(Chunk chunk, TempKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleChunkMeta(Chunk chunk, TempKey key, Double def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatChunkMeta(Chunk chunk, TempKey key) {
-+        Number chunkMeta = getChunkMeta(chunk, key, null);
-+        return chunkMeta != null ? chunkMeta.floatValue() : null;
-+    }
-+    public static Float getFloatChunkMeta(Chunk chunk, TempKey key, Float def) {
-+        Number chunkMeta = getChunkMeta(chunk, key, def);
-+        return chunkMeta != null ? chunkMeta.floatValue() : def;
++    public static int getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, int def) {
++        Number val = getChunkMeta(chunk, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, long def) {
++        Number val = getChunkMeta(chunk, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static Long incrementChunkMeta(Chunk chunk, TempKey key, Long amount) {
++    public static double getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, double def) {
++        Number val = getChunkMeta(chunk, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, float def) {
++        Number val = getChunkMeta(chunk, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, long amount) {
 +        return incrementChunkMeta(chunk, key, amount, 0L);
 +    }
-+    public static Long incrementChunkMeta(Chunk chunk, TempKey key, Long amount, Long start) {
-+        Long val = getChunkMeta(chunk, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, long amount, long start) {
++        long val = getChunkMeta(chunk, key, start);
 +        val += amount;
 +        setChunkMeta(chunk, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementChunkMeta(Chunk chunk, TempKey key, Double amount) {
++    public static double incrementChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, double amount) {
 +        return incrementChunkMeta(chunk, key, amount, 0D);
 +    }
-+    public static Double incrementChunkMeta(Chunk chunk, TempKey key, Double amount, Double start) {
-+        Double val = getChunkMeta(chunk, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementChunkMeta(@NotNull Chunk chunk, @NotNull TempKey key, double amount, double start) {
++        double val = getChunkMeta(chunk, key, start);
 +        val += amount;
 +        setChunkMeta(chunk, key, val);
 +        return val;
 +    }
++
 +    //////////////////////////////////////////////////
 +    //// TEMP INVENTORY META
 +    //////////////////////////////////////////////////
 +
-+    public static boolean hasInventoryMeta(Inventory inv, TempKey key) {
++    public static boolean hasInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key) {
 +        return inv.getMeta().containsKey(key.key());
 +    }
 +
-+    public static <T> T setInventoryMeta(Inventory inv, TempKey key, Object val) {
++    @Nullable
++    public static <T> T setInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, @Nullable Object val) {
 +        return (T) inv.getMeta().put(key.key(), val);
 +    }
 +
-+    public static <T> T removeInventoryMeta(Inventory inv, TempKey key) {
++    @Nullable
++    public static <T> T removeInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key) {
 +        return (T) inv.getMeta().remove(key.key());
 +    }
 +
-+    public static <T> T getInventoryMeta(Inventory inv, TempKey key) {
++    @Nullable
++    public static <T> T getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key) {
 +        return getInventoryMeta(inv, key, null);
 +    }
 +
-+    public static <T> T getInventoryMeta(Inventory inv, TempKey key, T def) {
++    public static <T> T getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, @Nullable T def) {
 +        Object val = inv.getMeta().get(key.key());
 +        if (val != null) {
 +            return (T) val;
@@ -1008,63 +908,41 @@ index 00000000..07bc1240
 +        return def;
 +    }
 +
-+    public static Integer getIntegerInventoryMeta(Inventory inv, TempKey key) {
-+        Number invMeta = getInventoryMeta(inv, key, null);
-+        return invMeta != null ? invMeta.intValue() : null;
-+    }
-+    public static Integer getIntegerInventoryMeta(Inventory inv, TempKey key, Integer def) {
-+        Number invMeta = getInventoryMeta(inv, key, def);
-+        return invMeta != null ? invMeta.intValue() : def;
-+    }
-+    public static Long getLongInventoryMeta(Inventory inv, TempKey key) {
-+        Number invMeta = getInventoryMeta(inv, key, null);
-+        return invMeta != null ? invMeta.longValue() : null;
-+    }
-+    public static Long getLongInventoryMeta(Inventory inv, TempKey key, Long def) {
-+        Number invMeta = getInventoryMeta(inv, key, def);
-+        return invMeta != null ? invMeta.longValue() : def;
-+    }
-+    public static Double getDoubleInventoryMeta(Inventory inv, TempKey key) {
-+        Number invMeta = getInventoryMeta(inv, key, null);
-+        return invMeta != null ? invMeta.doubleValue() : null;
-+    }
-+    public static Double getDoubleInventoryMeta(Inventory inv, TempKey key, Double def) {
-+        Number invMeta = getInventoryMeta(inv, key, def);
-+        return invMeta != null ? invMeta.doubleValue() : def;
-+    }
-+    public static Float getFloatInventoryMeta(Inventory inv, TempKey key) {
-+        Number invMeta = getInventoryMeta(inv, key, null);
-+        return invMeta != null ? invMeta.floatValue() : null;
-+    }
-+    public static Float getFloatInventoryMeta(Inventory inv, TempKey key, Float def) {
-+        Number invMeta = getInventoryMeta(inv, key, def);
-+        return invMeta != null ? invMeta.floatValue() : def;
++    public static int getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, int def) {
++        Number val = getInventoryMeta(inv, key);
++        return val != null ? val.intValue() : def;
 +    }
 +
++    public static long getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, long def) {
++        Number val = getInventoryMeta(inv, key);
++        return val != null ? val.longValue() : def;
++    }
 +
-+    public static Long incrementInventoryMeta(Inventory inv, TempKey key, Long amount) {
++    public static double getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, double def) {
++        Number val = getInventoryMeta(inv, key);
++        return val != null ? val.doubleValue() : def;
++    }
++
++    public static float getInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, float def) {
++        Number val = getInventoryMeta(inv, key);
++        return val != null ? val.floatValue() : def;
++    }
++
++    public static long incrementInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, long amount) {
 +        return incrementInventoryMeta(inv, key, amount, 0L);
 +    }
-+    public static Long incrementInventoryMeta(Inventory inv, TempKey key, Long amount, Long start) {
-+        Long val = getInventoryMeta(inv, key);
-+        Long origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static long incrementInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, long amount, long start) {
++        long val = getInventoryMeta(inv, key, start);
 +        val += amount;
 +        setInventoryMeta(inv, key, val);
 +        return val;
 +    }
 +
-+    public static Double incrementInventoryMeta(Inventory inv, TempKey key, Double amount) {
++    public static double incrementInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, double amount) {
 +        return incrementInventoryMeta(inv, key, amount, 0D);
 +    }
-+    public static Double incrementInventoryMeta(Inventory inv, TempKey key, Double amount, Double start) {
-+        Double val = getInventoryMeta(inv, key);
-+        Double origVal = val;
-+        if (val == null) {
-+            val = start;
-+        }
++    public static double incrementInventoryMeta(@NotNull Inventory inv, @NotNull TempKey key, double amount, double start) {
++        double val = getInventoryMeta(inv, key, start);
 +        val += amount;
 +        setInventoryMeta(inv, key, val);
 +        return val;
@@ -1599,30 +1477,14 @@ index 00000000..dcf4a459
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 11b691cf..7e35fa5d 100644
+index 11b691cf..2b34854c 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -1,12 +1,14 @@
- package org.bukkit;
- 
- import java.util.Collection;
-+import com.domnian.paperdragon.api.meta.TempMetaMap;
- import org.bukkit.block.Block;
- import org.bukkit.block.BlockState;
- import org.bukkit.block.data.BlockData;
- import org.bukkit.entity.Entity;
- import org.bukkit.plugin.Plugin;
- import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
- 
- /**
-  * Represents a chunk of blocks
-@@ -123,6 +125,9 @@ public interface Chunk {
+@@ -123,6 +123,8 @@ public interface Chunk {
      BlockState[] getTileEntities(boolean useSnapshot);
      // Paper end
  
-+    @Nullable
-+    TempMetaMap getTempMeta(); // PaperDragon
++    com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta(); // PaperDragon
 +
      /**
       * Checks if the chunk is loaded.
@@ -1639,28 +1501,28 @@ index 631cbf2b..d5a390d9 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 28c0562d..c9668d32 100644
+index 28c0562d..e9a5fde1 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -255,6 +255,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
      public Server getServer();
  
-+    @Nullable
 +    public com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta(); // PaperDragon
++
      /**
       * Returns true if the entity gets persisted.
       * <p>
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 6040d971..fdd178a3 100644
+index 6040d971..9ec35ec8 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,8 @@ import org.jetbrains.annotations.Nullable;
   */
  public interface Inventory extends Iterable<ItemStack> {
  
-+    @Nullable
 +    public HashMap<String, Object> getMeta(); // PaperDragon
++
      /**
       * Returns the size of the inventory
       *
