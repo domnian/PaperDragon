@@ -1,4 +1,4 @@
-From 42f31520a8976751ec4af166ad53df192a04cee6 Mon Sep 17 00:00:00 2001
+From fcbfe8fdf845b153d320bbffddec319fab009864 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 Jan 2016 03:42:03 -0500
 Subject: [PATCH] Player Death fires PlayerDropItem event
@@ -21,10 +21,10 @@ index 139c74954..6d82d0709 100644
          if (itemstack.isEmpty()) {
              return null;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 55114d2d9..2cd2d066f 100644
+index 5bcbd40d2..7f799b4c2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -804,7 +804,7 @@ public class CraftEventFactory {
+@@ -809,7 +809,7 @@ public class CraftEventFactory {
          for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
              if (stack == null || stack.getType() == Material.AIR) continue;
  

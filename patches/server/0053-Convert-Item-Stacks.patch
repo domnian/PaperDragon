@@ -1,4 +1,4 @@
-From eb659b57bf16c4017a6d57cb2275469eaa55c696 Mon Sep 17 00:00:00 2001
+From b32accde71be8fb71e9cda56a0e3021a6a40c1ec Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -124,7 +124,7 @@ index d5e8a7ee6..ee99da64f 100644
          if (item.getItem() != null && item.getItem().usesDurability()) {
              item.setDamage(item.getDamage());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 6419f32ee..27718c7f6 100644
+index 1cde2b73a..d471a6227 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -305,6 +305,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
@@ -134,7 +134,7 @@ index 6419f32ee..27718c7f6 100644
 +    int dataVersion = org.bukkit.Bukkit.getUnsafe().getDataVersion(); // Paper
      private NBTTagCompound internalTag;
      private final Map<String, NBTBase> unhandledTags = new TreeMap<>(); // Paper
-     private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
+     private CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
 @@ -315,6 +316,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          if (meta == null) {
              return;

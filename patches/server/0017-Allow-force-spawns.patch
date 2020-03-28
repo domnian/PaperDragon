@@ -1,4 +1,4 @@
-From 5e67a24380b1d6839061f157ea2d996993a4c3eb Mon Sep 17 00:00:00 2001
+From 46ee5feac890459af6076ace4651f3b04843ed9a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,10 +11,10 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 43d727185..fbaabddde 100644
+index 7683f13c8..b609a6b78 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1138,7 +1138,7 @@ public class WorldServer extends World {
+@@ -1149,7 +1149,7 @@ public class WorldServer extends World {
          boolean flag = entity.attachedToPlayer;
  
          entity.attachedToPlayer = true;
@@ -23,7 +23,7 @@ index 43d727185..fbaabddde 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1219,7 +1219,7 @@ public class WorldServer extends World {
+@@ -1230,7 +1230,7 @@ public class WorldServer extends World {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -33,10 +33,10 @@ index 43d727185..fbaabddde 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 40e766724..4cc4469f1 100644
+index 2d8f6b821..f94b85d2e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -589,7 +589,7 @@ public class CraftEventFactory {
+@@ -594,7 +594,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  

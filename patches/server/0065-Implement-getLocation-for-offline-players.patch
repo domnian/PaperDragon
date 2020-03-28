@@ -1,4 +1,4 @@
-From 18c933c0d6123bbfef14c25e67bf2c43987d3d12 Mon Sep 17 00:00:00 2001
+From c3caa98f0d4f9cf8857c9ae79524970b07a8e366 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:50:51 -0500
 Subject: [PATCH] Implement getLocation() for offline players
@@ -9,11 +9,11 @@ Subject: [PATCH] Implement getLocation() for offline players
  2 files changed, 17 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c44dc719b..8cdbd0859 100644
+index 3f37f187e..b3fb0b7f4 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1658,6 +1658,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
-                 nbttagcompound.setBoolean("Paper.FromMobSpawner", true);
+@@ -1661,6 +1661,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+                 nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end
 +            nbttagcompound.setString("Dragon.DisconnectWorld", world.worldData.getName()); // PaperDragon start - save disconnect world

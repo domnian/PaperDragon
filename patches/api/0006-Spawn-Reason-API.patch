@@ -1,4 +1,4 @@
-From a455492c813321f5155036bb8d2ea0ceb0221cfe Mon Sep 17 00:00:00 2001
+From 497f65b558357bd07a4d02f47595580c2c322fe9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Apr 2014 23:18:28 -0400
 Subject: [PATCH] Spawn Reason API
@@ -8,7 +8,7 @@ Subject: [PATCH] Spawn Reason API
  1 file changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 5047be15..56e78300 100644
+index db18f70e..a83a433c 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -20,7 +20,7 @@ index 5047be15..56e78300 100644
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -2036,6 +2038,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2037,6 +2039,12 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @NotNull
      public <T extends Entity> T spawn(@NotNull Location location, @NotNull Class<T> clazz) throws IllegalArgumentException;
  
@@ -33,7 +33,7 @@ index 5047be15..56e78300 100644
      /**
       * Spawn an entity of a specific class at the given {@link Location}, with
       * the supplied function run before the entity is added to the world.
-@@ -2053,7 +2061,28 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2054,7 +2062,28 @@ public interface World extends PluginMessageRecipient, Metadatable {
       *     {@link Entity} requested cannot be spawned
       */
      @NotNull

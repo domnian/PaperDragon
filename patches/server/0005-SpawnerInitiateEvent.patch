@@ -1,4 +1,4 @@
-From 2d8699c2ad65520887d51d1004688710d5da478c Mon Sep 17 00:00:00 2001
+From d79bbf1dd9fc1a862fd6d0ebcaa7cd6d5194707f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 29 Nov 2012 10:48:07 -0500
 Subject: [PATCH] SpawnerInitiateEvent
@@ -22,7 +22,7 @@ index 584166f22..e8b767d36 100644
  
      // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index b96f6461d..2d158757a 100644
+index df494d37b..5e450c4ed 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -51,7 +51,28 @@ public abstract class MobSpawnerAbstract {
@@ -56,10 +56,10 @@ index b96f6461d..2d158757a 100644
  
      public void c() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2c1e9cbcf..fc453975e 100644
+index 2b9c30527..73729b5c7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -224,6 +224,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -228,6 +228,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          return this.isClientSide;
      }
  

@@ -1,4 +1,4 @@
-From d67d201e725e6e876e87b5564dc932066284b046 Mon Sep 17 00:00:00 2001
+From 18af6fba41378c885546ca5c819a6cac809e0e2c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -503,7 +503,7 @@ index 193b5b8e6..014329d98 100644
              map.registerAttribute(targetRange);
              if (entity instanceof Wither) {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index cb0d36e80..e9cab414f 100644
+index 5892772fc..69fbfbe87 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -149,6 +149,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -598,7 +598,7 @@ index cb0d36e80..e9cab414f 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2548,7 +2559,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2552,7 +2563,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -607,7 +607,7 @@ index cb0d36e80..e9cab414f 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2967,6 +2978,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2971,6 +2982,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -898,7 +898,7 @@ index d02db5659..511009a9f 100644
              if (f >= 0.5F && this.a.getRandom().nextInt(100) == 0) {
                  this.a.setGoalTarget((EntityLiving) null);
 diff --git a/src/main/java/net/minecraft/server/EntityWolf.java b/src/main/java/net/minecraft/server/EntityWolf.java
-index db15d5e0a..4440a83c0 100644
+index eec1e26b6..d9a0e54fc 100644
 --- a/src/main/java/net/minecraft/server/EntityWolf.java
 +++ b/src/main/java/net/minecraft/server/EntityWolf.java
 @@ -29,6 +29,7 @@ public class EntityWolf extends EntityTameableAnimal {
@@ -909,7 +909,7 @@ index db15d5e0a..4440a83c0 100644
  
      @Override
      protected void initPathfinder() {
-@@ -360,6 +361,7 @@ public class EntityWolf extends EntityTameableAnimal {
+@@ -369,6 +370,7 @@ public class EntityWolf extends EntityTameableAnimal {
  
      public void setAngry(boolean flag) {
          byte b0 = (Byte) this.datawatcher.get(EntityWolf.bw);
@@ -1032,10 +1032,10 @@ index 29657fed7..959602b6c 100644
      private boolean c;
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 510998dda..43d727185 100644
+index 25bcce778..7683f13c8 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -749,7 +749,7 @@ public class WorldServer extends World {
+@@ -758,7 +758,7 @@ public class WorldServer extends World {
              entity.f(entity.locX(), entity.locY(), entity.locZ());
              entity.lastYaw = entity.yaw;
              entity.lastPitch = entity.pitch;
@@ -1044,7 +1044,7 @@ index 510998dda..43d727185 100644
                  ++entity.ticksLived;
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
-@@ -1430,6 +1430,7 @@ public class WorldServer extends World {
+@@ -1441,6 +1441,7 @@ public class WorldServer extends World {
              }
              // Paper end
              entity.shouldBeRemoved = false; // Paper - shouldn't be removed after being re-added
