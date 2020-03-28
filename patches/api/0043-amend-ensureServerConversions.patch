@@ -1,4 +1,4 @@
-From 8482767c7ab6ae943cc75a5a58d1f45632d0f2a5 Mon Sep 17 00:00:00 2001
+From b858b87be5183685481855cfd02de03d4251daae Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 Mar 2019 21:45:09 -0400
 Subject: [PATCH] amend ensureServerConversions
@@ -39,7 +39,7 @@ index 03ba2265..32d2ce35 100644
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index c232823d..4a8eea47 100644
+index 291285aa..af730645 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
@@ -74,7 +74,7 @@ index c232823d..4a8eea47 100644
  
      @Utility
      protected ItemStack() {}
-@@ -508,7 +533,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -521,7 +546,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      public Map<String, Object> serialize() {
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
@@ -83,7 +83,7 @@ index c232823d..4a8eea47 100644
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
-@@ -560,6 +585,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -573,6 +598,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
          }
  
          ItemStack result = new ItemStack(type, amount, damage);
@@ -91,7 +91,7 @@ index c232823d..4a8eea47 100644
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -651,13 +677,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -664,13 +690,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      }
  
      // Paper start
@@ -111,5 +111,5 @@ index c232823d..4a8eea47 100644
      @NotNull
      public ItemStack ensureServerConversions() {
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,12 +1,12 @@
-From a35feef22971cd30e3ea4f7a59fe69d38e6fd34b Mon Sep 17 00:00:00 2001
+From ddc79f32f03f338d3c5b2662428b39316723ce44 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
-Subject: [PATCH] Persistent and Temporary Metadata API
+Subject: [PATCH] Persistent and Temporary Metadata DragonAPI
 
-Entity, TileEntity, World, Chunk, Block, Inventory API's
+Entity, TileEntity, World, Chunk, Block, Inventory DragonAPI's
 ---
  .../domnian/paperdragon/api/DragonAPI.java    |   2 +
- .../com/domnian/paperdragon/api/Vector3i.java |  66 ++
+ .../com/domnian/paperdragon/api/Vector3i.java |  64 ++
  .../paperdragon/api/meta/DAPI_Meta.java       |  53 ++
  .../domnian/paperdragon/api/meta/Meta.java    | 760 ++++++++++++++++++
  .../domnian/paperdragon/api/meta/MetaKey.java |  51 ++
@@ -21,7 +21,7 @@ Entity, TileEntity, World, Chunk, Block, Inventory API's
  .../java/org/bukkit/block/BlockState.java     |   2 +
  src/main/java/org/bukkit/entity/Entity.java   |   2 +
  .../java/org/bukkit/inventory/Inventory.java  |   2 +
- 16 files changed, 1368 insertions(+)
+ 16 files changed, 1366 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/Vector3i.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/DAPI_Meta.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/Meta.java
@@ -54,10 +54,10 @@ index 74c4c59e..f78acdd6 100644
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
-index 00000000..5b38ee3e
+index 00000000..117f8e4c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,64 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -82,8 +82,6 @@ index 00000000..5b38ee3e
 + */
 +
 +package com.domnian.paperdragon.api;
-+
-+import com.domnian.paperdragon.api.meta.Meta;
 +
 +@SuppressWarnings("PublicInnerClass")
 +public final class Vector3i {
@@ -1527,5 +1525,5 @@ index 6040d971..9ec35ec8 100644
       * Returns the size of the inventory
       *
 -- 
-2.20.1.windows.1
+2.17.1
 

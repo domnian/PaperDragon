@@ -1,19 +1,19 @@
-From 0e8d2ffbc05ab89eb9ab55c895314a4653a1bdb7 Mon Sep 17 00:00:00 2001
+From fe251a76cdabc5e36ececcfd84ca8ac02c57007f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:14:52 -0500
 Subject: [PATCH] BlockBreakNaturallyEvent
 
 ---
- .../events/BlockBreakNaturallyEvent.java      | 28 +++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ .../events/BlockBreakNaturallyEvent.java      | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 new file mode 100644
-index 00000000..5dc7fb4d
+index 00000000..311ff5eb
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,38 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.Location;
@@ -21,15 +21,23 @@ index 00000000..5dc7fb4d
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.block.BlockEvent;
 +
++import java.util.Collection;
++import java.util.Collections;
++
 +public class BlockBreakNaturallyEvent extends BlockEvent {
-+    private final Item item;
-+    public BlockBreakNaturallyEvent(Location pos, Item item) {
++    private final Collection<Item> items;
++
++    public BlockBreakNaturallyEvent(Location pos, Collection<Item> items) {
 +        super(pos.getBlock());
-+        this.item = item;
++        this.items = items;
 +    }
 +
-+    public Item getItem() {
-+        return item;
++    public BlockBreakNaturallyEvent(Location pos, Item item) {
++        this(pos, Collections.singleton(item));
++    }
++
++    public Collection<Item> getItems() {
++        return items;
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
@@ -41,7 +49,9 @@ index 00000000..5dc7fb4d
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}
++
 -- 
-2.22.0
+2.20.1.windows.1
 

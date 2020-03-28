@@ -1,19 +1,19 @@
-From ebfa2405a163603e8ad0612b36463a7813a9e470 Mon Sep 17 00:00:00 2001
+From 98827db6451a6993ebc9f9b44d4efc5e29f95517 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:03:19 -0500
 Subject: [PATCH] ArrowHitBlockEvent
 
 ---
- .../event/entity/ArrowHitBlockEvent.java      | 93 +++++++++++++++++++
- 1 file changed, 93 insertions(+)
+ .../event/entity/ArrowHitBlockEvent.java      | 96 +++++++++++++++++++
+ 1 file changed, 96 insertions(+)
  create mode 100644 src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java b/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
 new file mode 100644
-index 00000000..6fe0732b
+index 00000000..d8d8e1b7
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/entity/ArrowHitBlockEvent.java
-@@ -0,0 +1,93 @@
+@@ -0,0 +1,96 @@
 +/*
 + * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
 + *
@@ -47,8 +47,9 @@ index 00000000..6fe0732b
 +import org.bukkit.event.entity.EntityEvent;
 +
 +/**
-+ * Different from ProjectileHitEvent in that it will let you cancel if the Arrow will
++ * Different from ProjectileHitEvent in that it will let you cancel if the projectile will
 + * "trigger" the block, such as TNT.
++ * This includes all variants of arrows including tridents
 + *
 + */
 +public class ArrowHitBlockEvent extends EntityEvent implements Cancellable {
@@ -92,6 +93,7 @@ index 00000000..6fe0732b
 +
 +    /**
 +     * Whether or not to cancel any behavior that would occur from the arrow hitting the block
++     *
 +     * @param cancel true if you wish to cancel this event
 +     */
 +    public void setCancelled(boolean cancel) {
@@ -107,6 +109,7 @@ index 00000000..6fe0732b
 +    }
 +
 +}
++
 -- 
-2.22.0
+2.20.1.windows.1
 

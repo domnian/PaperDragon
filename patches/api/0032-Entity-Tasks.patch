@@ -1,4 +1,4 @@
-From 4a03d6293b32e667aee0de351713fe9e1c71d5e5 Mon Sep 17 00:00:00 2001
+From 55fdc7b9a52ec67ef08d742f66ba5bda273a8168 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:52:29 -0500
 Subject: [PATCH] Entity Tasks
@@ -10,7 +10,7 @@ Subject: [PATCH] Entity Tasks
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityTask.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 7f99d075..85d4b770 100644
+index 7f99d075..b25abd42 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 @@ -1,5 +1,6 @@
@@ -196,5 +196,5 @@ index 00000000..578fc722
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

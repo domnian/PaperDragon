@@ -1,17 +1,23 @@
-From 5fc64980fdad6b49ce38df37eacb44d681f13deb Mon Sep 17 00:00:00 2001
+From 338b02241e339754f2c5952e1fd2c24adb67bdf4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 15 Jun 2013 23:19:03 -0400
 Subject: [PATCH] ItemStack isSimiliar API to skip durability and name checks
 
+Skip Durability is useful if you simply want to see if an item type is the same for weapons
+Skip Item Name is useful if you want to treat a renamed item the same as an unrenamed item, when lore is involved
+
+For example, lore can be used to identify a custom item, but then if a player renames it, the isSimilar breaks.
+
+This new boolean allows you to verify if the item is the same ignoring the name field by temporarily nulling it during the check.
 ---
- .../java/org/bukkit/inventory/ItemStack.java  | 53 ++++++++++++++++++-
- 1 file changed, 52 insertions(+), 1 deletion(-)
+ .../java/org/bukkit/inventory/ItemStack.java  | 66 ++++++++++++++++++-
+ 1 file changed, 65 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 5426e7c2..bc486fd3 100644
+index d7d6a3e8..291285aa 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -281,8 +281,36 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -281,16 +281,80 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
       * @param stack the item stack to compare to
       * @return true if the two stacks are equal, ignoring the amount
       */
@@ -48,15 +54,20 @@ index 5426e7c2..bc486fd3 100644
          if (stack == null) {
              return false;
          }
-@@ -290,7 +318,30 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+         if (stack == this) {
              return true;
          }
++
          Material comparisonType = (this.type.isLegacy()) ? Bukkit.getUnsafe().fromLegacy(this.getData(), true) : this.type; // This may be called from legacy item stacks, try to get the right material
 -        return comparisonType == stack.getType() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true);
-+        if (comparisonType != stack.getType() || (!skipDur && getDurability() != stack.getDurability())) return false;
++        if (comparisonType != stack.getType() || (!skipDur && getDurability() != stack.getDurability())) {
++            return false;
++        }
 +        final boolean hasMeta1 = hasItemMeta();
 +        final boolean hasMeta2 = stack.hasItemMeta();
-+        if (!hasMeta1 && !hasMeta2) return true;
++        if (!hasMeta1 && !hasMeta2) {
++            return true;
++        }
 +
 +        final ItemMeta meta1 = hasMeta1 ? getItemMeta() : null;
 +        final ItemMeta meta2 = hasMeta2 ? stack.getItemMeta() : null;
@@ -64,16 +75,24 @@ index 5426e7c2..bc486fd3 100644
 +        final String prevName1 = meta1 != null ? meta1.getDisplayName() : null;
 +        final String prevName2 = meta2 != null ? meta2.getDisplayName() : null;
 +        if (skipCheckingName) {
-+            if (meta1 != null) meta1.setDisplayName(null);
-+            if (meta2 != null) meta2.setDisplayName(null);
++            if (meta1 != null) {
++                meta1.setDisplayName(null);
++            }
++            if (meta2 != null) {
++                meta2.setDisplayName(null);
++            }
 +        }
 +
 +        try {
 +            return Bukkit.getItemFactory().equals(meta1, meta2);
 +        } finally {
 +            if (skipCheckingName) {
-+                if (meta1 != null) meta1.setDisplayName(prevName1);
-+                if (meta2 != null) meta2.setDisplayName(prevName2);
++                if (meta1 != null) {
++                    meta1.setDisplayName(prevName1);
++                }
++                if (meta2 != null) {
++                    meta2.setDisplayName(prevName2);
++                }
 +            }
 +        }
 +        // Paper end
@@ -81,5 +100,5 @@ index 5426e7c2..bc486fd3 100644
  
      @NotNull
 -- 
-2.20.1.windows.1
+2.17.1
 
