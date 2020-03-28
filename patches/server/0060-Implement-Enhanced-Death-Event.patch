@@ -1,4 +1,4 @@
-From 54547d6b201c6d1ef1119a0017db28e362c41d13 Mon Sep 17 00:00:00 2001
+From 3fa23ca1456d5155bb33ae28376d2e65f053d9df Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
@@ -25,10 +25,10 @@ index e7bfbc330..d61d018e6 100644
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 7f799b4c2..33f765808 100644
+index 12677e9f5..cfb67858f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -786,11 +786,12 @@ public class CraftEventFactory {
+@@ -794,11 +794,12 @@ public class CraftEventFactory {
          return event;
      }
  
@@ -43,5 +43,5 @@ index 7f799b4c2..33f765808 100644
          Bukkit.getServer().getPluginManager().callEvent(event);
          // Paper start - make cancellable
 -- 
-2.20.1.windows.1
+2.17.1
 

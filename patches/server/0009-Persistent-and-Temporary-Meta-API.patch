@@ -1,4 +1,4 @@
-From 682a91757267a3fad0965ef20e42e91c2065fa2c Mon Sep 17 00:00:00 2001
+From c2be2fac7a84caababd49258d7cee545fe0ce9b9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -861,10 +861,10 @@ index a8e64dfda..1d0846a38 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 73729b5c7..62354241b 100644
+index 2b9c30527..d699df4e7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -411,6 +411,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -410,6 +410,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                      this.a(blockposition, iblockdata1, iblockdata2);
                  }
                  */
@@ -1024,5 +1024,5 @@ index 026a0c399..a5f13b606 100644
          this.inventory = inventory;
      }
 -- 
-2.20.1.windows.1
+2.17.1
 

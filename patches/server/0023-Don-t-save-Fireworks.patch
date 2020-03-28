@@ -1,4 +1,4 @@
-From f4551ea45e226a2b0888719f88ee6cca97df7847 Mon Sep 17 00:00:00 2001
+From 27969356a23dc0ec51c09d1054d65295bcaabde3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Dec 2013 21:25:06 -0500
 Subject: [PATCH] Don't save Fireworks
@@ -6,14 +6,13 @@ Subject: [PATCH] Don't save Fireworks
 Fireworks can bug out and not detonate, and an automated
 launcher can very easily fill a chunk.
 
-Prevent saving Fireworks so that chunk unloads will wipe a chunks
-fireworks in this case.
+Prevent saving Fireworks so that chunk unloads will wipe a chunks fireworks in this case.
 ---
  src/main/java/net/minecraft/server/Entity.java | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 986828484..c44dc719b 100644
+index e48b7501d..3f37f187e 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1545,6 +1545,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -25,5 +24,5 @@ index 986828484..c44dc719b 100644
      }
  
 -- 
-2.20.1.windows.1
+2.17.1
 

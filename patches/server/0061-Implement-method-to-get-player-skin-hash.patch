@@ -1,4 +1,4 @@
-From 202dc2a285f62568b23f61cd17632e0732db63ab Mon Sep 17 00:00:00 2001
+From 77b78236d4a378d4c3cd8ec0c717ae15033e3bf5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 12 Jul 2019 03:48:22 -0400
 Subject: [PATCH] Implement method to get player skin hash
@@ -8,7 +8,7 @@ Subject: [PATCH] Implement method to get player skin hash
  1 file changed, 18 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 7c469c052..3a931540f 100644
+index a17d70705..a7a0c54e2 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -24,15 +24,22 @@
@@ -34,7 +34,7 @@ index 7c469c052..3a931540f 100644
  
  public class CraftDAPI_Misc implements DAPI_Misc {
  
-@@ -56,6 +63,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+@@ -62,6 +69,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
          return items;
      }
  
@@ -53,5 +53,5 @@ index 7c469c052..3a931540f 100644
          if (shulker == null) {
              throw new NullPointerException("Itemstack can not be null");
 -- 
-2.20.1.windows.1
+2.17.1
 

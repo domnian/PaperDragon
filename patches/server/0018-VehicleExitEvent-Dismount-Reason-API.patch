@@ -1,4 +1,4 @@
-From 72bd35056c51f40079b957669b7b79c4544be466 Mon Sep 17 00:00:00 2001
+From f0a5f6b72667826ad67bcbf34a4229e0a089d2a1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -75,7 +75,7 @@ index 5648d56a7..e48b7501d 100644
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
                  Entity n = craftn == null ? null : craftn.getHandle();
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index e8b767d36..139c74954 100644
+index c7d4749cb..9d2680bb2 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -378,6 +378,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -87,7 +87,7 @@ index e8b767d36..139c74954 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index a6fbd5aef..0b0b30570 100644
+index da3bdb22e..33bf49fdd 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -289,6 +289,7 @@ public abstract class EntityLiving extends Entity {
@@ -98,7 +98,7 @@ index a6fbd5aef..0b0b30570 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bw()) {
-@@ -3202,6 +3203,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3203,6 +3204,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {
@@ -119,5 +119,5 @@ index 7b79ee4fe..63069e30c 100644
                  worldserver.removeEntity(entity);
                  Iterator iterator = entity.getAllPassengers().iterator();
 -- 
-2.20.1.windows.1
+2.17.1
 

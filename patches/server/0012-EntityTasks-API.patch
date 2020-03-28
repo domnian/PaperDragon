@@ -1,4 +1,4 @@
-From 0efeea0bdc003ca92cbdd60dab3aea74514a96d9 Mon Sep 17 00:00:00 2001
+From f826dcac85eef5204d8d8eef7e479af983f7b48f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -100,7 +100,7 @@ index 000000000..fafea6e08
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1378d387f..25bcce778 100644
+index 1378d387f..db65baf60 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -746,6 +746,7 @@ public class WorldServer extends World {
@@ -111,14 +111,14 @@ index 1378d387f..25bcce778 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -761,6 +762,7 @@ public class WorldServer extends World {
+@@ -759,6 +760,7 @@ public class WorldServer extends World {
+             entity.lastPitch = entity.pitch;
+             if (entity.inChunk) {
                  ++entity.ticksLived;
++                EntityTasksHandler.tickHandler(entity); // PaperDragon
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
-+                EntityTasksHandler.tickHandler(entity); // PaperDragon
                  gameprofilerfiller.a(() -> {
-                     return IRegistry.ENTITY_TYPE.getKey(entity.getEntityType()).toString();
-                 });
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index cdaa21105..fb16475b8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
@@ -132,5 +132,5 @@ index cdaa21105..fb16475b8 100644
          loadPlugins();
          enablePlugins(PluginLoadOrder.STARTUP);
 -- 
-2.20.1.windows.1
+2.17.1
 

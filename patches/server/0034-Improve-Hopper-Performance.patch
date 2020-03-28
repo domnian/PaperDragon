@@ -1,15 +1,15 @@
-From e710e10ac0e6eb6d89f15e57d13f3eda0bd87e86 Mon Sep 17 00:00:00 2001
+From 339ae130f02dbbc0514fbbce189ce55754c68e0d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 May 2015 21:58:24 -0400
 Subject: [PATCH] Improve Hopper Performance
 
 Only do an item "suck in" action once per second
 ---
- .../java/net/minecraft/server/EntityItem.java | 15 +++++++++++++
- .../server/EntityMinecartHopper.java          | 16 ++++++++++++++
- .../java/net/minecraft/server/IHopper.java    |  8 ++++---
- .../minecraft/server/TileEntityHopper.java    | 22 ++++++++++++++++++-
- 4 files changed, 57 insertions(+), 4 deletions(-)
+ .../java/net/minecraft/server/EntityItem.java | 15 ++++++++++++++
+ .../server/EntityMinecartHopper.java          | 15 ++++++++++++++
+ .../java/net/minecraft/server/IHopper.java    |  9 ++++++---
+ .../minecraft/server/TileEntityHopper.java    | 20 ++++++++++++++++++-
+ 4 files changed, 55 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
 index 6496c3e81..ddb50636f 100644
@@ -49,19 +49,18 @@ index 6496c3e81..ddb50636f 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityMinecartHopper.java b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
-index 7416694ce..08297e1b1 100644
+index 7416694ce..ad218de3e 100644
 --- a/src/main/java/net/minecraft/server/EntityMinecartHopper.java
 +++ b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
-@@ -56,6 +56,8 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
-         this.d = flag;
-     }
- 
+@@ -7,6 +7,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
+     private boolean d = true;
+     private int e = -1;
+     private final BlockPosition f;
 +    public int pickupImmunity = 0; // PaperDragon
-+
-     @Override
-     public World getWorld() {
-         return this.world;
-@@ -148,4 +150,18 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
+ 
+     public EntityMinecartHopper(EntityTypes<? extends EntityMinecartHopper> entitytypes, World world) {
+         super(entitytypes, world);
+@@ -148,4 +149,18 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
      public Container a(int i, PlayerInventory playerinventory) {
          return new ContainerHopper(i, playerinventory, this);
      }
@@ -81,52 +80,34 @@ index 7416694ce..08297e1b1 100644
 +    // PaperDragon stop
  }
 diff --git a/src/main/java/net/minecraft/server/IHopper.java b/src/main/java/net/minecraft/server/IHopper.java
-index e1aa272e5..9ac507f9b 100644
+index e1aa272e5..e77ba6dd5 100644
 --- a/src/main/java/net/minecraft/server/IHopper.java
 +++ b/src/main/java/net/minecraft/server/IHopper.java
-@@ -15,9 +15,11 @@ public interface IHopper extends IInventory {
+@@ -15,9 +15,12 @@ public interface IHopper extends IInventory {
      @Nullable
      World getWorld();
  
 -    double z();
-+    double z(); default double getX() { return z(); } // PaperDragon - OBF HELPER
++    double z(); default double getX() { return z(); } // PaperDragon
  
 -    double A();
-+    double A(); default double getY() { return A(); } // PaperDragon - OBF HELPER
- 
--    double B();
-+    double B(); default double getZ() { return B(); } // PaperDragon - OBF HELPER
++    double A(); default double getY() { return A(); } // PaperDragon
++
++    double B(); default double getZ() { return B(); } // PaperDragon
 +
 +    long getAndIncrementAttemptCounter(); // PaperDragon
+ 
+-    double B();
  }
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 877a91da1..ace6bf9e8 100644
+index 877a91da1..2a4e1bd26 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -410,7 +410,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
-                 skipPullModeEventFire = skipHopperEvents; // Paper
-                 return a(ihopper, iinventory, i, enumdirection);
-             });
--        } else {
-+        } else if (shouldSuckin(ihopper)) { // PaperDragon
-             Iterator iterator = c(ihopper).iterator();
- 
-             EntityItem entityitem;
-@@ -425,6 +425,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
- 
-             return true;
-         }
-+        return false;
+@@ -93,6 +93,23 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+         return ContainerUtil.a(this.f(), i, j);
      }
  
-     private static boolean a(IHopper ihopper, IInventory iinventory, int i, EnumDirection enumdirection) {
-@@ -684,4 +685,23 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
-     protected Container createContainer(int i, PlayerInventory playerinventory) {
-         return new ContainerHopper(i, playerinventory, this);
-     }
-+
 +    // PaperDragon start
-+
 +    private long tickAttempts = 0;
 +    @Override
 +    public long getAndIncrementAttemptCounter() {
@@ -142,8 +123,27 @@ index 877a91da1..ace6bf9e8 100644
 +        return (hopper.getAndIncrementAttemptCounter() + hopperId) % 5 == 0;
 +    }
 +    // PaperDragon end
- }
 +
+     @Override
+     public void setItem(int i, ItemStack itemstack) {
+         this.d((EntityHuman) null);
+@@ -410,7 +427,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+                 skipPullModeEventFire = skipHopperEvents; // Paper
+                 return a(ihopper, iinventory, i, enumdirection);
+             });
+-        } else {
++        } else if (shouldSuckin(ihopper)) { // PaperDragon
+             Iterator iterator = c(ihopper).iterator();
+ 
+             EntityItem entityitem;
+@@ -425,6 +442,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+ 
+             return true;
+         }
++        return false; // PaperDragon
+     }
+ 
+     private static boolean a(IHopper ihopper, IInventory iinventory, int i, EnumDirection enumdirection) {
 -- 
-2.20.1.windows.1
+2.17.1
 

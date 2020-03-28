@@ -1,4 +1,4 @@
-From d040f1c2429748f2add9f24edd863a95996c1cb2 Mon Sep 17 00:00:00 2001
+From 514967a53843f607c1d3d915a5a75ce4407206fd Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -6,12 +6,13 @@ Subject: [PATCH] Misc PaperDragon Changes
 ---
  .../java/com/destroystokyo/paper/Metrics.java |  4 +-
  .../paperdragon/DragonVersionFetcher.java     | 84 +++++++++++++++++++
+ .../net/minecraft/server/EntityHuman.java     |  2 +-
  src/main/java/net/minecraft/server/MCLog.java | 77 +++++++++++++++++
  .../net/minecraft/server/MinecraftServer.java |  4 +-
  .../org/bukkit/craftbukkit/CraftServer.java   |  2 +-
  .../craftbukkit/util/CraftMagicNumbers.java   |  2 +-
  .../java/org/spigotmc/WatchdogThread.java     | 12 +--
- 7 files changed, 174 insertions(+), 11 deletions(-)
+ 8 files changed, 175 insertions(+), 12 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
@@ -127,6 +128,19 @@ index 000000000..edd083ef6
 +    }
 +
 +}
+diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
+index 584166f22..850c69273 100644
+--- a/src/main/java/net/minecraft/server/EntityHuman.java
++++ b/src/main/java/net/minecraft/server/EntityHuman.java
+@@ -1468,7 +1468,7 @@ public abstract class EntityHuman extends EntityLiving {
+ 
+     public void setRespawnPosition(BlockPosition blockposition, boolean flag, boolean flag1) {
+         if (blockposition != null) {
+-            if (flag1 && !blockposition.equals(this.g)) {
++            if (false && flag1 && !blockposition.equals(this.g)) { // EMC - Handle in our plugin
+                 this.sendMessage(new ChatMessage("block.minecraft.bed.set_spawn", new Object[0]));
+             }
+ 
 diff --git a/src/main/java/net/minecraft/server/MCLog.java b/src/main/java/net/minecraft/server/MCLog.java
 new file mode 100644
 index 000000000..bf28f00db
@@ -211,7 +225,7 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 346664cee..67508c133 100644
+index c9deaffc4..963c4c8ca 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1472,10 +1472,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -237,7 +251,7 @@ index 346664cee..67508c133 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 974c78a6a..3c0b61ce1 100644
+index 23b5c7ed5..02e06f464 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -203,7 +203,7 @@ import javax.annotation.Nullable; // Paper
@@ -312,5 +326,5 @@ index 5bdcdcf9e..3cfd5ec59 100644
  
  
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From fcbfe8fdf845b153d320bbffddec319fab009864 Mon Sep 17 00:00:00 2001
+From 1231da3998a57d8914f595579cac38392a1cf23c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 Jan 2016 03:42:03 -0500
 Subject: [PATCH] Player Death fires PlayerDropItem event
@@ -9,7 +9,7 @@ Subject: [PATCH] Player Death fires PlayerDropItem event
  2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 139c74954..6d82d0709 100644
+index 9d2680bb2..30dd79bfc 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -570,6 +570,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -21,10 +21,10 @@ index 139c74954..6d82d0709 100644
          if (itemstack.isEmpty()) {
              return null;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 5bcbd40d2..7f799b4c2 100644
+index 5bbd1dda8..12677e9f5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -809,7 +809,7 @@ public class CraftEventFactory {
+@@ -817,7 +817,7 @@ public class CraftEventFactory {
          for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
              if (stack == null || stack.getType() == Material.AIR) continue;
  
@@ -34,5 +34,5 @@ index 5bcbd40d2..7f799b4c2 100644
  
          return event;
 -- 
-2.20.1.windows.1
+2.17.1
 

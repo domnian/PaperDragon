@@ -1,20 +1,20 @@
-From b087f58fc397ce31efa359f51dde11d9c2ffa37a Mon Sep 17 00:00:00 2001
+From e0c45fb25229ffc146738a64b528973d8db68b57 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:19:45 -0500
 Subject: [PATCH] Attributes API
 
 ---
  .../paperdragon/api/CraftDragonAPI.java       |   2 +
- .../api/meta/CraftDAPI_Attributes.java        | 134 ++++++++++++++++++
+ .../api/meta/CraftDAPI_Attributes.java        | 136 ++++++++++++++++++
  .../minecraft/server/AttributeInstance.java   |   2 +-
  .../minecraft/server/AttributeMapBase.java    |   4 +-
- .../minecraft/server/AttributesAccessor.java  |  48 +++++++
+ .../minecraft/server/AttributesAccessor.java  |  52 +++++++
  .../minecraft/server/EntityInsentient.java    |   1 +
  .../net/minecraft/server/EntityLiving.java    |   1 +
  .../minecraft/server/GenericAttributes.java   |   1 +
  .../java/net/minecraft/server/NBTTagList.java |   2 +-
  .../server/PathfinderGoalTarget.java          |   2 +-
- 10 files changed, 192 insertions(+), 5 deletions(-)
+ 10 files changed, 198 insertions(+), 5 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java
  create mode 100644 src/main/java/net/minecraft/server/AttributesAccessor.java
 
@@ -40,10 +40,10 @@ index b11af17ef..8889fb45a 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java
 new file mode 100644
-index 000000000..bf42e5569
+index 000000000..2a8ed4937
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Attributes.java
-@@ -0,0 +1,134 @@
+@@ -0,0 +1,136 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -92,7 +92,6 @@ index 000000000..bf42e5569
 +
 +public class CraftDAPI_Attributes implements DAPI_Attributes {
 +
-+
 +    public void setAttribute(AttributeSlot slot, ItemStack item, Attribute attr, Operation operation, double val) {
 +        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
 +        final NBTTagList attributes = getAttributes(craftStack.getHandle());
@@ -124,6 +123,7 @@ index 000000000..bf42e5569
 +        }
 +        return false;
 +    }
++
 +    public Double getAttribute(LivingEntity livingEntity, Attribute attr) {
 +        final EntityLiving entity = ((CraftLivingEntity) livingEntity).getHandle();
 +        final IAttribute attributetype = AttributesAccessor.getAttribute(attr);
@@ -144,16 +144,17 @@ index 000000000..bf42e5569
 +        final AttributeModifier attributeModifier = new AttributeModifier(attr.uuid, name, val, AttributeModifier.Operation.a(operation.getId()));
 +        final NBTTagCompound attributeData = GenericAttributes.buildModifierCompound(attributeModifier);
 +        attributeData.setString("AttributeName", name);
-+        if (slot != null) attributeData.setString("Slot", slot.getSlotName());
++        if (slot != null) {
++            attributeData.setString("Slot", slot.getSlotName());
++        }
 +        return attributeData;
 +    }
 +
 +    private static void removeAttribute(NBTTagList attributes, Attribute attr, AttributeSlot slot) {
 +        final String name = AttributesAccessor.getAttribute(attr).getName();
-+        for (Iterator<NBTBase> iterator = attributes.list.iterator(); iterator.hasNext(); ) {
++        for (Iterator<NBTBase> iterator = attributes.iterator(); iterator.hasNext(); ) {
 +            NBTTagCompound nbtBase = (NBTTagCompound) iterator.next();
-+            if (name.equals(nbtBase.getString("AttributeName")) &&
-+                Objects.equals(slot != null ? slot.getSlotName() : "", nbtBase.getString("Slot"))) {
++            if (name.equals(nbtBase.getString("AttributeName")) && Objects.equals(slot != null ? slot.getSlotName() : "", nbtBase.getString("Slot"))) {
 +                iterator.remove();
 +            }
 +        }
@@ -177,6 +178,7 @@ index 000000000..bf42e5569
 +        }
 +        return attributes;
 +    }
++
 +}
 diff --git a/src/main/java/net/minecraft/server/AttributeInstance.java b/src/main/java/net/minecraft/server/AttributeInstance.java
 index 5df625b5d..0405ce07e 100644
@@ -208,15 +210,16 @@ index 9617be965..b70600412 100644
              AttributeInstance attributeinstance = this.c(iattribute);
 diff --git a/src/main/java/net/minecraft/server/AttributesAccessor.java b/src/main/java/net/minecraft/server/AttributesAccessor.java
 new file mode 100644
-index 000000000..193b5b8e6
+index 000000000..3e3ffcb37
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AttributesAccessor.java
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,52 @@
 +package net.minecraft.server;
 +
 +import com.domnian.paperdragon.api.DragonAPI;
 +import com.domnian.paperdragon.api.attributes.Attribute;
 +import com.google.common.collect.Maps;
++import org.bukkit.entity.LivingEntity;
 +import org.bukkit.entity.Wither;
 +
 +import java.util.HashMap;
@@ -225,6 +228,7 @@ index 000000000..193b5b8e6
 +    static final IAttribute targetRange = (new AttributeRanged(null, "generic.targetRange", 16.0D, 0.0D, 2048.0D)).a("Target Range");
 +
 +    private static final HashMap<Attribute, IAttribute> attributeMap = Maps.newHashMap();
++
 +    static {
 +        attributeMap.put(Attribute.TARGET_RANGE, targetRange);
 +        attributeMap.put(Attribute.MAX_HEALTH, GenericAttributes.MAX_HEALTH);
@@ -240,7 +244,8 @@ index 000000000..193b5b8e6
 +        attributeMap.put(Attribute.LUCK, GenericAttributes.LUCK);
 +    }
 +
-+    private AttributesAccessor() {}
++    private AttributesAccessor() {
++    }
 +
 +    public static IAttribute getAttribute(Attribute attribute) {
 +        return attributeMap.get(attribute);
@@ -248,7 +253,7 @@ index 000000000..193b5b8e6
 +
 +    public static void configureAttributes(EntityInsentient entity) {
 +        entity.getAttributeInstance(targetRange)
-+              .configureAttribute(new AttributeModifier("Random spawn bonus", entity.random.nextGaussian() * 0.05D, AttributeModifier.Operation.a(1)));
++                .configureAttribute(new AttributeModifier("Random spawn bonus", entity.random.nextGaussian() * 0.05D, AttributeModifier.Operation.MULTIPLY_BASE));
 +    }
 +
 +    public static void initializeAttributes(EntityLiving entity, AttributeMapBase map) {
@@ -259,6 +264,7 @@ index 000000000..193b5b8e6
 +            }
 +        }
 +    }
++
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
 index 1991cee43..54d0bed73 100644
@@ -273,17 +279,17 @@ index 1991cee43..54d0bed73 100644
              this.p(true);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 671fa0693..f2ada6b94 100644
+index 671fa0693..5352ebdd7 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -165,6 +165,7 @@ public abstract class EntityLiving extends Entity {
-         this.aK = this.yaw;
-         this.H = 0.6F;
-         this.bo = this.a(new Dynamic(DynamicOpsNBT.a, new NBTTagCompound()));
+@@ -201,6 +201,7 @@ public abstract class EntityLiving extends Entity {
+         this.getAttributeMap().b(GenericAttributes.MOVEMENT_SPEED);
+         this.getAttributeMap().b(GenericAttributes.ARMOR);
+         this.getAttributeMap().b(GenericAttributes.ARMOR_TOUGHNESS);
 +        AttributesAccessor.initializeAttributes(this, attributeMap); // PaperDragon
      }
  
-     public BehaviorController<?> getBehaviorController() {
+     @Override
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 index 469e293c2..44f26b3bd 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java

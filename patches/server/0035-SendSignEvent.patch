@@ -1,6 +1,6 @@
-From 611e7a67ee6604d3513b48b28f925fc851c5c10c Mon Sep 17 00:00:00 2001
-From: Derek Williams <GreenMeanieMC@gmail.com>
-Date: Sun, 17 Dec 2017 01:59:04 -0500
+From 17f311e710cf44c8d1045d88df55ec403a7be5a4 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 8 Jun 2015 23:55:20 -0400
 Subject: [PATCH] SendSignEvent
 
 ---
@@ -65,7 +65,7 @@ index 000000000..a289065f6
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index bbea31947..eb7117c4f 100644
+index 859263364..47032694a 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
 @@ -20,10 +20,15 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
@@ -99,5 +99,5 @@ index bbea31947..eb7117c4f 100644
  
      @Override
 -- 
-2.20.1.windows.1
+2.17.1
 
