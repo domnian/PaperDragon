@@ -1,4 +1,4 @@
-From 3fa23ca1456d5155bb33ae28376d2e65f053d9df Mon Sep 17 00:00:00 2001
+From 1c6c8f2bccfa3d07f643991cf1c49bb4f08fcd35 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement Enhanced Death Event
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index e7bfbc330..d61d018e6 100644
+index f44825090..f346086ce 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -589,7 +589,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -594,7 +594,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
  
          String deathmessage = defaultMessage.getString();
@@ -43,5 +43,5 @@ index 12677e9f5..cfb67858f 100644
          Bukkit.getServer().getPluginManager().callEvent(event);
          // Paper start - make cancellable
 -- 
-2.17.1
+2.20.1.windows.1
 

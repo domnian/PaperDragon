@@ -1,4 +1,4 @@
-From b8423a680fa69d3f8fab7c7ea7a5b10e198b614a Mon Sep 17 00:00:00 2001
+From 432bdf62b66272ba0502360f5204d4871595133b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jul 2013 18:58:19 -0400
 Subject: [PATCH] Entity Serialization
@@ -98,10 +98,10 @@ index a996b3c91..8bae05fc4 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e9cab414f..3847d4b6e 100644
+index 88620aec2..88138ac9f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1540,6 +1540,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1548,6 +1548,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          }
      }
  
