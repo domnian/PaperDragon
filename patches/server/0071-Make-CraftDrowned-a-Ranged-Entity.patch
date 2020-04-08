@@ -1,0 +1,30 @@
+From 70194c645bc6ef8b56deeecacb72504ed683aa1d Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Mon, 16 Mar 2020 17:19:42 -0500
+Subject: [PATCH] Make CraftDrowned a Ranged Entity
+
+---
+ src/main/java/org/bukkit/craftbukkit/entity/CraftDrowned.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftDrowned.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftDrowned.java
+index 6e41dfd92..390183fff 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftDrowned.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftDrowned.java
+@@ -1,11 +1,12 @@
+ package org.bukkit.craftbukkit.entity;
+ 
++import com.destroystokyo.paper.entity.CraftRangedEntity;
+ import net.minecraft.server.EntityDrowned;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.entity.Drowned;
+ import org.bukkit.entity.EntityType;
+ 
+-public class CraftDrowned extends CraftZombie implements Drowned {
++public class CraftDrowned extends CraftZombie implements Drowned, CraftRangedEntity<EntityDrowned> { // Paper
+ 
+     public CraftDrowned(CraftServer server, EntityDrowned entity) {
+         super(server, entity);
+-- 
+2.17.1
+
