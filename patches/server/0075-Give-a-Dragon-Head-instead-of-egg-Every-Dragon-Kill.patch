@@ -1,4 +1,4 @@
-From 3c2f5e60c1f30fdf1113527758591d5964905f60 Mon Sep 17 00:00:00 2001
+From e0c52f2f1c04cf8975f6953d22fce51833c6b57d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 23 Apr 2016 20:03:27 -0400
 Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
@@ -23,5 +23,5 @@ index 07393dfea..3e1acd7af 100644
  
              this.l = true;
 -- 
-2.17.1
+2.20.1.windows.1
 
