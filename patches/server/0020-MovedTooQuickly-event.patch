@@ -1,4 +1,4 @@
-From 6ebe0006ba70fc42246b8a565dbffcab37868e57 Mon Sep 17 00:00:00 2001
+From cb571a54e132f5a873aef1a5488b1c058547df78 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Sep 2013 22:01:47 -0400
 Subject: [PATCH] MovedTooQuickly event
@@ -9,10 +9,10 @@ also make creative immune to this event
  1 file changed, 2 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index a1ce2d2e0..a7d29cacc 100644
+index 639d18697..49b7c1f99 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1000,9 +1000,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1033,9 +1033,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
                                  if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && !this.isExemptPlayer()) {
                                  // CraftBukkit end

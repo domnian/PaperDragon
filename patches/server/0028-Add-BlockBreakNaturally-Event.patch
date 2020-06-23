@@ -1,4 +1,4 @@
-From f11b9e2efcfc4aa8f975ed34c3f199be2c393ab8 Mon Sep 17 00:00:00 2001
+From 88d281958ed232c7809e8c474b7f0b0873721604 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -11,10 +11,10 @@ To give reliable control over all blocks dropping to world to restore custom ite
  3 files changed, 12 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index e40375b67..41915e250 100644
+index 66244a9d0..d2c668a67 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -505,8 +505,10 @@ public class Block implements IMaterial {
+@@ -513,8 +513,10 @@ public class Block implements IMaterial {
              entityitem.defaultPickupDelay();
              // CraftBukkit start
              if (world.captureDrops != null) {
@@ -38,10 +38,10 @@ index 5cfc81c55..6496c3e81 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 3cc71f741..5bbd1dda8 100644
+index e230f886e..b63e6c669 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -345,6 +345,15 @@ public class CraftEventFactory {
+@@ -353,6 +353,15 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
@@ -58,5 +58,5 @@ index 3cc71f741..5bbd1dda8 100644
                  item.world.addEntity(item);
              }
 -- 
-2.17.1
+2.20.1.windows.1
 

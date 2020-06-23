@@ -1,4 +1,4 @@
-From a74fe07c8b78dd3da1da5e1d7c8849fac4cb80d9 Mon Sep 17 00:00:00 2001
+From b55adfed857ce4b5512c3e5b50c1fe7eaa1cfdfc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c638104..1e903fe5c 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6b55856a9..eed1358d3 100644
+index e2629406e..0638822b6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -100,10 +100,10 @@ index 000000000..fafea6e08
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c022b86f0..50595bc8b 100644
+index 63c34cca5..1e8fa1671 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -747,6 +747,7 @@ public class WorldServer extends World {
+@@ -786,6 +786,7 @@ public class WorldServer extends World {
              // Spigot start
              if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
                  entity.ticksLived++;
@@ -111,7 +111,7 @@ index c022b86f0..50595bc8b 100644
                  entity.inactiveTick();
                  return;
              }
-@@ -760,6 +761,7 @@ public class WorldServer extends World {
+@@ -799,6 +800,7 @@ public class WorldServer extends World {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -120,10 +120,10 @@ index c022b86f0..50595bc8b 100644
  
                  gameprofilerfiller.a(() -> {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index cdaa21105..fb16475b8 100644
+index d9564d674..014cd1ac0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -886,6 +886,7 @@ public final class CraftServer implements Server {
+@@ -895,6 +895,7 @@ public final class CraftServer implements Server {
          }
          // PaperDragon start
          net.minecraft.server.MetaApiAccessor.reload();

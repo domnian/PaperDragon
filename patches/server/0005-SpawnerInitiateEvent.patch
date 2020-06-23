@@ -1,4 +1,4 @@
-From 24f4e378a1f20411b8ba585d91c3e2d2cbcdefe9 Mon Sep 17 00:00:00 2001
+From 9fed57298aef38518d0ee7e66368a800d92d6aea Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 29 Nov 2012 10:48:07 -0500
 Subject: [PATCH] SpawnerInitiateEvent
@@ -10,7 +10,7 @@ Subject: [PATCH] SpawnerInitiateEvent
  3 files changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 850c69273..c7d4749cb 100644
+index 7a7e6e362..df7f2d710 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -73,6 +73,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -22,11 +22,11 @@ index 850c69273..c7d4749cb 100644
  
      // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/IEntityAccess.java b/src/main/java/net/minecraft/server/IEntityAccess.java
-index 4157e50e4..a7f11551d 100644
+index 3bc57ef91..52c6e282a 100644
 --- a/src/main/java/net/minecraft/server/IEntityAccess.java
 +++ b/src/main/java/net/minecraft/server/IEntityAccess.java
-@@ -59,6 +59,7 @@ public interface IEntityAccess {
-         }
+@@ -93,6 +93,7 @@ public interface IEntityAccess {
+         // Paper end
      }
  
 +    @Nullable public default EntityHuman findNearbyPlayer(double d0, double d1, double d2, double d3, Predicate<Entity> predicate) { return this.a(d0, d1, d2, d3, predicate); } // Paper - OBFHELPER
@@ -68,5 +68,5 @@ index df494d37b..5e450c4ed 100644
  
      public void c() {
 -- 
-2.17.1
+2.20.1.windows.1
 

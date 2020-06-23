@@ -1,4 +1,4 @@
-From a910cb83a9d9268cbccc86706b8876c17d4626f6 Mon Sep 17 00:00:00 2001
+From ed8a06462e8fde946f0f4076e649a1868e503411 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:21:28 -0500
 Subject: [PATCH] Dragon API
@@ -122,10 +122,10 @@ index 000000000..21bd42ff9
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3c0b61ce1..6cff0114f 100644
+index cfab58904..4e500b36a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -241,6 +241,7 @@ public final class CraftServer implements Server {
+@@ -243,6 +243,7 @@ public final class CraftServer implements Server {
      public static Exception excessiveVelEx; // Paper - Velocity warnings
  
      static {

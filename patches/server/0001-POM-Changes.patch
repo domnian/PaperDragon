@@ -1,4 +1,4 @@
-From 948adbd02579aa10b5ad43129754362a0a8d93e0 Mon Sep 17 00:00:00 2001
+From c0d779c5819bcbc7a176b170ee930bb943efdbcd Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 907807ee5..d3bdeed93 100644
+index e4c63bb76..865fa5f38 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,12 @@
@@ -28,7 +28,7 @@ index 907807ee5..d3bdeed93 100644
  
      <properties>
          <!-- <skipTests>true</skipTests> Paper - This [was] not going to end well -->
-@@ -21,16 +22,16 @@
+@@ -18,16 +19,16 @@
      </properties>
  
      <parent>
@@ -49,7 +49,7 @@ index 907807ee5..d3bdeed93 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -94,6 +95,31 @@
+@@ -108,6 +109,31 @@
              <version>1.1.1</version>
              <scope>compile</scope>
          </dependency>
@@ -81,7 +81,7 @@ index 907807ee5..d3bdeed93 100644
          <dependency>
              <groupId>org.xerial</groupId>
              <artifactId>sqlite-jdbc</artifactId>
-@@ -143,7 +169,7 @@
+@@ -164,7 +190,7 @@
  
      <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
      <build>
@@ -90,7 +90,7 @@ index 907807ee5..d3bdeed93 100644
          <defaultGoal>clean install</defaultGoal> <!-- Paper -->
          <plugins>
              <plugin>
-@@ -151,7 +177,7 @@
+@@ -172,7 +198,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
@@ -99,7 +99,7 @@ index 907807ee5..d3bdeed93 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
-@@ -302,6 +328,15 @@
+@@ -344,6 +370,15 @@
                      </excludes>
                  </configuration>
              </plugin>

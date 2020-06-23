@@ -1,0 +1,25 @@
+From 5255cb88e30d26e486aa007b8d80ee64e828fc89 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 13 Feb 2020 13:21:35 -0500
+Subject: [PATCH] Add the ability to have a change_page click action for books
+
+---
+ src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
+index 566313ff..40ebd366 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Chat.java
+@@ -41,6 +41,8 @@ public interface DAPI_Chat {
+ 
+         FancifulChat command(final String command);
+ 
++        FancifulChat page(final int page);
++
+         FancifulChat achievementTooltip(final String name);
+ 
+         FancifulChat itemTooltip(final String itemJSON);
+-- 
+2.20.1.windows.1
+

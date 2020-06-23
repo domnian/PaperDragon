@@ -1,4 +1,4 @@
-From bdb33d4e55e44f3230887bf77804d96101bf28a5 Mon Sep 17 00:00:00 2001
+From 1c8d0722039bb32ed8e50f2e331687f8cdbedfe7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 29 Apr 2014 20:27:43 -0400
 Subject: [PATCH] All blocks extinguish at same rate
@@ -10,10 +10,10 @@ This is so that blocks that have ignite/burn events cancelled will actually burn
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockFire.java b/src/main/java/net/minecraft/server/BlockFire.java
-index 1c30a0250..016f858ae 100644
+index 9e501514f..d6086c949 100644
 --- a/src/main/java/net/minecraft/server/BlockFire.java
 +++ b/src/main/java/net/minecraft/server/BlockFire.java
-@@ -134,7 +134,7 @@ public class BlockFire extends Block {
+@@ -135,7 +135,7 @@ public class BlockFire extends Block {
                          return;
                      }
  

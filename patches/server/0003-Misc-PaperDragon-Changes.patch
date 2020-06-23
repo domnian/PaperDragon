@@ -1,4 +1,4 @@
-From 514967a53843f607c1d3d915a5a75ce4407206fd Mon Sep 17 00:00:00 2001
+From ef5a651219156564767f98a27ce7a745ba50f8fd Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -17,10 +17,10 @@ Subject: [PATCH] Misc PaperDragon Changes
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index e257d6b36..5ef397950 100644
+index 24641501a..089e23776 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
-@@ -578,7 +578,7 @@ public class Metrics {
+@@ -581,7 +581,7 @@ public class Metrics {
              boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
@@ -29,7 +29,7 @@ index e257d6b36..5ef397950 100644
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
-@@ -588,7 +588,7 @@ public class Metrics {
+@@ -591,7 +591,7 @@ public class Metrics {
  
                  metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
                  metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
@@ -129,7 +129,7 @@ index 000000000..edd083ef6
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 584166f22..850c69273 100644
+index 7df24be46..7a7e6e362 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1468,7 +1468,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -225,10 +225,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c9deaffc4..963c4c8ca 100644
+index 4ab657903..b48c68e31 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1472,10 +1472,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1558,10 +1558,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          return false;
      }
  
@@ -241,7 +241,7 @@ index c9deaffc4..963c4c8ca 100644
      public void h(String s) {
          if (this.isDebugging()) {
              MinecraftServer.LOGGER.info(s);
-@@ -1484,7 +1486,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1570,7 +1572,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -251,10 +251,10 @@ index c9deaffc4..963c4c8ca 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 23b5c7ed5..02e06f464 100644
+index 43ea0bfca..cfab58904 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -203,7 +203,7 @@ import javax.annotation.Nullable; // Paper
+@@ -205,7 +205,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -264,10 +264,10 @@ index 23b5c7ed5..02e06f464 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 770375ed4..1d5d5a1cb 100644
+index 004b6ce13..d52b596b5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -306,7 +306,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -312,7 +312,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -277,10 +277,10 @@ index 770375ed4..1d5d5a1cb 100644
  
      @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 5bdcdcf9e..3cfd5ec59 100644
+index 513c1041c..6574bcd11 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -25,7 +25,7 @@ public class WatchdogThread extends Thread
+@@ -26,7 +26,7 @@ public class WatchdogThread extends Thread
  
      private WatchdogThread(long timeoutTime, boolean restart)
      {
@@ -289,7 +289,7 @@ index 5bdcdcf9e..3cfd5ec59 100644
          this.timeoutTime = timeoutTime;
          this.restart = restart;
          earlyWarningEvery = Math.min(PaperConfig.watchdogPrintEarlyWarningEvery, timeoutTime); // Paper
-@@ -82,9 +82,9 @@ public class WatchdogThread extends Thread
+@@ -85,9 +85,9 @@ public class WatchdogThread extends Thread
                  log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
                  log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
                  log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
@@ -301,7 +301,7 @@ index 5bdcdcf9e..3cfd5ec59 100644
                  //
                  if ( net.minecraft.server.World.lastPhysicsProblem != null )
                  {
-@@ -107,12 +107,12 @@ public class WatchdogThread extends Thread
+@@ -110,12 +110,12 @@ public class WatchdogThread extends Thread
                  // Paper end
                  } else
                  {
@@ -314,9 +314,9 @@ index 5bdcdcf9e..3cfd5ec59 100644
 -                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):" ); // Paper
 +                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to PaperDragon!):" ); // PaperDragon - We are PaperDragon
                  ChunkTaskManager.dumpAllChunkLoadInfo(); // Paper
-                 dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
+                 dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( server.serverThread.getId(), Integer.MAX_VALUE ), log );
                  log.log( Level.SEVERE, "------------------------------" );
-@@ -127,7 +127,7 @@ public class WatchdogThread extends Thread
+@@ -130,7 +130,7 @@ public class WatchdogThread extends Thread
                      dumpThread( thread, log );
                  }
                  } else {
@@ -326,5 +326,5 @@ index 5bdcdcf9e..3cfd5ec59 100644
  
  
 -- 
-2.17.1
+2.20.1.windows.1
 
