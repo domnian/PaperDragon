@@ -1,4 +1,4 @@
-From 6dfe2b5684ebaa4f2ee5c64b784db100e159744e Mon Sep 17 00:00:00 2001
+From c93e58d65d7a3d1889deda3c8232c545a380d8ab Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -796,10 +796,10 @@ index 6bcb19b56..73bc4103b 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 8abf276a3..f487371ad 100644
+index 201221df6..23b48637c 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -1239,6 +1239,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1257,6 +1257,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                      chunk = ((ProtoChunkExtension) ichunkaccess).u();
                  } else {
                      chunk = new Chunk(this.world, (ProtoChunk) ichunkaccess);
@@ -986,11 +986,11 @@ index d16d3fe58..a32f2b1fc 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index ce8d7877a..a221dbce7 100644
+index a4cd6c404..bec3de732 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1383,6 +1383,11 @@ public class CraftEventFactory {
-         // Paper end
+@@ -1386,6 +1386,11 @@ public class CraftEventFactory {
+         InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
 +        // PaperDragon start

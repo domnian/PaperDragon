@@ -1,4 +1,4 @@
-From 59fcc29bb0d78f103b645e9a9bba0fdba75d57f7 Mon Sep 17 00:00:00 2001
+From cd778c0803757f26c9e6c46fbb7ab9b193ab0327 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement Enhanced Death Event
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 4ed4ad6bc..2c8e1072d 100644
+index 39072ebdc..cabce7cf7 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -616,7 +616,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -621,7 +621,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
  
          String deathmessage = defaultMessage.getString();
@@ -25,7 +25,7 @@ index 4ed4ad6bc..2c8e1072d 100644
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index e9a07bcfc..99f57d746 100644
+index 78e7a4aa2..eae9f89e5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -803,11 +803,12 @@ public class CraftEventFactory {

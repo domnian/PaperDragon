@@ -1,4 +1,4 @@
-From 47aa317841e1284562af446fbce719ff75516121 Mon Sep 17 00:00:00 2001
+From e72de665828d0728bc1ee28318ecf811859f7bd4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -87,7 +87,7 @@ index df7f2d710..49b10598e 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index dc242021f..0253fab5a 100644
+index 5e8b510af..602c89064 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -289,6 +289,7 @@ public abstract class EntityLiving extends Entity {
@@ -98,7 +98,7 @@ index dc242021f..0253fab5a 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bw()) {
-@@ -3222,6 +3223,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3223,6 +3224,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {
@@ -107,7 +107,7 @@ index dc242021f..0253fab5a 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 54f6dfcaa..1d6fe83a8 100644
+index 5b634f238..174497abb 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -489,6 +489,7 @@ public abstract class PlayerList {
