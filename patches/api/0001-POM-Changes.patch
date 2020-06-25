@@ -1,17 +1,17 @@
-From 610fea7a39cb6c839fe87a66960f267feda6f1df Mon Sep 17 00:00:00 2001
+From 1b955edc143c2daa0d9ac7202a0f615aa154be45 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ pom.xml | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index a71015f4..b7889200 100644
+index fee78297..94f8f78f 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -3,18 +3,19 @@
+@@ -3,18 +3,18 @@
           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
      <modelVersion>4.0.0</modelVersion>
      <parent>
@@ -26,8 +26,7 @@ index a71015f4..b7889200 100644
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.15.2-R0.1-SNAPSHOT</version>
-+
+     <version>1.16.1-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -37,7 +36,7 @@ index a71015f4..b7889200 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -32,8 +33,9 @@
+@@ -32,8 +32,9 @@
              Please see https://www.spigotmc.org/go/maven for more information.
          -->
          <repository>
