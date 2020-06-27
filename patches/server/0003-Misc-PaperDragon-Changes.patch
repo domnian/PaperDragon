@@ -1,4 +1,4 @@
-From ef5a651219156564767f98a27ce7a745ba50f8fd Mon Sep 17 00:00:00 2001
+From e1bef558579f6c5c2abd9952156420d8df19ad89 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -6,13 +6,13 @@ Subject: [PATCH] Misc PaperDragon Changes
 ---
  .../java/com/destroystokyo/paper/Metrics.java |  4 +-
  .../paperdragon/DragonVersionFetcher.java     | 84 +++++++++++++++++++
- .../net/minecraft/server/EntityHuman.java     |  2 +-
+ .../net/minecraft/server/EntityPlayer.java    |  2 +-
  src/main/java/net/minecraft/server/MCLog.java | 77 +++++++++++++++++
- .../net/minecraft/server/MinecraftServer.java |  4 +-
+ .../net/minecraft/server/MinecraftServer.java |  2 +-
  .../org/bukkit/craftbukkit/CraftServer.java   |  2 +-
  .../craftbukkit/util/CraftMagicNumbers.java   |  2 +-
  .../java/org/spigotmc/WatchdogThread.java     | 12 +--
- 8 files changed, 175 insertions(+), 12 deletions(-)
+ 8 files changed, 173 insertions(+), 12 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
@@ -128,17 +128,17 @@ index 000000000..edd083ef6
 +    }
 +
 +}
-diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 7df24be46..7a7e6e362 100644
---- a/src/main/java/net/minecraft/server/EntityHuman.java
-+++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1468,7 +1468,7 @@ public abstract class EntityHuman extends EntityLiving {
- 
-     public void setRespawnPosition(BlockPosition blockposition, boolean flag, boolean flag1) {
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index c4295e4f2..f2b072104 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -1939,7 +1939,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (blockposition != null) {
--            if (flag1 && !blockposition.equals(this.g)) {
-+            if (false && flag1 && !blockposition.equals(this.g)) { // EMC - Handle in our plugin
-                 this.sendMessage(new ChatMessage("block.minecraft.bed.set_spawn", new Object[0]));
+             boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
+ 
+-            if (flag1 && !flag2) {
++            if (flag && flag1 && !flag2) { // PaperDragon - let plugins handle the message
+                 this.sendMessage(new ChatMessage("block.minecraft.set_spawn"), SystemUtils.b);
              }
  
 diff --git a/src/main/java/net/minecraft/server/MCLog.java b/src/main/java/net/minecraft/server/MCLog.java
@@ -225,23 +225,10 @@ index 000000000..bf28f00db
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4ab657903..b48c68e31 100644
+index b474f45b6..712de47c8 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1558,10 +1558,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-         return false;
-     }
- 
-+    public void error(String line) { this.g(line); } // PaperDragon - OBFHELPER
-     public void g(String s) {
-         MinecraftServer.LOGGER.error(s);
-     }
- 
-+    public void debug(String line) { this.g(line); } // PaperDragon - OBFHELPER
-     public void h(String s) {
-         if (this.isDebugging()) {
-             MinecraftServer.LOGGER.info(s);
-@@ -1570,7 +1572,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1446,7 +1446,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -251,10 +238,10 @@ index 4ab657903..b48c68e31 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 43ea0bfca..cfab58904 100644
+index 6dfafe23f..2e108b768 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -205,7 +205,7 @@ import javax.annotation.Nullable; // Paper
+@@ -229,7 +229,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -264,10 +251,10 @@ index 43ea0bfca..cfab58904 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 004b6ce13..d52b596b5 100644
+index 257f46003..2e0a9a748 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -312,7 +312,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -317,7 +317,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

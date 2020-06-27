@@ -1,0 +1,70 @@
+From 1633a94f3a1111aaacedad7bf2300a159f4f04d3 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 19 Dec 2019 03:24:02 -0500
+Subject: [PATCH] Implement WorldBorderUpdateEvent
+
+---
+ .../DragonWorldBorderListener.java            | 37 +++++++++++++++++++
+ .../net/minecraft/server/WorldBorder.java     |  2 +-
+ 2 files changed, 38 insertions(+), 1 deletion(-)
+ create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
+new file mode 100644
+index 000000000..3eaf63a35
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
+@@ -0,0 +1,37 @@
++package com.domnian.paperdragon;
++
++import com.domnian.paperdragon.events.WorldBorderUpdateEvent;
++import net.minecraft.server.IWorldBorderListener;
++import net.minecraft.server.WorldBorder;
++
++public class DragonWorldBorderListener implements IWorldBorderListener {
++
++    public void a(WorldBorder worldBorder, double v) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.SIZE).callEvent();
++    }
++
++    public void a(WorldBorder worldBorder, double v, double v1, long l) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.SIZE_TRANSITION).callEvent();
++    }
++
++    public void a(WorldBorder worldBorder, double v, double v1) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.CENTER).callEvent();
++    }
++
++    public void a(WorldBorder worldBorder, int i) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.WARNING_TIME).callEvent();
++    }
++
++    public void b(WorldBorder worldBorder, int i) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.WARNING_DISTANCE).callEvent();
++    }
++
++    public void b(WorldBorder worldBorder, double v) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.DAMAGE_AMOUNT).callEvent();
++    }
++
++    public void c(WorldBorder worldBorder, double v) {
++        new WorldBorderUpdateEvent(worldBorder.world.getWorld(), WorldBorderUpdateEvent.Type.DAMAGE_BUFFER).callEvent();
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/server/WorldBorder.java b/src/main/java/net/minecraft/server/WorldBorder.java
+index 0ef92a320..52212af40 100644
+--- a/src/main/java/net/minecraft/server/WorldBorder.java
++++ b/src/main/java/net/minecraft/server/WorldBorder.java
+@@ -7,7 +7,7 @@ import java.util.List;
+ 
+ public class WorldBorder {
+ 
+-    private final List<IWorldBorderListener> a = Lists.newArrayList();
++    private final List<IWorldBorderListener> a = Lists.newArrayList(new com.domnian.paperdragon.DragonWorldBorderListener()); // PaperDragon - WorldBorderUpdateEvent
+     private double c = 0.2D;
+     private double d = 5.0D;
+     private int e = 15;
+-- 
+2.20.1.windows.1
+

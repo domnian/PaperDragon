@@ -1,0 +1,38 @@
+From fee5454af42d0b21cec7edc6b9584c2f5ee54499 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 17 Jan 2016 03:42:03 -0500
+Subject: [PATCH] Player Death fires PlayerDropItem event
+
+---
+ src/main/java/net/minecraft/server/EntityHuman.java             | 1 +
+ .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java    | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
+index 0d9f303f2..d5a3df095 100644
+--- a/src/main/java/net/minecraft/server/EntityHuman.java
++++ b/src/main/java/net/minecraft/server/EntityHuman.java
+@@ -545,6 +545,7 @@ public abstract class EntityHuman extends EntityLiving {
+     }
+ 
+     @Nullable
++    public EntityItem drop(ItemStack itemstack, boolean flag, boolean flag1) { return a(itemstack, flag, flag1); } @Nullable // PaperDragon - OBF HELPER
+     public EntityItem a(ItemStack itemstack, boolean flag, boolean flag1) {
+         if (itemstack.isEmpty()) {
+             return null;
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 1d5cdd70e..760c4e021 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -837,7 +837,7 @@ public class CraftEventFactory {
+         for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
+             if (stack == null || stack.getType() == Material.AIR) continue;
+ 
+-            world.dropItem(entity.getLocation(), stack);
++            victim.drop(CraftItemStack.asNMSCopy(stack), true, false); // PaperDragon
+         }
+ 
+         return event;
+-- 
+2.20.1.windows.1
+

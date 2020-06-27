@@ -1,19 +1,19 @@
-From 278260b2ebf38a1b7f76fba6890f2b806c04cf0a Mon Sep 17 00:00:00 2001
+From 49f5b926c986604b28c71ad8b2a12e44ef1e3cef Mon Sep 17 00:00:00 2001
 From: Derek Williams <GreenMeanieMC@gmail.com>
 Date: Sun, 17 Dec 2017 01:46:00 -0500
 Subject: [PATCH] SendSignEvent
 
 ---
- .../paperdragon/events/SendSignEvent.java     | 47 +++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ .../paperdragon/events/SendSignEvent.java     | 46 +++++++++++++++++++
+ 1 file changed, 46 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 new file mode 100644
-index 00000000..e0b0757f
+index 000000000..ec93ab544
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,46 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -48,7 +48,6 @@ index 00000000..e0b0757f
 +    public abstract Block getBlock();
 +    public abstract String[] getLines();
 +    public abstract void setLine(int i, String line);
-+    public abstract Player getPlayer();
 +
 +    private static final HandlerList handlers = new HandlerList();
 +

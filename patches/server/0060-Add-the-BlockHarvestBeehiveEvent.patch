@@ -1,0 +1,28 @@
+From 7ea029dea10d158088069645bf84ea5e03bf5400 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Fri, 17 Jan 2020 21:32:10 -0600
+Subject: [PATCH] Add the BlockHarvestBeehiveEvent
+
+---
+ src/main/java/net/minecraft/server/IDispenseBehavior.java | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/main/java/net/minecraft/server/IDispenseBehavior.java b/src/main/java/net/minecraft/server/IDispenseBehavior.java
+index 660f44975..cf205e6ea 100644
+--- a/src/main/java/net/minecraft/server/IDispenseBehavior.java
++++ b/src/main/java/net/minecraft/server/IDispenseBehavior.java
+@@ -879,6 +879,11 @@ public interface IDispenseBehavior {
+                 if (iblockdata.a((Tag) TagsBlock.BEEHIVES, (blockbase_blockdata) -> {
+                     return blockbase_blockdata.b(BlockBeehive.b);
+                 }) && (Integer) iblockdata.get(BlockBeehive.b) >= 5) {
++                    // PaperDragonstart
++                    if (!(new com.domnian.paperdragon.events.BlockHarvestBeehiveEvent(bukkitBlock, MCUtil.toBukkitBlock(world, blockposition), craftItem).callEvent())) {
++                        return itemstack;
++                    }
++                    // PaperDragon end
+                     ((BlockBeehive) iblockdata.getBlock()).a(world.getMinecraftWorld(), iblockdata, blockposition, (EntityHuman) null, TileEntityBeehive.ReleaseStatus.BEE_RELEASED);
+                     this.a(true);
+                     return this.a(isourceblock, itemstack, new ItemStack(Items.HONEY_BOTTLE));
+-- 
+2.20.1.windows.1
+

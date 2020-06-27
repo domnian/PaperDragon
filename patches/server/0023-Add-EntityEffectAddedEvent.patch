@@ -1,0 +1,36 @@
+From c43210217771f8c8730734cf8125b21387401dd4 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 21 Feb 2014 00:50:46 -0500
+Subject: [PATCH] Add EntityEffectAddedEvent
+
+---
+ .../java/net/minecraft/server/EntityLiving.java     | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
+index 52e0ca9fc..5ca67a84f 100644
+--- a/src/main/java/net/minecraft/server/EntityLiving.java
++++ b/src/main/java/net/minecraft/server/EntityLiving.java
+@@ -911,6 +911,19 @@ public abstract class EntityLiving extends Entity {
+         }
+         // CraftBukkit end
+ 
++        // PaperDragon start
++        com.domnian.paperdragon.events.EntityEffectAddedEvent addedEvent = new com.domnian.paperdragon.events.EntityEffectAddedEvent(
++                (org.bukkit.entity.LivingEntity) this.getBukkitEntity(),
++                new org.bukkit.potion.PotionEffect(
++                        org.bukkit.potion.PotionEffectType.getById(MobEffectList.getId(mobeffect.getMobEffect())),
++                        mobeffect.getDuration(), mobeffect.getAmplifier(), mobeffect.isAmbient(),
++                        mobeffect.isShowParticles(), mobeffect.isShowIcon()
++                )
++        );
++        if (!addedEvent.callEvent()) return false;
++        final org.bukkit.potion.PotionEffect effect = addedEvent.getEffect();
++        mobeffect = new MobEffect(MobEffectList.fromId(effect.getType().getId()), effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.hasParticles());
++        // PaperDragon end
+         if (!this.d(mobeffect)) {
+             return false;
+         } else {
+-- 
+2.20.1.windows.1
+

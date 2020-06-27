@@ -1,0 +1,24 @@
+From fecb2cae62c46642c892f87165a40a0740407a74 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 1 Jun 2016 23:29:17 -0400
+Subject: [PATCH] Reset Ender Crystals on Dragon Spawn
+
+---
+ src/main/java/net/minecraft/server/EnderDragonBattle.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
+index 1f0126674..b9fac2c03 100644
+--- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
++++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
+@@ -403,6 +403,7 @@ public class EnderDragonBattle {
+         entityenderdragon.setPositionRotation(0.0D, 128.0D, 0.0D, this.world.random.nextFloat() * 360.0F, 0.0F);
+         this.world.addEntity(entityenderdragon);
+         this.dragonUUID = entityenderdragon.getUniqueID();
++        this.resetCrystals(); // PaperDragon
+         return entityenderdragon;
+     }
+ 
+-- 
+2.20.1.windows.1
+
