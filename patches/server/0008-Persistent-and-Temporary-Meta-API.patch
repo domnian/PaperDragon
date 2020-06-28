@@ -1,4 +1,4 @@
-From 3b076c0762566f2278d1d17347e5e650033bd203 Mon Sep 17 00:00:00 2001
+From d0108c783a313bf2a676d682da12573d60eff22f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,10 +179,10 @@ index ac58fcb79..1a0bd56c1 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b11383b35..1572c9582 100644
+index 38887c1b7..59654057b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
+@@ -54,6 +54,7 @@ import java.util.stream.Stream;
  public abstract class Entity implements INamableTileEntity, ICommandListener, KeyedObject { // Paper
  
      // CraftBukkit start
@@ -190,7 +190,7 @@ index b11383b35..1572c9582 100644
      private static final int CURRENT_LEVEL = 2;
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
-@@ -1565,6 +1566,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1568,6 +1569,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index b11383b35..1572c9582 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1781,6 +1783,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1784,6 +1786,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -804,10 +804,10 @@ index 6bcb19b56..73bc4103b 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 46f8fe23c..c82d347da 100644
+index 8c5639fa5..cc6a0a3f1 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -1251,6 +1251,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1271,6 +1271,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                      chunk = ((ProtoChunkExtension) ichunkaccess).u();
                  } else {
                      chunk = new Chunk(this.world, (ProtoChunk) ichunkaccess);
@@ -945,7 +945,7 @@ index 06e42b7db..73d890ae2 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2b00b6d40..f644a9c82 100644
+index 2ed6c04d6..b7b93bbe1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -930,6 +930,9 @@ public final class CraftServer implements Server {

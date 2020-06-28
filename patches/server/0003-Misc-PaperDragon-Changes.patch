@@ -1,4 +1,4 @@
-From e1bef558579f6c5c2abd9952156420d8df19ad89 Mon Sep 17 00:00:00 2001
+From bbbdeae22231d0f9efe8da8b67b3e3f23c3c3bd2 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -129,10 +129,10 @@ index 000000000..edd083ef6
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c4295e4f2..f2b072104 100644
+index d5740a25b..d35d78ad7 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1939,7 +1939,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1945,7 +1945,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (blockposition != null) {
              boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
  
@@ -238,7 +238,7 @@ index b474f45b6..712de47c8 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6dfafe23f..2e108b768 100644
+index d04f8ea7f..13b4cf89e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -229,7 +229,7 @@ import javax.annotation.Nullable; // Paper

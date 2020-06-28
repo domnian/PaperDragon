@@ -1,4 +1,4 @@
-From d0fff7b4384c8db82579f63ec5164380693ba6ff Mon Sep 17 00:00:00 2001
+From 3cd487cb7c11c0723bda877d45824e8f29070cbe Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,10 +40,10 @@ index d5c638104..1e903fe5c 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1572c9582..de8e7e168 100644
+index 59654057b..e5378113a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -55,6 +55,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      // CraftBukkit start
      public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
@@ -120,7 +120,7 @@ index 51a559bdc..8ac84b37a 100644
  
                  gameprofilerfiller.a(() -> {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f644a9c82..fa6ac85cc 100644
+index b7b93bbe1..1181c50ef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -932,6 +932,7 @@ public final class CraftServer implements Server {
