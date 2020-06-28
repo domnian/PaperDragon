@@ -1,4 +1,4 @@
-From 737c7e6517eaefd66155d7015dfe7f0e192b318d Mon Sep 17 00:00:00 2001
+From 8139e35a53ee2de2692fc8ebaea63549e41ace6d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 27 Jan 2020 00:54:51 -0500
 Subject: [PATCH] Add Method to Save Offline Player Data to File
@@ -9,7 +9,7 @@ WARNING: This is a dangerous operation!
  1 file changed, 14 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index a684243f2..81713c9c5 100644
+index a684243f2..d9f037808 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 @@ -539,5 +539,19 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
@@ -19,12 +19,12 @@ index a684243f2..81713c9c5 100644
 +
 +    private boolean saveData(NBTTagCompound data) {
 +        try {
-+            File file = new File(getStorageLazy().getPlayerDir(), getUniqueId().toString() + ".dat.tmp");
-+            File file1 = new File(getStorageLazy().getPlayerDir(), getUniqueId().toString() + ".dat");
++            File file = new File(storage.getPlayerDir(), getUniqueId().toString() + ".dat.tmp");
++            File dataFile = getDataFile();
 +
 +            net.minecraft.server.NBTCompressedStreamTools.a(data, new java.io.FileOutputStream(file));
-+            if (file1.exists()) file1.delete();
-+            return file.renameTo(file1);
++            if (dataFile.exists()) dataFile.delete();
++            return file.renameTo(dataFile);
 +        } catch (Exception exception) {
 +            exception.printStackTrace();
 +            return false;
