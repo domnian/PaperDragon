@@ -1,4 +1,4 @@
-From 788e89958427a98ccb390f25148d7c0bac2c3e8d Mon Sep 17 00:00:00 2001
+From 26391c6468c2da170de0b53adb7633470507b140 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 21:09:39 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
@@ -68,5 +68,5 @@ index 9ae84de43..2311e869b 100644
       * Get the type of entity this egg will spawn.
       *
 -- 
-2.20.1.windows.1
+2.17.1
 

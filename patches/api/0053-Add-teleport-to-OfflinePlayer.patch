@@ -1,4 +1,4 @@
-From f9ef5316c7d15349664d42ec629e478749f6d7ef Mon Sep 17 00:00:00 2001
+From 45f5387bec2bd0fe4c62d4ab8fd34b2850bbd611 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 27 Jan 2020 00:56:34 -0500
 Subject: [PATCH] Add teleport() to OfflinePlayer
@@ -19,5 +19,5 @@ index 08b8b2899..5da8c7b97 100644
      // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

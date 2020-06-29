@@ -1,4 +1,4 @@
-From 80f0868c1d98b7324d57fdda09d79b9d6ed367ed Mon Sep 17 00:00:00 2001
+From a7b730adce675b06b2978da0431c0fc729aa70fc Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:48:21 -0500
 Subject: [PATCH] Add Player Head API to DragonAPI
@@ -47,17 +47,17 @@ index 000000000..97f969747
 +
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 191b8d9b6..bb95f13e2 100644
+index 509b51848..7559326ec 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -11,6 +11,7 @@ public class DragonAPI {
+@@ -10,6 +10,7 @@ public class DragonAPI {
+     public static DAPI_Misc misc;
      public static DAPI_Meta meta;
      public static DAPI_Chat chat;
-     public static DAPI_Attributes attributes;
 +    public static DAPI_Heads heads;
  
      public static String stack() {
          return ExceptionUtils.getFullStackTrace(new Throwable());
 -- 
-2.20.1.windows.1
+2.17.1
 

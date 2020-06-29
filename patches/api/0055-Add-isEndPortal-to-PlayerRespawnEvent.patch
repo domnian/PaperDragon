@@ -1,4 +1,4 @@
-From 9e1d66f617384162e76afe9bd06cc194dad0bda2 Mon Sep 17 00:00:00 2001
+From 443e60662138f8f34e54f4d3d55bbc1109881e08 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:24:45 -0500
 Subject: [PATCH] Add isEndPortal to PlayerRespawnEvent
@@ -43,5 +43,5 @@ index 71b566e44..95a7087c8 100644
      @Override
      public HandlerList getHandlers() {
 -- 
-2.20.1.windows.1
+2.17.1
 

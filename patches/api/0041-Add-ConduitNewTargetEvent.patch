@@ -1,4 +1,4 @@
-From ff7c51e50cd9fe94a11168f6aaaebc56f9c18352 Mon Sep 17 00:00:00 2001
+From e66ff9ab579068a924052d1417c96475f0703b14 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sun, 14 Jul 2019 13:50:18 -0500
 Subject: [PATCH] Add ConduitNewTargetEvent
@@ -54,5 +54,5 @@ index 000000000..962ff9d35
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

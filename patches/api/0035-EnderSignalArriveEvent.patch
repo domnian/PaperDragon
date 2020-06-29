@@ -1,19 +1,19 @@
-From 607e3bf93c427dcbe461410d36776550df7f0880 Mon Sep 17 00:00:00 2001
+From e6328a134cfc3877133c2c1c7f458fe47fbfd622 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
-Date: Thu, 10 May 2018 20:25:37 -0400
-Subject: [PATCH] BlazeLaunchFireballEvent
+Date: Thu, 10 May 2018 20:24:05 -0400
+Subject: [PATCH] EnderSignalArriveEvent
 
 ---
- .../events/BlazeLaunchFireballEvent.java      | 66 +++++++++++++++++++
- 1 file changed, 66 insertions(+)
- create mode 100644 src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
+ .../events/EnderSignalArriveEvent.java        | 58 +++++++++++++++++++
+ 1 file changed, 58 insertions(+)
+ create mode 100644 src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
 
-diff --git a/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
+diff --git a/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java b/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
 new file mode 100644
-index 000000000..0635d6448
+index 000000000..67fe5fd16
 --- /dev/null
-+++ b/src/main/java/com/domnian/paperdragon/events/BlazeLaunchFireballEvent.java
-@@ -0,0 +1,66 @@
++++ b/src/main/java/com/domnian/paperdragon/events/EnderSignalArriveEvent.java
+@@ -0,0 +1,58 @@
 +/*
 + * Copyright (c) 2017 Daniel Ennis (Aikar) MIT License
 + *
@@ -39,23 +39,15 @@ index 000000000..0635d6448
 +
 +package com.domnian.paperdragon.events;
 +
-+import org.bukkit.entity.Blaze;
-+import org.bukkit.entity.SmallFireball;
++import org.bukkit.entity.EnderSignal;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.entity.EntityEvent;
 +
-+public class BlazeLaunchFireballEvent extends EntityEvent implements Cancellable {
-+    private final SmallFireball fireball;
-+
-+    public BlazeLaunchFireballEvent(Blaze blaze, SmallFireball fireball) {
-+        super(blaze);
-+        this.fireball = fireball;
-+    }
-+
-+    public SmallFireball getFireball() {
-+        return fireball;
++public class EnderSignalArriveEvent extends EntityEvent implements Cancellable {
++    public EnderSignalArriveEvent(EnderSignal entity) {
++        super(entity);
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
@@ -81,5 +73,5 @@ index 000000000..0635d6448
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

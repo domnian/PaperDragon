@@ -1,4 +1,4 @@
-From a730a4e3ca244105deb13b1f57a2eb61138d93f4 Mon Sep 17 00:00:00 2001
+From 9487b746434388c89a9a80eaf219d6051aa76d81 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:38:55 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -77,5 +77,5 @@ index 2b34854c5..ef518f31a 100644
       * Gets the X-coordinate of this chunk
       *
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From c891bdd7c2e85c131ba19e5467cff66a43c6f781 Mon Sep 17 00:00:00 2001
+From 2974481e6a6e40fb863e377953d7f63fd9e40f49 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sat, 7 Mar 2020 10:31:00 -0600
 Subject: [PATCH] Add an Entity Anger Event
@@ -67,5 +67,5 @@ index 000000000..a8d805e65
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

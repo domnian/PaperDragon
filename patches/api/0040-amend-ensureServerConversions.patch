@@ -1,4 +1,4 @@
-From 5dc3631a47a5b6bc60fcb907c7f1b1202a60ab55 Mon Sep 17 00:00:00 2001
+From 935ebb0db1e8ac21c25573269c32e3342ae04741 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 Mar 2019 21:45:09 -0400
 Subject: [PATCH] amend ensureServerConversions
@@ -111,5 +111,5 @@ index eed5110bd..0f42e7055 100644
      @NotNull
      public ItemStack ensureServerConversions() {
 -- 
-2.20.1.windows.1
+2.17.1
 

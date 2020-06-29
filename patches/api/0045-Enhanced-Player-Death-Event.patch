@@ -1,4 +1,4 @@
-From bea5fb651cadff56d5780d4c783462c2a8ff9b93 Mon Sep 17 00:00:00 2001
+From 554f2bac920a92993e9b0712ab41f7771383bdc5 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:32:29 -0400
 Subject: [PATCH] Enhanced Player Death Event
@@ -46,5 +46,5 @@ index 3a743430a..526224e78 100644
 +    // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

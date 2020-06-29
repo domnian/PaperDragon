@@ -1,4 +1,4 @@
-From fb1d16de194db3587026ca8051c5b01ec16cb9a8 Mon Sep 17 00:00:00 2001
+From f066652af298177667ae7129b5650c31bb94fce6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Jan 2016 22:02:53 -0500
 Subject: [PATCH] Add UnknownCommandEvent
@@ -81,5 +81,5 @@ index d35c1ff09..e86140553 100644
  
          // Paper start - Plugins do weird things to workaround normal registration
 -- 
-2.20.1.windows.1
+2.17.1
 

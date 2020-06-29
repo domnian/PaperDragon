@@ -1,4 +1,4 @@
-From 38fa71b3bf1591992c420d2ad4cd07d805d97f77 Mon Sep 17 00:00:00 2001
+From c53441aa41a721c25fb16db9c5395ca98b3225ae Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Thu, 28 Nov 2019 20:36:54 -0600
 Subject: [PATCH] Add a PotionExtinguishFire Event
@@ -87,5 +87,5 @@ index 000000000..2e27d7bbe
 +
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

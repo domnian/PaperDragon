@@ -1,4 +1,4 @@
-From 3133388155cd170a9e49cb1a5c72b785dbed32ac Mon Sep 17 00:00:00 2001
+From 8794dba88cd2ff50d07e19f44f6a78cd7aec3684 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:16:15 -0400
 Subject: [PATCH] Add PlayerHitPlayer Event
@@ -54,5 +54,5 @@ index 000000000..8bbfb1b5c
 +}
 \ No newline at end of file
 -- 
-2.20.1.windows.1
+2.17.1
 

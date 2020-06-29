@@ -1,4 +1,4 @@
-From 89c8dd112957331dbc6930207b8b2cfeb1fe6282 Mon Sep 17 00:00:00 2001
+From 669ac9956a963864aa90cd7a3440d3e6604016fe Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:49:00 -0500
 Subject: [PATCH] Add getLocation() to OfflinePlayer
@@ -21,5 +21,5 @@ index 3afd5f5c0..08b8b2899 100644
 +    // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

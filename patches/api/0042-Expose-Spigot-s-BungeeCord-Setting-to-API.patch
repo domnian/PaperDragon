@@ -1,4 +1,4 @@
-From f6ed0ad134cb49cf2acf928e8c13b5d233547f65 Mon Sep 17 00:00:00 2001
+From 7178d99a711649f3ffc445bf6ac663e885e5289a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -43,5 +43,5 @@ index d31d139b9..1fa5b3019 100644
 +    // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

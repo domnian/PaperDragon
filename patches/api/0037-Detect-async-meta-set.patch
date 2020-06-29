@@ -1,4 +1,4 @@
-From b5e565a5ec49657eeb35f557a35f44d0e4f9cc6f Mon Sep 17 00:00:00 2001
+From afa7fc25a1ded6ab082a16eaef1806e1e4cd057a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Jun 2018 03:06:49 -0400
 Subject: [PATCH] Detect async meta set
@@ -43,5 +43,5 @@ index 01841f273..953b49e78 100644
          return containsKey(key.key());
      }
 -- 
-2.20.1.windows.1
+2.17.1
 

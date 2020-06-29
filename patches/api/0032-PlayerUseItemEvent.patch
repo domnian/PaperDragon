@@ -1,4 +1,4 @@
-From ba373750ac9b84ffa1e8fa1889e475ad9e65c2e9 Mon Sep 17 00:00:00 2001
+From afe3c7d0a7921d3855656bf7f57ed4c8853d3a55 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Dec 2016 00:22:09 -0500
 Subject: [PATCH] PlayerUseItemEvent
@@ -387,5 +387,5 @@ index 000000000..17f2f5494
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

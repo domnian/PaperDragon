@@ -1,4 +1,4 @@
-From 46eee068c7286e2ca36b8e6013c52bde03d8e240 Mon Sep 17 00:00:00 2001
+From a9baadd88fd9f376a25b05ec8721246eaed314bf Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 14 Jul 2019 01:07:06 -0400
 Subject: [PATCH] Add classes to be ignored by the annotation test
@@ -99,5 +99,5 @@ index a48be38b1..a6b72871e 100644
  
      @Test
 -- 
-2.20.1.windows.1
+2.17.1
 

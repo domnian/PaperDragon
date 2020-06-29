@@ -1,4 +1,4 @@
-From 642ea33b3df153895a35ac1807a8f88ec63e9735 Mon Sep 17 00:00:00 2001
+From 59f44fdc9af9c16f6ea3c5a32507eee251d57013 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 24 Apr 2017 20:27:23 -0400
 Subject: [PATCH] Add ChatColor.getById
@@ -43,5 +43,5 @@ index 44d597d7a..4023c4f2b 100644
      /**
       * Gets the color represented by the specified color code
 -- 
-2.20.1.windows.1
+2.17.1
 
