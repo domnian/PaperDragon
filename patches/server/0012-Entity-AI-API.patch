@@ -1,4 +1,4 @@
-From 41f41b520c3dbfe8e8e2b0e95926079d6504699b Mon Sep 17 00:00:00 2001
+From 926b5bad62f477fc9e2f91b63906f37421f8fecc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -6,7 +6,7 @@ Subject: [PATCH] Entity AI API
 ---
  .../paperdragon/api/CraftDAPI_Entity.java     | 135 ++++++++
  .../domnian/paperdragon/api/EntityAIApi.java  | 297 ++++++++++++++++++
- .../java/net/minecraft/server/Entity.java     |  18 +-
+ .../java/net/minecraft/server/Entity.java     |  20 +-
  .../net/minecraft/server/EntityAnimal.java    |   2 +-
  .../net/minecraft/server/EntityBlaze.java     |  27 +-
  .../net/minecraft/server/EntityCreature.java  |   1 +
@@ -27,7 +27,7 @@ Subject: [PATCH] Entity AI API
  .../craftbukkit/entity/CraftEnderSignal.java  |   3 +-
  .../bukkit/craftbukkit/entity/CraftGhast.java |   9 +
  .../java/org/spigotmc/ActivationRange.java    |   1 +
- 23 files changed, 582 insertions(+), 26 deletions(-)
+ 23 files changed, 583 insertions(+), 27 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
  create mode 100644 src/main/java/net/minecraft/server/EntityGoalAccessor.java
 
@@ -187,7 +187,7 @@ index 1e903fe5c..09ee0247c 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
 new file mode 100644
-index 000000000..94f010019
+index 000000000..1552a308e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
 @@ -0,0 +1,297 @@
@@ -367,7 +367,7 @@ index 000000000..94f010019
 +    }
 +
 +    public static void setTargetRange(Mob entity, float range) {
-+        API.attributes.setAttribute(entity, Attribute.TARGET_RANGE, range);
++        DragonAPI.attributes.setAttribute(entity, Attribute.TARGET_RANGE, range);
 +    }
 +
 +    public static void setRangedAttackDistance(RangedEntity monster, float range) {
@@ -404,13 +404,13 @@ index 000000000..94f010019
 +        }));
 +    }
 +    public static void setEntityMaxPathfindingRange(Mob entity, float range) {
-+        API.attributes.setAttribute(entity, Attribute.FOLLOW_RANGE, range);
++        DragonAPI.attributes.setAttribute(entity, Attribute.FOLLOW_RANGE, range);
 +    }
 +
 +    public static void respawnEntity(org.bukkit.entity.Entity entity) {
 +        CraftEntity craft = (CraftEntity) entity;
 +        Entity newHandle = craft.getHandle().teleportTo(
-+                ((CraftWorld)craft.getWorld()).getHandle().getWorldProvider().getDimensionManager(),
++                ((CraftWorld)craft.getWorld()).getHandle(),
 +                MCUtil.toBlockPosition(entity.getLocation())
 +        );
 +        if (newHandle != null) {
@@ -489,9 +489,18 @@ index 000000000..94f010019
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e5378113a..558185ad8 100644
+index e5378113a..369dad557 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+     public float lastYaw;
+     public float lastPitch;
+     private AxisAlignedBB boundingBox;
+-    protected boolean onGround;
++    public boolean onGround; // PaperDragon - protected -> public
+     public boolean positionChanged;
+     public boolean v;
+     public boolean velocityChanged;
 @@ -152,6 +152,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      protected boolean inLava;
      public int noDamageTicks;
@@ -615,7 +624,7 @@ index b1a41ca53..874530226 100644
      public ItemStack breedItem; // CraftBukkit - Add breedItem variable
  
 diff --git a/src/main/java/net/minecraft/server/EntityBlaze.java b/src/main/java/net/minecraft/server/EntityBlaze.java
-index 83fac131c..8fa0b0fdf 100644
+index 83fac131c..bb1e9a48a 100644
 --- a/src/main/java/net/minecraft/server/EntityBlaze.java
 +++ b/src/main/java/net/minecraft/server/EntityBlaze.java
 @@ -8,6 +8,25 @@ public class EntityBlaze extends EntityMonster {
@@ -668,7 +677,7 @@ index 83fac131c..8fa0b0fdf 100644
                                  EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.a.world, this.a, d1 + this.a.getRandom().nextGaussian() * (double) f, d2, d3 + this.a.getRandom().nextGaussian() * (double) f);
  
                                  entitysmallfireball.setPosition(entitysmallfireball.locX(), this.a.e(0.5D) + 0.5D, entitysmallfireball.locZ());
-+                                if (new com.empireminecraft.customevents.BlazeLaunchFireballEvent((org.bukkit.entity.Blaze) this.a.getBukkitEntity(), (org.bukkit.entity.SmallFireball) entitysmallfireball.getBukkitEntity()).callEvent()) { // PaperDragon
++                                if (new com.domnian.paperdragon.events.BlazeLaunchFireballEvent((org.bukkit.entity.Blaze) this.a.getBukkitEntity(), (org.bukkit.entity.SmallFireball) entitysmallfireball.getBukkitEntity()).callEvent()) { // PaperDragon
                                  this.a.world.addEntity(entitysmallfireball);
 +                                } else { entitysmallfireball.die(); }// PaperDragon
                              }
@@ -687,7 +696,7 @@ index 11d384729..68b1e0b55 100644
          super(entitytypes, world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityEnderSignal.java b/src/main/java/net/minecraft/server/EntityEnderSignal.java
-index 84bf27299..d10ab6059 100644
+index 84bf27299..6714c47da 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderSignal.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderSignal.java
 @@ -9,6 +9,18 @@ public class EntityEnderSignal extends Entity {
@@ -753,7 +762,7 @@ index 84bf27299..d10ab6059 100644
              this.setPosition(d0, d1, d2);
              ++this.despawnTimer;
              if (this.despawnTimer > 80 && !this.world.isClientSide) {
-+                if (!(new com.empireminecraft.customevents.EnderSignalArriveEvent((org.bukkit.entity.EnderSignal) this.getBukkitEntity()).callEvent())) {return;} // PaperDragon
++                if (!(new com.domnian.paperdragon.events.EnderSignalArriveEvent((org.bukkit.entity.EnderSignal) this.getBukkitEntity()).callEvent())) {return;} // PaperDragon
                  this.playSound(SoundEffects.ENTITY_ENDER_EYE_DEATH, 1.0F, 1.0F);
                  this.die();
                  if (this.shouldDropItem) {
@@ -993,7 +1002,7 @@ index d3f0327a2..ed3b6ed64 100644
      private final Supplier<GameProfilerFiller> e;
      private final EnumSet<PathfinderGoal.Type> f = EnumSet.noneOf(PathfinderGoal.Type.class); // Paper unused, but dummy to prevent plugins from crashing as hard. Theyll need to support paper in a special case if this is super important, but really doesn't seem like it would be.
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 8ac84b37a..722e3871e 100644
+index 43e071a84..865c0dc43 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -822,7 +822,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {

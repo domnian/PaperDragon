@@ -1,4 +1,4 @@
-From d0108c783a313bf2a676d682da12573d60eff22f Mon Sep 17 00:00:00 2001
+From 7ea7ab1e8e881b327048f4c68138c2969df7f530 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -869,7 +869,7 @@ index 67fda8bd5..245f09867 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 64b62328c..f4284a178 100644
+index 5ec658c5f..1631ca198 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -485,6 +485,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -919,7 +919,7 @@ index 286f672b9..43a08fa4e 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f24c4def3..51a559bdc 100644
+index f24c4def3..0827768f4 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -56,7 +56,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -927,7 +927,7 @@ index f24c4def3..51a559bdc 100644
      private static final Logger LOGGER = LogManager.getLogger();
      public final Int2ObjectMap<Entity> entitiesById = new Int2ObjectLinkedOpenHashMap();
 -    private final Map<UUID, Entity> entitiesByUUID = Maps.newHashMap();
-+    private final Map<UUID, Entity> entitiesByUUID = Maps.newHashMap(); // PaperDragon - private -> public
++    public final Map<UUID, Entity> entitiesByUUID = Maps.newHashMap(); // PaperDragon - private -> public
      private final Queue<Entity> entitiesToAdd = Queues.newArrayDeque();
      public final List<EntityPlayer> players = Lists.newArrayList(); // Paper - private -> public
      public final ChunkProviderServer chunkProvider; // Paper - public
@@ -945,7 +945,7 @@ index 06e42b7db..73d890ae2 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2ed6c04d6..b7b93bbe1 100644
+index 3d6ea696b..bba0c50fd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -930,6 +930,9 @@ public final class CraftServer implements Server {

@@ -1,0 +1,42 @@
+From e745fa1c5efad6c6d3efb6fbd778fc5b3afadb6d Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Wed, 18 Mar 2020 21:54:38 -0500
+Subject: [PATCH] Add getPlayerCause to LightningStrike entities
+
+---
+ src/main/java/net/minecraft/server/EntityLightning.java    | 2 +-
+ .../bukkit/craftbukkit/entity/CraftLightningStrike.java    | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
+index b1b8748fa..5546c3e6f 100644
+--- a/src/main/java/net/minecraft/server/EntityLightning.java
++++ b/src/main/java/net/minecraft/server/EntityLightning.java
+@@ -14,7 +14,7 @@ public class EntityLightning extends Entity {
+     private int d;
+     public boolean isEffect;
+     @Nullable
+-    private EntityPlayer f;
++    private EntityPlayer f; public EntityPlayer getPlayerCause() { return f; } // PaperDragon - OBFHELPER
+     public boolean isSilent = false; // Spigot
+ 
+     public EntityLightning(EntityTypes<? extends EntityLightning> entitytypes, World world) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
+index 988386a9a..21a7bf7cf 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
+@@ -45,4 +45,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
+         return spigot;
+     }
+     // Spigot end
++    // PaperDragon start
++    @Override
++    public org.bukkit.entity.Player getPlayerCause() {
++        net.minecraft.server.EntityPlayer entityPlayer = ((EntityLightning) super.getHandle()).getPlayerCause();
++        return entityPlayer != null ? entityPlayer.getBukkitEntity() : null;
++    }
++    // PaperDragon end
+ }
+-- 
+2.20.1.windows.1
+

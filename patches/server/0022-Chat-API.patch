@@ -1,4 +1,4 @@
-From c6159145a0d4f18771357e6da34a118c4e080dce Mon Sep 17 00:00:00 2001
+From 6dd118db2beba52a2e74e6005af1b68144050834 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -7,10 +7,11 @@ Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pl
 But did a lot of bug fixing and improving upon it, and designing into the Dragon API
 ---
  .../paperdragon/api/CraftDragonAPI.java       |   2 +
- .../paperdragon/api/FancifulChatAPIImpl.java  | 267 ++++++++++++++++++
+ .../paperdragon/api/FancifulChatAPIImpl.java  | 282 ++++++++++++++++++
  .../paperdragon/api/chat/CraftDAPI_Chat.java  |  40 +++
  .../net/minecraft/server/ChatHoverable.java   |  28 +-
- 4 files changed, 323 insertions(+), 14 deletions(-)
+ .../java/net/minecraft/server/Entity.java     |   1 +
+ 5 files changed, 339 insertions(+), 14 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 
@@ -36,10 +37,10 @@ index b11af17ef..81ceb7f59 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
 new file mode 100644
-index 000000000..c6311a531
+index 000000000..dadaaaee8
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FancifulChatAPIImpl.java
-@@ -0,0 +1,267 @@
+@@ -0,0 +1,282 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -65,6 +66,23 @@ index 000000000..c6311a531
 +
 +package com.domnian.paperdragon.api;
 +
++import java.util.ArrayList;
++import java.util.List;
++
++import com.domnian.paperdragon.api.HiddenItemMeta;
++import net.minecraft.server.*;
++
++import net.minecraft.server.PacketPlayOutTitle.EnumTitleAction;
++import org.bukkit.craftbukkit.entity.CraftEntity;
++import org.bukkit.craftbukkit.entity.CraftPlayer;
++import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.bukkit.entity.Entity;
++import org.bukkit.entity.Player;
++import org.bukkit.inventory.ItemStack;
++import org.json.JSONException;
++import org.json.JSONStringer;
++
 +/**
 + * Credits to original version @
 + * http://forums.bukkit.org/threads/lib-fanciful-pleasant-chat-message-formatting.195148/
@@ -73,24 +91,8 @@ index 000000000..c6311a531
 + * @author aikar
 + *
 + */
-+
-+import java.util.ArrayList;
-+import java.util.List;
-+
-+import com.domnian.paperdragon.api.HiddenItemMeta;
-+import net.minecraft.server.*;
-+
-+import net.minecraft.server.PacketPlayOutTitle.EnumTitleAction;
-+import org.bukkit.craftbukkit.entity.CraftPlayer;
-+import org.bukkit.craftbukkit.inventory.CraftItemStack;
-+import org.bukkit.craftbukkit.util.CraftChatMessage;
-+import org.bukkit.entity.Player;
-+import org.bukkit.inventory.ItemStack;
-+import org.json.JSONException;
-+import org.json.JSONStringer;
-+
 +public class FancifulChatAPIImpl implements DAPI_Chat.FancifulChat {
-+    private final List<MessagePart> messageParts = new ArrayList<MessagePart>();
++    private final List<MessagePart> messageParts = new ArrayList<>();
 +    private ChatComponentText component;
 +    private boolean isDirty = true;
 +
@@ -114,45 +116,42 @@ index 000000000..c6311a531
 +        return this;
 +    }
 +
-+    public FancifulChatAPIImpl achievementTooltip(final String name) {
-+        onHover("show_achievement", "achievement." + name);
++    public FancifulChatAPIImpl advancementTooltip(final String name) {
++        //TODO: onHover("show_advancement", "advancement." + name);
 +        return this;
 +    }
 +
++    public FancifulChatAPIImpl page(String page) {
++        onClick("change_page", page);
++        return this;
++    }
++
++    public FancifulChatAPIImpl copy(String text) {
++        return null;
++    }
++
 +    public FancifulChatAPIImpl itemTooltip(final String itemJSON) {
-+        onHover("show_item", itemJSON);
++        //TODO: onHover("show_item", itemJSON);
 +        return this;
 +    }
 +
 +    public FancifulChatAPIImpl itemTooltip(final ItemStack itemStack) {
-+        NBTTagCompound root = CraftItemStack.asNMSCopy(itemStack).save(new NBTTagCompound());
-+        if (root.hasKey("tag")) {
-+            NBTTagCompound tag = HiddenItemMeta.filterItemLore(root.getCompound("tag"), false);
-+            NBTTagCompound display = tag.getCompound("display");
-+            if (display.hasKey("Lore")) {
-+                NBTTagList lore = display.getList("Lore", 8);
-+                NBTTagList newlore = new NBTTagList();
-+
-+                for (int i = 0; i < lore.size(); i++) {
-+                    String line = lore.getString(i);
-+                    String newline = (line.isEmpty() ? " " : line);
-+                    newlore.add(NBTTagString.a(newline));
-+                }
-+                display.set("Lore", newlore);
-+            }
-+
-+            root.set("tag", tag);
-+        }
-+        return itemTooltip(root.toString());
++        onHoverItem(itemStack);
++        return this;
 +    }
 +
 +    public FancifulChatAPIImpl tooltip(final String text) {
 +        final String[] lines = text.split("\\n");
 +        if (lines.length <= 1) {
-+            onHover("show_text", text);
++            onHoverText(text);
 +        } else {
 +            itemTooltip(makeMultilineTooltip(lines));
 +        }
++        return this;
++    }
++
++    public FancifulChatAPIImpl entityTooltip(Entity entity) {
++        onHoverEntity(entity);
 +        return this;
 +    }
 +
@@ -162,8 +161,8 @@ index 000000000..c6311a531
 +        return this;
 +    }
 +
-+    public void send(Player player){
-+        sendPacket(player, new PacketPlayOutChat(buildComponent(), ChatMessageType.SYSTEM, SystemUtils.b));
++    public void send(Player player) {
++        sendPacket(player, new PacketPlayOutChat(buildComponent(), net.minecraft.server.ChatMessageType.SYSTEM, SystemUtils.getNullUUID()));
 +    }
 +
 +    public static void sendTitle(Player player, FancifulChatAPIImpl title, FancifulChatAPIImpl subtitle, Integer fadeIn, Integer stay, Integer fadeOut) {
@@ -173,7 +172,7 @@ index 000000000..c6311a531
 +        if (title != null) {
 +            sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.TITLE, title.buildComponent()));
 +        }
-+        if (subtitle != null ) {
++        if (subtitle != null) {
 +            sendPacket(player, new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subtitle.buildComponent()));
 +        }
 +    }
@@ -199,6 +198,7 @@ index 000000000..c6311a531
 +        }
 +        return component;
 +    }
++
 +    protected MessagePart latest() {
 +        return messageParts.get(messageParts.size() - 1);
 +    }
@@ -227,86 +227,102 @@ index 000000000..c6311a531
 +        isDirty = true;
 +    }
 +
-+    protected void onHover(final String name, final String data) {
++    protected void onHoverText(final String data) {
 +        final MessagePart latest = latest();
-+        latest.hoverActionName = name;
-+        latest.hoverActionData = data;
++        latest.hoverActionName = "show_text";
++        latest.hoverTextData = data;
 +        isDirty = true;
 +    }
++
++    protected void onHoverItem(ItemStack itemStack) {
++        final MessagePart latest = latest();
++        latest.hoverActionName = "show_item";
++        latest.hoverItemData = CraftItemStack.asNMSCopy(itemStack);
++        isDirty = true;
++    }
++
++    private void onHoverEntity(Entity entity) {
++        final MessagePart latest = latest();
++        latest.hoverActionName = "show_entity";
++        latest.hoverEntityData = ((CraftEntity)entity).getHandle();
++        isDirty = true;
++    }
++
 +    static final class MessagePart {
 +
 +
 +        String clickActionName = null, clickActionData = null,
-+            hoverActionName = null, hoverActionData = null;
++                hoverActionName = null, hoverTextData = null;
++        net.minecraft.server.ItemStack hoverItemData = null;
++        net.minecraft.server.Entity hoverEntityData = null;
 +        final IChatBaseComponent[] components;
 +
 +        MessagePart(final String text) {
 +            components = CraftChatMessage.fromString(text, true);
 +        }
++
 +        public IChatBaseComponent[] getComponents() {
 +            for (IChatBaseComponent component : components) {
 +                if (clickActionName != null) {
-+                    if (clickActionName.equals("open_file")) {
-+
-+                        component.getChatModifier().setChatClickable(
-+
-+                            new ChatClickable(ChatClickable.EnumClickAction.OPEN_FILE, clickActionData));
-+                    } else if (clickActionName.equals("open_url")) {
-+                        component.getChatModifier().setChatClickable(
-+                            new ChatClickable(ChatClickable.EnumClickAction.OPEN_URL, clickActionData));
-+                    } else if (clickActionName.equals("suggest_command")) {
-+                        component.getChatModifier().setChatClickable(
-+                            new ChatClickable(ChatClickable.EnumClickAction.SUGGEST_COMMAND, clickActionData));
-+                    } else if (clickActionName.equals("run_command")) {
-+                        component.getChatModifier().setChatClickable(
-+                            new ChatClickable(ChatClickable.EnumClickAction.RUN_COMMAND, clickActionData));
++                    switch (clickActionName) {
++                        case "open_file":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.OPEN_FILE, clickActionData));
++                            break;
++                        case "open_url":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.OPEN_URL, clickActionData));
++                            break;
++                        case "suggest_command":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.SUGGEST_COMMAND, clickActionData));
++                            break;
++                        case "run_command":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.RUN_COMMAND, clickActionData));
++                            break;
++                        case "change_page":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.CHANGE_PAGE, clickActionData));
++                            break;
++                        case "copy_to_clipboard":
++                            component.getChatModifier().setChatClickable(
++                                    new ChatClickable(ChatClickable.EnumClickAction.COPY_TO_CLIPBOARD, clickActionData));
 +                    }
 +                }
 +                if (hoverActionName != null) {
-+                    final ChatComponentText hover = new ChatComponentText(hoverActionData);
-+                    if (hoverActionName.equals("show_item")) {
-+                        component.getChatModifier().setChatHoverable(
-+                            new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ITEM, ChatHoverable.c.b(hover)));
-+                    } else if (hoverActionName.equals("show_text")) {
-+                        component.getChatModifier().setChatHoverable(
-+                            new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_TEXT, hover));
++                    switch (hoverActionName) {
++                        case "show_item":
++                            if (hoverItemData != null) {
++                                NBTTagCompound root = hoverItemData.save(new NBTTagCompound());
++                                NBTTagCompound hover = null;
++                                if (root.hasKey("tag")) {
++                                    hover = HiddenItemMeta.filterItemLore(root.getCompound("tag"), false);
++                                }
++                                component.getChatModifier().setChatHoverable(new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ITEM, new ChatHoverable.c(hoverItemData.getItem(), hoverItemData.getCount(), hover)));
++                            }
++                            break;
++                        case "show_text":
++                            if (hoverTextData != null) {
++                                final ChatComponentText hover = new ChatComponentText(hoverTextData);
++                                component.getChatModifier().setChatHoverable(new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_TEXT, hover));
++                            }
++                            break;
++                        case "show_entity":
++                            if (hoverEntityData != null) {
++                                component.getChatModifier().setChatHoverable(hoverEntityData.createHoverEvent());
++                            }
++                            break;
++                        case "hover_json":
++                            //todo: ChatHoverable.a(JsonObject jsonobject)
 +                    }
 +                }
 +            }
 +
 +            return components;
 +        }
-+/*
-+        JSONWriter writeJson(final JSONWriter json) throws JSONException {
-+            json.object().key("text").value(text);
-+            if (color != null) {
-+                json.key("color").value(color.name().toLowerCase());
-+            }
-+            if (styles != null) {
-+                for (final ChatColor style : styles) {
-+                    json.key(style.name().toLowerCase()).value(true);
-+                }
-+            }
-+            if (clickActionName != null && clickActionData != null) {
-+                json.key("clickEvent")
-+                    .object()
-+                    .key("action").value(clickActionName)
-+                    .key("value").value(clickActionData)
-+                    .endObject();
-+            }
-+            if (hoverActionName != null && hoverActionData != null) {
-+                json.key("hoverEvent")
-+                    .object()
-+                    .key("action").value(hoverActionName)
-+                    .key("value").value(hoverActionData)
-+                    .endObject();
-+            }
-+            return json.endObject();
-+        }
-+*/
 +    }
 +}
-+
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
 index 000000000..afc5e9e73
@@ -354,7 +370,7 @@ index 000000000..afc5e9e73
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ChatHoverable.java b/src/main/java/net/minecraft/server/ChatHoverable.java
-index 5e366c413..ef5f69c14 100644
+index 5e366c413..6f6f8e030 100644
 --- a/src/main/java/net/minecraft/server/ChatHoverable.java
 +++ b/src/main/java/net/minecraft/server/ChatHoverable.java
 @@ -17,21 +17,21 @@ import org.apache.logging.log4j.Logger;
@@ -363,25 +379,25 @@ index 5e366c413..ef5f69c14 100644
      private static final Logger LOGGER = LogManager.getLogger();
 -    private final ChatHoverable.EnumHoverAction<?> b;
 -    private final Object c;
-+    private final ChatHoverable.EnumHoverAction<?> action; // PaperDragon RENAME: b -> action
-+    private final Object value; // PaperDragon - RENAME: c -> value
++    private final ChatHoverable.EnumHoverAction<?> action; // PaperDragon - OBFHELPER - decompile fix
++    private final Object value; // PaperDragon - OBFHELPER - decompile fix
  
      public <T> ChatHoverable(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction, T t0) {
 -        this.b = chathoverable_enumhoveraction;
 -        this.c = t0;
-+        this.action = chathoverable_enumhoveraction; // PaperDragon RENAME: b -> action
-+        this.value = t0; // PaperDragon RENAME: c -> value
++        this.action = chathoverable_enumhoveraction; // PaperDragon - decompile fix
++        this.value = t0; // PaperDragon - decompile fix
      }
  
      public ChatHoverable.EnumHoverAction<?> a() {
 -        return this.b;
-+        return this.action; // PaperDragon RENAME: b -> action
++        return this.action; // PaperDragon - decompile fix
      }
  
      @Nullable
      public <T> T a(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction) {
 -        return this.b == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.c) : null;
-+        return this.action == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.value) : null; // PaperDragon RENAME: b -> action, c -> value
++        return this.action == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.value) : null; // PaperDragon - decompile fix
      }
  
      public boolean equals(Object object) {
@@ -390,7 +406,7 @@ index 5e366c413..ef5f69c14 100644
              ChatHoverable chathoverable = (ChatHoverable) object;
  
 -            return this.b == chathoverable.b && Objects.equals(this.c, chathoverable.c);
-+            return this.action == chathoverable.action && Objects.equals(this.value, chathoverable.value); // PaperDragon RENAME: b -> action, c -> value
++            return this.action == chathoverable.action && Objects.equals(this.value, chathoverable.value); // PaperDragon - decompile fix
          } else {
              return false;
          }
@@ -398,15 +414,15 @@ index 5e366c413..ef5f69c14 100644
  
      public String toString() {
 -        return "HoverEvent{action=" + this.b + ", value='" + this.c + '\'' + '}';
-+        return "HoverEvent{action=" + this.action + ", value='" + this.value + '\'' + '}'; // PaperDragon RENAME: b -> action, c -> value
++        return "HoverEvent{action=" + this.action + ", value='" + this.value + '\'' + '}'; // PaperDragon - decompile fix
      }
  
      public int hashCode() {
 -        int i = this.b.hashCode();
-+        int i = this.action.hashCode(); // PaperDragon RENAME: b -> action
++        int i = this.action.hashCode(); // PaperDragon - decompile fix
  
 -        i = 31 * i + (this.c != null ? this.c.hashCode() : 0);
-+        i = 31 * i + (this.value != null ? this.value.hashCode() : 0); // PaperDragon RENAME: c -> value
++        i = 31 * i + (this.value != null ? this.value.hashCode() : 0); // PaperDragon - decompile fix
          return i;
      }
  
@@ -416,8 +432,8 @@ index 5e366c413..ef5f69c14 100644
  
 -        jsonobject.addProperty("action", this.b.b());
 -        jsonobject.add("contents", this.b.a(this.c));
-+        jsonobject.addProperty("action", this.action.b()); // PaperDragon RENAME: b -> action
-+        jsonobject.add("contents", this.action.a(this.value)); // PaperDragon RENAME: b -> action, c -> value
++        jsonobject.addProperty("action", this.action.b()); // PaperDragon - decompile fix
++        jsonobject.add("contents", this.action.a(this.value)); // PaperDragon - decompile fix
          return jsonobject;
      }
  
@@ -426,19 +442,31 @@ index 5e366c413..ef5f69c14 100644
  
          private T b(Object object) {
 -            return object;
-+            return (T) object;  // PaperDragon - decompile fix
++            return (T) object; // PaperDragon - decompile fix
          }
  
          @Nullable
-@@ -220,7 +220,7 @@ public class ChatHoverable {
-         }
- 
+@@ -165,7 +165,7 @@ public class ChatHoverable {
          @Nullable
--        private static ChatHoverable.c b(IChatBaseComponent ichatbasecomponent) {
-+        public static ChatHoverable.c b(IChatBaseComponent ichatbasecomponent) { // PaperDragon - private -> public
-             try {
-                 NBTTagCompound nbttagcompound = MojangsonParser.parse(ichatbasecomponent.getString());
+         private final NBTTagCompound c;
  
+-        c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) {
++        public c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) { // PaperDragon - default -> public
+             this.a = item;
+             this.b = i;
+             this.c = nbttagcompound;
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 598fe80cc..853071dbe 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -2910,6 +2910,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+         return this.getDirection();
+     }
+ 
++    public ChatHoverable createHoverEvent() { return this.ca(); } // PaperDragon - OBFHELPER
+     protected ChatHoverable ca() {
+         return new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ENTITY, new ChatHoverable.b(this.getEntityType(), this.getUniqueID(), this.getDisplayName()));
+     }
 -- 
 2.20.1.windows.1
 

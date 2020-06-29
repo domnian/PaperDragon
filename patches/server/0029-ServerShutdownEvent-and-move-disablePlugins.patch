@@ -1,4 +1,4 @@
-From 2b86e8f69cf2f9144f05a1e21a603e480fa402c2 Mon Sep 17 00:00:00 2001
+From a0601d5f8fae1d504d2dd46446a50182a4300bac Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 8 May 2015 19:56:21 -0400
 Subject: [PATCH] ServerShutdownEvent and move disablePlugins
@@ -8,7 +8,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 712de47c8..b3899c7a8 100644
+index 712de47c8..d98d447db 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -100,6 +100,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -27,7 +27,7 @@ index 712de47c8..b3899c7a8 100644
 -            this.server.waitForAsyncTasksShutdown(); // Paper
 +            // this.server.disablePlugins(); // PaperDragon - Moved below after everything has unloaded so plugins can get events
 +            // this.server.waitForAsyncTasksShutdown(); // Paper // PaperDragon - moved down
-+            new com.empireminecraft.customevents.ServerShutdownEvent(shutdownReason).callEvent(); // PaperDragon
++            new com.domnian.paperdragon.events.ServerShutdownEvent(shutdownReason).callEvent(); // PaperDragon
          }
          // CraftBukkit end
          if (this.getServerConnection() != null) {

@@ -1,4 +1,4 @@
-From d4719d6fd279715ddce91942825abfaa26527b06 Mon Sep 17 00:00:00 2001
+From bc07ec60e5dbecaa8b441f84ab7f9a8b4e207f37 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 2b2468831..d39ac2886 100644
+index ef8ee637a..021ce0045 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,12 @@
@@ -99,7 +99,7 @@ index 2b2468831..d39ac2886 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
-@@ -344,6 +370,15 @@
+@@ -349,6 +375,15 @@
                      </excludes>
                  </configuration>
              </plugin>

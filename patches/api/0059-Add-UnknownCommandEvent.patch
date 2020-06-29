@@ -1,0 +1,85 @@
+From fb1d16de194db3587026ca8051c5b01ec16cb9a8 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 3 Jan 2016 22:02:53 -0500
+Subject: [PATCH] Add UnknownCommandEvent
+
+---
+ .../events/UnknownCommandEvent.java           | 52 +++++++++++++++++++
+ .../org/bukkit/command/SimpleCommandMap.java  |  2 +-
+ 2 files changed, 53 insertions(+), 1 deletion(-)
+ create mode 100644 src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java b/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java
+new file mode 100644
+index 000000000..1dd90bee2
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java
+@@ -0,0 +1,52 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.command.CommandSender;
++import org.bukkit.event.Cancellable;
++import org.bukkit.event.Event;
++import org.bukkit.event.HandlerList;
++
++public class UnknownCommandEvent extends Event implements Cancellable {
++    private final CommandSender sender;
++    private final String sentCommandLabel;
++    private final String commandLine;
++
++    public UnknownCommandEvent(CommandSender sender, String sentCommandLabel, String commandLine) {
++        this.sender = sender;
++        this.sentCommandLabel = sentCommandLabel;
++        this.commandLine = commandLine;
++    }
++
++    public CommandSender getSender() {
++        return sender;
++    }
++
++    public String getSentCommandLabel() {
++        return sentCommandLabel;
++    }
++
++    public String getCommandLine() {
++        return commandLine;
++    }
++
++    private static final HandlerList handlers = new HandlerList();
++
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++
++    private boolean cancelled = false;
++
++    @Override
++    public boolean isCancelled() {
++        return cancelled;
++    }
++
++    @Override
++    public void setCancelled(boolean cancel) {
++        cancelled = cancel;
++    }
++}
+diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+index d35c1ff09..e86140553 100644
+--- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
++++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+@@ -144,7 +144,7 @@ public class SimpleCommandMap implements CommandMap {
+         Command target = getCommand(sentCommandLabel);
+ 
+         if (target == null) {
+-            return false;
++            return !(new com.domnian.paperdragon.events.UnknownCommandEvent(sender, sentCommandLabel, commandLine).callEvent()); // PaperDragon
+         }
+ 
+         // Paper start - Plugins do weird things to workaround normal registration
+-- 
+2.20.1.windows.1
+

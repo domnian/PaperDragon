@@ -1,4 +1,4 @@
-From 7303245fb479cadd944b0aedd9c2b87d3da655f5 Mon Sep 17 00:00:00 2001
+From 5422d133a6798f108740d749dcfa245a78d41607 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 22 Sep 2017 00:45:30 -0400
 Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
@@ -8,7 +8,7 @@ Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
  1 file changed, 4 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index e04cf9f7c..6f73a6fbd 100644
+index e04cf9f7c..80715cbe9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -2137,6 +2137,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -17,7 +17,7 @@ index e04cf9f7c..6f73a6fbd 100644
      }
 +
 +    public void sendJsonMessage(String json) {
-+        getHandle().sendMessage(net.minecraft.server.IChatBaseComponent.ChatSerializer.a(json));
++        getHandle().sendMessage(net.minecraft.server.IChatBaseComponent.ChatSerializer.a(json), SystemUtils.b);
 +    }
      // PaperDragon end
  

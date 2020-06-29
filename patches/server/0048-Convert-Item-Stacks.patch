@@ -1,4 +1,4 @@
-From 848575c91a9d07ee46521032edafb62fd76b38ea Mon Sep 17 00:00:00 2001
+From 8225bf2db119b775068f486cb387e62928cff23d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -41,10 +41,10 @@ index 67bf6d5b9..92c2aee49 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index 9dcc81140..c6d66d495 100644
+index 0d62f3ae9..f5045a93c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-@@ -326,9 +326,25 @@ public final class CraftItemFactory implements ItemFactory {
+@@ -327,9 +327,25 @@ public final class CraftItemFactory implements ItemFactory {
          return ((CraftMetaItem) meta).updateMaterial(material);
      }
      // Paper start
@@ -72,7 +72,7 @@ index 9dcc81140..c6d66d495 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index 3541fed80..69ec9c994 100644
+index 8af956955..d70af4b1a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 @@ -39,7 +39,12 @@ public final class CraftItemStack extends ItemStack {
@@ -115,7 +115,7 @@ index 3541fed80..69ec9c994 100644
      }
  
      public static ItemMeta getItemMeta(net.minecraft.server.ItemStack item) {
-@@ -524,7 +537,7 @@ public final class CraftItemStack extends ItemStack {
+@@ -525,7 +538,7 @@ public final class CraftItemStack extends ItemStack {
          item.setTag(tag);
  
          ((CraftMetaItem) itemMeta).applyToItem(tag);
