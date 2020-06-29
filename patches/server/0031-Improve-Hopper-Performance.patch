@@ -1,4 +1,4 @@
-From 22dc778d6dfc633e378777d2bfb42094390d4238 Mon Sep 17 00:00:00 2001
+From 4268c6049b18bc9c0a35a579aa5603c97e17ec18 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 May 2015 21:58:24 -0400
 Subject: [PATCH] Improve Hopper Performance
@@ -12,7 +12,7 @@ Only do an item "suck in" action once per second
  4 files changed, 50 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 64ebd2919..09bdbe533 100644
+index 64ebd29198..09bdbe5332 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -141,10 +141,24 @@ public class EntityItem extends Entity {
@@ -49,7 +49,7 @@ index 64ebd2919..09bdbe533 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityMinecartHopper.java b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
-index 4130fd8cd..75a35e5b6 100644
+index 4130fd8cd9..75a35e5b6f 100644
 --- a/src/main/java/net/minecraft/server/EntityMinecartHopper.java
 +++ b/src/main/java/net/minecraft/server/EntityMinecartHopper.java
 @@ -7,6 +7,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
@@ -80,7 +80,7 @@ index 4130fd8cd..75a35e5b6 100644
 +    // PaperDragon stop
  }
 diff --git a/src/main/java/net/minecraft/server/IHopper.java b/src/main/java/net/minecraft/server/IHopper.java
-index 54552d181..e28c24a01 100644
+index 54552d1819..e28c24a016 100644
 --- a/src/main/java/net/minecraft/server/IHopper.java
 +++ b/src/main/java/net/minecraft/server/IHopper.java
 @@ -15,6 +15,7 @@ public interface IHopper extends IInventory {
@@ -92,7 +92,7 @@ index 54552d181..e28c24a01 100644
      double x(); default double getX() { return this.x(); } // Paper - OBFHELPER
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index f00d8adab..f879079ee 100644
+index e12daab0ca..9eb507c5f6 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -91,6 +91,23 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -135,7 +135,7 @@ index f00d8adab..f879079ee 100644
 +        return false; // PaperDragon
      }
  
-     private static boolean a(IHopper ihopper, IInventory iinventory, int i, EnumDirection enumdirection) {
+     private static boolean a(IHopper ihopper, IInventory iinventory, int i, EnumDirection enumdirection) {// Paper - method unused as logic is inlined above
 -- 
 2.20.1.windows.1
 

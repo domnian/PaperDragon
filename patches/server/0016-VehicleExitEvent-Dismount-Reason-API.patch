@@ -1,4 +1,4 @@
-From 1ae90ea7d9c324b83bac6e29b1443536187d65e8 Mon Sep 17 00:00:00 2001
+From e91bf07eefe136bb4ab7e2efb5c6f7e8ff911f55 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 5f5c8579e..30297542d 100644
+index 2822eff6ef..4c92097455 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -318,6 +318,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -69,7 +69,7 @@ index 5f5c8579e..30297542d 100644
          return this.invulnerable && damagesource != DamageSource.OUT_OF_WORLD && !damagesource.v() && !isDisabled; // PaperDragon - add && !isDisabled
      }
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 2cada09ce..e0273a954 100644
+index 2cada09ced..e0273a954a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -364,6 +364,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -81,7 +81,7 @@ index 2cada09ce..e0273a954 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index a3e66ccfa..29327e2c4 100644
+index a3e66ccfa4..29327e2c4a 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -309,6 +309,7 @@ public abstract class EntityLiving extends Entity {
@@ -101,10 +101,10 @@ index a3e66ccfa..29327e2c4 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 35d7ac60f..c9d7196fd 100644
+index 3c5ba8f2fd..15fdbcbdd5 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -521,6 +521,7 @@ public abstract class PlayerList {
+@@ -517,6 +517,7 @@ public abstract class PlayerList {
  
              if (entity.hasSinglePlayerPassenger()) {
                  PlayerList.LOGGER.debug("Removing player mount");

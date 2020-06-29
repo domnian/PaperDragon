@@ -1,4 +1,4 @@
-From 36db64f12d3a00d900c8b68250f8639c796eadcd Mon Sep 17 00:00:00 2001
+From 6ba2a280507b653e7cf43e840bfc89f5c63be8ec Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -21,7 +21,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 000000000..cb9e8fbb2
+index 0000000000..cb9e8fbb24
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,95 @@
@@ -121,7 +121,7 @@ index 000000000..cb9e8fbb2
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 007255297..5a79f2fc7 100644
+index 0072552979..5a79f2fc78 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -60,7 +60,7 @@ public final class ItemStack {
@@ -162,7 +162,7 @@ index 007255297..5a79f2fc7 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 6d3db25dd..e7d459f37 100644
+index c20a3b6eb8..c21a385a0d 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -280,6 +280,7 @@ public class PacketDataSerializer extends ByteBuf {
@@ -180,7 +180,7 @@ index 6d3db25dd..e7d459f37 100644
 +                itemstack.tag = com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
                  if (itemstack.tag.hasKey("SkullOwnerOrig")) {
                      NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
-                     String ownerOrig = itemstack.tag.getString("SkullOwnerOrig");
+                     if (itemstack.tag.hasKey("SkullOwnerOrig")) {
 -- 
 2.20.1.windows.1
 
