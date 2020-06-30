@@ -1,4 +1,4 @@
-From e91bf07eefe136bb4ab7e2efb5c6f7e8ff911f55 Mon Sep 17 00:00:00 2001
+From d140b093e5ecc5a3575753d5182289bea7c37552 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2822eff6ef..4c92097455 100644
+index e6aec7bb0f..b24cb6ab8c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -318,6 +318,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -81,7 +81,7 @@ index 2cada09ced..e0273a954a 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index a3e66ccfa4..29327e2c4a 100644
+index 18d21b6062..ccb06eb525 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -309,6 +309,7 @@ public abstract class EntityLiving extends Entity {
@@ -92,7 +92,7 @@ index a3e66ccfa4..29327e2c4a 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bD()) {
-@@ -3402,6 +3403,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3414,6 +3415,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {
