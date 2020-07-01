@@ -1,4 +1,4 @@
-From 2708c223e751d3dd555ca462eb623a5f2cc38ac7 Mon Sep 17 00:00:00 2001
+From 744505364379b18dfa5d0710855e80cccf64ccf9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -11,7 +11,7 @@ To give reliable control over all blocks dropping to world to restore custom ite
  3 files changed, 12 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 81725611d..6a225a567 100644
+index 81725611d5..6a225a567b 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -237,8 +237,10 @@ public class Block extends BlockBase implements IMaterial {
@@ -26,7 +26,7 @@ index 81725611d..6a225a567 100644
              }
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 9173bedef..64ebd2919 100644
+index 9173bedefd..64ebd29198 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -17,6 +17,7 @@ public class EntityItem extends Entity {
@@ -38,10 +38,10 @@ index 9173bedef..64ebd2919 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index cf2566e8c..1d5cdd70e 100644
+index 52782d2219..a6b041d62e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -364,6 +364,15 @@ public class CraftEventFactory {
+@@ -367,6 +367,15 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
@@ -58,5 +58,5 @@ index cf2566e8c..1d5cdd70e 100644
                  item.world.addEntity(item);
              }
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,20 +1,20 @@
-From 12772218fa7b57653868801af377993a255791a8 Mon Sep 17 00:00:00 2001
+From 06baec014686d1947ec9c57ab0656c20a79a15d7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)
 
 ---
- .../paperdragon/api/CraftDAPI_Heads.java      | 83 +++++++++++++++++++
+ .../paperdragon/api/CraftDAPI_Heads.java      | 80 +++++++++++++++++++
  .../paperdragon/api/CraftDragonAPI.java       |  1 +
- 2 files changed, 84 insertions(+)
+ 2 files changed, 81 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 new file mode 100644
-index 000000000..30bcea953
+index 0000000000..1945f385fb
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-@@ -0,0 +1,83 @@
+@@ -0,0 +1,80 @@
 +/*
 + * Copyright (c) 2017. Domnian Development
 + *
@@ -26,10 +26,7 @@ index 000000000..30bcea953
 +import co.aikar.timings.NullTimingHandler;
 +import co.aikar.timings.Timing;
 +import co.aikar.timings.Timings;
-+import net.minecraft.server.ItemStack;
-+import net.minecraft.server.Items;
-+import net.minecraft.server.NBTTagCompound;
-+import net.minecraft.server.NBTTagList;
++import net.minecraft.server.*;
 +import org.apache.commons.codec.binary.Base64;
 +import org.bukkit.ChatColor;
 +import org.bukkit.Material;
@@ -81,7 +78,7 @@ index 000000000..30bcea953
 +                    props = new NBTTagCompound(),
 +                    textData = new NBTTagCompound();
 +            NBTTagList textures = new NBTTagList();
-+            owner.setString("Id", UUID.randomUUID().toString());
++            owner.setIntArray("Id", GameProfileSerializer.a(UUID.randomUUID()).getInts());
 +            textData.setString("Value", getTextureData(url));
 +            textures.add(textData);
 +            props.set("textures", textures);
@@ -99,7 +96,7 @@ index 000000000..30bcea953
 +
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index 81ceb7f59..a6408aab4 100644
+index 81ceb7f598..a6408aab4f 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -36,6 +36,7 @@ public final class CraftDragonAPI extends DragonAPI {
@@ -111,5 +108,5 @@ index 81ceb7f59..a6408aab4 100644
  
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

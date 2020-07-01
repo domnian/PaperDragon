@@ -1,4 +1,4 @@
-From 6ba2a280507b653e7cf43e840bfc89f5c63be8ec Mon Sep 17 00:00:00 2001
+From d68135f48189e810b0fcbfc5325399b0d8bda9be Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -21,7 +21,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 0000000000..cb9e8fbb24
+index 0000000000..85ea4e8600
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,95 @@
@@ -45,7 +45,7 @@ index 0000000000..cb9e8fbb24
 +                    String line = lore.getString(i);
 +                    if (line.startsWith("{") && line.endsWith("}")) {
 +                        IChatBaseComponent component = IChatBaseComponent.ChatSerializer.jsonToComponent(line);
-+                        line = component.getText();
++                        line = component.getString();
 +                    }
 +
 +                    if (line.equals("&&::META")) {
@@ -182,5 +182,5 @@ index c20a3b6eb8..c21a385a0d 100644
                      NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
                      if (itemstack.tag.hasKey("SkullOwnerOrig")) {
 -- 
-2.20.1.windows.1
+2.17.1
 
