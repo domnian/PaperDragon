@@ -1,4 +1,4 @@
-From d140b093e5ecc5a3575753d5182289bea7c37552 Mon Sep 17 00:00:00 2001
+From d74d5e03d7b33af02f51a0325650bd1dc8fc58ce Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e6aec7bb0f..b24cb6ab8c 100644
+index 6583c74c75..eb782e4db6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -318,6 +318,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -52,15 +52,15 @@ index e6aec7bb0f..b24cb6ab8c 100644
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2138,6 +2146,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
-                         (Vehicle) getBukkitEntity(),
-                         (LivingEntity) entity.getBukkitEntity(), !suppressCancellation // Paper
+@@ -2140,6 +2148,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  );
-+                event.reason = reason; // PaperDragon
-                 Bukkit.getPluginManager().callEvent(event);
+                 // Suppress during worldgen
+                 if (this.valid) {
++                    event.reason = reason; // PaperDragon
+                     Bukkit.getPluginManager().callEvent(event);
+                 }
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
-                 Entity n = craftn == null ? null : craftn.getHandle();
-@@ -2558,6 +2567,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2564,6 +2573,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cx=%d, cz=%d, tl=%d, v=%b, d=%b]", new Object[] { this.getClass().getSimpleName(), this.getDisplayName().getString(), Integer.valueOf(this.id), this.uniqueID.toString(), this.world == null ? "~NULL~" : this.world.toString(), Double.valueOf(this.locX()), Double.valueOf(this.locY()), Double.valueOf(this.locZ()), getChunkX(), getChunkZ(), this.ticksLived, this.valid, this.dead}); // Paper - add more information
      }
  
@@ -113,5 +113,5 @@ index 3c5ba8f2fd..15fdbcbdd5 100644
                  worldserver.removeEntity(entity);
                  entity.dead = true;
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From d68135f48189e810b0fcbfc5325399b0d8bda9be Mon Sep 17 00:00:00 2001
+From a0368fbfd0919b91b34f52e69ad60d4cc2548740 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -162,7 +162,7 @@ index 0072552979..5a79f2fc78 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index c20a3b6eb8..c21a385a0d 100644
+index 31e7fb5620..adafa50ab8 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -280,6 +280,7 @@ public class PacketDataSerializer extends ByteBuf {
@@ -172,7 +172,7 @@ index c20a3b6eb8..c21a385a0d 100644
 +                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon
                  if (nbttagcompound != null && nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
                      NBTTagCompound owner = nbttagcompound.getCompound("SkullOwner");
-                     if (owner.hasKey("Id")) {
+                     if (owner.hasUUID("Id")) {
 @@ -308,6 +309,7 @@ public class PacketDataSerializer extends ByteBuf {
              // CraftBukkit start
              if (itemstack.getTag() != null) {

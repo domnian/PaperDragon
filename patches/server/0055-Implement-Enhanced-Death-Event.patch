@@ -1,4 +1,4 @@
-From 1b9dbe215ae9a47cefe6f225df6ac79f50934bae Mon Sep 17 00:00:00 2001
+From dbc4b71943e4b06d7c6e188a83bc17efd980a5de Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement Enhanced Death Event
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 164ab52f0b..7fa229f920 100644
+index 589b0235c3..bd1023e37f 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -664,7 +664,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -661,7 +661,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
  
          String deathmessage = defaultMessage.getString();

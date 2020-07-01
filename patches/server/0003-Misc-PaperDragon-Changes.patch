@@ -1,4 +1,4 @@
-From 77d5a1e2810b00e2625e6a9f51c9ea20fccac8da Mon Sep 17 00:00:00 2001
+From cbf258e9972ab02ab018cfac5b878b372badabfa Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -129,10 +129,10 @@ index 0000000000..edd083ef62
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c047d8ff1f..164ab52f0b 100644
+index eeed8edfdf..589b0235c3 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1946,7 +1946,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1943,7 +1943,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (blockposition != null) {
              boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
  
@@ -225,7 +225,7 @@ index 0000000000..bf28f00db7
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d8d11ed962..c8486ff02b 100644
+index 26f230a801..7f340844ee 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1446,7 +1446,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -238,7 +238,7 @@ index d8d11ed962..c8486ff02b 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9f75670a02..503d5d0d00 100644
+index 8999dd1aa5..1131726d62 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -229,7 +229,7 @@ import javax.annotation.Nullable; // Paper
@@ -251,10 +251,10 @@ index 9f75670a02..503d5d0d00 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 257f46003f..2e0a9a748c 100644
+index f1e60981ab..93cd3b40fb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -317,7 +317,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -323,7 +323,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -313,5 +313,5 @@ index 513c1041c3..6574bcd116 100644
  
  
 -- 
-2.20.1.windows.1
+2.17.1
 
