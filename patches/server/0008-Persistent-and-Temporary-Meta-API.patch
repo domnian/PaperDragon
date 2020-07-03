@@ -1,4 +1,4 @@
-From 0519949f2213265536c48c51f330d21c12ba6119 Mon Sep 17 00:00:00 2001
+From 0ba286165addf385765b0d3ac64447ef2327a6b0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,7 +179,7 @@ index ac58fcb798..1a0bd56c14 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2aa38528d7..1025100461 100644
+index fcb3d3adae..e9b6c20087 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ import java.util.stream.Stream;
@@ -919,7 +919,7 @@ index 286f672b9b..43a08fa4eb 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f24c4def37..0827768f42 100644
+index 3a740f5669..9a0edc2516 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -56,7 +56,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -945,10 +945,10 @@ index 06e42b7db5..73d890ae22 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3d6ea696ba..bba0c50fdc 100644
+index 6267ff883c..13eea10e97 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -930,6 +930,9 @@ public final class CraftServer implements Server {
+@@ -932,6 +932,9 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
@@ -1004,10 +1004,10 @@ index 821417610f..5c27d48467 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 521e204260..ff1f82d9f1 100644
+index 6c5036b23a..58175022b4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1407,6 +1407,11 @@ public class CraftEventFactory {
+@@ -1419,6 +1419,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
@@ -1042,5 +1042,5 @@ index 7266313482..1aa383c15d 100644
          this.inventory = inventory;
      }
 -- 
-2.17.1
+2.20.1.windows.1
 

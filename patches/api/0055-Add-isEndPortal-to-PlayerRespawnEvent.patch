@@ -1,35 +1,43 @@
-From 443e60662138f8f34e54f4d3d55bbc1109881e08 Mon Sep 17 00:00:00 2001
+From 7b08f9afc10d5a4968368a42db6f24f02101c5ec Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:24:45 -0500
 Subject: [PATCH] Add isEndPortal to PlayerRespawnEvent
 
 ---
- .../org/bukkit/event/player/PlayerRespawnEvent.java | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ .../event/player/PlayerRespawnEvent.java      | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
-index 71b566e44..95a7087c8 100644
+index d2be2ad2e..46dcdfb82 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
-@@ -13,11 +13,13 @@ public class PlayerRespawnEvent extends PlayerEvent {
-     private static final HandlerList handlers = new HandlerList();
+@@ -14,16 +14,18 @@ public class PlayerRespawnEvent extends PlayerEvent {
      private Location respawnLocation;
      private final boolean isBedSpawn;
-+    private final boolean isEndPortal;
+     private final boolean isAnchorSpawn;
++    private final boolean isEndPortal; // PaperDragon - add isEndPortal
  
+     @Deprecated
 -    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn) {
-+    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isEndPortal) {
+-        this(respawnPlayer, respawnLocation, isBedSpawn, false);
++    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isEndPortal) { // PaperDragon - add isEndPortal
++        this(respawnPlayer, respawnLocation, isBedSpawn, false, isEndPortal); // PaperDragon - add isEndPortal
+     }
+ 
+-    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn) {
++    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn, final boolean isEndPortal) { // PaperDragon - add isEndPortal
          super(respawnPlayer);
          this.respawnLocation = respawnLocation;
          this.isBedSpawn = isBedSpawn;
-+        this.isEndPortal = isEndPortal;
++        this.isEndPortal = isEndPortal; // PaperDragon - add isEndPortal
+         this.isAnchorSpawn = isAnchorSpawn;
      }
  
-     /**
-@@ -51,6 +53,15 @@ public class PlayerRespawnEvent extends PlayerEvent {
-         return this.isBedSpawn;
+@@ -67,6 +69,17 @@ public class PlayerRespawnEvent extends PlayerEvent {
+         return isAnchorSpawn;
      }
  
++    // PaperDragon start - add isEndPortal
 +    /**
 +     * Gets whether the respawn is caused by entering an end portal leaving the end.
 +     *
@@ -38,10 +46,11 @@ index 71b566e44..95a7087c8 100644
 +    public boolean isEndPortal() {
 +        return this.isEndPortal;
 +    }
++    // PaperDragon end
 +
      @NotNull
      @Override
      public HandlerList getHandlers() {
 -- 
-2.17.1
+2.20.1.windows.1
 

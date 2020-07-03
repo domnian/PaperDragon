@@ -1,4 +1,4 @@
-From 95c708c5520bd2dad5f1fcb6ef73db0ed232f74c Mon Sep 17 00:00:00 2001
+From 3224a4495664dc61a7367e9c4c92254f8d7c6783 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:21:28 -0500
 Subject: [PATCH] Dragon API
@@ -15,7 +15,7 @@ Subject: [PATCH] Dragon API
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 new file mode 100644
-index 000000000..d5c638104
+index 0000000000..d5c6381045
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -0,0 +1,27 @@
@@ -48,7 +48,7 @@ index 000000000..d5c638104
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 new file mode 100644
-index 000000000..ab3428a68
+index 0000000000..ab3428a68e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -0,0 +1,27 @@
@@ -81,7 +81,7 @@ index 000000000..ab3428a68
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 new file mode 100644
-index 000000000..21bd42ff9
+index 0000000000..21bd42ff9d
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -0,0 +1,36 @@
@@ -122,10 +122,10 @@ index 000000000..21bd42ff9
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2e108b768..2b00b6d40 100644
+index 3170987512..6267ff883c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -268,6 +268,7 @@ public final class CraftServer implements Server {
+@@ -270,6 +270,7 @@ public final class CraftServer implements Server {
      public static Exception excessiveVelEx; // Paper - Velocity warnings
  
      static {

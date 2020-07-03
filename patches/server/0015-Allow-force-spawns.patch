@@ -1,4 +1,4 @@
-From 2dd2cd656ae366b8209e6a606f9fd2d7f6ebf32c Mon Sep 17 00:00:00 2001
+From 167fbf04f66db4988113ca3ccde4ee8ab67225da Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,7 +11,7 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 865c0dc43d..8275d65648 100644
+index fbca8e7302..57e9f05c1c 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1077,7 +1077,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -33,10 +33,10 @@ index 865c0dc43d..8275d65648 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index ff1f82d9f1..63b27cbc69 100644
+index 58175022b4..d0a1b44823 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -616,7 +616,7 @@ public class CraftEventFactory {
+@@ -628,7 +628,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  
@@ -46,5 +46,5 @@ index ff1f82d9f1..63b27cbc69 100644
              if (vehicle != null) {
                  vehicle.dead = true;
 -- 
-2.17.1
+2.20.1.windows.1
 

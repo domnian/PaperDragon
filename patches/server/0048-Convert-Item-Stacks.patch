@@ -1,4 +1,4 @@
-From 555d22af9180a90a4ba9dc943412a31ea2cf51ad Mon Sep 17 00:00:00 2001
+From 3968d7808801bea2ed7ddf87acdc839fefacd559 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -41,10 +41,10 @@ index 67bf6d5b94..92c2aee49a 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index c28691ae6b..7a216bae53 100644
+index 1c3e6e0c9a..1109e5020e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-@@ -331,9 +331,25 @@ public final class CraftItemFactory implements ItemFactory {
+@@ -335,9 +335,25 @@ public final class CraftItemFactory implements ItemFactory {
          return ((CraftMetaItem) meta).updateMaterial(material);
      }
      // Paper start
@@ -72,7 +72,7 @@ index c28691ae6b..7a216bae53 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index b64bbe7507..a9d06af2f9 100644
+index addb8ef990..3f524495f5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 @@ -39,7 +39,12 @@ public final class CraftItemStack extends ItemStack {
@@ -115,7 +115,7 @@ index b64bbe7507..a9d06af2f9 100644
      }
  
      public static ItemMeta getItemMeta(net.minecraft.server.ItemStack item) {
-@@ -529,7 +542,7 @@ public final class CraftItemStack extends ItemStack {
+@@ -533,7 +546,7 @@ public final class CraftItemStack extends ItemStack {
          item.setTag(tag);
  
          ((CraftMetaItem) itemMeta).applyToItem(tag);
@@ -125,7 +125,7 @@ index b64bbe7507..a9d06af2f9 100644
          if (item.getItem() != null && item.getItem().usesDurability()) {
              item.setDamage(item.getDamage());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 3ad7895ad8..dab92784a6 100644
+index 9ef7d6664b..d04081d0af 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -315,7 +315,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
@@ -169,5 +169,5 @@ index 3ad7895ad8..dab92784a6 100644
                      // Ignore (stripped like Vanilla)
                  }
 -- 
-2.17.1
+2.20.1.windows.1
 
