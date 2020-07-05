@@ -8,7 +8,7 @@ API_REPO="git@bitbucket.org:domnian/PaperDragon-API"
 SERVER_REPO="git@bitbucket.org:domnian/PaperDragon-Server"
 PAPERAPI_REPO="git@bitbucket.org:domnian/Paper-API"
 PAPERSERVER_REPO="git@bitbucket.org:domnian/Paper-Server"
-PAPER_BRANCH="ver/1.16"
+PAPER_BRANCH="master"
 MCDEV_REPO="git@bitbucket.org:domnian/mc-dev"
 
 function bashColor {
