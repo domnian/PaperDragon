@@ -1,4 +1,4 @@
-From 3968d7808801bea2ed7ddf87acdc839fefacd559 Mon Sep 17 00:00:00 2001
+From 27c644bbb3dbdfd8c95201fe8f10db2d177c9d92 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -11,10 +11,10 @@ Subject: [PATCH] Convert Item Stacks
  4 files changed, 54 insertions(+), 11 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 67bf6d5b94..92c2aee49a 100644
+index 63bc5882a1..a24f6bf75e 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -104,12 +104,23 @@ public final class ItemStack {
+@@ -150,12 +150,23 @@ public final class ItemStack {
          this.checkEmpty();
      }
  

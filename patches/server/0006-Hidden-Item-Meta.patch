@@ -1,4 +1,4 @@
-From a0368fbfd0919b91b34f52e69ad60d4cc2548740 Mon Sep 17 00:00:00 2001
+From d80b52b37fbb97323b906068f83ba0ea7635e693 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -121,7 +121,7 @@ index 0000000000..85ea4e8600
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 0072552979..5a79f2fc78 100644
+index 53dc47ffb4..3d68626ef3 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -60,7 +60,7 @@ public final class ItemStack {
@@ -133,7 +133,7 @@ index 0072552979..5a79f2fc78 100644
      private boolean j;
      private Entity k;
      private ShapeDetectorBlock l;
-@@ -843,8 +843,26 @@ public final class ItemStack {
+@@ -891,8 +891,26 @@ public final class ItemStack {
          IChatMutableComponent ichatmutablecomponent1 = ChatComponentUtils.a((IChatBaseComponent) ichatmutablecomponent);
  
          if (!this.j) {
@@ -182,5 +182,5 @@ index 31e7fb5620..adafa50ab8 100644
                      NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
                      if (itemstack.tag.hasKey("SkullOwnerOrig")) {
 -- 
-2.17.1
+2.20.1.windows.1
 
