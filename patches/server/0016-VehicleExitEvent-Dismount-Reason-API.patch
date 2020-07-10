@@ -1,4 +1,4 @@
-From 865676720d44e2bcda0ebbfd37abf377e38bc2ba Mon Sep 17 00:00:00 2001
+From 63da91ddcfedd3c899283930db55d2355567e063 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6583c74c75..eb782e4db6 100644
+index 61ac956b13..0375068dae 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -318,6 +318,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -22,7 +22,7 @@ index 6583c74c75..eb782e4db6 100644
              this.stopRiding();
          }
  
-@@ -2035,6 +2036,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2038,6 +2039,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              return false;
          } else {
              if (this.isPassenger()) {
@@ -30,7 +30,7 @@ index 6583c74c75..eb782e4db6 100644
                  this.stopRiding();
              }
  
-@@ -2055,7 +2057,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2058,7 +2060,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      public void ejectPassengers() {
          for (int i = this.passengers.size() - 1; i >= 0; --i) {
@@ -43,7 +43,7 @@ index 6583c74c75..eb782e4db6 100644
          }
  
      }
-@@ -2126,6 +2132,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2129,6 +2135,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      // Paper start
      protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
      protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
@@ -52,7 +52,7 @@ index 6583c74c75..eb782e4db6 100644
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2140,6 +2148,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2143,6 +2151,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  );
                  // Suppress during worldgen
                  if (this.valid) {
@@ -60,7 +60,7 @@ index 6583c74c75..eb782e4db6 100644
                      Bukkit.getPluginManager().callEvent(event);
                  }
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
-@@ -2564,6 +2573,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2567,6 +2576,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cx=%d, cz=%d, tl=%d, v=%b, d=%b]", new Object[] { this.getClass().getSimpleName(), this.getDisplayName().getString(), Integer.valueOf(this.id), this.uniqueID.toString(), this.world == null ? "~NULL~" : this.world.toString(), Double.valueOf(this.locX()), Double.valueOf(this.locY()), Double.valueOf(this.locZ()), getChunkX(), getChunkZ(), this.ticksLived, this.valid, this.dead}); // Paper - add more information
      }
  
@@ -81,7 +81,7 @@ index 2cada09ced..e0273a954a 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 18d21b6062..ccb06eb525 100644
+index dbb561d500..e967a36c78 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -309,6 +309,7 @@ public abstract class EntityLiving extends Entity {

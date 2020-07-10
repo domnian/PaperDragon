@@ -1,4 +1,4 @@
-From f58228f158fb05474c20fcb481ad751cb23f404f Mon Sep 17 00:00:00 2001
+From da2cd33b65b70ded3adaf3748d06667ca88a7ba9 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 11:22:21 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -8,10 +8,10 @@ Subject: [PATCH] PaperDragon Config Files
  1 file changed, 7 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index b464cc1a7..d31d139b9 100644
+index 0653e0ffe..2ac859c1b 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1424,6 +1424,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1438,6 +1438,13 @@ public interface Server extends PluginMessageRecipient {
          }
          // Paper end
  

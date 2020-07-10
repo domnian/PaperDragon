@@ -1,4 +1,4 @@
-From 53f0864b5f76b4b3251b4dbb6ffc0438d0d08f30 Mon Sep 17 00:00:00 2001
+From a19c7cf44b490958a8b0b54f7208977813d6a218 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 27 Jan 2020 00:56:50 -0500
 Subject: [PATCH] Implement teleport() for offline players
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement teleport() for offline players
  2 files changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index dbd100ce7..d4b1e8579 100644
+index d69fe0dda8..35acc97664 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1682,7 +1682,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1685,7 +1685,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end
@@ -22,7 +22,7 @@ index dbd100ce7..d4b1e8579 100644
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.a(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index d9f037808..5dbb7be04 100644
+index d9f0378083..5dbb7be040 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 @@ -553,5 +553,27 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa

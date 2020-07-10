@@ -1,4 +1,4 @@
-From 0ba286165addf385765b0d3ac64447ef2327a6b0 Mon Sep 17 00:00:00 2001
+From 45f72d6b3189900b911a6087bdaffae72616cac6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,7 +179,7 @@ index ac58fcb798..1a0bd56c14 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index fcb3d3adae..e9b6c20087 100644
+index 9c4b02d776..990021e4b3 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ import java.util.stream.Stream;
@@ -190,7 +190,7 @@ index fcb3d3adae..e9b6c20087 100644
      private static final int CURRENT_LEVEL = 2;
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
-@@ -1568,6 +1569,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1571,6 +1572,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index fcb3d3adae..e9b6c20087 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1784,6 +1786,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1787,6 +1789,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -804,7 +804,7 @@ index 6bcb19b560..73bc4103ba 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 8c5639fa55..cc6a0a3f1d 100644
+index 5544254a65..4c4fef3b85 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -1271,6 +1271,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -869,7 +869,7 @@ index 67fda8bd5a..245f09867a 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 5ec658c5f3..1631ca1980 100644
+index d300016e16..98ee751485 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -485,6 +485,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -945,7 +945,7 @@ index 06e42b7db5..73d890ae22 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6267ff883c..13eea10e97 100644
+index b98554b583..7de6e7c46d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -932,6 +932,9 @@ public final class CraftServer implements Server {
@@ -991,7 +991,7 @@ index 11aa2dc18c..f02392f424 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 821417610f..5c27d48467 100644
+index d1df4e5799..88db0424d1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -170,6 +170,8 @@ import org.bukkit.util.NumberConversions;
@@ -1004,7 +1004,7 @@ index 821417610f..5c27d48467 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 6c5036b23a..58175022b4 100644
+index dbc46fcda3..68eba6819a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -1419,6 +1419,11 @@ public class CraftEventFactory {

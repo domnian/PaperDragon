@@ -1,4 +1,4 @@
-From f41df4699b3bcebcb28122599cad0ed6dca70239 Mon Sep 17 00:00:00 2001
+From 0cc277ced78fa24653881f217139b2f6d4f71e07 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -493,7 +493,7 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 4ab2ad53eb..6f954b1585 100644
+index 7a4d7d9939..92f6e7f9b0 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -557,7 +557,7 @@ index 4ab2ad53eb..6f954b1585 100644
      }
  
      public boolean b(float f, float f1) {
-@@ -1335,6 +1341,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1338,6 +1344,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -565,7 +565,7 @@ index 4ab2ad53eb..6f954b1585 100644
          double d3 = MathHelper.a(d0, -3.0E7D, 3.0E7D);
          double d4 = MathHelper.a(d2, -3.0E7D, 3.0E7D);
  
-@@ -1362,6 +1369,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1365,6 +1372,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -573,7 +573,7 @@ index 4ab2ad53eb..6f954b1585 100644
          this.f(d0, d1, d2);
          this.yaw = f;
          this.pitch = f1;
-@@ -1409,6 +1417,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1412,6 +1420,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public void pickup(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -581,7 +581,7 @@ index 4ab2ad53eb..6f954b1585 100644
          if (!this.isSameVehicle(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX() - this.locX();
-@@ -1445,6 +1454,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1448,6 +1457,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void h(double d0, double d1, double d2) {
@@ -589,7 +589,7 @@ index 4ab2ad53eb..6f954b1585 100644
          this.setMot(this.getMot().add(d0, d1, d2));
          this.impulse = true;
      }
-@@ -1454,6 +1464,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1457,6 +1467,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -597,7 +597,7 @@ index 4ab2ad53eb..6f954b1585 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2553,7 +2564,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2556,7 +2567,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -606,7 +606,7 @@ index 4ab2ad53eb..6f954b1585 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2970,6 +2981,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2973,6 +2984,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -851,7 +851,7 @@ index a7860cb4de..9173bedefd 100644
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 316d1acae3..18d21b6062 100644
+index c1ef5215a6..dbb561d500 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -212,7 +212,7 @@ public abstract class EntityLiving extends Entity {
@@ -1162,5 +1162,5 @@ index f78e44e05f..bd504fbb4c 100644
          if ( !entity.inChunk || entity instanceof EntityFireworks ) {
              return true;
 -- 
-2.17.1
+2.20.1.windows.1
 

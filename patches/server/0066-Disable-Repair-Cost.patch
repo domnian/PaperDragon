@@ -1,4 +1,4 @@
-From 182bb985a48b1b6fb3007f548f0111614eb7e880 Mon Sep 17 00:00:00 2001
+From 0808e270001e2940bada41272aa8a7b6622f490d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 19 May 2015 23:47:32 -0400
 Subject: [PATCH] Disable Repair Cost
@@ -10,10 +10,10 @@ Handled on Plugin Level on a Per Player basis
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index a24f6bf75e..5b1cd3ac10 100644
+index c8ca03b0fc..391b96ac62 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -193,6 +193,7 @@ public final class ItemStack {
+@@ -185,6 +185,7 @@ public final class ItemStack {
  
          if (this.getItem().usesDurability()) {
              this.setDamage(this.getDamage());
@@ -21,7 +21,7 @@ index a24f6bf75e..5b1cd3ac10 100644
          }
  
      }
-@@ -826,10 +827,12 @@ public final class ItemStack {
+@@ -818,10 +819,12 @@ public final class ItemStack {
      }
  
      public int getRepairCost() {
