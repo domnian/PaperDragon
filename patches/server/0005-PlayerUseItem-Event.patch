@@ -1,4 +1,4 @@
-From 8e053468f17526874eed54e10669d339fccee60a Mon Sep 17 00:00:00 2001
+From 8cc8eebf83ba0ce3332fa9271e5b107fc9c5511a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,7 +10,7 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 76 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 14606a12c..af169211a 100644
+index 7a2140e4b9..316d1acae3 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -2060,7 +2060,7 @@ public abstract class EntityLiving extends Entity {
@@ -23,7 +23,7 @@ index 14606a12c..af169211a 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 734855c1d..1afac9a1f 100644
+index 6d192b2744..c14bd70b33 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -402,6 +402,15 @@ public class PlayerInteractManager {
@@ -137,10 +137,10 @@ index 734855c1d..1afac9a1f 100644
 +                }
 +                //replace  entityhuman.b(enumhand) with itemstack
 +                ItemActionContext itemactioncontext = new ItemActionContext(entityplayer, enumhand, movingobjectpositionblock);
-+                EnumInteractionResult enuminteractionresult1 = itemstack.placeItem(itemactioncontext, enumhand);
  
 -                    enuminteractionresult1 = itemstack.placeItem(itemactioncontext, enumhand);
 +                int i = itemstack.getCount();
++                EnumInteractionResult enuminteractionresult1 = itemstack.placeItem(itemactioncontext, enumhand);
 +                if (eventPlace.getTempItem() != null) {
 +                    entityplayer.setHand(enumhand, itemstack = orig);
 +                }
