@@ -1,4 +1,4 @@
-From 63da91ddcfedd3c899283930db55d2355567e063 Mon Sep 17 00:00:00 2001
+From 020c361eeb394547cda24b9e1652b3ff7946139c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 61ac956b13..0375068dae 100644
+index 22e728f470..fe9ca2af8d 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -318,6 +318,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -61,7 +61,7 @@ index 61ac956b13..0375068dae 100644
                  }
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
 @@ -2567,6 +2576,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
-         return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cx=%d, cz=%d, tl=%d, v=%b, d=%b]", new Object[] { this.getClass().getSimpleName(), this.getDisplayName().getString(), Integer.valueOf(this.id), this.uniqueID.toString(), this.world == null ? "~NULL~" : this.world.toString(), Double.valueOf(this.locX()), Double.valueOf(this.locY()), Double.valueOf(this.locZ()), getChunkX(), getChunkZ(), this.ticksLived, this.valid, this.dead}); // Paper - add more information
+         return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cx=%d, cz=%d, tl=%d, v=%b, d=%b]", new Object[] { this.getClass().getSimpleName(), this.getDisplayName().getString(), Integer.valueOf(this.id), this.uniqueID.toString(), this.world == null ? "~NULL~" : this.world.toString(), Double.valueOf(this.locX()), Double.valueOf(this.locY()), Double.valueOf(this.locZ()), chunkX, chunkZ, this.ticksLived, this.valid, this.dead}); // Paper - add more information
      }
  
 +    VehicleExitEvent.DismountReason dismountReason = VehicleExitEvent.DismountReason.UNKNOWN; // PaperDragon
@@ -69,7 +69,7 @@ index 61ac956b13..0375068dae 100644
          return this.invulnerable && damagesource != DamageSource.OUT_OF_WORLD && !damagesource.v() && !isDisabled; // PaperDragon - add && !isDisabled
      }
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 2cada09ced..e0273a954a 100644
+index e411f6280d..419dd0b974 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -364,6 +364,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -81,7 +81,7 @@ index 2cada09ced..e0273a954a 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index dbb561d500..e967a36c78 100644
+index eefb15521b..5ff1575ca8 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -309,6 +309,7 @@ public abstract class EntityLiving extends Entity {
@@ -92,7 +92,7 @@ index dbb561d500..e967a36c78 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bD()) {
-@@ -3414,6 +3415,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3411,6 +3412,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {
@@ -101,10 +101,10 @@ index dbb561d500..e967a36c78 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 3c2f1f140c..91776fa017 100644
+index 38d83bb318..1e7002a326 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -528,6 +528,7 @@ public abstract class PlayerList {
+@@ -529,6 +529,7 @@ public abstract class PlayerList {
  
              if (entity.hasSinglePlayerPassenger()) {
                  PlayerList.LOGGER.debug("Removing player mount");

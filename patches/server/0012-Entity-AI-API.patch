@@ -1,4 +1,4 @@
-From 0cc277ced78fa24653881f217139b2f6d4f71e07 Mon Sep 17 00:00:00 2001
+From d983061f89df9af01448aa6a80a19cc80ef093c0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -493,7 +493,7 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7a4d7d9939..92f6e7f9b0 100644
+index 6999c60437..82a6b4b16a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -818,7 +818,7 @@ index 0000000000..d0ee7f3042
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 605bbf0174..9ad437498d 100644
+index a5c9526499..dbe4903bad 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -53,6 +53,7 @@ public abstract class EntityInsentient extends EntityLiving {
@@ -851,7 +851,7 @@ index a7860cb4de..9173bedefd 100644
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c1ef5215a6..dbb561d500 100644
+index 26339d5710..eefb15521b 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -212,7 +212,7 @@ public abstract class EntityLiving extends Entity {
@@ -892,7 +892,7 @@ index c1ef5215a6..dbb561d500 100644
          }
  
          if (nbttagcompound.hasKeyOfType("ActiveEffects", 9)) {
-@@ -2412,7 +2425,16 @@ public abstract class EntityLiving extends Entity {
+@@ -2409,7 +2422,16 @@ public abstract class EntityLiving extends Entity {
  
      public boolean attackEntity(Entity entity) {
          this.z(entity);
@@ -1069,10 +1069,10 @@ index 29822c1949..9a3bc286d1 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index ee3cf2f16c..fbca8e7302 100644
+index 64fc49a05b..c51d8bcef0 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -822,7 +822,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -823,7 +823,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              entity.f(entity.locX(), entity.locY(), entity.locZ());
              entity.lastYaw = entity.yaw;
              entity.lastPitch = entity.pitch;
@@ -1081,7 +1081,7 @@ index ee3cf2f16c..fbca8e7302 100644
                  ++entity.ticksLived;
                  EntityTasksHandler.tickHandler(entity); // PaperDragon
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
-@@ -1397,6 +1397,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1398,6 +1398,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              }
              // Paper end
              entity.shouldBeRemoved = false; // Paper - shouldn't be removed after being re-added
@@ -1150,7 +1150,7 @@ index cac82ce760..e8c35244ff 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index f78e44e05f..bd504fbb4c 100644
+index 37e930e0cb..646160685f 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -377,6 +377,7 @@ public class ActivationRange

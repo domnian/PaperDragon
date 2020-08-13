@@ -1,4 +1,4 @@
-From 86e9e67c95574928a585eff7bb2d31a2b7630d68 Mon Sep 17 00:00:00 2001
+From 4cf97b769443d8646d3325cdc3f45d55268987b1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -125,7 +125,7 @@ index addb8ef990..3f524495f5 100644
          if (item.getItem() != null && item.getItem().usesDurability()) {
              item.setDamage(item.getDamage());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 9ef7d6664b..d04081d0af 100644
+index d15fc981a9..68ae4d2cdb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -315,7 +315,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
@@ -152,9 +152,9 @@ index 9ef7d6664b..d04081d0af 100644
  
              if (display.hasKey(NAME.NBT)) {
                  try {
--                    displayName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(NAME.NBT), 1024 ) ); // Spigot
-+                    if (isLegacy) displayName = new net.minecraft.server.ChatComponentText(limit( display.getString(NAME.NBT), 1024 )); // Paper
-+                    else displayName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(NAME.NBT), 1024 ) ); // Spigot // Paper
+-                    displayName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(NAME.NBT), 8192 ) ); // Spigot
++                    if (isLegacy) displayName = new net.minecraft.server.ChatComponentText(limit( display.getString(NAME.NBT), 8192 )); // Paper
++                    else displayName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(NAME.NBT), 8192 ) ); // Spigot // Paper
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
@@ -162,9 +162,9 @@ index 9ef7d6664b..d04081d0af 100644
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
--                    locName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(LOCNAME.NBT), 1024 ) ); // Spigot
-+                    if (isLegacy) locName = new net.minecraft.server.ChatComponentText(limit( display.getString(LOCNAME.NBT), 1024 )); // Paper
-+                    else locName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(LOCNAME.NBT), 1024 ) ); // Spigot // Paper
+-                    locName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(LOCNAME.NBT), 8192 ) ); // Spigot
++                    if (isLegacy) locName = new net.minecraft.server.ChatComponentText(limit( display.getString(LOCNAME.NBT), 8192 )); // Paper
++                    else locName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(LOCNAME.NBT), 8192 ) ); // Spigot // Paper
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }

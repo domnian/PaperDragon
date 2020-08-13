@@ -1,4 +1,4 @@
-From eb6880b8f0b808d1e696d4630979bf5103729c9f Mon Sep 17 00:00:00 2001
+From 688f2ff842df4be868c1a9cfe93bd8eec552d5c0 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:08:31 -0400
 Subject: [PATCH] Implement AdvancementBroadcastEvent
@@ -8,10 +8,10 @@ Subject: [PATCH] Implement AdvancementBroadcastEvent
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 57b9d1344..7eb04a5f5 100644
+index 17789407b9..d8f45e7367 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -292,7 +292,14 @@ public class AdvancementDataPlayer {
+@@ -296,7 +296,14 @@ public class AdvancementDataPlayer {
                  this.player.world.getServer().getPluginManager().callEvent(new org.bukkit.event.player.PlayerAdvancementDoneEvent(this.player.getBukkitEntity(), advancement.bukkit)); // CraftBukkit
                  advancement.d().a(this.player);
                  if (advancement.c() != null && advancement.c().i() && this.player.world.getGameRules().getBoolean(GameRules.ANNOUNCE_ADVANCEMENTS)) {

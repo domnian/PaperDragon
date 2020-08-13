@@ -1,4 +1,4 @@
-From 76a18a08fb3a2f38e67a677c7f22a56e188f7b24 Mon Sep 17 00:00:00 2001
+From c7f3e19a05667cb1907f32292e771f0f73d495b7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -10,7 +10,7 @@ Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
  3 files changed, 17 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 3b1b72776..02d6e1962 100644
+index 3b1b727768..02d6e19627 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -158,6 +158,10 @@ public class DragonConfig {
@@ -25,7 +25,7 @@ index 3b1b72776..02d6e1962 100644
  
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 2a180d5a4..107135de9 100644
+index 2a180d5a45..107135de9e 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -74,6 +74,10 @@ public class DragonWorldConfig {
@@ -40,10 +40,10 @@ index 2a180d5a4..107135de9 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 7eb04a5f5..174262043 100644
+index d8f45e7367..e6664b087e 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -295,6 +295,15 @@ public class AdvancementDataPlayer {
+@@ -299,6 +299,15 @@ public class AdvancementDataPlayer {
                      // PaperDragon start - AdvancementBroadcastEvent
                      IChatBaseComponent adv = org.bukkit.craftbukkit.util.CraftChatMessage.fixComponent(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
                      com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());
