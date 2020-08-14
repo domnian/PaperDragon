@@ -1,4 +1,4 @@
-From 3773c9e6a11fa44f446e47388fd7cc1f36e45727 Mon Sep 17 00:00:00 2001
+From b37f86e7e0d6177f1b8f5401cde3f668f810a58f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 30 Apr 2015 00:46:26 -0400
 Subject: [PATCH] Don't require flag for sign conversion
@@ -9,11 +9,11 @@ Also reverts part of Paper's old sign conversion patch
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index c4b0d8720..aafbcd932 100644
+index 2b9d5724c1..b1f5784209 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySign.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySign.java
 @@ -12,7 +12,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
-     private final IChatFormatted[] g;
+     private final FormattedString[] g;
      private EnumColor color;
      public java.util.UUID signEditor; // Paper
 -    private static final boolean CONVERT_LEGACY_SIGNS = Boolean.getBoolean("convertLegacySigns"); // Paper

@@ -1,4 +1,4 @@
-From 974bfe8db9aebc8842700b131bc13d65bc549d08 Mon Sep 17 00:00:00 2001
+From 87c5a484e47b0836c6bc2cb74860ef821e8b4a11 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -121,7 +121,7 @@ index 0000000000..85ea4e8600
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 3c56053e30..f67f0ee6cb 100644
+index ace50805bf..afab30d9cf 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -60,7 +60,7 @@ public final class ItemStack {
@@ -133,7 +133,7 @@ index 3c56053e30..f67f0ee6cb 100644
      private boolean j;
      private Entity k;
      private ShapeDetectorBlock l;
-@@ -883,8 +883,26 @@ public final class ItemStack {
+@@ -889,8 +889,26 @@ public final class ItemStack {
          IChatMutableComponent ichatmutablecomponent1 = ChatComponentUtils.a((IChatBaseComponent) ichatmutablecomponent);
  
          if (!this.j) {
@@ -162,10 +162,10 @@ index 3c56053e30..f67f0ee6cb 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 31e7fb5620..adafa50ab8 100644
+index f43193c109..df1b21638b 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -280,6 +280,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -290,6 +290,7 @@ public class PacketDataSerializer extends ByteBuf {
                  // Spigot end
                  nbttagcompound = itemstack.getTag();
                  // Paper start
@@ -173,7 +173,7 @@ index 31e7fb5620..adafa50ab8 100644
                  if (nbttagcompound != null && nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
                      NBTTagCompound owner = nbttagcompound.getCompound("SkullOwner");
                      if (owner.hasUUID("Id")) {
-@@ -308,6 +309,7 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -318,6 +319,7 @@ public class PacketDataSerializer extends ByteBuf {
              // CraftBukkit start
              if (itemstack.getTag() != null) {
                  // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client

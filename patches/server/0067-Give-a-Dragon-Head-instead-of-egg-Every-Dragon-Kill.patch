@@ -1,4 +1,4 @@
-From 5eb2c802d2378e43dcd10921149ca3438cdbac54 Mon Sep 17 00:00:00 2001
+From 89ab5c37cecdd937532b748c78ae979111b26924 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 23 Apr 2016 20:03:27 -0400
 Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
@@ -8,12 +8,12 @@ Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
-index c560f40e8..2d254c48c 100644
+index 7c5886897a..696d2d2a73 100644
 --- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
 +++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
 @@ -358,8 +358,8 @@ public class EnderDragonBattle {
              this.bossBattle.setVisible(false);
-             this.a(true);
+             this.generateExitPortal(true);
              this.n();
 -            if (!this.previouslyKilled) {
 -                this.world.setTypeUpdate(this.world.getHighestBlockYAt(HeightMap.Type.MOTION_BLOCKING, WorldGenEndTrophy.a), Blocks.DRAGON_EGG.getBlockData());

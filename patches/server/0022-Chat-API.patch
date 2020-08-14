@@ -1,4 +1,4 @@
-From 79bf25160342a57d554ea9560994ca7a7589116a Mon Sep 17 00:00:00 2001
+From b7862ffdeec53d2d327da3f3a764ddf0b158e8f2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -692,22 +692,22 @@ index 5e366c413c..4b6347f16d 100644
              this.b = i;
              this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/ChatModifier.java b/src/main/java/net/minecraft/server/ChatModifier.java
-index 9ce4fb103d..09e4aeae11 100644
+index 688415f6c8..9208b8dc2e 100644
 --- a/src/main/java/net/minecraft/server/ChatModifier.java
 +++ b/src/main/java/net/minecraft/server/ChatModifier.java
-@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
+@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
+ 
  public class ChatModifier {
  
-     public static final MinecraftKey a = new MinecraftKey("minecraft", "default");
-+    public static ChatModifier nullModifier() { return b; } // PaperDragon - OBFHELPER
-     public static final ChatModifier b = new ChatModifier((ChatHexColor) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (ChatClickable) null, (ChatHoverable) null, (String) null, (MinecraftKey) null);
++    public static ChatModifier nullModifier() { return a; } // PaperDragon - OBFHELPER
+     public static final ChatModifier a = new ChatModifier((ChatHexColor) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (ChatClickable) null, (ChatHoverable) null, (String) null, (MinecraftKey) null);
+     public static final MinecraftKey b = new MinecraftKey("minecraft", "default");
      @Nullable
-     private final ChatHexColor color;
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 630343bbbd..4d0354d3df 100644
+index ca1e97660c..8430971bf8 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2919,6 +2919,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2877,6 +2877,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return this.getDirection();
      }
  

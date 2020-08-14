@@ -1,4 +1,4 @@
-From 1633a94f3a1111aaacedad7bf2300a159f4f04d3 Mon Sep 17 00:00:00 2001
+From 6758772dda9a0d9bd7101f096794f9643b467f43 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 19 Dec 2019 03:24:02 -0500
 Subject: [PATCH] Implement WorldBorderUpdateEvent
@@ -11,7 +11,7 @@ Subject: [PATCH] Implement WorldBorderUpdateEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
 new file mode 100644
-index 000000000..3eaf63a35
+index 0000000000..3eaf63a356
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
 @@ -0,0 +1,37 @@
@@ -53,7 +53,7 @@ index 000000000..3eaf63a35
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldBorder.java b/src/main/java/net/minecraft/server/WorldBorder.java
-index 0ef92a320..52212af40 100644
+index f011869880..97f3cdc16d 100644
 --- a/src/main/java/net/minecraft/server/WorldBorder.java
 +++ b/src/main/java/net/minecraft/server/WorldBorder.java
 @@ -7,7 +7,7 @@ import java.util.List;
@@ -62,7 +62,7 @@ index 0ef92a320..52212af40 100644
  
 -    private final List<IWorldBorderListener> a = Lists.newArrayList();
 +    private final List<IWorldBorderListener> a = Lists.newArrayList(new com.domnian.paperdragon.DragonWorldBorderListener()); // PaperDragon - WorldBorderUpdateEvent
-     private double c = 0.2D;
+     private double b = 0.2D;
      private double d = 5.0D;
      private int e = 15;
 -- 

@@ -1,4 +1,4 @@
-From 4268c6049b18bc9c0a35a579aa5603c97e17ec18 Mon Sep 17 00:00:00 2001
+From 9aabc04657269c137862f3610641bb9f4009c1d9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 May 2015 21:58:24 -0400
 Subject: [PATCH] Improve Hopper Performance
@@ -12,10 +12,10 @@ Only do an item "suck in" action once per second
  4 files changed, 50 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 64ebd29198..09bdbe5332 100644
+index 3104c6ea5b..ca9217351e 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -141,10 +141,24 @@ public class EntityItem extends Entity {
+@@ -146,10 +146,24 @@ public class EntityItem extends Entity {
                  // CraftBukkit end
                  this.die();
              }
@@ -40,7 +40,7 @@ index 64ebd29198..09bdbe5332 100644
      // Spigot start - copied from above
      @Override
      public void inactiveTick() {
-@@ -165,6 +179,7 @@ public class EntityItem extends Entity {
+@@ -170,6 +184,7 @@ public class EntityItem extends Entity {
              // CraftBukkit end
              this.die();
          }
@@ -80,7 +80,7 @@ index 4130fd8cd9..75a35e5b6f 100644
 +    // PaperDragon stop
  }
 diff --git a/src/main/java/net/minecraft/server/IHopper.java b/src/main/java/net/minecraft/server/IHopper.java
-index 54552d1819..e28c24a016 100644
+index 187000f1e4..10063ceca2 100644
 --- a/src/main/java/net/minecraft/server/IHopper.java
 +++ b/src/main/java/net/minecraft/server/IHopper.java
 @@ -15,6 +15,7 @@ public interface IHopper extends IInventory {
@@ -92,7 +92,7 @@ index 54552d1819..e28c24a016 100644
      double x(); default double getX() { return this.x(); } // Paper - OBFHELPER
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index e12daab0ca..9eb507c5f6 100644
+index dd3d123bc7..a14e68db5c 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -91,6 +91,23 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi

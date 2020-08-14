@@ -1,4 +1,4 @@
-From 50ea3817f30565b6896cfdddd50a1313661f722d Mon Sep 17 00:00:00 2001
+From 21f0ba674290ad4930595c7d78f0f96af0315588 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,10 +11,10 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c51d8bcef0..84b4fe8391 100644
+index 18575056e3..2efbe3b2e8 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1078,7 +1078,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1079,7 +1079,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          boolean flag = entity.attachedToPlayer;
  
          entity.attachedToPlayer = true;
@@ -23,7 +23,7 @@ index c51d8bcef0..84b4fe8391 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1158,7 +1158,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1159,7 +1159,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -33,7 +33,7 @@ index c51d8bcef0..84b4fe8391 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index f8b3b62577..315920279e 100644
+index 49a7fc6eab..a542b8a0eb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -629,7 +629,7 @@ public class CraftEventFactory {
