@@ -1,4 +1,4 @@
-From 954c91424668ca3ee07ee8326bcc51085b5aeb37 Mon Sep 17 00:00:00 2001
+From 209f4610a75b8fb1ff95157781398016e20e4054 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -1069,7 +1069,7 @@ index fe77458f07..1130cb6376 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 5c50f7ea85..18575056e3 100644
+index 1d8bc45e2c..665f5064ee 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -824,7 +824,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -1081,7 +1081,7 @@ index 5c50f7ea85..18575056e3 100644
                  ++entity.ticksLived;
                  EntityTasksHandler.tickHandler(entity); // PaperDragon
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
-@@ -1435,6 +1435,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1439,6 +1439,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              }
              // Paper end
              entity.shouldBeRemoved = false; // Paper - shouldn't be removed after being re-added
