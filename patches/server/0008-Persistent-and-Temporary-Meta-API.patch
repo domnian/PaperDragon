@@ -1,4 +1,4 @@
-From 6db08a7db39a4a60a9c3d125b146bc7d86ba4c24 Mon Sep 17 00:00:00 2001
+From 186c00f24bd41cc8dc4289c828fae1a6d7ff7759 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,10 +179,10 @@ index 335bb1dcb7..370ed80eb2 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c87de4b5b8..e0f7e2e2fa 100644
+index 97e61dae79..f6d4edbec6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -54,6 +54,7 @@ import java.util.stream.Stream;
+@@ -55,6 +55,7 @@ import org.bukkit.plugin.PluginManager;
  public abstract class Entity implements INamableTileEntity, ICommandListener, KeyedObject { // Paper
  
      // CraftBukkit start
@@ -190,7 +190,7 @@ index c87de4b5b8..e0f7e2e2fa 100644
      private static final int CURRENT_LEVEL = 2;
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
-@@ -1526,6 +1527,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1527,6 +1528,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index c87de4b5b8..e0f7e2e2fa 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1742,6 +1744,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1743,6 +1745,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -919,7 +919,7 @@ index a7e623044a..f41fcabfc5 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index a21ce48551..e3ecb77920 100644
+index 923efc17be..a5c8617f2a 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -57,7 +57,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -945,7 +945,7 @@ index d2c45157a2..272b0a4816 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e6eb5565da..deac69ad0b 100644
+index 07d8c44516..9ca9bc9291 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -931,6 +931,9 @@ public final class CraftServer implements Server {
@@ -1004,10 +1004,10 @@ index b1fdc5737d..d2ddb88370 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 89268b9b46..49a7fc6eab 100644
+index 68e3d29787..603b52e968 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1420,6 +1420,11 @@ public class CraftEventFactory {
+@@ -1424,6 +1424,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
@@ -1020,7 +1020,7 @@ index 89268b9b46..49a7fc6eab 100644
  
      public static ItemStack handleEditBookEvent(EntityPlayer player, EnumItemSlot slot, ItemStack itemInHand, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index 7266313482..1aa383c15d 100644
+index bba9bddc1c..59cc71bc4b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 @@ -31,6 +31,17 @@ import org.bukkit.inventory.ItemStack;

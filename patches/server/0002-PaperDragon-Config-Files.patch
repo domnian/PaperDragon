@@ -1,4 +1,4 @@
-From 367590019512b343bb939d842d75012d614354a4 Mon Sep 17 00:00:00 2001
+From 950bcd139320ff0573827be2fa6ea0e2a0fe8b16 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -302,7 +302,7 @@ index 287db5203f..912b10f00a 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 93c0afbfba..e9b0cb9683 100644
+index 7d83cf39ae..e75e6e0d4d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -847,6 +847,7 @@ public final class CraftServer implements Server {
@@ -330,7 +330,7 @@ index 93c0afbfba..e9b0cb9683 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2234,6 +2238,13 @@ public final class CraftServer implements Server {
+@@ -2232,6 +2236,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -345,7 +345,7 @@ index 93c0afbfba..e9b0cb9683 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 082a35004f..bf22157f6c 100644
+index bac292e6d8..898319ec09 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -146,6 +146,14 @@ public class Main {

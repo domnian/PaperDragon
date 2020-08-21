@@ -1,4 +1,4 @@
-From 209f4610a75b8fb1ff95157781398016e20e4054 Mon Sep 17 00:00:00 2001
+From 1576f6fe870a6bab38b7f15e91bd630e8ba5962c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -493,10 +493,10 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 0e7c83d10a..174a19b2f8 100644
+index ce057e2e53..0e805bf00a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -124,7 +124,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public float lastYaw;
      public float lastPitch;
      private AxisAlignedBB boundingBox;
@@ -505,7 +505,7 @@ index 0e7c83d10a..174a19b2f8 100644
      public boolean positionChanged;
      public boolean v;
      public boolean velocityChanged;
-@@ -151,6 +151,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -152,6 +152,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      protected Tag<FluidType> O;
      public int noDamageTicks;
      protected boolean justCreated;
@@ -515,7 +515,7 @@ index 0e7c83d10a..174a19b2f8 100644
      protected final DataWatcher datawatcher;
      protected static final DataWatcherObject<Byte> S = DataWatcher.a(Entity.class, DataWatcherRegistry.a);
      private static final DataWatcherObject<Integer> AIR_TICKS = DataWatcher.a(Entity.class, DataWatcherRegistry.b);
-@@ -179,7 +182,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -180,7 +183,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      private boolean az;
      private final double[] aA;
      private long aB;
@@ -524,7 +524,7 @@ index 0e7c83d10a..174a19b2f8 100644
      private float headHeight;
      // CraftBukkit start
      public boolean persist = true;
-@@ -391,6 +394,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -392,6 +395,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPosition(double d0, double d1, double d2) {
@@ -532,7 +532,7 @@ index 0e7c83d10a..174a19b2f8 100644
          this.setPositionRaw(d0, d1, d2);
          //this.a(this.size.a(d0, d1, d2)); // Paper - move into setPositionRaw
          if (valid) ((WorldServer) world).chunkCheck(this); // CraftBukkit
-@@ -418,6 +422,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -419,6 +423,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      // CraftBukkit end
  
      public void entityBaseTick() {
@@ -540,7 +540,7 @@ index 0e7c83d10a..174a19b2f8 100644
          this.world.getMethodProfiler().enter("entityBaseTick");
          if (this.isPassenger() && this.getVehicle().dead) {
              this.stopRiding();
-@@ -593,6 +598,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -594,6 +599,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -548,7 +548,7 @@ index 0e7c83d10a..174a19b2f8 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().c(vec3d));
              this.recalcPosition();
-@@ -1056,7 +1062,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1057,7 +1063,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isFireProof() {
@@ -557,7 +557,7 @@ index 0e7c83d10a..174a19b2f8 100644
      }
  
      public boolean b(float f, float f1) {
-@@ -1288,6 +1294,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1289,6 +1295,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -565,7 +565,7 @@ index 0e7c83d10a..174a19b2f8 100644
          this.f(d0, d1, d2);
          this.yaw = f % 360.0F;
          this.pitch = MathHelper.a(f1, -90.0F, 90.0F) % 360.0F;
-@@ -1319,6 +1326,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1320,6 +1327,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -573,7 +573,7 @@ index 0e7c83d10a..174a19b2f8 100644
          this.g(d0, d1, d2);
          this.yaw = f;
          this.pitch = f1;
-@@ -1367,6 +1375,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1368,6 +1376,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public void pickup(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -581,7 +581,7 @@ index 0e7c83d10a..174a19b2f8 100644
          if (!this.isSameVehicle(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX() - this.locX();
-@@ -1403,6 +1412,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1404,6 +1413,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void i(double d0, double d1, double d2) {
@@ -589,7 +589,7 @@ index 0e7c83d10a..174a19b2f8 100644
          this.setMot(this.getMot().add(d0, d1, d2));
          this.impulse = true;
      }
-@@ -1412,6 +1422,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1413,6 +1423,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -597,7 +597,7 @@ index 0e7c83d10a..174a19b2f8 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2505,7 +2516,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2506,7 +2517,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -606,7 +606,7 @@ index 0e7c83d10a..174a19b2f8 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2931,6 +2942,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2944,6 +2955,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  

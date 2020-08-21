@@ -1,4 +1,4 @@
-From 699c9fd26f5c74c20bcebc750a2d6edc80a909f1 Mon Sep 17 00:00:00 2001
+From 17b0c3059712a24e080ca713527a8d8d5f679d53 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,10 +40,10 @@ index d5c6381045..1e903fe5ce 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e0f7e2e2fa..0e7c83d10a 100644
+index f6d4edbec6..ce057e2e53 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -55,6 +55,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -56,6 +56,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      // CraftBukkit start
      public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
@@ -103,7 +103,7 @@ index 0000000000..42bd08e0e9
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e3ecb77920..5c50f7ea85 100644
+index a5c8617f2a..1d8bc45e2c 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -813,6 +813,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -123,7 +123,7 @@ index e3ecb77920..5c50f7ea85 100644
  
                  gameprofilerfiller.a(() -> {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index deac69ad0b..278f96caca 100644
+index 9ca9bc9291..884fadf0ee 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -933,6 +933,7 @@ public final class CraftServer implements Server {

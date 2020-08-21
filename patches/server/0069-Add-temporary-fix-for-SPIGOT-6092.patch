@@ -1,4 +1,4 @@
-From 19784023400c5308d35d08f7f799906014140f5a Mon Sep 17 00:00:00 2001
+From 8cc7687acedf4dd2b1d0bf622d432d7e65255da3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 20 Aug 2020 20:03:43 -0400
 Subject: [PATCH] Add temporary fix for SPIGOT-6092
@@ -8,10 +8,10 @@ Subject: [PATCH] Add temporary fix for SPIGOT-6092
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index bc55231c4e..27cca16172 100644
+index d733d31b3b..66a0534d9e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -899,7 +899,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -895,7 +895,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      @Override
      public void setBedSpawnLocation(Location location, boolean override) {
          if (location == null) {
