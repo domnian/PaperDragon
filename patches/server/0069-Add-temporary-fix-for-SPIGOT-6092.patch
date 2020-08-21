@@ -1,0 +1,25 @@
+From 19784023400c5308d35d08f7f799906014140f5a Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 20 Aug 2020 20:03:43 -0400
+Subject: [PATCH] Add temporary fix for SPIGOT-6092
+
+---
+ src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index bc55231c4e..27cca16172 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -899,7 +899,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+     @Override
+     public void setBedSpawnLocation(Location location, boolean override) {
+         if (location == null) {
+-            getHandle().setRespawnPosition(null, null, location.getYaw(), override, false);
++            getHandle().setRespawnPosition(null, null, 0f, override, false); // PaperDragon - SPIGOT-6092
+         } else {
+             getHandle().setRespawnPosition(((CraftWorld) location.getWorld()).getHandle().getDimensionKey(), new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ()), location.getYaw(), override, false);
+         }
+-- 
+2.20.1.windows.1
+
