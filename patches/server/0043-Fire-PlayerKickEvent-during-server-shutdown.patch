@@ -1,4 +1,4 @@
-From bda5f92c07832d437704120026908629c3f29780 Mon Sep 17 00:00:00 2001
+From cdf416b652ad3e8676e3de8467f4bf2d6f16cf70 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 4 Jul 2018 15:49:34 -0400
 Subject: [PATCH] Fire PlayerKickEvent during server shutdown
@@ -8,10 +8,10 @@ Subject: [PATCH] Fire PlayerKickEvent during server shutdown
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 64e8205c2..50e4184ce 100644
+index 436fae2f6b..666948af60 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -272,11 +272,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -275,11 +275,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
          PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.player), s, leaveMessage);
  

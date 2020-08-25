@@ -1,4 +1,4 @@
-From 186c00f24bd41cc8dc4289c828fae1a6d7ff7759 Mon Sep 17 00:00:00 2001
+From a49e337359794a364a7af23967d517f45582fcaa Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -151,7 +151,7 @@ index 299d7d7a55..ae51125f15 100644
      public boolean needsDecoration;
      // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 335bb1dcb7..370ed80eb2 100644
+index a0353da423..3672940450 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -1,6 +1,7 @@
@@ -162,7 +162,7 @@ index 335bb1dcb7..370ed80eb2 100644
  import com.google.common.collect.Maps;
  import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
  import it.unimi.dsi.fastutil.longs.LongSet;
-@@ -200,6 +201,7 @@ public class ChunkRegionLoader {
+@@ -214,6 +215,7 @@ public class ChunkRegionLoader {
          }
  
          HeightMap.a((IChunkAccess) object, enumset);
@@ -170,7 +170,7 @@ index 335bb1dcb7..370ed80eb2 100644
          NBTTagCompound nbttagcompound4 = nbttagcompound1.getCompound("Structures");
  
          ((IChunkAccess) object).a(a(definedstructuremanager, nbttagcompound4, worldserver.getSeed()));
-@@ -377,6 +379,7 @@ public class ChunkRegionLoader {
+@@ -391,6 +393,7 @@ public class ChunkRegionLoader {
          nbttagcompound.set("Level", nbttagcompound1);
          nbttagcompound1.setInt("xPos", chunkcoordintpair.x);
          nbttagcompound1.setInt("zPos", chunkcoordintpair.z);
@@ -919,7 +919,7 @@ index a7e623044a..f41fcabfc5 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 923efc17be..a5c8617f2a 100644
+index efe10b7f58..379f3d4efa 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -57,7 +57,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -945,10 +945,10 @@ index d2c45157a2..272b0a4816 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 07d8c44516..9ca9bc9291 100644
+index f8935a4e8c..b546e4bd0e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -931,6 +931,9 @@ public final class CraftServer implements Server {
+@@ -938,6 +938,9 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
