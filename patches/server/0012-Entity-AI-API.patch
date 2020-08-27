@@ -1,4 +1,4 @@
-From 1576f6fe870a6bab38b7f15e91bd630e8ba5962c Mon Sep 17 00:00:00 2001
+From 8426ac3b956ac5030ae4706180daa8b952f0740c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -10,7 +10,7 @@ Subject: [PATCH] Entity AI API
  .../net/minecraft/server/EntityAnimal.java    |   2 +-
  .../net/minecraft/server/EntityBlaze.java     |  27 +-
  .../net/minecraft/server/EntityCreature.java  |   1 +
- .../minecraft/server/EntityEnderSignal.java   |  24 +-
+ .../minecraft/server/EntityEnderSignal.java   |  22 +-
  .../net/minecraft/server/EntityGhast.java     |   3 +-
  .../minecraft/server/EntityGoalAccessor.java  |  20 ++
  .../minecraft/server/EntityInsentient.java    |   1 +
@@ -29,7 +29,7 @@ Subject: [PATCH] Entity AI API
  .../craftbukkit/entity/CraftEnderSignal.java  |   3 +-
  .../bukkit/craftbukkit/entity/CraftGhast.java |   9 +
  .../java/org/spigotmc/ActivationRange.java    |   1 +
- 25 files changed, 601 insertions(+), 30 deletions(-)
+ 25 files changed, 600 insertions(+), 29 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
  create mode 100644 src/main/java/net/minecraft/server/EntityGoalAccessor.java
 
@@ -493,7 +493,7 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ce057e2e53..0e805bf00a 100644
+index 43672579a8..e4c7f1c212 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -124,7 +124,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -597,7 +597,7 @@ index ce057e2e53..0e805bf00a 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2506,7 +2517,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2510,7 +2521,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -606,7 +606,7 @@ index ce057e2e53..0e805bf00a 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2944,6 +2955,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2948,6 +2959,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -700,7 +700,7 @@ index 4757e5a92c..944c9503a7 100644
          super(entitytypes, world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityEnderSignal.java b/src/main/java/net/minecraft/server/EntityEnderSignal.java
-index 6e5b460770..6e043b303a 100644
+index 3f39a53be8..0a165c75c8 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderSignal.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderSignal.java
 @@ -9,6 +9,18 @@ public class EntityEnderSignal extends Entity {
@@ -722,17 +722,15 @@ index 6e5b460770..6e043b303a 100644
      public EntityEnderSignal(EntityTypes<? extends EntityEnderSignal> entitytypes, World world) {
          super(entitytypes, world);
      }
-@@ -20,8 +32,8 @@ public class EntityEnderSignal extends Entity {
+@@ -20,7 +32,7 @@ public class EntityEnderSignal extends Entity {
      }
  
      public void b(ItemStack itemstack) {
 -        if (itemstack.getItem() != Items.ENDER_EYE || itemstack.hasTag()) {
--            this.getDataWatcher().set(EntityEnderSignal.b, SystemUtils.a((Object) itemstack.cloneItemStack(), (itemstack1) -> {
 +        if (!itemstack.isEmpty() && (itemstack.getItem() != Items.ENDER_EYE || itemstack.hasTag())) { // PaperDragon - Hide null item issue
-+            this.getDataWatcher().set(EntityEnderSignal.b, SystemUtils.a(itemstack.cloneItemStack(), (itemstack1) -> { // PaperDragon - Decompile Fix
+             this.getDataWatcher().set(EntityEnderSignal.b, SystemUtils.a(itemstack.cloneItemStack(), (itemstack1) -> { // CraftBukkit - decompile error
                  itemstack1.setCount(1);
              }));
-         }
 @@ -43,6 +55,7 @@ public class EntityEnderSignal extends Entity {
          this.getDataWatcher().register(EntityEnderSignal.b, ItemStack.b);
      }
@@ -830,7 +828,7 @@ index 36df27024c..a8fb57cd92 100644
      public boolean aware = true; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index e1372620fc..2b3b3b85ed 100644
+index cfb31c412c..e433133b05 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -16,6 +16,7 @@ public class EntityItem extends Entity {
@@ -1069,7 +1067,7 @@ index fe77458f07..1130cb6376 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1d8bc45e2c..665f5064ee 100644
+index cf5acf4e93..817bf72685 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -824,7 +824,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {

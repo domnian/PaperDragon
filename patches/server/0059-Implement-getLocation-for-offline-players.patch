@@ -1,4 +1,4 @@
-From abd53f4d934b41c5123f1a76b4836953e163ec74 Mon Sep 17 00:00:00 2001
+From af72502ab19f772f5446a59aaf7c2f79c80a30f7 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:50:51 -0500
 Subject: [PATCH] Implement getLocation() for offline players
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement getLocation() for offline players
  2 files changed, 16 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 5700dd22c9..37b8cbdd77 100644
+index 1c78e752a9..d1022d30de 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1641,6 +1641,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1644,6 +1644,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end

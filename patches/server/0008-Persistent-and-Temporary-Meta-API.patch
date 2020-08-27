@@ -1,4 +1,4 @@
-From a49e337359794a364a7af23967d517f45582fcaa Mon Sep 17 00:00:00 2001
+From bd66a1aec57a05b4cf561d417ec3e57b028dd804 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,7 +179,7 @@ index a0353da423..3672940450 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 97e61dae79..f6d4edbec6 100644
+index 45e7e30892..2fd43f2cf5 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -55,6 +55,7 @@ import org.bukkit.plugin.PluginManager;
@@ -198,7 +198,7 @@ index 97e61dae79..f6d4edbec6 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1743,6 +1745,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1747,6 +1749,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -804,7 +804,7 @@ index 6bcb19b560..73bc4103ba 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 8a069cfcbf..e76ee7d113 100644
+index fcd3388d88..70e08a8393 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -1284,6 +1284,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
