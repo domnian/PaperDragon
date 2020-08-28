@@ -1,4 +1,4 @@
-From bd66a1aec57a05b4cf561d417ec3e57b028dd804 Mon Sep 17 00:00:00 2001
+From 908221d5f78846b710312c7a50d09731018bd700 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -9,7 +9,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  src/main/java/net/minecraft/server/Chunk.java |   2 +
  .../minecraft/server/ChunkRegionLoader.java   |   3 +
  .../java/net/minecraft/server/Entity.java     |   3 +
- .../net/minecraft/server/MetaApiAccessor.java | 567 ++++++++++++++++++
+ .../net/minecraft/server/MetaApiAccessor.java | 568 ++++++++++++++++++
  .../server/PacketPlayOutMapChunk.java         |   1 +
  .../server/PacketPlayOutTileEntityData.java   |   1 +
  .../net/minecraft/server/PlayerChunkMap.java  |   1 +
@@ -17,7 +17,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../minecraft/server/ProtoChunkExtension.java |   1 +
  .../java/net/minecraft/server/TileEntity.java |   3 +
  src/main/java/net/minecraft/server/World.java |   1 +
- .../net/minecraft/server/WorldDataServer.java |  11 +-
+ .../net/minecraft/server/WorldDataServer.java |   9 +-
  .../net/minecraft/server/WorldServer.java     |   2 +-
  .../org/bukkit/craftbukkit/CraftChunk.java    |   2 +
  .../org/bukkit/craftbukkit/CraftServer.java   |   3 +
@@ -26,7 +26,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  .../craftbukkit/entity/CraftEntity.java       |   2 +
  .../craftbukkit/event/CraftEventFactory.java  |   5 +
  .../craftbukkit/inventory/CraftInventory.java |  11 +
- 22 files changed, 715 insertions(+), 3 deletions(-)
+ 22 files changed, 714 insertions(+), 3 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
@@ -208,12 +208,13 @@ index 45e7e30892..2fd43f2cf5 100644
                  origin = new org.bukkit.Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 0000000000..55dcbb2cdb
+index 0000000000..26e06b0bbe
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
-@@ -0,0 +1,567 @@
+@@ -0,0 +1,568 @@
 +package net.minecraft.server;
 +
++import com.mojang.serialization.Dynamic;
 +import org.bukkit.Bukkit;
 +import com.domnian.paperdragon.api.Vector3i;
 +import com.domnian.paperdragon.api.meta.PersistentMetaList;
@@ -349,9 +350,9 @@ index 0000000000..55dcbb2cdb
 +        }
 +    }
 +
-+    static void loadWorldMeta(WorldDataServer world, NBTTagCompound nbt) {
-+        if (nbt.hasKey(WORLD_META)) {
-+            NBTTagCompound nbtmeta = nbt.getCompound(WORLD_META);
++    static void loadWorldMeta(WorldDataServer world, Dynamic<NBTBase> nbt) {
++        NBTTagCompound nbtmeta = (NBTTagCompound) nbt.getElement(WORLD_META, null);
++        if (nbtmeta != null) {
 +            world.metaMap = getMetaMapFromCompound(nbtmeta);
 +        }
 +        if (world.metaMap == null) {
@@ -881,7 +882,7 @@ index 912b10f00a..58b50888d6 100644
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
 diff --git a/src/main/java/net/minecraft/server/WorldDataServer.java b/src/main/java/net/minecraft/server/WorldDataServer.java
-index a7e623044a..f41fcabfc5 100644
+index a7e623044a..67ee36a7ba 100644
 --- a/src/main/java/net/minecraft/server/WorldDataServer.java
 +++ b/src/main/java/net/minecraft/server/WorldDataServer.java
 @@ -57,6 +57,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
@@ -892,7 +893,7 @@ index a7e623044a..f41fcabfc5 100644
  
      private WorldDataServer(@Nullable DataFixer datafixer, int i, @Nullable NBTTagCompound nbttagcompound, boolean flag, int j, int k, int l, float f, long i1, long j1, int k1, int l1, int i2, boolean flag1, int j2, boolean flag2, boolean flag3, boolean flag4, WorldBorder.c worldborder_c, int k2, int l2, @Nullable UUID uuid, LinkedHashSet<String> linkedhashset, CustomFunctionCallbackTimerQueue<MinecraftServer> customfunctioncallbacktimerqueue, @Nullable NBTTagCompound nbttagcompound1, NBTTagCompound nbttagcompound2, WorldSettings worldsettings, GeneratorSettings generatorsettings, Lifecycle lifecycle) {
          this.k = datafixer;
-@@ -101,9 +102,15 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
+@@ -101,9 +102,13 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
          });
  
          // CraftBukkit - decompile error
@@ -901,15 +902,13 @@ index a7e623044a..f41fcabfc5 100644
 +        WorldDataServer worldData = new WorldDataServer(datafixer, i, nbttagcompound, dynamic.get("WasModded").asBoolean(false), dynamic.get("SpawnX").asInt(0), dynamic.get("SpawnY").asInt(0), dynamic.get("SpawnZ").asInt(0), dynamic.get("SpawnAngle").asFloat(0.0F), j, dynamic.get("DayTime").asLong(j), levelversion.a(), dynamic.get("clearWeatherTime").asInt(0), dynamic.get("rainTime").asInt(0), dynamic.get("raining").asBoolean(false), dynamic.get("thunderTime").asInt(0), dynamic.get("thundering").asBoolean(false), dynamic.get("initialized").asBoolean(true), dynamic.get("DifficultyLocked").asBoolean(false), WorldBorder.c.a(dynamic, WorldBorder.c), dynamic.get("WanderingTraderSpawnDelay").asInt(0), dynamic.get("WanderingTraderSpawnChance").asInt(0), (UUID) dynamic.get("WanderingTraderId").read(MinecraftSerializableUUID.a).result().orElse(null), (LinkedHashSet) dynamic.get("ServerBrands").asStream().flatMap((dynamic1) -> {
              return SystemUtils.a(dynamic1.asString().result());
          }).collect(Collectors.toCollection(Sets::newLinkedHashSet)), new CustomFunctionCallbackTimerQueue<>(CustomFunctionCallbackTimers.a, dynamic.get("ScheduledEvents").asStream()), (NBTTagCompound) dynamic.get("CustomBossEvents").orElseEmptyMap().getValue(), nbttagcompound1, worldsettings, generatorsettings, lifecycle);
-+        if (nbttagcompound != null) {
-+            MetaApiAccessor.loadWorldMeta(worldData, nbttagcompound);
-+        }
++        MetaApiAccessor.loadWorldMeta(worldData, dynamic);
 +        return worldData;
 +        // PaperDragon end
      }
  
      @Override
-@@ -180,7 +187,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
+@@ -180,7 +185,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
          if (this.B != null) {
              nbttagcompound.a("WanderingTraderId", this.B);
          }
