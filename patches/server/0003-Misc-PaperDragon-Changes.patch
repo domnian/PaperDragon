@@ -1,4 +1,4 @@
-From 6d29d214f973d0d596d74b81e2cb807499e4a6b7 Mon Sep 17 00:00:00 2001
+From 150a47cfd324dfa17e0477368a5695db166091ed Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -129,7 +129,7 @@ index 0000000000..edd083ef62
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 73ea951831..f09dd0fa37 100644
+index 8b1e866b3e..a2c19cd876 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -1914,7 +1914,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -225,7 +225,7 @@ index 0000000000..bf28f00db7
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bbe793ca36..42f1cb57e5 100644
+index 65e8dc3402..bdeab066ac 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1451,7 +1451,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -251,10 +251,10 @@ index 87e18f941d..d94ea46e16 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index c1efe830dd..d852f26197 100644
+index a9728c6c53..c1d883bec1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -326,7 +326,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -327,7 +327,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

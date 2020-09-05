@@ -1,4 +1,4 @@
-From 76a0e1bc922046fe23d18e64105416f4bc2f9fa5 Mon Sep 17 00:00:00 2001
+From c59cdddca65cf77f663dcec0942a6904624cf4b9 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 27 Jan 2020 00:56:50 -0500
 Subject: [PATCH] Implement teleport() for offline players
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement teleport() for offline players
  2 files changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d1022d30de..7ab71e24ee 100644
+index add4dce371..d4422e5653 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1644,7 +1644,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1645,7 +1645,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end

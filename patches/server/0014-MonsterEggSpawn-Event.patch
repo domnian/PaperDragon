@@ -1,4 +1,4 @@
-From 2289afffbb3860743e4401b6fe48f50a23884ca6 Mon Sep 17 00:00:00 2001
+From 1b303847a53cc07c870b80fd74d15a298926e5ef Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -9,7 +9,7 @@ Get the itemstack used to spawn an entity
  1 file changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index 2767de830b..c4d45c2ba0 100644
+index e23247e0a8..202f379f01 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
 +++ b/src/main/java/net/minecraft/server/EntityTypes.java
 @@ -10,6 +10,7 @@ import java.util.stream.Stream;
@@ -20,7 +20,7 @@ index 2767de830b..c4d45c2ba0 100644
  
  public class EntityTypes<T extends Entity> {
  
-@@ -166,18 +167,40 @@ public class EntityTypes<T extends Entity> {
+@@ -167,18 +168,40 @@ public class EntityTypes<T extends Entity> {
  
      @Nullable
      public Entity spawnCreature(WorldServer worldserver, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {

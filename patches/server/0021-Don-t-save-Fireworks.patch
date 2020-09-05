@@ -1,4 +1,4 @@
-From 1a3bde2e92df13615d842b35382b0c1057e7ab66 Mon Sep 17 00:00:00 2001
+From e2d104dca201753cd811ec518d57154dc92441a2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 28 Dec 2013 21:25:06 -0500
 Subject: [PATCH] Don't save Fireworks
@@ -12,10 +12,10 @@ Prevent saving Fireworks so that chunk unloads will wipe a chunks fireworks in t
  1 file changed, 1 insertion(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 0d05a8fe71..e5809a2db6 100644
+index c61bf086a3..00db2961c7 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1521,6 +1521,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1522,6 +1522,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      public boolean serializeEntity(NBTTagCompound cmp) { List<Entity> pass = Lists.newArrayList(passengers); passengers.clear();boolean res = d(cmp); passengers.addAll(pass); return res; } // PaperDragon // OBF HELPER
      public boolean d(NBTTagCompound nbttagcompound) {

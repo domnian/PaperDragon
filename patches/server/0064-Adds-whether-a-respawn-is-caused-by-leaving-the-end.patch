@@ -1,4 +1,4 @@
-From 2dcdf8a1cbc48ef723a5ed447ea8dc6086d99967 Mon Sep 17 00:00:00 2001
+From ad37b0ab65351049b7943a93e9c4516f527f4e5c Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:25:11 -0500
 Subject: [PATCH] Adds whether a respawn is caused by leaving the end
@@ -8,10 +8,10 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 299a9b6879..756a4a1853 100644
+index 76cce0e5ea..b75427d497 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -816,7 +816,8 @@ public abstract class PlayerList {
+@@ -815,7 +815,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = cserver.getPlayer(entityplayer1);

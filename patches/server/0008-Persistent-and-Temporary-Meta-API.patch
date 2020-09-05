@@ -1,4 +1,4 @@
-From 908221d5f78846b710312c7a50d09731018bd700 Mon Sep 17 00:00:00 2001
+From 62264853417cbb7db437300e45c77c048b242b04 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,7 +179,7 @@ index a0353da423..3672940450 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 45e7e30892..2fd43f2cf5 100644
+index 1ee01486f8..4fdbeb7868 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -55,6 +55,7 @@ import org.bukkit.plugin.PluginManager;
@@ -190,7 +190,7 @@ index 45e7e30892..2fd43f2cf5 100644
      private static final int CURRENT_LEVEL = 2;
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
-@@ -1527,6 +1528,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1528,6 +1529,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index 45e7e30892..2fd43f2cf5 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1747,6 +1749,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1748,6 +1750,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -842,18 +842,18 @@ index 9ee7e1e936..a6b3fd3340 100644
          return this.a;
      }
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index e48fbf6280..32d8e1b8ea 100644
+index d32540c88b..f7fae45c3e 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -80,6 +80,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -81,6 +81,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
      }
  
      public void load(IBlockData iblockdata, NBTTagCompound nbttagcompound) {
 +        MetaApiAccessor.loadTileEntityMeta(this, nbttagcompound); // PaperDragon
          this.position = new BlockPosition(nbttagcompound.getInt("x"), nbttagcompound.getInt("y"), nbttagcompound.getInt("z"));
          // CraftBukkit start - read container
-         this.persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
-@@ -102,6 +103,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+         this.persistentDataContainer.clear(); // Paper - clear instead of reinit
+@@ -103,6 +104,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
              throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
          } else {
              nbttagcompound.setString("id", minecraftkey.toString());
@@ -861,7 +861,7 @@ index e48fbf6280..32d8e1b8ea 100644
              nbttagcompound.setInt("x", this.position.getX());
              nbttagcompound.setInt("y", this.position.getY());
              nbttagcompound.setInt("z", this.position.getZ());
-@@ -232,6 +234,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -233,6 +235,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
          }
      }
  
@@ -870,7 +870,7 @@ index e48fbf6280..32d8e1b8ea 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 912b10f00a..58b50888d6 100644
+index e525a670ec..c9268cf253 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -450,6 +450,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -990,7 +990,7 @@ index 0f89e77681..ea5f2df61a 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b1fdc5737d..d2ddb88370 100644
+index 6ceb2d50c5..bf7d319edb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -172,6 +172,8 @@ import org.bukkit.util.NumberConversions;
@@ -1003,10 +1003,10 @@ index b1fdc5737d..d2ddb88370 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 68e3d29787..603b52e968 100644
+index 8d5b08cbeb..d62f0902fd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1424,6 +1424,11 @@ public class CraftEventFactory {
+@@ -1423,6 +1423,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());

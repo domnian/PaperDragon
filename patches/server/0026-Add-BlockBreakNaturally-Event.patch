@@ -1,4 +1,4 @@
-From 5b752b5057651be2e176592f548cc676ae1aa681 Mon Sep 17 00:00:00 2001
+From 5faa019dff4f17a3b6364962a89bea51bfcfe331 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -11,7 +11,7 @@ To give reliable control over all blocks dropping to world to restore custom ite
  3 files changed, 12 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index a45ceff9ff..5ac947c977 100644
+index 4b4f14711d..bd073e9e6a 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
@@ -26,7 +26,7 @@ index a45ceff9ff..5ac947c977 100644
              }
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index e433133b05..ad8eae05fe 100644
+index 4fb3436cfa..1db9fd510d 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -17,6 +17,7 @@ public class EntityItem extends Entity {
@@ -38,10 +38,10 @@ index e433133b05..ad8eae05fe 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 63187167e3..03f51125d5 100644
+index 66cd5d93a6..32ca4ef33b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -384,6 +384,15 @@ public class CraftEventFactory {
+@@ -385,6 +385,15 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
