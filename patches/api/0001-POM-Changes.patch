@@ -1,14 +1,14 @@
-From 1af3d9b7de0b11c5a004829e1ce03616c563e523 Mon Sep 17 00:00:00 2001
+From 2ef96b9f624e99a5fe222a83fc42bc2cc92761b3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:53:40 -0400
 Subject: [PATCH] POM Changes
 
 ---
- pom.xml | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ pom.xml | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 1a34f6880..eea768dce 100644
+index 29dafd4b9..2110e67e4 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -26,7 +26,7 @@ index 1a34f6880..eea768dce 100644
 -    <artifactId>paper-api</artifactId>
 +    <groupId>com.domnian.paperdragon</groupId>
 +    <artifactId>paperdragon-api</artifactId>
-     <version>1.16.2-R0.1-SNAPSHOT</version>
+     <version>1.16.3-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Paper-API</name>
@@ -36,18 +36,6 @@ index 1a34f6880..eea768dce 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -32,8 +32,9 @@
-             Please see https://www.spigotmc.org/go/maven for more information.
-         -->
-         <repository>
--            <id>spigotmc-public</id>
--            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-+            <id>domnian-rel</id>
-+            <name>Domnian Releases</name>
-+            <url>https://domnian.com/repo/content/repositories/releases/</url>
-         </repository>
-         <repository>
-             <id>sonatype</id>
 -- 
-2.20.1.windows.1
+2.17.1
 

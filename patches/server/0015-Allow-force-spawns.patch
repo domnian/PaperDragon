@@ -1,4 +1,4 @@
-From 01b75ad1a673fdc99884e000e7ee7e5b5a3b1a5b Mon Sep 17 00:00:00 2001
+From ca8a2e97e5e27909295c6cec64e2f7464626e7d5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,10 +11,10 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 817bf72685..f800a5249d 100644
+index f448f87eaf..c302eb1ace 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1079,7 +1079,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1099,7 +1099,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          boolean flag = entity.attachedToPlayer;
  
          entity.attachedToPlayer = true;
@@ -23,7 +23,7 @@ index 817bf72685..f800a5249d 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1159,7 +1159,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1179,7 +1179,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -46,5 +46,5 @@ index d62f0902fd..eb17eb47bc 100644
              if (vehicle != null) {
                  vehicle.dead = true;
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 62264853417cbb7db437300e45c77c048b242b04 Mon Sep 17 00:00:00 2001
+From 526a7e69bb9c4fc04c2432e80a22d9e26ed88181 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -179,10 +179,10 @@ index a0353da423..3672940450 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1ee01486f8..4fdbeb7868 100644
+index cfb14c54d6..62d0bbb288 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -55,6 +55,7 @@ import org.bukkit.plugin.PluginManager;
+@@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
  public abstract class Entity implements INamableTileEntity, ICommandListener, KeyedObject { // Paper
  
      // CraftBukkit start
@@ -190,7 +190,7 @@ index 1ee01486f8..4fdbeb7868 100644
      private static final int CURRENT_LEVEL = 2;
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
          return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
-@@ -1528,6 +1529,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1525,6 +1526,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index 1ee01486f8..4fdbeb7868 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1748,6 +1750,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1745,6 +1747,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -870,7 +870,7 @@ index d32540c88b..f7fae45c3e 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e525a670ec..c9268cf253 100644
+index 9d16f1b7cc..929f0ad888 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -450,6 +450,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -918,7 +918,7 @@ index a7e623044a..67ee36a7ba 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index efe10b7f58..379f3d4efa 100644
+index 25cdd7b0f7..e622cfc4dd 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -57,7 +57,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -944,7 +944,7 @@ index d2c45157a2..272b0a4816 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f8935a4e8c..b546e4bd0e 100644
+index 9f0793f0f6..4c651aafb0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -938,6 +938,9 @@ public final class CraftServer implements Server {
@@ -1041,5 +1041,5 @@ index bba9bddc1c..59cc71bc4b 100644
          this.inventory = inventory;
      }
 -- 
-2.20.1.windows.1
+2.17.1
 
