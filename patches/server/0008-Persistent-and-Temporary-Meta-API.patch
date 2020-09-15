@@ -1,4 +1,4 @@
-From 526a7e69bb9c4fc04c2432e80a22d9e26ed88181 Mon Sep 17 00:00:00 2001
+From a474ad1f2e6c4f042039eb2bb5a296dfbc6b5b3d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -944,10 +944,10 @@ index d2c45157a2..272b0a4816 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9f0793f0f6..4c651aafb0 100644
+index a9c892f856..9c59b7291c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -938,6 +938,9 @@ public final class CraftServer implements Server {
+@@ -940,6 +940,9 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
@@ -1041,5 +1041,5 @@ index bba9bddc1c..59cc71bc4b 100644
          this.inventory = inventory;
      }
 -- 
-2.17.1
+2.20.1.windows.1
 

@@ -1,4 +1,4 @@
-From 5ef27b5f7842bdacbd5fef51ada91e3847a9d0ac Mon Sep 17 00:00:00 2001
+From 7d297dead90849966f27938b0ff4ff1971d09782 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,7 +10,7 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 76 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c622fb7044..c8e11c3791 100644
+index 76185f042d..2766ef98f2 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -2069,7 +2069,7 @@ public abstract class EntityLiving extends Entity {
@@ -23,7 +23,7 @@ index c622fb7044..c8e11c3791 100644
              this.setSlot(EnumItemSlot.MAINHAND, itemstack);
          } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 6d192b2744..c14bd70b33 100644
+index 300fad4b4a..bf7e99400c 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -402,6 +402,15 @@ public class PlayerInteractManager {
@@ -101,15 +101,15 @@ index 6d192b2744..c14bd70b33 100644
                      entityplayer.updateInventory(entityplayer.defaultContainer);
                  }
  
-@@ -443,6 +477,7 @@ public class PlayerInteractManager {
-     public boolean firedInteract = false;
+@@ -446,6 +480,7 @@ public class PlayerInteractManager {
+     public ItemStack interactItemStack;
      public EnumInteractionResult a(EntityPlayer entityplayer, World world, ItemStack itemstack, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
          BlockPosition blockposition = movingobjectpositionblock.getBlockPosition();
 +        org.bukkit.util.Vector hitVector = new org.bukkit.util.Vector(movingobjectpositionblock.getPos().x, movingobjectpositionblock.getPos().y, movingobjectpositionblock.getPos().z); // Paper - Ensure last 3 floats line up as vector params
          IBlockData iblockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.PASS;
          boolean cancelledBlock = false;
-@@ -513,17 +548,44 @@ public class PlayerInteractManager {
+@@ -519,17 +554,44 @@ public class PlayerInteractManager {
              }
  
              if (!itemstack.isEmpty() && enuminteractionresult != EnumInteractionResult.SUCCESS && !interactResult) { // add !interactResult SPIGOT-764
