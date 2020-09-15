@@ -16,9 +16,12 @@ pushRepo PaperDragon-Server ${SERVER_REPO} master:ver/${minecraftversion}
 pushRepo mc-dev ${MCDEV_REPO} ${paperVer}
 
 # Push Parent to Remotes
-git push origin master -f
-git push origin master:mc/${minecraftversion} -f
-git push origin master:ver/${minecraftversion} -f
+branch="$(git symbolic-ref HEAD 2>/dev/null)" || "master"
+branch=${branch##refs/heads/}
+
+git push origin ${branch} -f
+git push origin ${branch}:mc/${minecraftversion} -f
+git push origin ${branch}:ver/${minecraftversion} -f
 (
     git ls-remote --exit-code pd-push >> /dev/null
     [[ "$?" == "128" ]] && git remote add pd-push git@github.com:domnian/PaperDragon >> /dev/null
