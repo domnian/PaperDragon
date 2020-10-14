@@ -1,4 +1,4 @@
-From 24e7baae62d58ad1cbe2f7e673fffd4c6e86b3de Mon Sep 17 00:00:00 2001
+From b94961c60677390a9757ddb993f5b4d53c3b5e42 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c6381045..1e903fe5ce 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 62d0bbb288..4dbf63a34a 100644
+index 6545b28ab1..6b008d644e 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -49,8 +49,8 @@ index 62d0bbb288..4dbf63a34a 100644
      public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
 +    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
      private static final int CURRENT_LEVEL = 2;
+     boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
-         return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
 index 0000000000..42bd08e0e9
@@ -103,7 +103,7 @@ index 0000000000..42bd08e0e9
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e622cfc4dd..f6b0cb09dd 100644
+index bfe43e2dfb..162c436255 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -830,6 +830,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {

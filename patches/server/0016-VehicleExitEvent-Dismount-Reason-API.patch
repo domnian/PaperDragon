@@ -1,4 +1,4 @@
-From 17a305c36823e7b54d206f6c4c6e2e4f312c5125 Mon Sep 17 00:00:00 2001
+From 2ff370349b7df5909deef443d422e38b934d591c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,10 +11,10 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 3fb00024a5..2ebcd5fb53 100644
+index 01c2bfca64..f65eddcb5b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -278,6 +278,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -280,6 +280,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          }
  
          if (this.isPassenger()) {
@@ -22,7 +22,7 @@ index 3fb00024a5..2ebcd5fb53 100644
              this.stopRiding();
          }
  
-@@ -1999,6 +2000,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2015,6 +2016,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              return false;
          } else {
              if (this.isPassenger()) {
@@ -30,7 +30,7 @@ index 3fb00024a5..2ebcd5fb53 100644
                  this.stopRiding();
              }
  
-@@ -2019,7 +2021,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2035,7 +2037,11 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      public void ejectPassengers() {
          for (int i = this.passengers.size() - 1; i >= 0; --i) {
@@ -43,7 +43,7 @@ index 3fb00024a5..2ebcd5fb53 100644
          }
  
      }
-@@ -2090,6 +2096,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2106,6 +2112,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      // Paper start
      protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
      protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
@@ -52,7 +52,7 @@ index 3fb00024a5..2ebcd5fb53 100644
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2104,6 +2112,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2120,6 +2128,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  );
                  // Suppress during worldgen
                  if (this.valid) {
@@ -60,7 +60,7 @@ index 3fb00024a5..2ebcd5fb53 100644
                      Bukkit.getPluginManager().callEvent(event);
                  }
                  CraftEntity craftn = (CraftEntity) entity.getBukkitEntity().getVehicle();
-@@ -2520,6 +2529,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2540,6 +2549,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cx=%d, cz=%d, tl=%d, v=%b, d=%b]", new Object[] { this.getClass().getSimpleName(), this.getDisplayName().getString(), Integer.valueOf(this.id), this.uniqueID.toString(), this.world == null ? "~NULL~" : this.world.toString(), Double.valueOf(this.locX()), Double.valueOf(this.locY()), Double.valueOf(this.locZ()), chunkX, chunkZ, this.ticksLived, this.valid, this.dead}); // Paper - add more information
      }
  
@@ -101,10 +101,10 @@ index 2742cb54d4..06dee727bb 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 787e80c50a..76cce0e5ea 100644
+index 38f26e25cb..48c23f9d60 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -529,6 +529,7 @@ public abstract class PlayerList {
+@@ -532,6 +532,7 @@ public abstract class PlayerList {
  
              if (entity.hasSinglePlayerPassenger()) {
                  PlayerList.LOGGER.debug("Removing player mount");
@@ -113,5 +113,5 @@ index 787e80c50a..76cce0e5ea 100644
                  worldserver.removeEntity(entity);
                  entity.dead = true;
 -- 
-2.17.1
+2.20.1.windows.1
 

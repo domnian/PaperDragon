@@ -1,4 +1,4 @@
-From afae5a43ad6940b372762caf09792ab730798d4e Mon Sep 17 00:00:00 2001
+From 602df27e814d565a6432bec420a2935b482c8edb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jul 2013 18:58:19 -0400
 Subject: [PATCH] Entity Serialization
@@ -98,10 +98,10 @@ index 1dd0657139..b809114a0b 100644
 +
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a691188e74..3fb00024a5 100644
+index e4a2338970..01c2bfca64 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1516,6 +1516,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1524,6 +1524,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          }
      }
  
@@ -110,7 +110,7 @@ index a691188e74..3fb00024a5 100644
          return this.isPassenger() ? false : this.a_(nbttagcompound);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index bf7d319edb..f70088cc6d 100644
+index 6c5d3d079c..6d072c6981 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -182,6 +182,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -131,5 +131,5 @@ index bf7d319edb..f70088cc6d 100644
          this.server = server;
          this.entity = entity;
 -- 
-2.17.1
+2.20.1.windows.1
 

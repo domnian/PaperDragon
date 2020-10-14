@@ -1,4 +1,4 @@
-From 715f21f602e2a709acd0311e0cbdfa01bc2ee8a0 Mon Sep 17 00:00:00 2001
+From 42b5fd6c9d4be3e764c50d859e3d208353cdc51f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -704,10 +704,10 @@ index 688415f6c8..9208b8dc2e 100644
      public static final MinecraftKey b = new MinecraftKey("minecraft", "default");
      @Nullable
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 073b1a09d6..272e4aa65d 100644
+index b4b60a7237..7b846e9dac 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2893,6 +2893,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2913,6 +2913,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return this.getDirection();
      }
  
@@ -716,5 +716,5 @@ index 073b1a09d6..272e4aa65d 100644
          return new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ENTITY, new ChatHoverable.b(this.getEntityType(), this.getUniqueID(), this.getDisplayName()));
      }
 -- 
-2.17.1
+2.20.1.windows.1
 

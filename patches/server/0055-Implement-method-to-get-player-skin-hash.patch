@@ -1,4 +1,4 @@
-From 8939895f0db48456d22b9a28fa2e01d3cfa3995c Mon Sep 17 00:00:00 2001
+From 6ab29e4153341331a41548cbeb627129d9b25a61 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 12 Jul 2019 03:48:22 -0400
 Subject: [PATCH] Implement method to get player skin hash
@@ -8,7 +8,7 @@ Subject: [PATCH] Implement method to get player skin hash
  1 file changed, 18 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index c7fa151e5..0d5c5ac36 100644
+index c7fa151e53..0d5c5ac369 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -24,15 +24,22 @@

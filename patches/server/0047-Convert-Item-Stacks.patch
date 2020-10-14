@@ -1,4 +1,4 @@
-From 4cf97b769443d8646d3325cdc3f45d55268987b1 Mon Sep 17 00:00:00 2001
+From 677677cbf2bb9dd7c7ea05510ce449192746554b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -11,7 +11,7 @@ Subject: [PATCH] Convert Item Stacks
  4 files changed, 54 insertions(+), 11 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 29801d6ec8..c8ca03b0fc 100644
+index 55ac1aecf2..1167f996c3 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -142,12 +142,23 @@ public final class ItemStack {
@@ -41,7 +41,7 @@ index 29801d6ec8..c8ca03b0fc 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index 1c3e6e0c9a..1109e5020e 100644
+index af84813c70..4d71ecfc8d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 @@ -335,9 +335,25 @@ public final class CraftItemFactory implements ItemFactory {

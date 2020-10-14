@@ -1,4 +1,4 @@
-From ca8a2e97e5e27909295c6cec64e2f7464626e7d5 Mon Sep 17 00:00:00 2001
+From 6d42cbd76669210a41d5a993494a32646ebcd212 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,7 +11,7 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f448f87eaf..c302eb1ace 100644
+index 8cbb0ec794..4a28fdab23 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1099,7 +1099,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -23,7 +23,7 @@ index f448f87eaf..c302eb1ace 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1179,7 +1179,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1186,7 +1186,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -33,7 +33,7 @@ index f448f87eaf..c302eb1ace 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index d62f0902fd..eb17eb47bc 100644
+index 8620f34efb..caa2607f93 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -636,7 +636,7 @@ public class CraftEventFactory {
@@ -46,5 +46,5 @@ index d62f0902fd..eb17eb47bc 100644
              if (vehicle != null) {
                  vehicle.dead = true;
 -- 
-2.17.1
+2.20.1.windows.1
 

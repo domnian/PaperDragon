@@ -1,4 +1,4 @@
-From 66c267095d316fa6ca8f862d5c8b757427dcdad8 Mon Sep 17 00:00:00 2001
+From 4a486ce3b779b4f67cc6ae32480c4a15b41a8e4b Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sun, 14 Jul 2019 13:50:53 -0500
 Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage
@@ -9,7 +9,7 @@ Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage
  1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/TileEntityConduit.java b/src/main/java/net/minecraft/server/TileEntityConduit.java
-index ade830122..839cde5fc 100644
+index ade8301227..839cde5fc2 100644
 --- a/src/main/java/net/minecraft/server/TileEntityConduit.java
 +++ b/src/main/java/net/minecraft/server/TileEntityConduit.java
 @@ -182,7 +182,14 @@ public class TileEntityConduit extends TileEntity implements ITickable {

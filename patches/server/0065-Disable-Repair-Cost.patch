@@ -1,4 +1,4 @@
-From 0590e4bdc7b7ba2bfc862a21378289d3ab3e83d4 Mon Sep 17 00:00:00 2001
+From b6a9322222cecb4bb4f1257737a958de21d2a08a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 19 May 2015 23:47:32 -0400
 Subject: [PATCH] Disable Repair Cost
@@ -10,7 +10,7 @@ Handled on Plugin Level on a Per Player basis
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 7965412bfe..d083fb4eab 100644
+index 1167f996c3..035f1e7f27 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -185,6 +185,7 @@ public final class ItemStack {

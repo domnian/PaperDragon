@@ -1,4 +1,4 @@
-From f767e630facf7b6aaedc8246dea19a1fe3f4e66c Mon Sep 17 00:00:00 2001
+From 572b60bdac4c24d48b2b533945bbddf84bdc1886 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -493,10 +493,10 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 4dbf63a34a..a691188e74 100644
+index 6b008d644e..e4a2338970 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -122,7 +122,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public float lastYaw;
      public float lastPitch;
      private AxisAlignedBB boundingBox;
@@ -505,7 +505,7 @@ index 4dbf63a34a..a691188e74 100644
      public boolean positionChanged;
      public boolean v;
      public boolean velocityChanged;
-@@ -150,6 +150,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -151,6 +151,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      protected Tag<FluidType> O;
      public int noDamageTicks;
      protected boolean justCreated;
@@ -515,7 +515,7 @@ index 4dbf63a34a..a691188e74 100644
      protected final DataWatcher datawatcher;
      protected static final DataWatcherObject<Byte> S = DataWatcher.a(Entity.class, DataWatcherRegistry.a);
      private static final DataWatcherObject<Integer> AIR_TICKS = DataWatcher.a(Entity.class, DataWatcherRegistry.b);
-@@ -178,7 +181,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -179,7 +182,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      private boolean az;
      private final double[] aA;
      private long aB;
@@ -524,7 +524,7 @@ index 4dbf63a34a..a691188e74 100644
      private float headHeight;
      // CraftBukkit start
      public boolean persist = true;
-@@ -389,6 +392,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -391,6 +394,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPosition(double d0, double d1, double d2) {
@@ -532,7 +532,7 @@ index 4dbf63a34a..a691188e74 100644
          this.setPositionRaw(d0, d1, d2);
          //this.a(this.size.a(d0, d1, d2)); // Paper - move into setPositionRaw
          if (valid) ((WorldServer) world).chunkCheck(this); // CraftBukkit
-@@ -416,6 +420,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -418,6 +422,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      // CraftBukkit end
  
      public void entityBaseTick() {
@@ -540,7 +540,7 @@ index 4dbf63a34a..a691188e74 100644
          this.world.getMethodProfiler().enter("entityBaseTick");
          if (this.isPassenger() && this.getVehicle().dead) {
              this.stopRiding();
-@@ -591,6 +596,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -593,6 +598,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -548,7 +548,7 @@ index 4dbf63a34a..a691188e74 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().c(vec3d));
              this.recalcPosition();
-@@ -1054,7 +1060,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1056,7 +1062,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isFireProof() {
@@ -557,7 +557,7 @@ index 4dbf63a34a..a691188e74 100644
      }
  
      public boolean b(float f, float f1) {
-@@ -1286,6 +1292,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1288,6 +1294,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setLocation(double d0, double d1, double d2, float f, float f1) {
@@ -565,15 +565,15 @@ index 4dbf63a34a..a691188e74 100644
          this.f(d0, d1, d2);
          this.yaw = f % 360.0F;
          this.pitch = MathHelper.a(f1, -90.0F, 90.0F) % 360.0F;
-@@ -1317,6 +1324,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1319,6 +1326,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
 +        if (isDisabled) { return; } // PaperDragon
-         this.mot = new Vec3D(0, 0, 0); // Paper - cancel entity velocity if teleported
-         this.g(d0, d1, d2);
-         this.yaw = f;
-@@ -1366,6 +1374,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+         // Paper - cancel entity velocity if teleported
+         if (!preserveMotion) {
+             this.mot = Vec3D.ORIGIN;
+@@ -1374,6 +1382,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      public void pickup(EntityHuman entityhuman) {}
  
      public void collide(Entity entity) {
@@ -581,7 +581,7 @@ index 4dbf63a34a..a691188e74 100644
          if (!this.isSameVehicle(entity)) {
              if (!entity.noclip && !this.noclip) {
                  double d0 = entity.locX() - this.locX();
-@@ -1402,6 +1411,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1410,6 +1419,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void i(double d0, double d1, double d2) {
@@ -589,7 +589,7 @@ index 4dbf63a34a..a691188e74 100644
          this.setMot(this.getMot().add(d0, d1, d2));
          this.impulse = true;
      }
-@@ -1411,6 +1421,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1419,6 +1429,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -597,7 +597,7 @@ index 4dbf63a34a..a691188e74 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2509,7 +2520,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2529,7 +2540,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -606,7 +606,7 @@ index 4dbf63a34a..a691188e74 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2947,6 +2958,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2967,6 +2978,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -1058,7 +1058,7 @@ index fe77458f07..1130cb6376 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f6b0cb09dd..f448f87eaf 100644
+index 162c436255..8cbb0ec794 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -828,7 +828,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -1070,7 +1070,7 @@ index f6b0cb09dd..f448f87eaf 100644
                  ++entity.ticksLived;
                  EntityTasksHandler.tickHandler(entity); // PaperDragon
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
-@@ -1459,6 +1459,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1466,6 +1466,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              }
              // Paper end
              entity.shouldBeRemoved = false; // Paper - shouldn't be removed after being re-added
@@ -1151,5 +1151,5 @@ index 0b93635ba5..afbec64883 100644
          if ( !entity.inChunk || entity instanceof EntityFireworks ) {
              return true;
 -- 
-2.17.1
+2.20.1.windows.1
 

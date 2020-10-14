@@ -1,4 +1,4 @@
-From e217fc24707f23aa85d660e14ced7508d9f7dc6b Mon Sep 17 00:00:00 2001
+From 3c70e7de90c37b77b91adf76282678e91d814e7d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 16 Aug 2019 22:18:35 -0400
 Subject: [PATCH] Fix Bukkit.createInventory() with type LECTERN
@@ -95,7 +95,7 @@ index cb6f55c4d8..4a02ef64f6 100644
              if (this.world != null) BlockLectern.a(this.getWorld(), this.getPosition(), this.getBlock()); // CraftBukkit
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index 5db3dc231c..7951e8cbd9 100644
+index 53917d3b38..db9ef278de 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 @@ -300,6 +300,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
