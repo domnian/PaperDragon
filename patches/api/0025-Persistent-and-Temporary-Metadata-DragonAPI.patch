@@ -1,4 +1,4 @@
-From a4363a37c658b09a172532391197e1aebe91fd08 Mon Sep 17 00:00:00 2001
+From b632e093f5653646749f187f8ebf5dd91cdf1c8f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata DragonAPI
@@ -1475,10 +1475,10 @@ index 000000000..dcf4a459a
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 11b691cf5..2b34854c5 100644
+index b4ef6297f..3642c375e 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -123,6 +123,8 @@ public interface Chunk {
+@@ -124,6 +124,8 @@ public interface Chunk extends PersistentDataHolder {
      BlockState[] getTileEntities(boolean useSnapshot);
      // Paper end
  
@@ -1499,7 +1499,7 @@ index 631cbf2be..d5a390d94 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index cc0c2b249..ecce15881 100644
+index 8e72dbbfd..585c20ff5 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -259,6 +259,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
@@ -1512,7 +1512,7 @@ index cc0c2b249..ecce15881 100644
       * Returns true if the entity gets persisted.
       * <p>
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index df975b566..1f51a83fc 100644
+index f7de3486d..3e5b62b8e 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,8 @@ import org.jetbrains.annotations.Nullable;

@@ -1,4 +1,4 @@
-From 17e1e6d1e6b4a2fa38df5f3ba5f4afd6c49a4770 Mon Sep 17 00:00:00 2001
+From 606d24a3d2a45be663cc293ffe4f127f45662013 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:46:42 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -17,10 +17,10 @@ Objects represented by an Identifier, should be able to use them as their equal/
  1 file changed, 43 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 272b0a4816..ed56b50351 100644
+index fc970713d..ebe88477a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -52,6 +52,7 @@ public class CraftChunk implements Chunk {
+@@ -53,6 +53,7 @@ public class CraftChunk implements Chunk {
          worldServer = (WorldServer) getHandle().world;
          x = getHandle().getPos().x;
          z = getHandle().getPos().z;
@@ -28,7 +28,7 @@ index 272b0a4816..ed56b50351 100644
      }
  
      @Override
-@@ -339,4 +340,46 @@ public class CraftChunk implements Chunk {
+@@ -345,4 +346,46 @@ public class CraftChunk implements Chunk {
      static {
          Arrays.fill(emptyLight, (byte) 0xFF);
      }
