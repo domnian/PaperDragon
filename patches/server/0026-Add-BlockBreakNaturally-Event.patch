@@ -1,17 +1,17 @@
-From 5faa019dff4f17a3b6364962a89bea51bfcfe331 Mon Sep 17 00:00:00 2001
+From fb1514bc3731c6dd060b31858449ec2bd61ff31d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
 
 To give reliable control over all blocks dropping to world to restore custom item meta
 ---
- src/main/java/net/minecraft/server/Block.java            | 2 ++
- src/main/java/net/minecraft/server/EntityItem.java       | 1 +
- .../org/bukkit/craftbukkit/event/CraftEventFactory.java  | 9 +++++++++
- 3 files changed, 12 insertions(+)
+ src/main/java/net/minecraft/server/Block.java          |  2 ++
+ src/main/java/net/minecraft/server/EntityItem.java     |  1 +
+ .../bukkit/craftbukkit/event/CraftEventFactory.java    | 10 ++++++++++
+ 3 files changed, 13 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 4b4f14711d..bd073e9e6a 100644
+index 4b4f14711..bd073e9e6 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
@@ -26,7 +26,7 @@ index 4b4f14711d..bd073e9e6a 100644
              }
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 4fb3436cfa..1db9fd510d 100644
+index 4fb3436cf..1db9fd510 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -17,6 +17,7 @@ public class EntityItem extends Entity {
@@ -38,17 +38,18 @@ index 4fb3436cfa..1db9fd510d 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 66cd5d93a6..32ca4ef33b 100644
+index 9eafcd92f..c7deb965a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -385,6 +385,15 @@ public class CraftEventFactory {
+@@ -385,6 +385,16 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
 +            // PaperDragon start
 +            com.google.common.collect.Multimap<org.bukkit.Location, org.bukkit.entity.Item> drops = com.google.common.collect.ArrayListMultimap.create();
 +            for (EntityItem item : items) {
-+                drops.put(net.minecraft.server.MCUtil.toLocation(item.world, item.droppedPosition), (org.bukkit.entity.Item) item.getBukkitEntity());
++                BlockPosition pos = item.droppedPosition != null ? item.droppedPosition : new BlockPosition(item.locX(), item.locY(), item.locZ());
++                drops.put(net.minecraft.server.MCUtil.toLocation(item.world, pos), (org.bukkit.entity.Item) item.getBukkitEntity());
 +            }
 +            for (org.bukkit.Location location : drops.keySet()) {
 +                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(location, drops.get(location)).callEvent();
