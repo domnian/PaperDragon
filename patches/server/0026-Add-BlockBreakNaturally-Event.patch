@@ -1,4 +1,4 @@
-From fb1514bc3731c6dd060b31858449ec2bd61ff31d Mon Sep 17 00:00:00 2001
+From 9402bca57dd277e26dbeb6812beda3493e50fc47 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -7,18 +7,19 @@ To give reliable control over all blocks dropping to world to restore custom ite
 ---
  src/main/java/net/minecraft/server/Block.java          |  2 ++
  src/main/java/net/minecraft/server/EntityItem.java     |  1 +
+ src/main/java/net/minecraft/server/WorldServer.java    |  1 +
  .../bukkit/craftbukkit/event/CraftEventFactory.java    | 10 ++++++++++
- 3 files changed, 13 insertions(+)
+ 4 files changed, 14 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 4b4f14711..bd073e9e6 100644
+index 4b4f14711..b1c0f1484 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
              entityitem.defaultPickupDelay();
              // CraftBukkit start
              if (world.captureDrops != null) {
-+                entityitem.droppedPosition = blockposition; // PaperDragon
++                entityitem.droppedPosition = blockposition.immutableCopy(); // PaperDragon
                  world.captureDrops.add(entityitem);
              } else {
 +                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(MCUtil.toLocation(world, blockposition), (org.bukkit.entity.Item) entityitem.getBukkitEntity()).callEvent(); // EMC
@@ -37,6 +38,18 @@ index 4fb3436cf..1db9fd510 100644
      public int pickupDelay;
      private int f;
      private UUID thrower;
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 4a28fdab2..f2c0b24da 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -1175,6 +1175,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+         } else {
+             // Paper start - capture all item additions to the world
+             if (captureDrops != null && entity instanceof EntityItem) {
++                ((EntityItem) entity).droppedPosition = new BlockPosition(entity.locX(), entity.locY(), entity.locZ()); // PaperDragon
+                 captureDrops.add((EntityItem) entity);
+                 return true;
+             }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 index 9eafcd92f..c7deb965a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
