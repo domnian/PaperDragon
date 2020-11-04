@@ -1,4 +1,4 @@
-From 18d9612628ec4b9df0e067cc771f33a700608956 Mon Sep 17 00:00:00 2001
+From a7f2323df13640cf3761854d0ee6a0da85b0ffca Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
@@ -9,10 +9,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
  2 files changed, 16 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index bfe842364..b698cc6d3 100644
+index 464b2161f..f4e735ec5 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1787,4 +1787,13 @@ public final class Bukkit {
+@@ -1808,4 +1808,13 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -27,10 +27,10 @@ index bfe842364..b698cc6d3 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index defe7f145..5fc3afe80 100644
+index 27811c6db..46b3192e5 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1563,4 +1563,11 @@ public interface Server extends PluginMessageRecipient {
+@@ -1582,4 +1582,11 @@ public interface Server extends PluginMessageRecipient {
      @NotNull
      com.destroystokyo.paper.entity.ai.MobGoals getMobGoals();
      // Paper end

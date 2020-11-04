@@ -1,4 +1,4 @@
-From b8ad856bb7a9dd89845ee1b6f6f9d774cdad540f Mon Sep 17 00:00:00 2001
+From 7d697bcf1979d7ab596c8376186b57829184d583 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
@@ -12,7 +12,7 @@ Fired when a player hits another player, regardless of gamemode
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 new file mode 100644
-index 0000000000..1a45cd0c4d
+index 000000000..1a45cd0c4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 @@ -0,0 +1,21 @@
@@ -38,12 +38,12 @@ index 0000000000..1a45cd0c4d
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 44fd267e35..9433440ae6 100644
+index e4359def3..bd3dac30d 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1020,6 +1020,7 @@ public abstract class EntityHuman extends EntityLiving {
      public void attack(Entity entity) {
-         if (entity.bK()) {
+         if (entity.bL()) {
              if (!entity.t(this)) {
 +                com.domnian.paperdragon.PDEventFactory.handlePlayerHitPlayer(this, entity); // PaperDragon - Implement PlayerHitPlayerEvent
                  float f = (float) this.b(GenericAttributes.ATTACK_DAMAGE);

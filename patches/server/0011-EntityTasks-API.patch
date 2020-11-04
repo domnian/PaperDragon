@@ -1,4 +1,4 @@
-From b94961c60677390a9757ddb993f5b4d53c3b5e42 Mon Sep 17 00:00:00 2001
+From 67357faafbd3facff86f321a48dc72e197cf4d81 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -15,7 +15,7 @@ Avoids Bukkit system so that tasks will simply maintain themselves on entity rem
  create mode 100644 src/main/java/net/minecraft/server/EntityTasksHandler.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index d5c6381045..1e903fe5ce 100644
+index d5c638104..1e903fe5c 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -23,5 +23,20 @@
@@ -40,7 +40,7 @@ index d5c6381045..1e903fe5ce 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6545b28ab1..6b008d644e 100644
+index 98496bcba..0585eb103 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -53,7 +53,7 @@ index 6545b28ab1..6b008d644e 100644
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
-index 0000000000..42bd08e0e9
+index 000000000..42bd08e0e
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 @@ -0,0 +1,45 @@
@@ -103,10 +103,10 @@ index 0000000000..42bd08e0e9
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index bfe43e2dfb..162c436255 100644
+index 8d32731d3..9bcdc6784 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -830,6 +830,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -834,6 +834,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -114,7 +114,7 @@ index bfe43e2dfb..162c436255 100644
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
                  gameprofilerfiller.a(() -> {
-@@ -840,7 +841,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -844,7 +845,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      TimingHistory.activatedEntityTicks++; // Paper
                  entity.tick();
                  entity.postTick(); // CraftBukkit
@@ -124,7 +124,7 @@ index bfe43e2dfb..162c436255 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9c59b7291c..431df9e6dc 100644
+index 07ed6b2f2..de5138607 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -942,6 +942,7 @@ public final class CraftServer implements Server {

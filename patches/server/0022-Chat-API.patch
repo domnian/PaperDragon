@@ -1,4 +1,4 @@
-From 42b5fd6c9d4be3e764c50d859e3d208353cdc51f Mon Sep 17 00:00:00 2001
+From 18bf1a961fe4d321121f376095ad99ec7c2840d4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -20,7 +20,7 @@ But did a lot of bug fixing and improving upon it, and designing into the Dragon
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index b11af17efb..81ceb7f598 100644
+index b11af17ef..81ceb7f59 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -23,6 +23,7 @@
@@ -41,7 +41,7 @@ index b11af17efb..81ceb7f598 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
 new file mode 100644
-index 0000000000..d02e51859d
+index 000000000..d02e51859
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
 @@ -0,0 +1,177 @@
@@ -224,7 +224,7 @@ index 0000000000..d02e51859d
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
-index 0000000000..7b29f0894a
+index 000000000..7b29f0894
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 @@ -0,0 +1,87 @@
@@ -317,7 +317,7 @@ index 0000000000..7b29f0894a
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
 new file mode 100644
-index 0000000000..2388b7c62c
+index 000000000..2388b7c62
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
 @@ -0,0 +1,267 @@
@@ -589,7 +589,7 @@ index 0000000000..2388b7c62c
 +     */
 +}
 diff --git a/src/main/java/net/minecraft/server/ChatHexColor.java b/src/main/java/net/minecraft/server/ChatHexColor.java
-index 3cb6ad020d..b84d5c6cbd 100644
+index 3cb6ad020..b84d5c6cb 100644
 --- a/src/main/java/net/minecraft/server/ChatHexColor.java
 +++ b/src/main/java/net/minecraft/server/ChatHexColor.java
 @@ -68,10 +68,12 @@ public final class ChatHexColor {
@@ -606,7 +606,7 @@ index 3cb6ad020d..b84d5c6cbd 100644
      public static ChatHexColor a(String s) {
          if (s.startsWith("#")) {
 diff --git a/src/main/java/net/minecraft/server/ChatHoverable.java b/src/main/java/net/minecraft/server/ChatHoverable.java
-index 5e366c413c..4b6347f16d 100644
+index 5e366c413..4b6347f16 100644
 --- a/src/main/java/net/minecraft/server/ChatHoverable.java
 +++ b/src/main/java/net/minecraft/server/ChatHoverable.java
 @@ -17,21 +17,21 @@ import org.apache.logging.log4j.Logger;
@@ -692,7 +692,7 @@ index 5e366c413c..4b6347f16d 100644
              this.b = i;
              this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/ChatModifier.java b/src/main/java/net/minecraft/server/ChatModifier.java
-index 688415f6c8..9208b8dc2e 100644
+index 688415f6c..9208b8dc2 100644
 --- a/src/main/java/net/minecraft/server/ChatModifier.java
 +++ b/src/main/java/net/minecraft/server/ChatModifier.java
 @@ -14,6 +14,7 @@ import javax.annotation.Nullable;
@@ -704,15 +704,15 @@ index 688415f6c8..9208b8dc2e 100644
      public static final MinecraftKey b = new MinecraftKey("minecraft", "default");
      @Nullable
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b4b60a7237..7b846e9dac 100644
+index 77ad401bb..da819fb72 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2913,6 +2913,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2914,6 +2914,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return this.getDirection();
      }
  
-+    public ChatHoverable createHoverEvent() { return this.ca(); } // PaperDragon - OBFHELPER
-     protected ChatHoverable ca() {
++    public ChatHoverable createHoverEvent() { return this.cb(); } // PaperDragon - OBFHELPER
+     protected ChatHoverable cb() {
          return new ChatHoverable(ChatHoverable.EnumHoverAction.SHOW_ENTITY, new ChatHoverable.b(this.getEntityType(), this.getUniqueID(), this.getDisplayName()));
      }
 -- 

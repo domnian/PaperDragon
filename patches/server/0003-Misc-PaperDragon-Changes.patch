@@ -1,4 +1,4 @@
-From b70d10f5a4ee8eb55d9de6be52f37b2deff0bc4c Mon Sep 17 00:00:00 2001
+From d2351ee7ba14aa2145111e890c013f1b848ccf90 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -17,7 +17,7 @@ Subject: [PATCH] Misc PaperDragon Changes
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 8a19c96499..9c7849eb50 100644
+index 8a19c9649..9c7849eb5 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -581,7 +581,7 @@ public class Metrics {
@@ -40,7 +40,7 @@ index 8a19c96499..9c7849eb50 100644
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 new file mode 100644
-index 0000000000..edd083ef62
+index 000000000..edd083ef6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 @@ -0,0 +1,84 @@
@@ -129,10 +129,10 @@ index 0000000000..edd083ef62
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 11fa231caa..7571476b1a 100644
+index 56677b8bf..7722202bc 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1914,7 +1914,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1917,7 +1917,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (blockposition != null) {
              boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
  
@@ -143,7 +143,7 @@ index 11fa231caa..7571476b1a 100644
  
 diff --git a/src/main/java/net/minecraft/server/MCLog.java b/src/main/java/net/minecraft/server/MCLog.java
 new file mode 100644
-index 0000000000..bf28f00db7
+index 000000000..bf28f00db
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MCLog.java
 @@ -0,0 +1,77 @@
@@ -225,7 +225,7 @@ index 0000000000..bf28f00db7
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 883c17f00b..f3a9b3bece 100644
+index 9c4ea5265..bd85a73cd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1451,7 +1451,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -238,7 +238,7 @@ index 883c17f00b..f3a9b3bece 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7602d9d513..1c39433c49 100644
+index 95e451026..63f20fd98 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -232,7 +232,7 @@ import javax.annotation.Nullable; // Paper
@@ -251,7 +251,7 @@ index 7602d9d513..1c39433c49 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 0b2bc20d10..ec3d6c4e93 100644
+index ed926fc6e..21ad633c0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -347,7 +347,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -264,7 +264,7 @@ index 0b2bc20d10..ec3d6c4e93 100644
  
      @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 513c1041c3..6574bcd116 100644
+index 513c1041c..6574bcd11 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -26,7 +26,7 @@ public class WatchdogThread extends Thread

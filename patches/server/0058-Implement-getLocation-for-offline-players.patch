@@ -1,4 +1,4 @@
-From 2ced697913fca0eaa17acc8a8a1f42b7715be578 Mon Sep 17 00:00:00 2001
+From f3ecdf362bb570c83a8cf14549e731375500bac3 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:50:51 -0500
 Subject: [PATCH] Implement getLocation() for offline players
@@ -9,10 +9,10 @@ Subject: [PATCH] Implement getLocation() for offline players
  2 files changed, 16 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7b846e9dac..bfa5ba1854 100644
+index da819fb72..f94351549 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1653,6 +1653,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1654,6 +1654,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end
@@ -21,7 +21,7 @@ index 7b846e9dac..bfa5ba1854 100644
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.a(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 5770d4183c..a684243f2d 100644
+index 5770d4183..a684243f2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 @@ -525,4 +525,19 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa

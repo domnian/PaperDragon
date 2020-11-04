@@ -1,4 +1,4 @@
-From 9402bca57dd277e26dbeb6812beda3493e50fc47 Mon Sep 17 00:00:00 2001
+From 64d044cf1829c92d7c590031fe9dfa67f837ff95 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -27,7 +27,7 @@ index 4b4f14711..b1c0f1484 100644
              }
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 4fb3436cf..1db9fd510 100644
+index 7938f3e18..2cf07c8c0 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -17,6 +17,7 @@ public class EntityItem extends Entity {
@@ -39,10 +39,10 @@ index 4fb3436cf..1db9fd510 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 4a28fdab2..f2c0b24da 100644
+index 1e8f09073..656756405 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1175,6 +1175,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1179,6 +1179,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof EntityItem) {
@@ -51,7 +51,7 @@ index 4a28fdab2..f2c0b24da 100644
                  return true;
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 9eafcd92f..c7deb965a 100644
+index c781acd4c..5e1461115 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -385,6 +385,16 @@ public class CraftEventFactory {

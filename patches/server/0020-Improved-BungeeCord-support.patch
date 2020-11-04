@@ -1,4 +1,4 @@
-From 290a169a5b904142596e8320acae6ad9036965f2 Mon Sep 17 00:00:00 2001
+From 719843e077739bbcc412108db398fbdfc2df9f40 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Dec 2013 23:21:21 -0500
 Subject: [PATCH] Improved BungeeCord support
@@ -13,7 +13,7 @@ Allow online-mode to be set to true, and skip online-mode for bungee IP's
  4 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 5dde738b74..68d53349ea 100644
+index 1d60def8f..11f500d2a 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -74,7 +74,8 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -35,20 +35,20 @@ index 5dde738b74..68d53349ea 100644
                          if ( split.length == 3 || split.length == 4 ) {
                              packethandshakinginsetprotocol.hostname = split[0];
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 57a3a8d094..1816e66653 100644
+index c61cd50df..0c4c56a4c 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -183,7 +183,7 @@ public class LoginListener implements PacketLoginInListener {
+@@ -184,7 +184,7 @@ public class LoginListener implements PacketLoginInListener {
      public void a(PacketLoginInStart packetlogininstart) {
          Validate.validState(this.g == LoginListener.EnumProtocolState.HELLO, "Unexpected hello packet", new Object[0]);
          this.i = packetlogininstart.b();
 -        if (this.server.getOnlineMode() && !this.networkManager.isLocal()) {
 +        if (!this.networkManager.isProxied && this.server.getOnlineMode() && !this.networkManager.isLocal()) { // PaperDragon - add !isProxied
              this.g = LoginListener.EnumProtocolState.KEY;
-             this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic(), this.e));
+             this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic().getEncoded(), this.e));
          } else {
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index c9b36e6040..79a672a474 100644
+index 7a84ea411..611b0a99c 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -50,6 +50,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -60,7 +60,7 @@ index c9b36e6040..79a672a474 100644
      private PacketListener packetListener;
      private IChatBaseComponent m;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e66050b87a..c2ae2dab7a 100644
+index e66050b87..c2ae2dab7 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -229,6 +229,7 @@ public class SpigotConfig

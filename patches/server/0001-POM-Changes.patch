@@ -1,4 +1,4 @@
-From f8b7548f0660d0198f8f0058d472f60d33045e76 Mon Sep 17 00:00:00 2001
+From 3e87597dc9bac034cd37389bfa8dc179a96551e8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 02:57:58 -0400
 Subject: [PATCH] POM Changes
@@ -9,7 +9,7 @@ Subject: [PATCH] POM Changes
  2 files changed, 44 insertions(+), 10 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index add3a9c1a9..726db66987 100644
+index 80f165291..f587389f8 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -19,7 +19,7 @@ index add3a9c1a9..726db66987 100644
 -    <artifactId>paper</artifactId>
 +    <artifactId>paperdragon</artifactId>
      <packaging>jar</packaging>
-     <version>1.16.3-R0.1-SNAPSHOT</version>
+     <version>1.16.4-R0.1-SNAPSHOT</version>
 -    <name>Paper</name>
 -    <url>https://papermc.io</url>
 +    <name>PaperDragon</name>
@@ -115,7 +115,7 @@ index add3a9c1a9..726db66987 100644
      </build>
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 674096cab1..50cd5f9cac 100644
+index 674096cab..50cd5f9ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
