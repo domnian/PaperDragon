@@ -1,4 +1,4 @@
-From 931aa09b69e50112ebca75f189798f6b485f86f0 Mon Sep 17 00:00:00 2001
+From dc7920e0e18c3a4ebf2957dff1a2fd9bf7b54585 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 23 Apr 2016 20:03:27 -0400
 Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
@@ -8,7 +8,7 @@ Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
-index 95ecf9dd51..9bd1dc7ebb 100644
+index 38dc6086d1..f890c7b5b5 100644
 --- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
 +++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
 @@ -358,8 +358,8 @@ public class EnderDragonBattle {

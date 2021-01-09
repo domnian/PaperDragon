@@ -1,4 +1,4 @@
-From ad6f5a22ec1d03749c38ee98d21e7c66b354bb38 Mon Sep 17 00:00:00 2001
+From c43d2106220f43ea812d0d8c7c9f32282b3f768f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -31,7 +31,7 @@ Subject: [PATCH] Persistent and Temporary Meta API
  create mode 100644 src/main/java/net/minecraft/server/MetaApiAccessor.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
-index 21bd42ff9..b11af17ef 100644
+index 21bd42ff9d..b11af17efb 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 @@ -23,6 +23,8 @@
@@ -53,7 +53,7 @@ index 21bd42ff9..b11af17ef 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
 new file mode 100644
-index 000000000..2afd6f251
+index 0000000000..2afd6f2510
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
 @@ -0,0 +1,80 @@
@@ -138,7 +138,7 @@ index 000000000..2afd6f251
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index dcbae1c45..1845080aa 100644
+index 9c078d30af..32f5d8b6db 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -140,6 +140,8 @@ public class Chunk implements IChunkAccess {
@@ -151,7 +151,7 @@ index dcbae1c45..1845080aa 100644
      public boolean needsDecoration;
  
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 8e7da2c5f..5c963afd0 100644
+index 8e7da2c5f3..5c963afd0a 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -1,6 +1,7 @@
@@ -179,7 +179,7 @@ index 8e7da2c5f..5c963afd0 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 0c952fea3..98496bcba 100644
+index d9021fde3d..52f3b97b60 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
@@ -190,7 +190,7 @@ index 0c952fea3..98496bcba 100644
      private static final int CURRENT_LEVEL = 2;
      boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
-@@ -1534,6 +1535,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1540,6 +1541,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index 0c952fea3..98496bcba 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1762,6 +1764,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1768,6 +1770,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -208,7 +208,7 @@ index 0c952fea3..98496bcba 100644
                  origin = new org.bukkit.Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/server/MetaApiAccessor.java b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 new file mode 100644
-index 000000000..26e06b0bb
+index 0000000000..26e06b0bbe
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MetaApiAccessor.java
 @@ -0,0 +1,568 @@
@@ -781,10 +781,10 @@ index 000000000..26e06b0bb
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-index 5094a5d6f..bf008b2e1 100644
+index b9276928a5..5482c39b9b 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-@@ -90,6 +90,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
+@@ -93,6 +93,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
                  // Paper end
                  NBTTagCompound nbttagcompound = tileentity.b();
                  if (tileentity instanceof TileEntitySkull) { TileEntitySkull.sanitizeTileEntityUUID(nbttagcompound); } // Paper
@@ -793,7 +793,7 @@ index 5094a5d6f..bf008b2e1 100644
                  this.g.add(nbttagcompound);
              }
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java b/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
-index 6bcb19b56..73bc4103b 100644
+index 6bcb19b560..73bc4103ba 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutTileEntityData.java
 @@ -11,6 +11,7 @@ public class PacketPlayOutTileEntityData implements Packet<PacketListenerPlayOut
@@ -805,7 +805,7 @@ index 6bcb19b56..73bc4103b 100644
          this.b = i;
          this.c = nbttagcompound;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 6c399bcea..0a7f3cda7 100644
+index 49008cdec7..53ecbfde22 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -1284,6 +1284,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -817,7 +817,7 @@ index 6c399bcea..0a7f3cda7 100644
                  }
  
 diff --git a/src/main/java/net/minecraft/server/ProtoChunk.java b/src/main/java/net/minecraft/server/ProtoChunk.java
-index 5b0cd414c..ed890909f 100644
+index 5b0cd414ca..ed890909f0 100644
 --- a/src/main/java/net/minecraft/server/ProtoChunk.java
 +++ b/src/main/java/net/minecraft/server/ProtoChunk.java
 @@ -47,6 +47,8 @@ public class ProtoChunk implements IChunkAccess {
@@ -830,7 +830,7 @@ index 5b0cd414c..ed890909f 100644
      // Paper start - Anti-Xray - Add world
      @Deprecated public ProtoChunk(ChunkCoordIntPair chunkcoordintpair, ChunkConverter chunkconverter) { this(chunkcoordintpair, chunkconverter, null); } // Notice for updates: Please make sure this constructor isn't used anywhere
 diff --git a/src/main/java/net/minecraft/server/ProtoChunkExtension.java b/src/main/java/net/minecraft/server/ProtoChunkExtension.java
-index 300cbb8b0..4e1ffdfd5 100644
+index 300cbb8b01..4e1ffdfd56 100644
 --- a/src/main/java/net/minecraft/server/ProtoChunkExtension.java
 +++ b/src/main/java/net/minecraft/server/ProtoChunkExtension.java
 @@ -192,6 +192,7 @@ public class ProtoChunkExtension extends ProtoChunk {
@@ -842,7 +842,7 @@ index 300cbb8b0..4e1ffdfd5 100644
          return this.a;
      }
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index 58d958a88..7cfdbe353 100644
+index 58d958a88a..7cfdbe353d 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
 @@ -81,6 +81,7 @@ public abstract class TileEntity implements KeyedObject { // Paper
@@ -870,7 +870,7 @@ index 58d958a88..7cfdbe353 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index baecfc8ef..5aea11fad 100644
+index 8733829875..e5cc6acf15 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -441,6 +441,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -882,7 +882,7 @@ index baecfc8ef..5aea11fad 100644
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
 diff --git a/src/main/java/net/minecraft/server/WorldDataServer.java b/src/main/java/net/minecraft/server/WorldDataServer.java
-index a7e623044..67ee36a7b 100644
+index a7e623044a..67ee36a7ba 100644
 --- a/src/main/java/net/minecraft/server/WorldDataServer.java
 +++ b/src/main/java/net/minecraft/server/WorldDataServer.java
 @@ -57,6 +57,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
@@ -918,7 +918,7 @@ index a7e623044..67ee36a7b 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index b19681031..8d32731d3 100644
+index 5b0b6edfa7..29f3f67a99 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -61,7 +61,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -931,10 +931,10 @@ index b19681031..8d32731d3 100644
      public final List<EntityPlayer> players = Lists.newArrayList(); // Paper - private -> public
      public final ChunkProviderServer chunkProvider; // Paper - public
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 42b476344..fc970713d 100644
+index b345b7658b..9d5c320c1c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -39,6 +39,8 @@ import org.bukkit.plugin.Plugin;
+@@ -41,6 +41,8 @@ import org.bukkit.plugin.Plugin;
  
  public class CraftChunk implements Chunk {
      private WeakReference<net.minecraft.server.Chunk> weakChunk;
@@ -944,10 +944,10 @@ index 42b476344..fc970713d 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f0d280867..07ed6b2f2 100644
+index ba7a7b8a35..7090cc8c89 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -940,6 +940,9 @@ public final class CraftServer implements Server {
+@@ -945,6 +945,9 @@ public final class CraftServer implements Server {
                  "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
              ));
          }
@@ -958,7 +958,7 @@ index f0d280867..07ed6b2f2 100644
          enablePlugins(PluginLoadOrder.STARTUP);
          enablePlugins(PluginLoadOrder.POSTWORLD);
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
-index dc0e6e49e..d3f57d3fd 100644
+index dc0e6e49e9..d3f57d3fd2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockEntityState.java
 @@ -156,4 +156,11 @@ public class CraftBlockEntityState<T extends TileEntity> extends CraftBlockState
@@ -974,7 +974,7 @@ index dc0e6e49e..d3f57d3fd 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
-index 36d7de6e6..2ab8f4679 100644
+index 36d7de6e65..2ab8f4679d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
 @@ -290,4 +290,11 @@ public class CraftBlockState implements BlockState {
@@ -990,7 +990,7 @@ index 36d7de6e6..2ab8f4679 100644
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 4ec0e9220..01309cba5 100644
+index 475dc1aa2c..c8c0695dfe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -174,6 +174,8 @@ import org.bukkit.util.NumberConversions;
@@ -1003,10 +1003,10 @@ index 4ec0e9220..01309cba5 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 90d8631dd..f7b9f00d2 100644
+index c762015e14..7a2312fd54 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1419,6 +1419,11 @@ public class CraftEventFactory {
+@@ -1426,6 +1426,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
@@ -1019,7 +1019,7 @@ index 90d8631dd..f7b9f00d2 100644
  
      public static ItemStack handleEditBookEvent(EntityPlayer player, int itemInHandIndex, ItemStack itemInHand, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index bba9bddc1..59cc71bc4 100644
+index bba9bddc1c..59cc71bc4b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 @@ -31,6 +31,17 @@ import org.bukkit.inventory.ItemStack;

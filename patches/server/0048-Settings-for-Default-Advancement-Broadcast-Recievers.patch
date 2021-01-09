@@ -1,4 +1,4 @@
-From f7296115906488bf05fb2402fcfcbd75826533de Mon Sep 17 00:00:00 2001
+From efb8e88554c8317306f76845735304a3365ad82d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -40,10 +40,10 @@ index 2a180d5a45..107135de9e 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index d8f45e7367..e6664b087e 100644
+index 4c12e65cad..f139efbef1 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -299,6 +299,15 @@ public class AdvancementDataPlayer {
+@@ -300,6 +300,15 @@ public class AdvancementDataPlayer {
                      // PaperDragon start - AdvancementBroadcastEvent
                      IChatBaseComponent adv = org.bukkit.craftbukkit.util.CraftChatMessage.fixComponent(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
                      com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());

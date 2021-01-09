@@ -1,4 +1,4 @@
-From c68bed74dfc674e00da74013f6fa144167df6396 Mon Sep 17 00:00:00 2001
+From 224414523bee5da3e9eb9404db83ea0b5496bc0b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 23:03:44 -0500
 Subject: [PATCH] Add FlowerPotPlantEvent and FlowerPotRemoveEvent
@@ -8,10 +8,10 @@ Subject: [PATCH] Add FlowerPotPlantEvent and FlowerPotRemoveEvent
  1 file changed, 7 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/BlockFlowerPot.java b/src/main/java/net/minecraft/server/BlockFlowerPot.java
-index d776277e8..495a0d92b 100644
+index c2b3d73c64..ba4f5a451d 100644
 --- a/src/main/java/net/minecraft/server/BlockFlowerPot.java
 +++ b/src/main/java/net/minecraft/server/BlockFlowerPot.java
-@@ -40,8 +40,15 @@ public class BlockFlowerPot extends Block {
+@@ -63,8 +63,15 @@ public class BlockFlowerPot extends Block {
                  if (!entityhuman.abilities.canInstantlyBuild) {
                      itemstack.subtract(1);
                  }

@@ -1,4 +1,4 @@
-From b6a9322222cecb4bb4f1257737a958de21d2a08a Mon Sep 17 00:00:00 2001
+From eb6370c29d1f2d10d45632f510b83b796b428751 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 19 May 2015 23:47:32 -0400
 Subject: [PATCH] Disable Repair Cost
@@ -10,10 +10,10 @@ Handled on Plugin Level on a Per Player basis
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 1167f996c3..035f1e7f27 100644
+index dfa808ae14..1fcd6be933 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -185,6 +185,7 @@ public final class ItemStack {
+@@ -174,6 +174,7 @@ public final class ItemStack {
  
          if (this.getItem().usesDurability()) {
              this.setDamage(this.getDamage());
@@ -21,7 +21,7 @@ index 1167f996c3..035f1e7f27 100644
          }
  
      }
-@@ -824,10 +825,12 @@ public final class ItemStack {
+@@ -818,10 +819,12 @@ public final class ItemStack {
      }
  
      public int getRepairCost() {
@@ -35,10 +35,10 @@ index 1167f996c3..035f1e7f27 100644
          if (i == 0) {
              this.removeTag("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 68ae4d2cdb..9d177dcbd0 100644
+index 7154ba7019..6b1c0f5bfc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -406,7 +406,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -390,7 +390,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          this.enchantments = buildEnchantments(tag, ENCHANTMENTS);
          this.attributeModifiers = buildModifiers(tag, ATTRIBUTES);
  

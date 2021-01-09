@@ -1,4 +1,4 @@
-From 6cdf74fb1f16a2cad22fd0fb2f1a0ef187eaf8a0 Mon Sep 17 00:00:00 2001
+From ddf4d3ff74e59a3b6e3d19c2715edb8d72ae94a5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 8 May 2015 19:56:21 -0400
 Subject: [PATCH] ServerShutdownEvent and move disablePlugins
@@ -8,10 +8,10 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 42f1cb57e5..bcbeea6907 100644
+index 1da07cf619..f793b62ae3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -100,6 +100,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -96,6 +96,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected final Proxy proxy;
      private boolean onlineMode;
      private boolean B;
@@ -19,7 +19,7 @@ index 42f1cb57e5..bcbeea6907 100644
      private boolean pvpMode;
      private boolean allowFlight;
      @Nullable
-@@ -770,8 +771,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -762,8 +763,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -31,7 +31,7 @@ index 42f1cb57e5..bcbeea6907 100644
          }
          // CraftBukkit end
          if (this.getServerConnection() != null) {
-@@ -810,6 +812,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -802,6 +804,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  }
              }
          }
@@ -39,7 +39,7 @@ index 42f1cb57e5..bcbeea6907 100644
  
          if (this.snooper.d()) {
              this.snooper.e();
-@@ -862,6 +865,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -854,6 +857,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.safeShutdown(flag, false);
      }
      public void safeShutdown(boolean flag, boolean isRestarting) {

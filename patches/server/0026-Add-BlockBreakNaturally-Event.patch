@@ -1,4 +1,4 @@
-From 64d044cf1829c92d7c590031fe9dfa67f837ff95 Mon Sep 17 00:00:00 2001
+From 4ee774f167c684d937a8bd707d33b04836592fc1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -12,7 +12,7 @@ To give reliable control over all blocks dropping to world to restore custom ite
  4 files changed, 14 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 4b4f14711..b1c0f1484 100644
+index 1fc98698b8..2fc8b46b16 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
@@ -27,7 +27,7 @@ index 4b4f14711..b1c0f1484 100644
              }
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 7938f3e18..2cf07c8c0 100644
+index 45519db8a0..aa3081f66c 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -17,6 +17,7 @@ public class EntityItem extends Entity {
@@ -39,10 +39,10 @@ index 7938f3e18..2cf07c8c0 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1e8f09073..656756405 100644
+index 9bf1147b2a..3979bd1ed3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1179,6 +1179,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1180,6 +1180,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof EntityItem) {
@@ -51,10 +51,10 @@ index 1e8f09073..656756405 100644
                  return true;
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index c781acd4c..5e1461115 100644
+index 9bab4d8c74..236daf4d9f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -385,6 +385,16 @@ public class CraftEventFactory {
+@@ -383,6 +383,16 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {

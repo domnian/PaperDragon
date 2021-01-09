@@ -1,4 +1,4 @@
-From 4a486ce3b779b4f67cc6ae32480c4a15b41a8e4b Mon Sep 17 00:00:00 2001
+From 8b62455d0babfb0a7af98f81cff85cabd58dff98 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sun, 14 Jul 2019 13:50:53 -0500
 Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage

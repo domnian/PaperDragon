@@ -1,4 +1,4 @@
-From b632e093f5653646749f187f8ebf5dd91cdf1c8f Mon Sep 17 00:00:00 2001
+From 461ae3abc56f482f2c5dc1ccd72386e5c751cc77 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata DragonAPI
@@ -1475,11 +1475,11 @@ index 000000000..dcf4a459a
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index b4ef6297f..3642c375e 100644
+index 98263d896..25c91348c 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -124,6 +124,8 @@ public interface Chunk extends PersistentDataHolder {
-     BlockState[] getTileEntities(boolean useSnapshot);
+@@ -136,6 +136,8 @@ public interface Chunk extends PersistentDataHolder {
+     Collection<BlockState> getTileEntities(@NotNull Predicate<Block> blockPredicate, boolean useSnapshot);
      // Paper end
  
 +    com.domnian.paperdragon.api.meta.TempMetaMap getTempMeta(); // PaperDragon
@@ -1499,10 +1499,10 @@ index 631cbf2be..d5a390d94 100644
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 8e72dbbfd..585c20ff5 100644
+index bdec63edc..f1015aee0 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -259,6 +259,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -266,6 +266,8 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
      public Server getServer();
  

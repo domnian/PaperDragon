@@ -1,4 +1,4 @@
-From 10c90ccc542c6fc073fe48bd026ba71f78208af0 Mon Sep 17 00:00:00 2001
+From 2949d19435e6158196700a56e998247321b79a37 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:25:11 -0500
 Subject: [PATCH] Adds whether a respawn is caused by leaving the end
@@ -8,7 +8,7 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 48c23f9d60..b02e97c251 100644
+index a06c5c4140..5ba5d9584a 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -818,7 +818,8 @@ public abstract class PlayerList {

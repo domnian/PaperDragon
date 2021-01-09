@@ -1,4 +1,4 @@
-From 7acd95ba61c4b9fad103dc87e5c3d6ca3334b8f0 Mon Sep 17 00:00:00 2001
+From 987040726a853b8bb181f8404cdf590dda0ed910 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:38:55 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -63,10 +63,10 @@ index 000000000..c0ade55bc
 +
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 3642c375e..fa9cb5310 100644
+index 25c91348c..02ea3dea7 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -14,6 +14,9 @@ import org.jetbrains.annotations.NotNull;
+@@ -16,6 +16,9 @@ import org.jetbrains.annotations.NotNull;
   */
  public interface Chunk extends PersistentDataHolder {
  

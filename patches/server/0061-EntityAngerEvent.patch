@@ -1,4 +1,4 @@
-From 98a72eef7477dca9b3c5a0a45fe45786215479f8 Mon Sep 17 00:00:00 2001
+From 2b2cb108843662c798bd85c70b866c6b180253cf Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sat, 7 Mar 2020 10:32:04 -0600
 Subject: [PATCH] EntityAngerEvent
@@ -8,7 +8,7 @@ Subject: [PATCH] EntityAngerEvent
  1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/IEntityAngerable.java b/src/main/java/net/minecraft/server/IEntityAngerable.java
-index e19c31cd4d..c26718d1b9 100644
+index 5e2f5536ef..8a06541586 100644
 --- a/src/main/java/net/minecraft/server/IEntityAngerable.java
 +++ b/src/main/java/net/minecraft/server/IEntityAngerable.java
 @@ -1,5 +1,7 @@

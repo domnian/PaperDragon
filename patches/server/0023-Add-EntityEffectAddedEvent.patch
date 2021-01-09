@@ -1,4 +1,4 @@
-From bf69bffc735d0dafa7e52e21eb34b5460d176dd7 Mon Sep 17 00:00:00 2001
+From ab7a922c3ce10894f603e964ce1fe0c2d72b3352 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 21 Feb 2014 00:50:46 -0500
 Subject: [PATCH] Add EntityEffectAddedEvent
@@ -8,10 +8,10 @@ Subject: [PATCH] Add EntityEffectAddedEvent
  1 file changed, 13 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 5f5e6d7082..a2d175c8ec 100644
+index 8261526819..3ac7b4ac2f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -924,6 +924,19 @@ public abstract class EntityLiving extends Entity {
+@@ -929,6 +929,19 @@ public abstract class EntityLiving extends Entity {
          }
          // CraftBukkit end
  

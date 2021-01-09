@@ -1,19 +1,19 @@
-From 7f35b8ee4746d2e49a473d17ffba8c6529034ea0 Mon Sep 17 00:00:00 2001
+From 4e3de7ed2c66032ba2a75ca1ed1e99c48e03b96d Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Wed, 18 Mar 2020 21:54:38 -0500
 Subject: [PATCH] Add getPlayerCause to LightningStrike entities
 
 ---
- src/main/java/net/minecraft/server/EntityLightning.java    | 2 +-
- .../bukkit/craftbukkit/entity/CraftLightningStrike.java    | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ src/main/java/net/minecraft/server/EntityLightning.java   | 2 +-
+ .../bukkit/craftbukkit/entity/CraftLightningStrike.java   | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
-index 180bfd4a60..03d48911b2 100644
+index 5200b0396e..a1bec12318 100644
 --- a/src/main/java/net/minecraft/server/EntityLightning.java
 +++ b/src/main/java/net/minecraft/server/EntityLightning.java
 @@ -14,7 +14,7 @@ public class EntityLightning extends Entity {
-     private int d;
+     private int d; public int getFlashCount() { return d; } public void setFlashCount(int flashes) { this.d = flashes; } // Paper - OBFHELPER
      public boolean isEffect;
      @Nullable
 -    private EntityPlayer f;
@@ -22,13 +22,14 @@ index 180bfd4a60..03d48911b2 100644
  
      public EntityLightning(EntityTypes<? extends EntityLightning> entitytypes, World world) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-index 988386a9a7..21a7bf7cf1 100644
+index 8016f4c053..133a79d7df 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-@@ -45,4 +45,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
-         return spigot;
+@@ -68,4 +68,12 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
+         getHandle().setLifeTicks(lifeTicks);
      }
-     // Spigot end
+     // Paper end
++
 +    // PaperDragon start
 +    @Override
 +    public org.bukkit.entity.Player getPlayerCause() {
