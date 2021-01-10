@@ -1,4 +1,4 @@
-From eed969444d31145579d8d578dd74d01548229bb8 Mon Sep 17 00:00:00 2001
+From 4c37cc059c6b23f62af0f1bfe9e945b01ff01cd4 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)
@@ -108,5 +108,5 @@ index 81ceb7f598..a6408aab4f 100644
  
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

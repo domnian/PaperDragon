@@ -1,4 +1,4 @@
-From 7b3ecd4e1a3667654c8c2b81e001e005941b2677 Mon Sep 17 00:00:00 2001
+From aa625d54f8d1c1ec326563dec06e95379fa52b61 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Fri, 29 Nov 2019 02:48:17 -0600
 Subject: [PATCH] Add the PlayerThrowTridentEvent
@@ -29,5 +29,5 @@ index 3663b70173..0a401028a5 100644
                              itemstack.damage(1, entityhuman, (entityhuman1) -> {
                                  entityhuman1.broadcastItemBreak(entityliving.getRaisedHand());
 -- 
-2.20.1.windows.1
+2.17.1
 

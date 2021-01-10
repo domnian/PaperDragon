@@ -1,4 +1,4 @@
-From 5ce10233461c208cb9cd7d68c96b1a107d018821 Mon Sep 17 00:00:00 2001
+From bfb3c57aa64ea5e8293fd41859aea8c5d16bb0dc Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 27 Jan 2020 00:56:50 -0500
 Subject: [PATCH] Implement teleport() for offline players
@@ -54,5 +54,5 @@ index d9f0378083..5dbb7be040 100644
      // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

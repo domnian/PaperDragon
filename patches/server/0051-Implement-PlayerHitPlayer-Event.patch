@@ -1,4 +1,4 @@
-From b142bcf6e4143c4d16aeb66c3d5a42f603456a63 Mon Sep 17 00:00:00 2001
+From d67285cb1f11112c3c53483503968e04ecd0eab8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
@@ -50,5 +50,5 @@ index a6e6b75394..a9453d1e6d 100644
                  float f1;
  
 -- 
-2.20.1.windows.1
+2.17.1
 

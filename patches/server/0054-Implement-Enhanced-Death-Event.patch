@@ -1,4 +1,4 @@
-From 66c3e7250d1853967d7e3bdaf91502053de097e2 Mon Sep 17 00:00:00 2001
+From c5f38b4f1d3cd185f87061e40fd6c810fd41f45b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
@@ -43,5 +43,5 @@ index 330a370814..4ba699c136 100644
          Bukkit.getServer().getPluginManager().callEvent(event);
          // Paper start - make cancellable
 -- 
-2.20.1.windows.1
+2.17.1
 

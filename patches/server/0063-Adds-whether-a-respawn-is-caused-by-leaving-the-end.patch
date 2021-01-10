@@ -1,4 +1,4 @@
-From 2949d19435e6158196700a56e998247321b79a37 Mon Sep 17 00:00:00 2001
+From 51c272ebf73d6660c6201136576efc89c3dab39c Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:25:11 -0500
 Subject: [PATCH] Adds whether a respawn is caused by leaving the end
@@ -22,5 +22,5 @@ index a06c5c4140..5ba5d9584a 100644
              // Spigot Start
              if (entityplayer.playerConnection.isDisconnected()) {
 -- 
-2.20.1.windows.1
+2.17.1
 

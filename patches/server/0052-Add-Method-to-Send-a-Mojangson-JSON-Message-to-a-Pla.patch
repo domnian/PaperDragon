@@ -1,4 +1,4 @@
-From d33da084087ade0c18fc63fdcc5d6656f1ac0057 Mon Sep 17 00:00:00 2001
+From 16f5dd85268b5dbc0d65376a75b06be247bf0cc8 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 22 Sep 2017 00:45:30 -0400
 Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
@@ -23,5 +23,5 @@ index 76869b0913..b196d78347 100644
  
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 8b62455d0babfb0a7af98f81cff85cabd58dff98 Mon Sep 17 00:00:00 2001
+From 6fe37078c478a9105e53863b0c36786da62d3845 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sun, 14 Jul 2019 13:50:53 -0500
 Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage
@@ -38,5 +38,5 @@ index ade8301227..839cde5fc2 100644
              // CraftBukkit end
          }
 -- 
-2.20.1.windows.1
+2.17.1
 

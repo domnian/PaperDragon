@@ -1,4 +1,4 @@
-From e2a52362df3d29754c80de51e9c0180e7faea989 Mon Sep 17 00:00:00 2001
+From 323b470bfabd0c3205e95d9e85e67c4cf360ce9b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Jun 2017 00:28:41 -0400
 Subject: [PATCH] Add PaperDragon Command
@@ -77,5 +77,5 @@ index 0000000000..a88d44d504
 +    }
 +}
 -- 
-2.20.1.windows.1
+2.17.1
 

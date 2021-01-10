@@ -1,4 +1,4 @@
-From 4e3de7ed2c66032ba2a75ca1ed1e99c48e03b96d Mon Sep 17 00:00:00 2001
+From fabc219c31ba660e57be0ae54edea7db8dcc68b9 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Wed, 18 Mar 2020 21:54:38 -0500
 Subject: [PATCH] Add getPlayerCause to LightningStrike entities
@@ -39,5 +39,5 @@ index 8016f4c053..133a79d7df 100644
 +    // PaperDragon end
  }
 -- 
-2.20.1.windows.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From efb8e88554c8317306f76845735304a3365ad82d Mon Sep 17 00:00:00 2001
+From b51d9811162662d44ded2e4f31654fc8af2355b2 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -60,5 +60,5 @@ index 4c12e65cad..f139efbef1 100644
                      for (org.bukkit.entity.Player player : event.getReceivers()) {
                          ((org.bukkit.craftbukkit.entity.CraftPlayer) player).getHandle().sendMessage(adv, SystemUtils.b);
 -- 
-2.20.1.windows.1
+2.17.1
 
