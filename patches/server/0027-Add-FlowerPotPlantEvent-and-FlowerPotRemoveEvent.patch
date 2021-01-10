@@ -1,4 +1,4 @@
-From 224414523bee5da3e9eb9404db83ea0b5496bc0b Mon Sep 17 00:00:00 2001
+From c9a39b1d53032949d8a6aa435867cbf341c3bf7d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 23:03:44 -0500
 Subject: [PATCH] Add FlowerPotPlantEvent and FlowerPotRemoveEvent
@@ -8,7 +8,7 @@ Subject: [PATCH] Add FlowerPotPlantEvent and FlowerPotRemoveEvent
  1 file changed, 7 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/BlockFlowerPot.java b/src/main/java/net/minecraft/server/BlockFlowerPot.java
-index c2b3d73c64..ba4f5a451d 100644
+index c2b3d73c64..b69ae82874 100644
 --- a/src/main/java/net/minecraft/server/BlockFlowerPot.java
 +++ b/src/main/java/net/minecraft/server/BlockFlowerPot.java
 @@ -63,8 +63,15 @@ public class BlockFlowerPot extends Block {
@@ -19,14 +19,14 @@ index c2b3d73c64..ba4f5a451d 100644
              } else {
                  ItemStack itemstack1 = new ItemStack(this.c);
 +                // PaperDragon Start
-+                com.domnian.paperdragon.events.FlowerPotRemoveEvent event = new com.domnian.paperdragon.events.FlowerPotRemoveEvent(
++                com.domnian.paperdragon.events.FlowerPotRemoveEvent removeEvent = new com.domnian.paperdragon.events.FlowerPotRemoveEvent(
 +                    (org.bukkit.entity.Player) entityhuman.getBukkitEntity(), MCUtil.toLocation(world, blockposition), itemstack1.getBukkitStack());
-+                event.callEvent();
-+                itemstack1 = ItemStack.fromBukkitCopy(event.getItem());
++                removeEvent.callEvent();
++                itemstack1 = ItemStack.fromBukkitCopy(removeEvent.getItem());
 +                // PaperDragon End
  
                  if (itemstack.isEmpty()) {
                      entityhuman.a(enumhand, itemstack1);
 -- 
-2.20.1.windows.1
+2.17.1
 
