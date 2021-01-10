@@ -1,4 +1,4 @@
-From c43d2106220f43ea812d0d8c7c9f32282b3f768f Mon Sep 17 00:00:00 2001
+From 0aba1e93d5256e965e851358563cfdca6309c85a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -138,10 +138,10 @@ index 0000000000..2afd6f2510
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 9c078d30af..32f5d8b6db 100644
+index af9d54ef05..2bbca98275 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -140,6 +140,8 @@ public class Chunk implements IChunkAccess {
+@@ -141,6 +141,8 @@ public class Chunk implements IChunkAccess {
          return bukkitChunk;
      }
  
@@ -870,7 +870,7 @@ index 58d958a88a..7cfdbe353d 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8733829875..e5cc6acf15 100644
+index 73aab4a278..0e5c7ac76d 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -441,6 +441,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -918,7 +918,7 @@ index a7e623044a..67ee36a7ba 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 5b0b6edfa7..29f3f67a99 100644
+index b033ff4437..b9150c12ed 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -61,7 +61,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
