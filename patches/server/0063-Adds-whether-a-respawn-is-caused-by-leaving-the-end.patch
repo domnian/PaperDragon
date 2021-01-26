@@ -1,4 +1,4 @@
-From 51c272ebf73d6660c6201136576efc89c3dab39c Mon Sep 17 00:00:00 2001
+From 836dae18ee45f02649b7b12ab5796372ff7124a7 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:25:11 -0500
 Subject: [PATCH] Adds whether a respawn is caused by leaving the end
@@ -8,10 +8,10 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index a06c5c4140..5ba5d9584a 100644
+index 2452f365b6..53a2dc01a8 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -818,7 +818,8 @@ public abstract class PlayerList {
+@@ -827,7 +827,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = cserver.getPlayer(entityplayer1);
@@ -22,5 +22,5 @@ index a06c5c4140..5ba5d9584a 100644
              // Spigot Start
              if (entityplayer.playerConnection.isDisconnected()) {
 -- 
-2.17.1
+2.20.1.windows.1
 

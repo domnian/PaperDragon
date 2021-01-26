@@ -1,4 +1,4 @@
-From 0aba1e93d5256e965e851358563cfdca6309c85a Mon Sep 17 00:00:00 2001
+From 24ff9044d499bbf6e3921434c2fbd73708c56e2a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -151,7 +151,7 @@ index af9d54ef05..2bbca98275 100644
      public boolean needsDecoration;
  
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 8e7da2c5f3..5c963afd0a 100644
+index f51bf71c8d..b018d0c3dc 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -1,6 +1,7 @@
@@ -179,7 +179,7 @@ index 8e7da2c5f3..5c963afd0a 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d9021fde3d..52f3b97b60 100644
+index f307a63611..bff85d2a60 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -53,6 +53,7 @@ import org.bukkit.plugin.PluginManager;
@@ -190,7 +190,7 @@ index d9021fde3d..52f3b97b60 100644
      private static final int CURRENT_LEVEL = 2;
      boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
-@@ -1540,6 +1541,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1541,6 +1542,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
                  this.yaw = 0;
              }
  
@@ -198,7 +198,7 @@ index d9021fde3d..52f3b97b60 100644
              if (Float.isNaN(this.pitch)) {
                  this.pitch = 0;
              }
-@@ -1768,6 +1770,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1769,6 +1771,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              // CraftBukkit end
  
              // Paper start - Restore the entity's origin location
@@ -870,10 +870,10 @@ index 58d958a88a..7cfdbe353d 100644
      // Paper start
      public InventoryHolder getOwner() {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 73aab4a278..0e5c7ac76d 100644
+index 89cc30503e..71312ee434 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -441,6 +441,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -442,6 +442,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                      this.a(blockposition, iblockdata1, iblockdata2);
                  }
                  */
@@ -882,7 +882,7 @@ index 73aab4a278..0e5c7ac76d 100644
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
 diff --git a/src/main/java/net/minecraft/server/WorldDataServer.java b/src/main/java/net/minecraft/server/WorldDataServer.java
-index a7e623044a..67ee36a7ba 100644
+index c4fe49a64f..20364a9782 100644
 --- a/src/main/java/net/minecraft/server/WorldDataServer.java
 +++ b/src/main/java/net/minecraft/server/WorldDataServer.java
 @@ -57,6 +57,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
@@ -918,7 +918,7 @@ index a7e623044a..67ee36a7ba 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index b033ff4437..b9150c12ed 100644
+index fbe7f43f6c..caaf0f7221 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -61,7 +61,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -944,7 +944,7 @@ index b345b7658b..9d5c320c1c 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ba7a7b8a35..7090cc8c89 100644
+index 67277d720a..d7227af25e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -945,6 +945,9 @@ public final class CraftServer implements Server {
@@ -1003,10 +1003,10 @@ index 475dc1aa2c..c8c0695dfe 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index c762015e14..7a2312fd54 100644
+index 696ded96e6..41fc528a88 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1426,6 +1426,11 @@ public class CraftEventFactory {
+@@ -1427,6 +1427,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());

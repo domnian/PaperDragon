@@ -1,4 +1,4 @@
-From 649cde3d2e6299662bf63be52f928dbf1029b5c3 Mon Sep 17 00:00:00 2001
+From b454ecb8316cae9d54888c93d4f05405cc81fea0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 31 Dec 2012 01:25:46 -0500
 Subject: [PATCH] Anvil Event
@@ -10,7 +10,7 @@ Fire an event for anvil usage, remove cap from server, send level to client
  2 files changed, 18 insertions(+)
 
 diff --git a/src/main/java/net/minecraft/server/ContainerAnvil.java b/src/main/java/net/minecraft/server/ContainerAnvil.java
-index 24631b2bc..6492b13b8 100644
+index fc2038df89..0c421f52bd 100644
 --- a/src/main/java/net/minecraft/server/ContainerAnvil.java
 +++ b/src/main/java/net/minecraft/server/ContainerAnvil.java
 @@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
@@ -44,7 +44,7 @@ index 24631b2bc..6492b13b8 100644
              if (!itemstack1.isEmpty()) {
                  int k2 = itemstack1.getRepairCost();
 diff --git a/src/main/java/net/minecraft/server/ContainerProperty.java b/src/main/java/net/minecraft/server/ContainerProperty.java
-index e26b85693..312c87bf4 100644
+index 7523c77a91..55f968cede 100644
 --- a/src/main/java/net/minecraft/server/ContainerProperty.java
 +++ b/src/main/java/net/minecraft/server/ContainerProperty.java
 @@ -3,6 +3,7 @@ package net.minecraft.server;
@@ -58,7 +58,7 @@ index e26b85693..312c87bf4 100644
 @@ -55,6 +56,7 @@ public abstract class ContainerProperty {
      public abstract void set(int i);
  
-     public boolean c() {
+     public boolean checkAndClearUpdateFlag() { return c(); } public boolean c() { // Paper - OBFHELPER
 +        if (this.forceUpdate) { return true; } // PaperDragon
          int i = this.get();
          boolean flag = i != this.a;

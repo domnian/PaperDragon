@@ -1,4 +1,4 @@
-From 5833fc903edab673d75be76511211bc546871fe3 Mon Sep 17 00:00:00 2001
+From 68f84ebeeaad6c30460f745bd8b84cdbe8efabac Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -121,7 +121,7 @@ index 0000000000..85ea4e8600
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 5a62ac72ed..10b4cfa599 100644
+index afa1dc693b..594903f11b 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -60,7 +60,7 @@ public final class ItemStack {
@@ -133,7 +133,7 @@ index 5a62ac72ed..10b4cfa599 100644
      private boolean j;
      private Entity k;
      private ShapeDetectorBlock l;
-@@ -894,8 +894,26 @@ public final class ItemStack {
+@@ -889,8 +889,26 @@ public final class ItemStack {
          IChatMutableComponent ichatmutablecomponent1 = ChatComponentUtils.a((IChatBaseComponent) ichatmutablecomponent);
  
          if (!this.j) {

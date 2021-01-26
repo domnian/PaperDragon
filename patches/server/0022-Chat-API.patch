@@ -1,4 +1,4 @@
-From dfbf0baeec20dfd9f86c41098ea55e56c0a6ae2e Mon Sep 17 00:00:00 2001
+From 5891c6684d08303eeea227e933f348cba6530b7e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
@@ -704,10 +704,10 @@ index 688415f6c8..9208b8dc2e 100644
      public static final MinecraftKey b = new MinecraftKey("minecraft", "default");
      @Nullable
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ed83e6342d..dc3cd73b7c 100644
+index ab141247da..9dff8b89d8 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2921,6 +2921,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2928,6 +2928,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return this.getDirection();
      }
  

@@ -1,4 +1,4 @@
-From 79d12c93471bbbb2355af5f6184fb764c4c69390 Mon Sep 17 00:00:00 2001
+From e07b714492999a73c94565b4dc232b7d7b650abb Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
@@ -129,10 +129,10 @@ index 0000000000..edd083ef62
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 7240b885d9..a9dfa38c92 100644
+index baa82134d1..abbb2bf3e5 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1920,7 +1920,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1925,7 +1925,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (blockposition != null) {
              boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
  
@@ -225,10 +225,10 @@ index 0000000000..bf28f00db7
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a7cd98a7cd..1da07cf619 100644
+index 8c384171ca..8f981d9a3d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1444,7 +1444,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1448,7 +1448,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -238,7 +238,7 @@ index a7cd98a7cd..1da07cf619 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 38ff14e577..3732cfb22d 100644
+index 8d539d1d3a..0ca6d06d45 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -232,7 +232,7 @@ import javax.annotation.Nullable; // Paper
@@ -251,10 +251,10 @@ index 38ff14e577..3732cfb22d 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 0f7f1503d0..40e4a9fe6d 100644
+index ac5003dc82..7a32f1a5e3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -353,7 +353,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -370,7 +370,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -264,7 +264,7 @@ index 0f7f1503d0..40e4a9fe6d 100644
  
      @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 513c1041c3..6574bcd116 100644
+index ae8903ee1d..9207bbf27d 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -26,7 +26,7 @@ public class WatchdogThread extends Thread
@@ -276,7 +276,7 @@ index 513c1041c3..6574bcd116 100644
          this.timeoutTime = timeoutTime;
          this.restart = restart;
          earlyWarningEvery = Math.min(PaperConfig.watchdogPrintEarlyWarningEvery, timeoutTime); // Paper
-@@ -85,9 +85,9 @@ public class WatchdogThread extends Thread
+@@ -89,9 +89,9 @@ public class WatchdogThread extends Thread
                  log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
                  log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
                  log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
@@ -288,7 +288,7 @@ index 513c1041c3..6574bcd116 100644
                  //
                  if ( net.minecraft.server.World.lastPhysicsProblem != null )
                  {
-@@ -110,12 +110,12 @@ public class WatchdogThread extends Thread
+@@ -114,12 +114,12 @@ public class WatchdogThread extends Thread
                  // Paper end
                  } else
                  {
@@ -303,7 +303,7 @@ index 513c1041c3..6574bcd116 100644
                  ChunkTaskManager.dumpAllChunkLoadInfo(); // Paper
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( server.serverThread.getId(), Integer.MAX_VALUE ), log );
                  log.log( Level.SEVERE, "------------------------------" );
-@@ -130,7 +130,7 @@ public class WatchdogThread extends Thread
+@@ -134,7 +134,7 @@ public class WatchdogThread extends Thread
                      dumpThread( thread, log );
                  }
                  } else {

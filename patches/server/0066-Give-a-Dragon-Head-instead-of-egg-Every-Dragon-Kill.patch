@@ -1,27 +1,25 @@
-From ad765677df026f11b675e7023e5cf0a064e9d437 Mon Sep 17 00:00:00 2001
+From fc047b6d8b2eaa98b6648ab03ac7facc5d7fac55 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 23 Apr 2016 20:03:27 -0400
 Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
 
 ---
- src/main/java/net/minecraft/server/EnderDragonBattle.java | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ src/main/java/net/minecraft/server/EnderDragonBattle.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
-index 38dc6086d1..f890c7b5b5 100644
+index 7f11adbc5d..f89a9783c0 100644
 --- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
 +++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
-@@ -358,8 +358,8 @@ public class EnderDragonBattle {
-             this.bossBattle.setVisible(false);
+@@ -359,7 +359,7 @@ public class EnderDragonBattle {
              this.generateExitPortal(true);
              this.n();
--            if (!this.previouslyKilled) {
+             if (this.world.paperConfig.enderDragonsDeathAlwaysPlacesDragonEgg || !this.previouslyKilled) { // Paper - always place dragon egg
 -                this.world.setTypeUpdate(this.world.getHighestBlockYAt(HeightMap.Type.MOTION_BLOCKING, WorldGenEndTrophy.a), Blocks.DRAGON_EGG.getBlockData());
-+            if (true) { // PaperDragon - Use a Dragon Skull instead of Dragon Egg, always place
 +                this.world.setTypeUpdate(this.world.getHighestBlockYAt(HeightMap.Type.MOTION_BLOCKING, WorldGenEndTrophy.a), Blocks.DRAGON_HEAD.getBlockData()); // PaperDragon
              }
  
              this.previouslyKilled = true;
 -- 
-2.17.1
+2.20.1.windows.1
 

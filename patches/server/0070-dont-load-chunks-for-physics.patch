@@ -1,4 +1,4 @@
-From 50d3060fee59068f6550d5111ceee7db38cec0a5 Mon Sep 17 00:00:00 2001
+From 2d580b3286b63e091b434c74283ad4e81c8ffa60 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 16 Mar 2020 03:07:02 -0400
 Subject: [PATCH] dont load chunks for physics
@@ -23,10 +23,10 @@ index 1f334d6328..415d409183 100644
  
                  Block.a(iblockdata, iblockdata1, generatoraccess, blockposition_mutableblockposition, i, j);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e5cc6acf15..2336bbe2a6 100644
+index 71312ee434..061b2bc4d5 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -604,7 +604,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -605,7 +605,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public void neighborChanged(BlockPosition pos, Block blockIn, BlockPosition fromPos) { a(pos, blockIn, fromPos); } // Paper - OBFHELPER
      public void a(BlockPosition blockposition, Block block, BlockPosition blockposition1) {
          if (!this.isClientSide) {
@@ -37,5 +37,5 @@ index e5cc6acf15..2336bbe2a6 100644
              try {
                  // CraftBukkit start
 -- 
-2.17.1
+2.20.1.windows.1
 

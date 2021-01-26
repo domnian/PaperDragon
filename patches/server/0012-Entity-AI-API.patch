@@ -1,4 +1,4 @@
-From c261f19be938d1a5dd8def27e6d0adb52ce902f3 Mon Sep 17 00:00:00 2001
+From 133e0fbad28fd05272bed113fd8e43fa47afc5c6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 6 Dec 2016 22:22:14 -0500
 Subject: [PATCH] Entity AI API
@@ -493,7 +493,7 @@ index 0000000000..6172603da6
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ef80f0ad67..0f2a21dcc4 100644
+index 6c38085e8f..963a61a432 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -123,7 +123,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -580,8 +580,8 @@ index ef80f0ad67..0f2a21dcc4 100644
 +        if (isDisabled) { return; } // PaperDragon
          if (!this.isSameVehicle(entity)) {
              if (!entity.noclip && !this.noclip) {
-                 double d0 = entity.locX() - this.locX();
-@@ -1411,6 +1420,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+                 if (this.world.paperConfig.onlyPlayersCollide && !(entity instanceof EntityPlayer || this instanceof EntityPlayer)) return; // Paper
+@@ -1412,6 +1421,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public void i(double d0, double d1, double d2) {
@@ -589,7 +589,7 @@ index ef80f0ad67..0f2a21dcc4 100644
          this.setMot(this.getMot().add(d0, d1, d2));
          this.impulse = true;
      }
-@@ -1420,6 +1430,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1421,6 +1431,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean damageEntity(DamageSource damagesource, float f) {
@@ -597,7 +597,7 @@ index ef80f0ad67..0f2a21dcc4 100644
          if (this.isInvulnerable(damagesource)) {
              return false;
          } else {
-@@ -2536,7 +2547,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2537,7 +2548,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
      }
  
      public boolean isInvulnerable(DamageSource damagesource) {
@@ -606,7 +606,7 @@ index ef80f0ad67..0f2a21dcc4 100644
      }
  
      public boolean isInvulnerable() {
-@@ -2975,6 +2986,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2982,6 +2993,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return false;
      }
  
@@ -688,7 +688,7 @@ index 74082136b3..c8739bb4e3 100644
                          }
                      }
 diff --git a/src/main/java/net/minecraft/server/EntityCreature.java b/src/main/java/net/minecraft/server/EntityCreature.java
-index 4757e5a92c..944c9503a7 100644
+index eaa10d6e3a..b59e46dbaa 100644
 --- a/src/main/java/net/minecraft/server/EntityCreature.java
 +++ b/src/main/java/net/minecraft/server/EntityCreature.java
 @@ -9,6 +9,7 @@ public abstract class EntityCreature extends EntityInsentient {
@@ -807,7 +807,7 @@ index 0000000000..d0ee7f3042
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 6d716214e7..173aa481e7 100644
+index eb5c3a1f0d..603e692538 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -53,6 +53,7 @@ public abstract class EntityInsentient extends EntityLiving {
@@ -840,7 +840,7 @@ index f41aaa7623..45519db8a0 100644
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 458606cb66..647c4b8bcb 100644
+index 3f7e12f18f..1db9182e3a 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -212,7 +212,7 @@ public abstract class EntityLiving extends Entity {
@@ -1024,7 +1024,7 @@ index a55a8ef6e1..26f6cb7762 100644
              return false;
          } else {
 diff --git a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
-index d3f0327a2a..024a82c029 100644
+index 9cad895c7d..77017e2b51 100644
 --- a/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
 +++ b/src/main/java/net/minecraft/server/PathfinderGoalSelector.java
 @@ -1,6 +1,7 @@
@@ -1058,7 +1058,7 @@ index fe77458f07..1130cb6376 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1b1ef14795..abe0c4dbb6 100644
+index 5d1a2f45ce..b8f736fde3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -832,7 +832,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
