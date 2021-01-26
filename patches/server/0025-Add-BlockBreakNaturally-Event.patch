@@ -1,0 +1,76 @@
+From 7678b025165ad4306bf8a2f6fda2e4a12524d33f Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 18 Dec 2014 22:48:46 -0500
+Subject: [PATCH] Add BlockBreakNaturally Event
+
+To give reliable control over all blocks dropping to world to restore custom item meta
+---
+ src/main/java/net/minecraft/server/Block.java          |  2 ++
+ src/main/java/net/minecraft/server/EntityItem.java     |  1 +
+ src/main/java/net/minecraft/server/WorldServer.java    |  1 +
+ .../bukkit/craftbukkit/event/CraftEventFactory.java    | 10 ++++++++++
+ 4 files changed, 14 insertions(+)
+
+diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
+index 1fc98698b8..2fc8b46b16 100644
+--- a/src/main/java/net/minecraft/server/Block.java
++++ b/src/main/java/net/minecraft/server/Block.java
+@@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
+             entityitem.defaultPickupDelay();
+             // CraftBukkit start
+             if (world.captureDrops != null) {
++                entityitem.droppedPosition = blockposition.immutableCopy(); // PaperDragon
+                 world.captureDrops.add(entityitem);
+             } else {
++                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(MCUtil.toLocation(world, blockposition), (org.bukkit.entity.Item) entityitem.getBukkitEntity()).callEvent(); // EMC
+                 world.addEntity(entityitem);
+             }
+             // CraftBukkit end
+diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
+index 45519db8a0..aa3081f66c 100644
+--- a/src/main/java/net/minecraft/server/EntityItem.java
++++ b/src/main/java/net/minecraft/server/EntityItem.java
+@@ -17,6 +17,7 @@ public class EntityItem extends Entity {
+     private static final DataWatcherObject<ItemStack> ITEM = DataWatcher.a(EntityItem.class, DataWatcherRegistry.g);
+     public int age;
+     public boolean canDespawn = true; // PaperDragon
++    public BlockPosition droppedPosition; // PaperDragon
+     public int pickupDelay;
+     private int f;
+     private UUID thrower;
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 35c84aab47..cf66d6a993 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -1180,6 +1180,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+         } else {
+             // Paper start - capture all item additions to the world
+             if (captureDrops != null && entity instanceof EntityItem) {
++                ((EntityItem) entity).droppedPosition = new BlockPosition(entity.locX(), entity.locY(), entity.locZ()); // PaperDragon
+                 captureDrops.add((EntityItem) entity);
+                 return true;
+             }
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 68ed70d84a..941974f4fc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -384,6 +384,16 @@ public class CraftEventFactory {
+         Bukkit.getPluginManager().callEvent(event);
+ 
+         if (!event.isCancelled()) {
++            // PaperDragon start
++            com.google.common.collect.Multimap<org.bukkit.Location, org.bukkit.entity.Item> drops = com.google.common.collect.ArrayListMultimap.create();
++            for (EntityItem item : items) {
++                BlockPosition pos = item.droppedPosition != null ? item.droppedPosition : new BlockPosition(item.locX(), item.locY(), item.locZ());
++                drops.put(net.minecraft.server.MCUtil.toLocation(item.world, pos), (org.bukkit.entity.Item) item.getBukkitEntity());
++            }
++            for (org.bukkit.Location location : drops.keySet()) {
++                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(location, drops.get(location)).callEvent();
++            }
++            // PaperDragon end
+             for (EntityItem item : items) {
+                 item.world.addEntity(item);
+             }
+-- 
+2.20.1.windows.1
+

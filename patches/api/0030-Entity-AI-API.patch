@@ -1,0 +1,151 @@
+From ad760faac27a7f749aa5f16198b74d1c5ab7bd94 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 6 Dec 2016 22:31:40 -0500
+Subject: [PATCH] Entity AI API
+
+---
+ .../domnian/paperdragon/api/DAPI_Entity.java  | 62 +++++++++++++++++++
+ src/main/java/org/bukkit/entity/Blaze.java    |  7 ++-
+ .../java/org/bukkit/entity/EnderSignal.java   |  8 ++-
+ src/main/java/org/bukkit/entity/Ghast.java    |  6 +-
+ 4 files changed, 79 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+index 85d4b770a..16e770c7d 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+@@ -1,8 +1,18 @@
+ package com.domnian.paperdragon.api;
+ 
++import com.destroystokyo.paper.entity.RangedEntity;
++import org.bukkit.entity.Mob;
+ import com.domnian.paperdragon.api.EntityTask.TaskHandler;
++import org.bukkit.Location;
+ import org.bukkit.World;
++import org.bukkit.entity.Animals;
++import org.bukkit.entity.Creature;
++import org.bukkit.entity.EnderSignal;
+ import org.bukkit.entity.Entity;
++import org.bukkit.entity.Item;
++import org.bukkit.entity.Spider;
++import org.bukkit.entity.Wolf;
++import org.jetbrains.annotations.NotNull;
+ 
+ public interface DAPI_Entity {
+ 
+@@ -67,4 +77,56 @@ public interface DAPI_Entity {
+ 
+     <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task);
+ 
++    boolean isEntityDisabled(@NotNull org.bukkit.entity.Entity entity);
++
++    void setItemCanDespawn(@NotNull Item item, boolean canDespawn);
++
++    /**
++     * Disables Ticking on an Entity
++     *
++     * @param entity
++     * @param disabled
++     */
++    void setDisabledEntity(@NotNull org.bukkit.entity.Entity entity, boolean disabled);
++
++    int getLove(@NotNull Animals animal);
++
++    void setLove(@NotNull Animals animal, int love);
++
++    void setFireProof(@NotNull Mob entity, boolean flag);
++
++    void setFirePanicProof(@NotNull Mob entity, boolean flag);
++
++    void makeAggressive(@NotNull Creature creature, float range);
++
++    void makeAggressiveDuringDay(@NotNull Spider spider, boolean attack);
++
++    boolean isAggressive(@NotNull Creature creature);
++
++    void makePeaceful(@NotNull Mob entity);
++
++    void addGoalByName(@NotNull Mob entity, String goalName, boolean isTargetGoal, int tickRate, Class<?>[] argClasses, Object... args);
++
++    void removeGoalByName(@NotNull Mob entity, String goalName);
++
++    void setEntitySize(@NotNull org.bukkit.entity.Entity entity, float width, float height);
++
++    void setTargetRange(@NotNull Mob entity, float range);
++
++    void setRangedAttackDistance(@NotNull RangedEntity monster, float range);
++
++    void setRangedAttackSpeed(@NotNull RangedEntity monster, Integer min, Integer max);
++
++    void setAlwaysAngry(@NotNull Wolf wolf, boolean alwaysAngry);
++
++    void respawnEntity(@NotNull org.bukkit.entity.Entity entity);
++
++    void setEnderSignalLife(@NotNull EnderSignal enderSignal, int lifeTime);
++
++    int getEnderSignalLife(@NotNull EnderSignal enderSignal);
++
++    void setEnderSignalSpeed(@NotNull EnderSignal enderSignal, double speed);
++
++    void setEnderSignalDestination(@NotNull EnderSignal enderSignal, Location target);
++
+ }
+diff --git a/src/main/java/org/bukkit/entity/Blaze.java b/src/main/java/org/bukkit/entity/Blaze.java
+index 7a5505b7f..9611c4910 100644
+--- a/src/main/java/org/bukkit/entity/Blaze.java
++++ b/src/main/java/org/bukkit/entity/Blaze.java
+@@ -4,5 +4,10 @@ package org.bukkit.entity;
+  * Represents a Blaze monster
+  */
+ public interface Blaze extends Monster {
+-
++    // PaperDragon start
++    void setFireballs(int num);
++    int getNumFireballs();
++    int getTimeBetweenFireballs();
++    void setTimeBetweenFireballs(int timeBetweenFireballs);
++    // PaperDragon end
+ }
+diff --git a/src/main/java/org/bukkit/entity/EnderSignal.java b/src/main/java/org/bukkit/entity/EnderSignal.java
+index 1bba155d8..7aab75c58 100644
+--- a/src/main/java/org/bukkit/entity/EnderSignal.java
++++ b/src/main/java/org/bukkit/entity/EnderSignal.java
+@@ -17,7 +17,7 @@ public interface EnderSignal extends Entity {
+      */
+     @NotNull
+     public Location getTargetLocation();
+-
++    // PaperDragon start
+     /**
+      * Set the {@link Location} this EnderSignal is moving towards.
+      * <br>
+@@ -26,7 +26,11 @@ public interface EnderSignal extends Entity {
+      *
+      * @param location the new target location
+      */
+-    public void setTargetLocation(@NotNull Location location);
++    public default void setTargetLocation(@NotNull Location location) {
++        setTargetLocation(location, false);
++    }
++    public void setTargetLocation(@NotNull Location location, boolean useExactTarget);
++    // PaperDragon end
+ 
+     /**
+      * Gets if the EnderSignal should drop an item on death.<br>
+diff --git a/src/main/java/org/bukkit/entity/Ghast.java b/src/main/java/org/bukkit/entity/Ghast.java
+index 3f5edf76c..b96600c88 100644
+--- a/src/main/java/org/bukkit/entity/Ghast.java
++++ b/src/main/java/org/bukkit/entity/Ghast.java
+@@ -3,4 +3,8 @@ package org.bukkit.entity;
+ /**
+  * Represents a Ghast.
+  */
+-public interface Ghast extends Flying {}
++public interface Ghast extends Flying {
++
++    int getFireballCooldown(); // PaperDragon
++    void setFireballCooldown(int cooldown); // PaperDragon
++}
+-- 
+2.20.1.windows.1
+

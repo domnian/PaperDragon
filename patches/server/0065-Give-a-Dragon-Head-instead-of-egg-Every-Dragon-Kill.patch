@@ -1,0 +1,25 @@
+From effb03bc805f8b7afb465304e1d253b9e7459354 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 23 Apr 2016 20:03:27 -0400
+Subject: [PATCH] Give a Dragon Head instead of egg Every Dragon Kill
+
+---
+ src/main/java/net/minecraft/server/EnderDragonBattle.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main/java/net/minecraft/server/EnderDragonBattle.java b/src/main/java/net/minecraft/server/EnderDragonBattle.java
+index 7f11adbc5d..f89a9783c0 100644
+--- a/src/main/java/net/minecraft/server/EnderDragonBattle.java
++++ b/src/main/java/net/minecraft/server/EnderDragonBattle.java
+@@ -359,7 +359,7 @@ public class EnderDragonBattle {
+             this.generateExitPortal(true);
+             this.n();
+             if (this.world.paperConfig.enderDragonsDeathAlwaysPlacesDragonEgg || !this.previouslyKilled) { // Paper - always place dragon egg
+-                this.world.setTypeUpdate(this.world.getHighestBlockYAt(HeightMap.Type.MOTION_BLOCKING, WorldGenEndTrophy.a), Blocks.DRAGON_EGG.getBlockData());
++                this.world.setTypeUpdate(this.world.getHighestBlockYAt(HeightMap.Type.MOTION_BLOCKING, WorldGenEndTrophy.a), Blocks.DRAGON_HEAD.getBlockData()); // PaperDragon
+             }
+ 
+             this.previouslyKilled = true;
+-- 
+2.20.1.windows.1
+

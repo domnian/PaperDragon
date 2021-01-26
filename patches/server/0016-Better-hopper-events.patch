@@ -1,0 +1,78 @@
+From c8753f2fd013150c6b236706e3a538d4bcfedb54 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 9 Sep 2013 19:41:07 -0400
+Subject: [PATCH] Better hopper events
+
+---
+ .../domnian/paperdragon/api/HopperEvents.java | 32 +++++++++++++++++++
+ .../minecraft/server/TileEntityHopper.java    |  7 +++-
+ 2 files changed, 38 insertions(+), 1 deletion(-)
+ create mode 100644 src/main/java/com/domnian/paperdragon/api/HopperEvents.java
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/HopperEvents.java b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
+new file mode 100644
+index 0000000000..84f23c673b
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
+@@ -0,0 +1,32 @@
++package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.events.HopperDrainEvent;
++import com.domnian.paperdragon.events.HopperFillEvent;
++import net.minecraft.server.BlockPosition;
++import net.minecraft.server.EnumDirection;
++import org.bukkit.Bukkit;
++import org.bukkit.craftbukkit.CraftWorld;
++import org.bukkit.inventory.Inventory;
++
++public final class HopperEvents {
++    private HopperEvents() {}
++
++    public static boolean drain(CraftWorld world, Inventory inventory, double x, double y, double z) {
++        HopperDrainEvent event = new HopperDrainEvent(world, inventory, x, y, z);
++        Bukkit.getPluginManager().callEvent(event);
++        return event.isCancelled();
++    }
++    public static boolean fill(CraftWorld world, Inventory inventory, BlockPosition position, EnumDirection enumdirection)  {
++        HopperFillEvent event = new HopperFillEvent(world, inventory,
++            position.getX(),
++            position.getY(),
++            position.getZ(),
++            enumdirection.getAdjacentX(),
++            enumdirection.getAdjacentY(),
++            enumdirection.getAdjacentZ()
++        );
++        Bukkit.getPluginManager().callEvent(event);
++        return event.isCancelled();
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
+index d432de40eb..dd3d123bc7 100644
+--- a/src/main/java/net/minecraft/server/TileEntityHopper.java
++++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
+@@ -330,6 +330,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+         } else {
+             EnumDirection enumdirection = ((EnumDirection) this.getBlock().get(BlockHopper.FACING)).opposite();
+ 
++            if (com.domnian.paperdragon.api.HopperEvents.fill(((WorldServer)world).getWorld(), this.getOwner(false).getInventory(), this.position, enumdirection)) { return false; } // PaperDragon
+             if (this.b(iinventory, enumdirection)) {
+                 return false;
+             } else {
+@@ -437,8 +438,12 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+             EnumDirection enumdirection = EnumDirection.DOWN;
+ 
+             // Paper start - optimize hoppers and remove streams
++            // PaperDragon start - hopper drain event
++            if (c(iinventory, enumdirection)) return false;
++            if (com.domnian.paperdragon.api.HopperEvents.drain((ihopper.getWorld()).getWorld(), new org.bukkit.craftbukkit.inventory.CraftInventory(ihopper), ihopper.getLocation().getX(), ihopper.getLocation().getY(), ihopper.getLocation().getZ())) { return false; }
+             skipPullModeEventFire = skipHopperEvents;
+-            return !c(iinventory, enumdirection) && anyMatch(iinventory, enumdirection, (item, i) -> {
++            return anyMatch(iinventory, enumdirection, (item, i) -> {
++                // PaperDragon end
+                 // Logic copied from below to avoid extra getItem calls
+                 if (!item.isEmpty() && canTakeItem(iinventory, item, i, enumdirection)) {
+                     return hopperPull(ihopper, iinventory, item, i);
+-- 
+2.20.1.windows.1
+
