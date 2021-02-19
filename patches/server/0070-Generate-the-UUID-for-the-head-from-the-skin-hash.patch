@@ -1,0 +1,51 @@
+From e8e7db726a35656e823fef1e40caed9e1e771c16 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 19 Feb 2021 03:57:17 -0500
+Subject: [PATCH] Generate the UUID for the head from the skin hash
+
+This will always result in the same UUID for a given hash
+---
+ .../domnian/paperdragon/api/CraftDAPI_Heads.java    | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
+index eb3c2353cc..43cbf10349 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
+@@ -11,6 +11,7 @@ import co.aikar.timings.Timing;
+ import co.aikar.timings.Timings;
+ import net.minecraft.server.*;
+ import org.apache.commons.codec.binary.Base64;
++import org.apache.commons.lang.StringUtils;
+ import org.bukkit.ChatColor;
+ import org.bukkit.Material;
+ import org.bukkit.inventory.meta.SkullMeta;
+@@ -61,7 +62,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+                     props = new NBTTagCompound(),
+                     textData = new NBTTagCompound();
+             NBTTagList textures = new NBTTagList();
+-            owner.setIntArray("Id", GameProfileSerializer.a(UUID.randomUUID()).getInts());
++            owner.setIntArray("Id", GameProfileSerializer.a(skinHashToUUID(hash)).getInts());
+             textData.setString("Value", getTextureData(url));
+             textures.add(textData);
+             props.set("textures", textures);
+@@ -72,6 +73,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+         }
+     }
+ 
++    private static UUID skinHashToUUID(String hash) {
++        hash = StringUtils.leftPad(hash, 64, '0');
++        long high = Long.parseLong(hash.substring(0, 16), 16);
++        long low = Long.parseLong(hash.substring(48), 16);
++        return new UUID(
++                (high & 0xFFFFFFFFFFFF0FFFL) | 0x0000000000004000L, // Set version to 4
++                (low  & 0x3FFFFFFFFFFFFFFFL) | 0x8000000000000000L // Set to IETF variant
++        );
++    }
++
+     private static String getTextureData(String url) {
+         String texture = "{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}";
+         return new String(Base64.encodeBase64(texture.getBytes(Charset.forName("UTF-8"))));
+-- 
+2.20.1.windows.1
+

@@ -1,4 +1,4 @@
-From d137708f7c0f06f4d76822d2ecea4814ae27b084 Mon Sep 17 00:00:00 2001
+From f237b9c49d42f1901e2271282d7efdeed047b65b Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)
@@ -11,7 +11,7 @@ Subject: [PATCH] Implement Player Head API (DragonAPI)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 new file mode 100644
-index 0000000000..1945f385fb
+index 0000000000..eb3c2353cc
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 @@ -0,0 +1,80 @@
@@ -46,10 +46,10 @@ index 0000000000..1945f385fb
 +     */
 +    private static Timing timings() {
 +        try {
-+            Method ofSafeMethod = Timings.class.getMethod("ofSafe", String.class);
++            Method ofSafeMethod = Timings.class.getDeclaredMethod("ofSafe", String.class);
 +            boolean oldAccessible = ofSafeMethod.isAccessible();
 +            ofSafeMethod.setAccessible(true);
-+            Object timings = ofSafeMethod.invoke("Skull Creation");
++            Object timings = ofSafeMethod.invoke(null, "Skull Creation");
 +            ofSafeMethod.setAccessible(oldAccessible);
 +            if (timings instanceof Timing) {
 +                return (Timing) timings;
