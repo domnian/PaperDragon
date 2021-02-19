@@ -1,4 +1,4 @@
-From d7d1c06333695daad0603e755c81b5ecd89abc66 Mon Sep 17 00:00:00 2001
+From 242e200c629e6fe1b366c3852033aa7f0020f06f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
@@ -9,7 +9,7 @@ Get the itemstack used to spawn an entity
  1 file changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index bf914dc5ee..bc9549ad7f 100644
+index 93b5a6471c..f526e60dd1 100644
 --- a/src/main/java/net/minecraft/server/EntityTypes.java
 +++ b/src/main/java/net/minecraft/server/EntityTypes.java
 @@ -10,6 +10,7 @@ import java.util.stream.Stream;
@@ -20,7 +20,7 @@ index bf914dc5ee..bc9549ad7f 100644
  
  public class EntityTypes<T extends Entity> {
  
-@@ -177,18 +178,40 @@ public class EntityTypes<T extends Entity> {
+@@ -177,15 +178,20 @@ public class EntityTypes<T extends Entity> {
  
      @Nullable
      public Entity spawnCreature(WorldServer worldserver, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
@@ -43,6 +43,11 @@ index bf914dc5ee..bc9549ad7f 100644
 +    }
      @Nullable
      public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
+         // Paper start - Call PreCreatureSpawnEvent
+@@ -202,7 +208,24 @@ public class EntityTypes<T extends Entity> {
+             }
+         }
+         // Paper end
 +        return spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason);
 +    }
 +    public T spawnCreature(WorldServer worldserver, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {

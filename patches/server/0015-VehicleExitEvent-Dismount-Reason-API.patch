@@ -1,4 +1,4 @@
-From b7fda93e387ed6daf739295d84d4abe6de155b93 Mon Sep 17 00:00:00 2001
+From 72160e6fc062f0604b0c46bfae487de8de437abe Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 128db78839..dd335f946f 100644
+index 78bc7fb050..de6ffbf97a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -280,6 +280,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -69,10 +69,10 @@ index 128db78839..dd335f946f 100644
          return this.invulnerable && damagesource != DamageSource.OUT_OF_WORLD && !damagesource.v() && !isDisabled; // PaperDragon - add && !isDisabled
      }
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 9796b4e57d..7e4d2c2d2c 100644
+index 59b00c78f8..08051eaf16 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -364,6 +364,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -362,6 +362,7 @@ public abstract class EntityHuman extends EntityLiving {
      @Override
      public void passengerTick() {
          if (this.er() && this.isPassenger()) {
@@ -81,10 +81,10 @@ index 9796b4e57d..7e4d2c2d2c 100644
              this.setSneaking(false);
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 1db9182e3a..9eacb6b06c 100644
+index 5a93a693a2..0b25688ded 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -309,6 +309,7 @@ public abstract class EntityLiving extends Entity {
+@@ -310,6 +310,7 @@ public abstract class EntityLiving extends Entity {
                  }
  
                  if (!this.world.isClientSide && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().bt()) {
@@ -92,7 +92,7 @@ index 1db9182e3a..9eacb6b06c 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bH()) {
-@@ -3458,6 +3459,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3479,6 +3480,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {

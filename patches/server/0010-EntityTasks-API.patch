@@ -1,4 +1,4 @@
-From 9b2e8a75bc705292eb0473610d0927f5b0a5715e Mon Sep 17 00:00:00 2001
+From f0e1ac64d820631c4d7c06c940997a51fb350bd4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -40,7 +40,7 @@ index d5c6381045..1e903fe5ce 100644
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index bff85d2a60..6c38085e8f 100644
+index 6917116111..9834da0aa2 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -103,10 +103,10 @@ index 0000000000..42bd08e0e9
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index caaf0f7221..5d1a2f45ce 100644
+index 389466680d..6a6962777f 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -834,6 +834,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -835,6 +835,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
@@ -114,7 +114,7 @@ index caaf0f7221..5d1a2f45ce 100644
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
                  gameprofilerfiller.a(() -> {
-@@ -844,7 +845,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -845,7 +846,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      TimingHistory.activatedEntityTicks++; // Paper
                  entity.tick();
                  entity.postTick(); // CraftBukkit
@@ -124,10 +124,10 @@ index caaf0f7221..5d1a2f45ce 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d7227af25e..27fb87a6bd 100644
+index 5550334185..89927c6814 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -947,6 +947,7 @@ public final class CraftServer implements Server {
+@@ -946,6 +946,7 @@ public final class CraftServer implements Server {
          }
          // PaperDragon start
          net.minecraft.server.MetaApiAccessor.reload();

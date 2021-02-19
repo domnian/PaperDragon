@@ -1,4 +1,4 @@
-From 7678b025165ad4306bf8a2f6fda2e4a12524d33f Mon Sep 17 00:00:00 2001
+From c7771ab0df8abc0b42fdaa756bc5b8cb01d8f930 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
@@ -39,10 +39,10 @@ index 45519db8a0..aa3081f66c 100644
      private int f;
      private UUID thrower;
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 35c84aab47..cf66d6a993 100644
+index 04e22c2733..790f6f74ca 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1180,6 +1180,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1181,6 +1181,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof EntityItem) {
@@ -51,10 +51,10 @@ index 35c84aab47..cf66d6a993 100644
                  return true;
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 68ed70d84a..941974f4fc 100644
+index d88d5d2ad2..42cc65bda7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -384,6 +384,16 @@ public class CraftEventFactory {
+@@ -390,6 +390,16 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
@@ -68,9 +68,9 @@ index 68ed70d84a..941974f4fc 100644
 +                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(location, drops.get(location)).callEvent();
 +            }
 +            // PaperDragon end
-             for (EntityItem item : items) {
-                 item.world.addEntity(item);
-             }
+             // Paper start
+             for (Item bukkit : list) {
+                 if (!bukkit.isValid()) {
 -- 
 2.20.1.windows.1
 

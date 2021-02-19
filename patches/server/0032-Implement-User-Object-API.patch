@@ -1,4 +1,4 @@
-From 3e30d5b694cee7fc59b037658ca4646df16d84b6 Mon Sep 17 00:00:00 2001
+From 239965ffb59d8b9b73bdac9f70a452fbf3800f01 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 23 Jun 2016 22:30:39 -0400
 Subject: [PATCH] Implement User Object API
@@ -8,10 +8,10 @@ Subject: [PATCH] Implement User Object API
  1 file changed, 12 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7c18b22c7b..6cd63e586f 100644
+index ed7b91bf70..740f7b0392 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2223,4 +2223,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2222,4 +2222,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          return spigot;
      }
      // Spigot end

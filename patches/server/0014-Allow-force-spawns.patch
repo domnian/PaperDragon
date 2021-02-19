@@ -1,4 +1,4 @@
-From 28250dab17972214f3d5fa954eeefd45fc3ea625 Mon Sep 17 00:00:00 2001
+From 31a1d68d4e24325cb6b1e90845dd00bdc13110e1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -11,10 +11,10 @@ Force some cases where plugins should not be allowed to block it.
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index b8f736fde3..35c84aab47 100644
+index 59fb2f81b4..04e22c2733 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1104,7 +1104,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1105,7 +1105,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          boolean flag = entity.attachedToPlayer;
  
          entity.attachedToPlayer = true;
@@ -23,7 +23,7 @@ index b8f736fde3..35c84aab47 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1191,7 +1191,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1192,7 +1192,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -33,10 +33,10 @@ index b8f736fde3..35c84aab47 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 41fc528a88..b48d659f62 100644
+index feaa48bc02..52edbe0689 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -644,7 +644,7 @@ public class CraftEventFactory {
+@@ -661,7 +661,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  

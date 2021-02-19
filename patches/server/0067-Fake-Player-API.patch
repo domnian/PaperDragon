@@ -1,4 +1,4 @@
-From 9c4ab50574fefe65a8334a996405df786f9c5399 Mon Sep 17 00:00:00 2001
+From 22b9dc0871f292c10127063aa2c0bde10bba7549 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 29 Dec 2020 01:32:45 -0600
 Subject: [PATCH] Fake Player API
@@ -261,7 +261,7 @@ index 53a2dc01a8..3691886579 100644
              EntityPlayer entityplayer1 = (EntityPlayer) this.players.get(i);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7f6a83cf33..3c3f92ad2c 100644
+index edfba7901f..73a9ba2062 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -4,6 +4,10 @@ import com.destroystokyo.paper.ClientOption.ChatVisibility;
@@ -275,7 +275,7 @@ index 7f6a83cf33..3c3f92ad2c 100644
  import com.google.common.base.Preconditions;
  import com.google.common.collect.ImmutableSet;
  import com.google.common.io.BaseEncoding;
-@@ -1384,6 +1388,77 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1383,6 +1387,77 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public boolean canSee(Player player) {
          return !hiddenPlayers.containsKey(player.getUniqueId());
      }

@@ -1,4 +1,4 @@
-From 4bf15c141ab451537c9e21fc6b70e21b517a775b Mon Sep 17 00:00:00 2001
+From feb190f5b9adf6bdbafdf0fb48e4d2cac87d367e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
@@ -38,10 +38,10 @@ index 0000000000..1a45cd0c4d
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 096e84437c..4b4d04d3e1 100644
+index f744fc14c2..e2bb1000a5 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1020,6 +1020,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1018,6 +1018,7 @@ public abstract class EntityHuman extends EntityLiving {
      public void attack(Entity entity) {
          if (entity.bL()) {
              if (!entity.t(this)) {

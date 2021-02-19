@@ -1,4 +1,4 @@
-From c6efac85ddaa5a9e8dca4eccd05bc4195d7a2efc Mon Sep 17 00:00:00 2001
+From 6ba159866f21d444a5e65af667b733c884b0b12d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 16 Mar 2020 03:07:02 -0400
 Subject: [PATCH] dont load chunks for physics
@@ -23,7 +23,7 @@ index 1f334d6328..415d409183 100644
  
                  Block.a(iblockdata, iblockdata1, generatoraccess, blockposition_mutableblockposition, i, j);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 71312ee434..061b2bc4d5 100644
+index a47bf28e1c..ede9af8ac1 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -605,7 +605,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
