@@ -1,4 +1,4 @@
-From 338b02241e339754f2c5952e1fd2c24adb67bdf4 Mon Sep 17 00:00:00 2001
+From f497d9db00ce166c87c399e079554edeb9836c26 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 15 Jun 2013 23:19:03 -0400
 Subject: [PATCH] ItemStack isSimiliar API to skip durability and name checks
@@ -14,10 +14,10 @@ This new boolean allows you to verify if the item is the same ignoring the name 
  1 file changed, 65 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index d7d6a3e8..291285aa 100644
+index 58f99e3eb..8fe352c8c 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -281,16 +281,80 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -281,16 +281,80 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
       * @param stack the item stack to compare to
       * @return true if the two stacks are equal, ignoring the amount
       */
@@ -100,5 +100,5 @@ index d7d6a3e8..291285aa 100644
  
      @NotNull
 -- 
-2.17.1
+2.20.1.windows.1
 

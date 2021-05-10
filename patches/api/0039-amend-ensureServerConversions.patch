@@ -1,21 +1,21 @@
-From d2b05a08ec66e35523f77fcb55a6ce88e841db1e Mon Sep 17 00:00:00 2001
+From cc176d7c6b7373d0ed0f22d0f61d200a36ee92d3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 29 Mar 2019 21:45:09 -0400
 Subject: [PATCH] amend ensureServerConversions
 
 pending paper merge, store data version on stacks
 ---
- .../org/bukkit/inventory/ItemFactory.java     | 17 ++++++---
- .../java/org/bukkit/inventory/ItemStack.java  | 38 ++++++++++++++++---
- 2 files changed, 43 insertions(+), 12 deletions(-)
+ .../org/bukkit/inventory/ItemFactory.java     | 17 +++++---
+ .../java/org/bukkit/inventory/ItemStack.java  | 39 +++++++++++++++----
+ 2 files changed, 43 insertions(+), 13 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemFactory.java b/src/main/java/org/bukkit/inventory/ItemFactory.java
-index 3f23927e5..30a328992 100644
+index eab52f861..e000e7692 100644
 --- a/src/main/java/org/bukkit/inventory/ItemFactory.java
 +++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
-@@ -144,13 +144,18 @@ public interface ItemFactory {
-     Material updateMaterial(@NotNull final ItemMeta meta, @NotNull final Material material) throws IllegalArgumentException;
-     // Paper start
+@@ -154,13 +154,18 @@ public interface ItemFactory {
+     net.kyori.adventure.text.event.HoverEvent<net.kyori.adventure.text.event.HoverEvent.ShowItem> asHoverEvent(final @NotNull ItemStack item, final @NotNull java.util.function.UnaryOperator<net.kyori.adventure.text.event.HoverEvent.ShowItem> op);
+ 
      /**
 -     * Minecart updates are converting simple item stacks into more complex NBT oriented Item Stacks.
 -     *
@@ -39,10 +39,10 @@ index 3f23927e5..30a328992 100644
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 0c1b37f48..b635b97dd 100644
+index 8fe352c8c..8da40e1f9 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
      private int amount = 0;
      private MaterialData data = null;
      private ItemMeta meta;
@@ -74,7 +74,7 @@ index 0c1b37f48..b635b97dd 100644
  
      @Utility
      protected ItemStack() {}
-@@ -521,7 +546,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -521,7 +546,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
      public Map<String, Object> serialize() {
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
@@ -83,7 +83,7 @@ index 0c1b37f48..b635b97dd 100644
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
-@@ -573,6 +598,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -573,6 +598,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
          }
  
          ItemStack result = new ItemStack(type, amount, damage);
@@ -91,10 +91,11 @@ index 0c1b37f48..b635b97dd 100644
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -664,13 +690,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+@@ -669,14 +695,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+     public net.kyori.adventure.text.event.HoverEvent<net.kyori.adventure.text.event.HoverEvent.ShowItem> asHoverEvent(final @NotNull java.util.function.UnaryOperator<net.kyori.adventure.text.event.HoverEvent.ShowItem> op) {
+         return org.bukkit.Bukkit.getServer().getItemFactory().asHoverEvent(this, op);
      }
- 
-     // Paper start
+-
 +    protected ItemStack asCraftItemStack() {
 +        return Bukkit.getServer().getItemFactory()._asServerItemStack(this);
 +    }

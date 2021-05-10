@@ -1,4 +1,4 @@
-From dfa615ae0fde8b269ac9e3d6df0d4e8bea6a07ff Mon Sep 17 00:00:00 2001
+From 8994921fac88793a40ccaf42cea58db5f42b4b7e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 25 Dec 2017 21:26:15 -0500
 Subject: [PATCH] Entity Serialization
@@ -28,12 +28,12 @@ index 9ea6b96da..7f99d075b 100644
 +
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index d4c776f32..cc0c2b249 100644
+index 46985eaea..8618d0a34 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -28,6 +28,11 @@ import org.jetbrains.annotations.Nullable;
   */
- public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder {
+ public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity> { // Paper
  
 +    // PaperDragon start
 +    public boolean spawnAt(@NotNull Location loc);

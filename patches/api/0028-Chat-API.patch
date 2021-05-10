@@ -1,14 +1,14 @@
-From 4144c875bed8ce6d68d7cce878f7057e40f8cb83 Mon Sep 17 00:00:00 2001
+From ccc0476f28cd438c4e5fba8858b82e6b6f0667ca Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 22:30:15 -0500
 Subject: [PATCH] Chat API
 
 ---
  .../domnian/paperdragon/api/DragonAPI.java    |  2 +
- .../paperdragon/api/chat/ChatBuilder.java     | 21 ++++++++
- .../paperdragon/api/chat/DAPI_Chat.java       | 51 +++++++++++++++++++
- .../paperdragon/api/chat/FancifulChat.java    | 36 +++++++++++++
- 4 files changed, 110 insertions(+)
+ .../paperdragon/api/chat/ChatBuilder.java     | 21 +++++++
+ .../paperdragon/api/chat/DAPI_Chat.java       | 55 +++++++++++++++++++
+ .../paperdragon/api/chat/FancifulChat.java    | 36 ++++++++++++
+ 4 files changed, 114 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
@@ -61,10 +61,10 @@ index 000000000..6a5246b42
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
 new file mode 100644
-index 000000000..100670143
+index 000000000..ead4a18ae
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,55 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *  
@@ -92,6 +92,8 @@ index 000000000..100670143
 +
 +import org.bukkit.entity.Player;
 +
++import java.util.UUID;
++
 +public interface DAPI_Chat {
 +
 +    FancifulChat createFancyChat();
@@ -105,17 +107,20 @@ index 000000000..100670143
 +
 +    void sendChat(Player player, FancifulChat message);
 +
++    void sendChat(UUID sender, Player player, FancifulChat message);
++
 +    void sendSystem(Player player, FancifulChat message);
 +
-+    /* TODO: Add advancement api
++    /* TODO: Add Advancement Toast API
 +    default void sentToast(Player player, FancifulText title, FancifulText description, ItemStack icon) {
 +        sentToast(player, title, description, icon, null, null, 0F, 0F);
 +    }
 +    void sentToast(Player player, FancifulText title, FancifulText description, ItemStack icon, String frame, String background, Float x, Float y);
 +    */
 +
-+    //todo; Use FancifulPage for book page setting
++    // TODO: Use FancifulPage for book page setting
 +}
+\ No newline at end of file
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
 new file mode 100644
 index 000000000..0c8dac80d

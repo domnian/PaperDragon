@@ -1,4 +1,4 @@
-From 112cd9da88259c120600836d23fc4a2b90b578f5 Mon Sep 17 00:00:00 2001
+From c4c28ae7d346b91e9d9d913996312299ee72c07b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Apr 2016 02:14:00 -0400
 Subject: [PATCH] Rework Spigot Deprecations
@@ -6,9 +6,10 @@ Subject: [PATCH] Rework Spigot Deprecations
 Deprecate Inventory.getContents because md5 likes to make stupid changes
 Undeprecate (get/set)MaxHealth
 ---
- src/main/java/org/bukkit/entity/Damageable.java   | 4 ----
- src/main/java/org/bukkit/inventory/Inventory.java | 4 ++++
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ src/main/java/org/bukkit/entity/Damageable.java              | 4 ----
+ src/main/java/org/bukkit/event/entity/EntityDamageEvent.java | 3 +--
+ src/main/java/org/bukkit/inventory/Inventory.java            | 4 ++++
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/entity/Damageable.java b/src/main/java/org/bukkit/entity/Damageable.java
 index fc4d3bcd9..13e8ce4d7 100644
@@ -34,21 +35,38 @@ index fc4d3bcd9..13e8ce4d7 100644
      void setMaxHealth(double health);
  
      /**
+diff --git a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
+index feec8b1e1..c676218c6 100644
+--- a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
++++ b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
+@@ -205,12 +205,11 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
+     /**
+      * An enum to specify the types of modifier
+      *
+-     * @deprecated This API is responsible for a large number of implementation
++     * This API is responsible for a large number of implementation
+      * problems and is in general unsustainable to maintain. It is likely to be
+      * removed very soon in a subsequent release. Please see
+      * https://www.spigotmc.org/threads/194446/ for more information.
+      */
+-    @Deprecated
+     public enum DamageModifier {
+         /**
+          * This represents the amount of damage being done, also known as the
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 753c05229..df975b566 100644
+index 7956aebcb..e155827ce 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
-@@ -156,20 +156,24 @@ public interface Inventory extends Iterable<ItemStack> {
+@@ -156,19 +156,23 @@ public interface Inventory extends Iterable<ItemStack> {
      /**
       * Returns all ItemStacks from the inventory
       *
 +     * @deprecated because people love breaking API's for no reason. you probally want @{see {@link #getStorageContents()}}
       * @return An array of ItemStacks from the inventory. Individual items may be null.
       */
-     @NotNull
 +    @Deprecated
-     public ItemStack[] getContents();
- 
+     public @org.checkerframework.checker.nullness.qual.Nullable ItemStack @org.checkerframework.checker.nullness.qual.NonNull [] getContents(); // Paper - make array elements nullable instead array
+     
      /**
       * Completely replaces the inventory's contents. Removes all existing
       * contents and replaces it with the ItemStacks given in the array.

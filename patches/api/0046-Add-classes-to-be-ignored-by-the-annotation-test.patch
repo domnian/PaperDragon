@@ -1,4 +1,4 @@
-From 994a39f2fef4e9ec0514e98211869d0a385c9dd6 Mon Sep 17 00:00:00 2001
+From 9b8271deafa95502fe9eee36d25e9181b6bc5952 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 14 Jul 2019 01:07:06 -0400
 Subject: [PATCH] Add classes to be ignored by the annotation test
@@ -10,7 +10,7 @@ that are excluded do have issues that were not resolved.
  1 file changed, 63 insertions(+), 7 deletions(-)
 
 diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
-index 4c2780c90..4bbc225a7 100644
+index 82b278349..0e3995cb7 100644
 --- a/src/test/java/org/bukkit/AnnotationTest.java
 +++ b/src/test/java/org/bukkit/AnnotationTest.java
 @@ -5,12 +5,8 @@ import java.io.FileInputStream;
@@ -28,7 +28,7 @@ index 4c2780c90..4bbc225a7 100644
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
  import org.junit.Assert;
-@@ -49,8 +45,68 @@ public class AnnotationTest {
+@@ -57,8 +53,68 @@ public class AnnotationTest {
          "co/aikar/timings/TimingHistory$2$1$2",
          "co/aikar/timings/TimingHistory$3",
          "co/aikar/timings/TimingHistory$4",

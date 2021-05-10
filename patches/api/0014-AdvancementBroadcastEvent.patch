@@ -1,19 +1,19 @@
-From 3d6a37e4fe1c92a89e6062bddec77eb63a0c896f Mon Sep 17 00:00:00 2001
+From d664160eb6180bd489b7874dbd3136d502d26f15 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 4 Dec 2016 01:01:08 -0500
 Subject: [PATCH] AdvancementBroadcastEvent
 
 ---
- .../events/AdvancementBroadcastEvent.java     | 60 +++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ .../events/AdvancementBroadcastEvent.java     | 69 +++++++++++++++++++
+ 1 file changed, 69 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 new file mode 100644
-index 000000000..2dd548178
+index 000000000..6743879ba
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
-@@ -0,0 +1,60 @@
+@@ -0,0 +1,69 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -42,37 +42,46 @@ index 000000000..2dd548178
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +import java.util.ArrayList;
 +import java.util.List;
 +
 +public class AdvancementBroadcastEvent extends Event {
-+    final Player player;
-+    List<Player> receivers = new ArrayList<Player>();
 +
++    final Player player;
++    List<Player> receivers = new ArrayList<>();
++
++    private static final HandlerList handlers = new HandlerList();
++
++    public AdvancementBroadcastEvent(@NotNull Player player) {
++        this.player = player;
++    }
++
++    @NotNull
 +    public Player getPlayer() {
 +        return player;
 +    }
 +
++    @NotNull
 +    public List<Player> getReceivers() {
 +        return receivers;
 +    }
 +
-+    public void setReceivers(List<Player> receivers) {
++    public void setReceivers(@NotNull List<Player> receivers) {
 +        this.receivers = receivers;
 +    }
 +
-+    private static final HandlerList handlers = new HandlerList();
-+
-+    public AdvancementBroadcastEvent(Player player) {this.player = player;}
-+
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}
 -- 
 2.20.1.windows.1

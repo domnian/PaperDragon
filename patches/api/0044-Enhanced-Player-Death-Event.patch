@@ -1,25 +1,25 @@
-From 489034cf97c067f9d37f9a3e46336a55dcd9822c Mon Sep 17 00:00:00 2001
+From 468b5e327c1901d329d75236871a97b17da80d7a Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:32:29 -0400
 Subject: [PATCH] Enhanced Player Death Event
 
 ---
- .../bukkit/event/entity/PlayerDeathEvent.java | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ .../bukkit/event/entity/PlayerDeathEvent.java | 23 +++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-index 3a743430a..526224e78 100644
+index 3d45d2e41..606b694f8 100644
 --- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-@@ -18,6 +18,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+@@ -19,6 +19,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      private int newTotalExp = 0;
      private boolean keepLevel = false;
      private boolean keepInventory = false;
 +    private String sourceKey = "death.attack.generic"; // PaperDragon - Enhanced Player Death Event
- 
      // Paper start
-     private List<ItemStack> itemsToKeep = new java.util.ArrayList<>();
-@@ -224,4 +225,25 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+     private boolean doExpDrop;
+ 
+@@ -280,4 +281,26 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      public boolean getKeepInventory() {
          return keepInventory;
      }
@@ -44,6 +44,7 @@ index 3a743430a..526224e78 100644
 +        return sourceKey;
 +    }
 +    // PaperDragon end
++
  }
 -- 
 2.20.1.windows.1
