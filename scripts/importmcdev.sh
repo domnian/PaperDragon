@@ -86,7 +86,9 @@ for f in $files; do
     fi
 done
 if [ -n "$error" ]; then
-    exit 1
+    echo "$(bashColor 1 31) There was an error while performing auto-import! $(bashColorReset)"
+    read -p "$(bashColor 1 33) Continue with manual imports? (y/N) $(bashColorReset)" cont
+    [[ $cont == [yY] || $cont == [yY][eE][sS] ]] || exit 1
 fi
 
 ###############################################################################################
@@ -96,8 +98,6 @@ fi
 ###############################################################################################
 
 # import Foo
-import PathfinderGoalWrapped
-import PacketPlayOutTileEntityData
 
 ################
 (
