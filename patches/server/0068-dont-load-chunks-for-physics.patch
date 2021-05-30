@@ -1,41 +1,41 @@
-From 6ba159866f21d444a5e65af667b733c884b0b12d Mon Sep 17 00:00:00 2001
+From 47547f23a64d46d3746a297f844a9708e9a85479 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 16 Mar 2020 03:07:02 -0400
 Subject: [PATCH] dont load chunks for physics
 
 ---
- src/main/java/net/minecraft/server/BlockBase.java | 3 ++-
- src/main/java/net/minecraft/server/World.java     | 3 ++-
+ src/main/java/net/minecraft/world/level/World.java             | 3 ++-
+ .../java/net/minecraft/world/level/block/state/BlockBase.java  | 3 ++-
  2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
-index 1f334d6328..415d409183 100644
---- a/src/main/java/net/minecraft/server/BlockBase.java
-+++ b/src/main/java/net/minecraft/server/BlockBase.java
-@@ -537,7 +537,8 @@ public abstract class BlockBase {
-                 EnumDirection enumdirection = aenumdirection[l];
- 
-                 blockposition_mutableblockposition.a((BaseBlockPosition) blockposition, enumdirection);
--                IBlockData iblockdata = generatoraccess.getType(blockposition_mutableblockposition);
-+                IBlockData iblockdata = generatoraccess.getTypeIfLoaded(blockposition_mutableblockposition); // EMC
-+                if (iblockdata == null) continue; // EMC
-                 IBlockData iblockdata1 = iblockdata.updateState(enumdirection.opposite(), this.p(), generatoraccess, blockposition_mutableblockposition, blockposition);
- 
-                 Block.a(iblockdata, iblockdata1, generatoraccess, blockposition_mutableblockposition, i, j);
-diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index a47bf28e1c..ede9af8ac1 100644
---- a/src/main/java/net/minecraft/server/World.java
-+++ b/src/main/java/net/minecraft/server/World.java
-@@ -605,7 +605,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
+index eaa7d63d9e..a4169c3980 100644
+--- a/src/main/java/net/minecraft/world/level/World.java
++++ b/src/main/java/net/minecraft/world/level/World.java
+@@ -665,7 +665,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public void neighborChanged(BlockPosition pos, Block blockIn, BlockPosition fromPos) { a(pos, blockIn, fromPos); } // Paper - OBFHELPER
      public void a(BlockPosition blockposition, Block block, BlockPosition blockposition1) {
          if (!this.isClientSide) {
 -            IBlockData iblockdata = this.getType(blockposition);
-+            IBlockData iblockdata = this.getTypeIfLoaded(blockposition); // EMC
-+            if (iblockdata == null) return; // EMC
++            IBlockData iblockdata = this.getTypeIfLoaded(blockposition); // PaperDragon
++            if (iblockdata == null) return; // PaperDragon
  
              try {
                  // CraftBukkit start
+diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBase.java b/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
+index 0d26250887..6cca525907 100644
+--- a/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
++++ b/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
+@@ -590,7 +590,8 @@ public abstract class BlockBase {
+                 EnumDirection enumdirection = aenumdirection[l];
+ 
+                 blockposition_mutableblockposition.a((BaseBlockPosition) blockposition, enumdirection);
+-                IBlockData iblockdata = generatoraccess.getType(blockposition_mutableblockposition);
++                IBlockData iblockdata = generatoraccess.getTypeIfLoaded(blockposition_mutableblockposition); // PaperDragon
++                if (iblockdata == null) continue; // PaperDragon
+                 IBlockData iblockdata1 = iblockdata.updateState(enumdirection.opposite(), this.p(), generatoraccess, blockposition_mutableblockposition, blockposition);
+ 
+                 Block.a(iblockdata, iblockdata1, generatoraccess, blockposition_mutableblockposition, i, j);
 -- 
 2.20.1.windows.1
 

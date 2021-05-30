@@ -1,18 +1,18 @@
-From 735fa2b0cb054c6d93252a4cdbfb76b4ac8eabfa Mon Sep 17 00:00:00 2001
+From 1d41aa9638cd4da442c38f99dd74c442c595d8ed Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 30 Apr 2015 00:46:26 -0400
 Subject: [PATCH] Don't require flag for sign conversion
 
 Also reverts part of Paper's old sign conversion patch
 ---
- src/main/java/net/minecraft/server/TileEntitySign.java | 10 +++++-----
+ .../world/level/block/entity/TileEntitySign.java       | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/TileEntitySign.java b/src/main/java/net/minecraft/server/TileEntitySign.java
-index 2b9d5724c1..b1f5784209 100644
---- a/src/main/java/net/minecraft/server/TileEntitySign.java
-+++ b/src/main/java/net/minecraft/server/TileEntitySign.java
-@@ -12,7 +12,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntitySign.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntitySign.java
+index 7f78f38858..1864575c03 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/TileEntitySign.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntitySign.java
+@@ -31,7 +31,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
      private final FormattedString[] g;
      private EnumColor color;
      public java.util.UUID signEditor; // Paper
@@ -21,7 +21,7 @@ index 2b9d5724c1..b1f5784209 100644
  
      public TileEntitySign() {
          super(TileEntityTypes.SIGN);
-@@ -52,7 +52,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+@@ -71,7 +71,7 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
          // This is done with a flag instead of all the time because
          // we have no way to tell whether a sign is from 1.7.10 or 1.8
  
@@ -30,7 +30,7 @@ index 2b9d5724c1..b1f5784209 100644
  
          for (int i = 0; i < 4; ++i) {
              String s = nbttagcompound.getString("Text" + (i + 1));
-@@ -61,14 +61,14 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
+@@ -80,14 +80,14 @@ public class TileEntitySign extends TileEntity implements ICommandListener { //
              }
  
              try {

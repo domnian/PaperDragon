@@ -1,22 +1,22 @@
-From 499468439bd009c7a58886c6d5b0e974434a7b83 Mon Sep 17 00:00:00 2001
+From ba0896aba3f0843ac211c88bd4030d8b4adb02fd Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Fri, 17 Jan 2020 21:32:10 -0600
 Subject: [PATCH] Add the BlockHarvestBeehiveEvent
 
 ---
- src/main/java/net/minecraft/server/IDispenseBehavior.java | 5 +++++
+ .../java/net/minecraft/core/dispenser/IDispenseBehavior.java | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/IDispenseBehavior.java b/src/main/java/net/minecraft/server/IDispenseBehavior.java
-index 7b8a470d97..dbbd3a440d 100644
---- a/src/main/java/net/minecraft/server/IDispenseBehavior.java
-+++ b/src/main/java/net/minecraft/server/IDispenseBehavior.java
-@@ -880,6 +880,11 @@ public interface IDispenseBehavior {
+diff --git a/src/main/java/net/minecraft/core/dispenser/IDispenseBehavior.java b/src/main/java/net/minecraft/core/dispenser/IDispenseBehavior.java
+index 0055a96b51..a1583cf6ae 100644
+--- a/src/main/java/net/minecraft/core/dispenser/IDispenseBehavior.java
++++ b/src/main/java/net/minecraft/core/dispenser/IDispenseBehavior.java
+@@ -960,6 +960,11 @@ public interface IDispenseBehavior {
                  if (iblockdata.a((Tag) TagsBlock.BEEHIVES, (blockbase_blockdata) -> {
                      return blockbase_blockdata.b(BlockBeehive.b);
                  }) && (Integer) iblockdata.get(BlockBeehive.b) >= 5) {
-+                    // PaperDragonstart
-+                    if (!(new com.domnian.paperdragon.events.BlockHarvestBeehiveEvent(bukkitBlock, MCUtil.toBukkitBlock(worldserver, blockposition), craftItem).callEvent())) {
++                    // PaperDragon start
++                    if (!(new com.domnian.paperdragon.events.BlockHarvestBeehiveEvent(bukkitBlock, net.minecraft.server.MCUtil.toBukkitBlock(worldserver, blockposition), craftItem).callEvent())) {
 +                        return itemstack;
 +                    }
 +                    // PaperDragon end

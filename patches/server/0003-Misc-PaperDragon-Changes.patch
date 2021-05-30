@@ -1,18 +1,18 @@
-From 6fd65dc24c31986d69e7078bd7af41ba410ebbb7 Mon Sep 17 00:00:00 2001
+From 689321684b3b749e47bea91e75507e384fc581b9 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:09:02 -0400
 Subject: [PATCH] Misc PaperDragon Changes
 
 ---
  .../java/com/destroystokyo/paper/Metrics.java |  4 +-
- .../paperdragon/DragonVersionFetcher.java     | 84 +++++++++++++++++++
- .../net/minecraft/server/EntityPlayer.java    |  2 +-
- src/main/java/net/minecraft/server/MCLog.java | 77 +++++++++++++++++
+ .../paperdragon/DragonVersionFetcher.java     | 89 +++++++++++++++++++
+ src/main/java/net/minecraft/server/MCLog.java | 76 ++++++++++++++++
  .../net/minecraft/server/MinecraftServer.java |  2 +-
+ .../minecraft/server/level/EntityPlayer.java  |  2 +-
  .../org/bukkit/craftbukkit/CraftServer.java   |  2 +-
  .../craftbukkit/util/CraftMagicNumbers.java   |  2 +-
  .../java/org/spigotmc/WatchdogThread.java     | 12 +--
- 8 files changed, 173 insertions(+), 12 deletions(-)
+ 8 files changed, 177 insertions(+), 12 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
  create mode 100644 src/main/java/net/minecraft/server/MCLog.java
 
@@ -40,10 +40,10 @@ index dee00aac05..e83982c42a 100644
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 new file mode 100644
-index 0000000000..edd083ef62
+index 0000000000..95ccd2e48c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,89 @@
 +package com.domnian.paperdragon;
 +
 +import com.destroystokyo.paper.VersionHistoryManager;
@@ -52,6 +52,11 @@ index 0000000000..edd083ef62
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
 +import com.google.gson.JsonSyntaxException;
++import net.kyori.adventure.text.Component;
++import net.kyori.adventure.text.TextComponent;
++import net.kyori.adventure.text.format.NamedTextColor;
++import net.kyori.adventure.text.format.TextDecoration;
++import org.checkerframework.checker.nullness.qual.NonNull;
 +
 +import javax.annotation.Nonnull;
 +import javax.annotation.Nullable;
@@ -72,23 +77,23 @@ index 0000000000..edd083ef62
 +
 +    @Nonnull
 +    @Override
-+    public String getVersionMessage(@Nonnull String serverVersion) {
++    public Component getVersionMessage(@Nonnull String serverVersion) {
 +        String[] parts = serverVersion.substring("git-PaperDragon-".length()).split("[-\\s]");
-+        String updateMessage = getUpdateStatusMessage("domnian/PaperDragon", GITHUB_BRANCH_NAME, parts[0]);
-+        String history = getHistory();
++        final Component updateMessage = getUpdateStatusMessage("domnian/PaperDragon", GITHUB_BRANCH_NAME, parts[0]);
++        final Component history = getHistory();
 +
-+        return history != null ? history + "\n" + updateMessage : updateMessage;
++        return history != null ? TextComponent.ofChildren(updateMessage, Component.newline(), history) : updateMessage;
 +    }
 +
-+    private static String getUpdateStatusMessage(@Nonnull String repo, @Nonnull String branch, @Nonnull String versionInfo) {
++    private static Component getUpdateStatusMessage(@Nonnull String repo, @Nonnull String branch, @Nonnull String versionInfo) {
 +        versionInfo = versionInfo.replace("\"", "");
 +        int distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
 +
 +        switch (distance) {
-+            case -1: return "Error obtaining version information";
-+            case 0: return "You are running the latest version";
-+            case -2: return "Unknown version";
-+            default: return "You are " + distance + " version(s) behind";
++            case -1: return Component.text("Error obtaining version information", NamedTextColor.YELLOW);
++            case 0: return Component.text("You are running the latest version", NamedTextColor.GREEN);
++            case -2: return Component.text("Unknown version", NamedTextColor.YELLOW);
++            default: return Component.text("You are " + distance + " version(s) behind", NamedTextColor.YELLOW);
 +        }
 +    }
 +
@@ -117,36 +122,23 @@ index 0000000000..edd083ef62
 +    }
 +
 +    @Nullable
-+    private String getHistory() {
++    private TextComponent getHistory() {
 +        final VersionHistoryManager.VersionData data = VersionHistoryManager.INSTANCE.getVersionData();
 +        if (data == null) return null;
 +
 +        final String oldVersion = data.getOldVersion();
 +        if (oldVersion == null) return null;
 +
-+        return "Previous version: " + oldVersion;
++        return Component.text("Previous version: " + oldVersion, NamedTextColor.GRAY, TextDecoration.ITALIC);
 +    }
 +
 +}
-diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index a9a409eeba..c349cb9277 100644
---- a/src/main/java/net/minecraft/server/EntityPlayer.java
-+++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1943,7 +1943,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
-         if (blockposition != null) {
-             boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
- 
--            if (flag1 && !flag2) {
-+            if (flag && flag1 && !flag2) { // PaperDragon - let plugins handle the message
-                 this.sendMessage(new ChatMessage("block.minecraft.set_spawn"), SystemUtils.b);
-             }
- 
 diff --git a/src/main/java/net/minecraft/server/MCLog.java b/src/main/java/net/minecraft/server/MCLog.java
 new file mode 100644
-index 0000000000..bf28f00db7
+index 0000000000..6fd77e5a11
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/MCLog.java
-@@ -0,0 +1,77 @@
+@@ -0,0 +1,76 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -222,13 +214,12 @@ index 0000000000..bf28f00db7
 +        severe(ExceptionUtils.getFullStackTrace(e));
 +    }
 +
-+
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ccf2d0b090..9017c53098 100644
+index 61712ae515..e7164df5af 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1450,7 +1450,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1579,7 +1579,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -237,11 +228,24 @@ index ccf2d0b090..9017c53098 100644
      }
  
      public CrashReport b(CrashReport crashreport) {
+diff --git a/src/main/java/net/minecraft/server/level/EntityPlayer.java b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+index 1161605d9f..05f37d45fc 100644
+--- a/src/main/java/net/minecraft/server/level/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+@@ -2076,7 +2076,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+         if (blockposition != null) {
+             boolean flag2 = blockposition.equals(this.spawn) && resourcekey.equals(this.spawnDimension);
+ 
+-            if (flag1 && !flag2) {
++            if (flag && flag1 && !flag2) { // PaperDragon - let plugins handle the message
+                 this.sendMessage(new ChatMessage("block.minecraft.set_spawn"), SystemUtils.b);
+             }
+ 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ac705e6bf5..f04b9fbeb5 100644
+index affd978602..8e6edd49c9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -231,7 +231,7 @@ import javax.annotation.Nullable; // Paper
+@@ -232,7 +232,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -251,10 +255,10 @@ index ac705e6bf5..f04b9fbeb5 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index ac5003dc82..7a32f1a5e3 100644
+index 6141e86278..08139d81f7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -370,7 +370,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -397,7 +397,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -264,7 +268,7 @@ index ac5003dc82..7a32f1a5e3 100644
  
      @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index ae8903ee1d..9207bbf27d 100644
+index 30a665c090..304e535eb1 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -26,7 +26,7 @@ public class WatchdogThread extends Thread
@@ -286,7 +290,7 @@ index ae8903ee1d..9207bbf27d 100644
 -                log.log( Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion() );
 +                log.log( Level.SEVERE, "PaperDragon version: " + Bukkit.getServer().getVersion() ); // PaperDragon - We are PaperDragon
                  //
-                 if ( net.minecraft.server.World.lastPhysicsProblem != null )
+                 if ( net.minecraft.world.level.World.lastPhysicsProblem != null )
                  {
 @@ -114,12 +114,12 @@ public class WatchdogThread extends Thread
                  // Paper end

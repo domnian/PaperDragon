@@ -1,4 +1,4 @@
-From f0e1ac64d820631c4d7c06c940997a51fb350bd4 Mon Sep 17 00:00:00 2001
+From fec5b6750f59f56479c3d8b9892fe054b764f2c2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -6,12 +6,12 @@ Subject: [PATCH] EntityTasks API
 Allows scheduling repeating task timers on an entity level.
 Avoids Bukkit system so that tasks will simply maintain themselves on entity removal.
 ---
- .../paperdragon/api/CraftDAPI_Entity.java     | 15 +++++++
- .../java/net/minecraft/server/Entity.java     |  1 +
- .../minecraft/server/EntityTasksHandler.java  | 45 +++++++++++++++++++
- .../net/minecraft/server/WorldServer.java     |  3 +-
+ .../paperdragon/api/CraftDAPI_Entity.java     | 15 ++++++
+ .../minecraft/server/EntityTasksHandler.java  | 47 +++++++++++++++++++
+ .../minecraft/server/level/WorldServer.java   |  3 +-
+ .../net/minecraft/world/entity/Entity.java    |  1 +
  .../org/bukkit/craftbukkit/CraftServer.java   |  1 +
- 5 files changed, 64 insertions(+), 1 deletion(-)
+ 5 files changed, 66 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/net/minecraft/server/EntityTasksHandler.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
@@ -39,27 +39,17 @@ index d5c6381045..1e903fe5ce 100644
 +        ((CraftEntity) entity).getHandle().entityTasks.clear();
 +    }
  }
-diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6917116111..9834da0aa2 100644
---- a/src/main/java/net/minecraft/server/Entity.java
-+++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -54,6 +54,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
- 
-     // CraftBukkit start
-     public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
-+    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
-     private static final int CURRENT_LEVEL = 2;
-     boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
-     static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 diff --git a/src/main/java/net/minecraft/server/EntityTasksHandler.java b/src/main/java/net/minecraft/server/EntityTasksHandler.java
 new file mode 100644
-index 0000000000..42bd08e0e9
+index 0000000000..74b5598889
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntityTasksHandler.java
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,47 @@
 +package net.minecraft.server;
 +
 +import com.domnian.paperdragon.api.EntityTask;
++import net.minecraft.server.level.WorldServer;
++import net.minecraft.world.entity.Entity;
 +
 +import java.util.ArrayList;
 +import java.util.Iterator;
@@ -102,32 +92,44 @@ index 0000000000..42bd08e0e9
 +
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
-diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 389466680d..6a6962777f 100644
---- a/src/main/java/net/minecraft/server/WorldServer.java
-+++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -835,6 +835,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
+index c05a7e0cd2..e569e363b3 100644
+--- a/src/main/java/net/minecraft/server/level/WorldServer.java
++++ b/src/main/java/net/minecraft/server/level/WorldServer.java
+@@ -949,6 +949,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              entity.lastPitch = entity.pitch;
              if (entity.inChunk) {
                  ++entity.ticksLived;
-+                EntityTasksHandler.tickHandler(entity); // PaperDragon
++                net.minecraft.server.EntityTasksHandler.tickHandler(entity); // PaperDragon
                  GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
                  gameprofilerfiller.a(() -> {
-@@ -845,7 +846,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -959,7 +960,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      TimingHistory.activatedEntityTicks++; // Paper
                  entity.tick();
                  entity.postTick(); // CraftBukkit
 -                } else { entity.inactiveTick(); } // Paper - EAR 2
-+                } else { EntityTasksHandler.tickHandler(entity); entity.inactiveTick(); } // Paper - EAR 2 // PaperDragon
++                } else { net.minecraft.server.EntityTasksHandler.tickHandler(entity); entity.inactiveTick(); } // Paper - EAR 2 // PaperDragon
                  gameprofilerfiller.exit();
              }
  
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 0b60b70210..daa14f510c 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -146,6 +146,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
+ 
+     // CraftBukkit start
+     public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
++    public net.minecraft.server.EntityTasksHandler.TaskList entityTasks = new net.minecraft.server.EntityTasksHandler.TaskList(); // PaperDragon
+     private static final int CURRENT_LEVEL = 2;
+     boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
+     static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5550334185..89927c6814 100644
+index 1a49e4fc17..49bde1b677 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -946,6 +946,7 @@ public final class CraftServer implements Server {
+@@ -951,6 +951,7 @@ public final class CraftServer implements Server {
          }
          // PaperDragon start
          net.minecraft.server.MetaApiAccessor.reload();

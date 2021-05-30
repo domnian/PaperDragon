@@ -1,20 +1,19 @@
-From 35f3b9fda300e532926d1c869f32762489d420cd Mon Sep 17 00:00:00 2001
+From eaaba5f38f0269076f66a6daa10c7fe716edb7e2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
 
 Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pleasant-chat-message-formatting.195148/
-But did a lot of bug fixing and improving upon it, and designing into the Dragon API
+But did a lot of bug fixing and improving upon it, and designing into the Empire API
 ---
  .../paperdragon/api/CraftDragonAPI.java       |   2 +
- .../api/chat/CraftChatBuilder.java            | 177 ++++++++++++
- .../paperdragon/api/chat/CraftDAPI_Chat.java  |  87 ++++++
- .../api/chat/CraftFancifulChat.java           | 267 ++++++++++++++++++
- .../net/minecraft/server/ChatHexColor.java    |   2 +
- .../net/minecraft/server/ChatHoverable.java   |  28 +-
- .../net/minecraft/server/ChatModifier.java    |   1 +
- .../java/net/minecraft/server/Entity.java     |   1 +
- 8 files changed, 551 insertions(+), 14 deletions(-)
+ .../api/chat/CraftChatBuilder.java            | 166 +++++++++++
+ .../paperdragon/api/chat/CraftDAPI_Chat.java  |  98 +++++++
+ .../api/chat/CraftFancifulChat.java           | 273 ++++++++++++++++++
+ .../minecraft/network/chat/ChatHexColor.java  |   1 +
+ .../minecraft/network/chat/ChatModifier.java  |   1 +
+ .../net/minecraft/world/entity/Entity.java    |   1 +
+ 7 files changed, 542 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
  create mode 100644 src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
@@ -41,27 +40,26 @@ index b11af17efb..81ceb7f598 100644
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
 new file mode 100644
-index 0000000000..d02e51859d
+index 0000000000..e7c5af5ad4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
-@@ -0,0 +1,177 @@
+@@ -0,0 +1,166 @@
 +package com.domnian.paperdragon.api.chat;
 +
-+import net.minecraft.server.IChatMutableComponent;
-+import net.minecraft.server.ChatComponentText;
-+import net.minecraft.server.EnumChatFormat;
-+import net.minecraft.server.ChatHexColor;
-+import net.minecraft.server.ChatModifier;
++import net.minecraft.EnumChatFormat;
++import net.minecraft.network.chat.ChatComponentText;
++import net.minecraft.network.chat.ChatHexColor;
++import net.minecraft.network.chat.ChatModifier;
++import net.minecraft.network.chat.IChatMutableComponent;
 +import org.bukkit.ChatColor;
-+import org.bukkit.Color;
 +
 +import java.util.ArrayList;
 +import java.util.List;
 +
 +public class CraftChatBuilder implements ChatBuilder {
 +    List<ChatPart> parts = new ArrayList<>();
-+    ChatComponentText component;
 +    boolean isDirty = true;
++
 +
 +    @Override
 +    public ChatBuilder color(String hex) {
@@ -123,15 +121,8 @@ index 0000000000..d02e51859d
 +        }
 +        return this;
 +    }
-+
-+    private ChatBuilder color(Color color) {
-+        latest().color(ChatHexColor.fromRGB(color.asRGB()));
-+        isDirty = true;
-+        return this;
-+    }
-+
 +    private ChatBuilder color(EnumChatFormat color) {
-+        latest().color(color);
++        latest().obfuscated();
 +        isDirty = true;
 +        return this;
 +    }
@@ -182,6 +173,7 @@ index 0000000000..d02e51859d
 +        return parts.get(parts.size() - 1);
 +    }
 +
++
 +    private static class ChatPart {
 +        IChatMutableComponent component;
 +
@@ -190,10 +182,6 @@ index 0000000000..d02e51859d
 +        }
 +
 +        void color(ChatHexColor color) {
-+            component.format(modifier -> modifier.setColor(color));
-+        }
-+
-+        void color(EnumChatFormat color) {
 +            component.format(modifier -> modifier.setColor(color));
 +        }
 +
@@ -224,10 +212,10 @@ index 0000000000..d02e51859d
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
-index 0000000000..7b29f0894a
+index 0000000000..83d66b3b6f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
-@@ -0,0 +1,87 @@
+@@ -0,0 +1,98 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -253,10 +241,17 @@ index 0000000000..7b29f0894a
 +
 +package com.domnian.paperdragon.api.chat;
 +
-+import net.minecraft.server.*;
++import net.minecraft.SystemUtils;
++import net.minecraft.network.chat.ChatMessageType;
++import net.minecraft.network.protocol.Packet;
++import net.minecraft.network.protocol.game.PacketPlayOutChat;
++import net.minecraft.network.protocol.game.PacketPlayOutTitle;
 +
++import net.minecraft.server.network.PlayerConnection;
 +import org.bukkit.craftbukkit.entity.CraftPlayer;
 +import org.bukkit.entity.Player;
++
++import java.util.UUID;
 +
 +public class CraftDAPI_Chat implements DAPI_Chat {
 +
@@ -292,8 +287,12 @@ index 0000000000..7b29f0894a
 +
 +    @Override
 +    public void sendChat(Player player, FancifulChat message) {
-+        sendPacket(player, new PacketPlayOutChat(((CraftFancifulChat) message).buildComponent(),
-+                ChatMessageType.CHAT, SystemUtils.getNullUUID()));
++        sendChat(SystemUtils.getNullUUID(), player, message);
++    }
++
++    @Override
++    public void sendChat(UUID sender, Player player, FancifulChat message) {
++        sendPacket(player, new PacketPlayOutChat(((CraftFancifulChat) message).buildComponent(), ChatMessageType.CHAT, sender));
 +    }
 +
 +    @Override
@@ -317,14 +316,20 @@ index 0000000000..7b29f0894a
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
 new file mode 100644
-index 0000000000..2388b7c62c
+index 0000000000..5e0a091906
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
-@@ -0,0 +1,267 @@
+@@ -0,0 +1,273 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import com.domnian.paperdragon.api.HiddenItemMeta;
-+import net.minecraft.server.*;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.network.chat.ChatBaseComponent;
++import net.minecraft.network.chat.ChatClickable;
++import net.minecraft.network.chat.ChatComponentText;
++import net.minecraft.network.chat.ChatHoverable;
++import net.minecraft.network.chat.IChatBaseComponent;
++import net.minecraft.network.chat.IChatMutableComponent;
 +import org.bukkit.craftbukkit.entity.CraftEntity;
 +import org.bukkit.craftbukkit.inventory.CraftItemStack;
 +import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -482,7 +487,7 @@ index 0000000000..2388b7c62c
 +        }
 +
 +        public void tooltip(ItemStack item) {
-+            net.minecraft.server.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
++            net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 +            NBTTagCompound root = itemStack.save(new NBTTagCompound());
 +            NBTTagCompound hover = root;
 +            if (root.hasKey("tag")) {
@@ -588,16 +593,11 @@ index 0000000000..2388b7c62c
 +    }
 +     */
 +}
-diff --git a/src/main/java/net/minecraft/server/ChatHexColor.java b/src/main/java/net/minecraft/server/ChatHexColor.java
-index 3cb6ad020d..b84d5c6cbd 100644
---- a/src/main/java/net/minecraft/server/ChatHexColor.java
-+++ b/src/main/java/net/minecraft/server/ChatHexColor.java
-@@ -68,10 +68,12 @@ public final class ChatHexColor {
-         return (ChatHexColor) ChatHexColor.a.get(enumchatformat);
-     }
- 
-+    public static ChatHexColor fromRGB(int i) { return a(i); } // PaperDragon - OBFHELPER
-     public static ChatHexColor a(int i) {
+diff --git a/src/main/java/net/minecraft/network/chat/ChatHexColor.java b/src/main/java/net/minecraft/network/chat/ChatHexColor.java
+index 6cbbcbcbce..50e8d9cdf1 100644
+--- a/src/main/java/net/minecraft/network/chat/ChatHexColor.java
++++ b/src/main/java/net/minecraft/network/chat/ChatHexColor.java
+@@ -73,6 +73,7 @@ public final class ChatHexColor {
          return new ChatHexColor(i);
      }
  
@@ -605,97 +605,11 @@ index 3cb6ad020d..b84d5c6cbd 100644
      @Nullable
      public static ChatHexColor a(String s) {
          if (s.startsWith("#")) {
-diff --git a/src/main/java/net/minecraft/server/ChatHoverable.java b/src/main/java/net/minecraft/server/ChatHoverable.java
-index 5e366c413c..4b6347f16d 100644
---- a/src/main/java/net/minecraft/server/ChatHoverable.java
-+++ b/src/main/java/net/minecraft/server/ChatHoverable.java
-@@ -17,21 +17,21 @@ import org.apache.logging.log4j.Logger;
- public class ChatHoverable {
- 
-     private static final Logger LOGGER = LogManager.getLogger();
--    private final ChatHoverable.EnumHoverAction<?> b;
--    private final Object c;
-+    private final ChatHoverable.EnumHoverAction<?> action;  // PaperDragon - OBFHELPER - decompile fix
-+    private final Object value; // PaperDragon - OBFHELPER - decompile fix
- 
-     public <T> ChatHoverable(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction, T t0) {
--        this.b = chathoverable_enumhoveraction;
--        this.c = t0;
-+        this.action = chathoverable_enumhoveraction; // PaperDragon - OBFHELPER - decompile fix
-+        this.value = t0; // PaperDragon - OBFHELPER - decompile fix
-     }
- 
-     public ChatHoverable.EnumHoverAction<?> a() {
--        return this.b;
-+        return this.action; // PaperDragon - OBFHELPER - decompile fix
-     }
- 
-     @Nullable
-     public <T> T a(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction) {
--        return this.b == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.c) : null;
-+        return this.action == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.value) : null; // PaperDragon - OBFHELPER - decompile fix
-     }
- 
-     public boolean equals(Object object) {
-@@ -40,20 +40,20 @@ public class ChatHoverable {
-         } else if (object != null && this.getClass() == object.getClass()) {
-             ChatHoverable chathoverable = (ChatHoverable) object;
- 
--            return this.b == chathoverable.b && Objects.equals(this.c, chathoverable.c);
-+            return this.action == chathoverable.action && Objects.equals(this.value, chathoverable.value); // PaperDragon - OBFHELPER - decompile fix
-         } else {
-             return false;
-         }
-     }
- 
-     public String toString() {
--        return "HoverEvent{action=" + this.b + ", value='" + this.c + '\'' + '}';
-+        return "HoverEvent{action=" + this.action + ", value='" + this.value + '\'' + '}'; // PaperDragon - OBFHELPER - decompile fix
-     }
- 
-     public int hashCode() {
--        int i = this.b.hashCode();
-+        int i = this.action.hashCode(); // PaperDragon - OBFHELPER - decompile fix
- 
--        i = 31 * i + (this.c != null ? this.c.hashCode() : 0);
-+        i = 31 * i + (this.value != null ? this.value.hashCode() : 0); // PaperDragon - OBFHELPER - decompile fix
-         return i;
-     }
- 
-@@ -85,8 +85,8 @@ public class ChatHoverable {
-     public JsonObject b() {
-         JsonObject jsonobject = new JsonObject();
- 
--        jsonobject.addProperty("action", this.b.b());
--        jsonobject.add("contents", this.b.a(this.c));
-+        jsonobject.addProperty("action", this.action.b()); // PaperDragon - OBFHELPER - decompile fix
-+        jsonobject.add("contents", this.action.a(this.value)); // PaperDragon - OBFHELPER - decompile fix
-         return jsonobject;
-     }
- 
-@@ -132,7 +132,7 @@ public class ChatHoverable {
-         }
- 
-         private T b(Object object) {
--            return object;
-+            return (T) object; // PaperDragon - OBFHELPER - decompile fix
-         }
- 
-         @Nullable
-@@ -165,7 +165,7 @@ public class ChatHoverable {
-         @Nullable
-         private final NBTTagCompound c;
- 
--        c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) {
-+        public c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) { // PaperDragon - default -> public
-             this.a = item;
-             this.b = i;
-             this.c = nbttagcompound;
-diff --git a/src/main/java/net/minecraft/server/ChatModifier.java b/src/main/java/net/minecraft/server/ChatModifier.java
-index 688415f6c8..9208b8dc2e 100644
---- a/src/main/java/net/minecraft/server/ChatModifier.java
-+++ b/src/main/java/net/minecraft/server/ChatModifier.java
-@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
+diff --git a/src/main/java/net/minecraft/network/chat/ChatModifier.java b/src/main/java/net/minecraft/network/chat/ChatModifier.java
+index 294a0b8952..6342150c1d 100644
+--- a/src/main/java/net/minecraft/network/chat/ChatModifier.java
++++ b/src/main/java/net/minecraft/network/chat/ChatModifier.java
+@@ -18,6 +18,7 @@ import net.minecraft.util.ChatDeserializer;
  
  public class ChatModifier {
  
@@ -703,11 +617,11 @@ index 688415f6c8..9208b8dc2e 100644
      public static final ChatModifier a = new ChatModifier((ChatHexColor) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (Boolean) null, (ChatClickable) null, (ChatHoverable) null, (String) null, (MinecraftKey) null);
      public static final MinecraftKey b = new MinecraftKey("minecraft", "default");
      @Nullable
-diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ab141247da..9dff8b89d8 100644
---- a/src/main/java/net/minecraft/server/Entity.java
-+++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2928,6 +2928,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index cd9c69782f..7a4974863f 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -3022,6 +3022,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
          return this.getDirection();
      }
  

@@ -1,45 +1,57 @@
-From f4d49e498c24d6ec8c3de5e84f88912ca9270712 Mon Sep 17 00:00:00 2001
+From b777a9c65533353a05779dbc2e2d1ef613540d4c Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 12 Jan 2020 19:50:51 -0500
 Subject: [PATCH] Implement getLocation() for offline players
 
 ---
- src/main/java/net/minecraft/server/Entity.java    |  1 +
- .../bukkit/craftbukkit/CraftOfflinePlayer.java    | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ .../net/minecraft/world/entity/Entity.java    |  1 +
+ .../craftbukkit/CraftOfflinePlayer.java       | 27 +++++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9dff8b89d8..8ab979c8c4 100644
---- a/src/main/java/net/minecraft/server/Entity.java
-+++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1661,6 +1661,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 7a4974863f..c74a37ce6a 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -1755,6 +1755,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
                  nbttagcompound.setBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end
-+            nbttagcompound.setString("Dragon.DisconnectWorld", world.worldData.getName()); // PaperDragon start - save disconnect world
++            nbttagcompound.setString("Dragon.DisconnectWorld", ((WorldServer) world).worldDataServer.getName()); // PaperDragon start - save disconnect world
              return nbttagcompound;
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.a(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 5770d4183c..a684243f2d 100644
+index 1e741158bb..f3cf227d50 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -525,4 +525,19 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -525,4 +525,31 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
              manager.save();
          }
      }
 +
 +    // PaperDragon start
++    @Override
 +    public Location getLocation() {
++        if (isOnline()) return getPlayer().getLocation();
 +        NBTTagCompound data = getData();
-+        net.minecraft.server.NBTTagList pos = data.getList("Pos", 6); // 6 = NBTTagDouble
-+        net.minecraft.server.NBTTagList rot = data.getList("Rotation", 5); // 5 = NBTTagFloat
-+        String worldName = data.hasKeyOfType("Dragon.DisconnectWorld", 8) ? data.getString("Dragon.DisconnectWorld") : server.getHandle().getServer().getWorld();
++        net.minecraft.nbt.NBTTagList pos = data.getList("Pos", 6); // 6 = NBTTagDouble
++        net.minecraft.nbt.NBTTagList rot = data.getList("Rotation", 5); // 5 = NBTTagFloat
++
++        UUID worldUUID = new UUID(data.getLong("WorldUUIDMost"), data.getLong("WorldUUIDLeast"));
++        org.bukkit.World world = org.bukkit.Bukkit.getWorld(worldUUID);
++        if (world == null) {
++            if (data.hasKeyOfType("Dragon.DisconnectWorld", 8)) {
++                world = Bukkit.getWorld(data.getString("Dragon.DisconnectWorld"));
++            } else {
++                world = Bukkit.getWorld(server.getHandle().getServer().getWorld());
++            }
++        }
++
 +        return new Location(
-+                Bukkit.getWorld(worldName), // World
++                world, // World
 +                pos.getDoubleAt(0), pos.getDoubleAt(1), pos.getDoubleAt(2), // X, Y, Z
-+                ((net.minecraft.server.NBTTagFloat) rot.get(0)).asFloat(), // Yaw
-+                ((net.minecraft.server.NBTTagFloat) rot.get(1)).asFloat() // Pitch
++                ((net.minecraft.nbt.NBTTagFloat) rot.get(0)).asFloat(), // Yaw
++                ((net.minecraft.nbt.NBTTagFloat) rot.get(1)).asFloat() // Pitch
 +        );
 +    }
 +    // PaperDragon end

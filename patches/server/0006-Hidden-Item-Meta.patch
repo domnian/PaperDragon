@@ -1,4 +1,4 @@
-From 68f84ebeeaad6c30460f745bd8b84cdbe8efabac Mon Sep 17 00:00:00 2001
+From 74717b62239a1ea14c50acd883a8becf31262d36 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 27 Feb 2013 23:27:45 -0500
 Subject: [PATCH] Hidden Item Meta
@@ -13,26 +13,28 @@ Then you can store Data on 21+
 Also adds a &&::SHINY tag to send a fake enchantment aura if it does not exists.
 Must be set before META
 ---
- .../paperdragon/api/HiddenItemMeta.java       | 95 +++++++++++++++++++
- .../java/net/minecraft/server/ItemStack.java  | 22 ++++-
- .../server/PacketDataSerializer.java          |  2 +
- 3 files changed, 117 insertions(+), 2 deletions(-)
+ .../paperdragon/api/HiddenItemMeta.java       | 97 +++++++++++++++++++
+ .../network/PacketDataSerializer.java         |  2 +
+ .../minecraft/network/chat/ChatHoverable.java | 28 +++---
+ .../net/minecraft/world/item/ItemStack.java   | 20 +++-
+ 4 files changed, 132 insertions(+), 15 deletions(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 0000000000..85ea4e8600
+index 0000000000..ac4ff665b1
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
-@@ -0,0 +1,95 @@
+@@ -0,0 +1,97 @@
 +package com.domnian.paperdragon.api;
 +
-+import net.minecraft.server.IChatBaseComponent;
-+import net.minecraft.server.NBTTagCompound;
-+import net.minecraft.server.NBTTagList;
-+import net.minecraft.server.NBTTagString;
++import net.minecraft.network.chat.IChatBaseComponent;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.nbt.NBTTagList;
++import net.minecraft.nbt.NBTTagString;
 +
 +public class HiddenItemMeta {
++
 +    public static NBTTagCompound filterItemLore(NBTTagCompound nbttagcompound, boolean storeOriginal) {
 +        if (nbttagcompound != null && nbttagcompound.hasKey("display")) {
 +            NBTTagCompound display = nbttagcompound.getCompound("display");
@@ -119,21 +121,119 @@ index 0000000000..85ea4e8600
 +        }
 +        return tag;
 +    }
++
 +}
-diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index afa1dc693b..594903f11b 100644
---- a/src/main/java/net/minecraft/server/ItemStack.java
-+++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -60,7 +60,7 @@ public final class ItemStack {
-     private int g;
-     @Deprecated
-     private Item item;
--    NBTTagCompound tag; // Paper -> package private
-+    public NBTTagCompound tag; // Paper -> package private // PaperDragon
-     private boolean j;
-     private Entity k;
-     private ShapeDetectorBlock l;
-@@ -889,8 +889,26 @@ public final class ItemStack {
+diff --git a/src/main/java/net/minecraft/network/PacketDataSerializer.java b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+index 579eb1260c..aff609ef61 100644
+--- a/src/main/java/net/minecraft/network/PacketDataSerializer.java
++++ b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+@@ -318,6 +318,7 @@ public class PacketDataSerializer extends ByteBuf {
+                 // Spigot end
+                 nbttagcompound = itemstack.getTag();
+                 // Paper start
++                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon
+                 if (nbttagcompound != null && nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
+                     NBTTagCompound owner = nbttagcompound.getCompound("SkullOwner");
+                     if (owner.hasUUID("Id")) {
+@@ -346,6 +347,7 @@ public class PacketDataSerializer extends ByteBuf {
+             // CraftBukkit start
+             if (itemstack.getTag() != null) {
+                 // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
++                itemstack.tag = com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
+                 if (itemstack.tag.hasKey("SkullOwnerOrig")) {
+                     NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
+                     if (itemstack.tag.hasKey("SkullOwnerOrig")) {
+diff --git a/src/main/java/net/minecraft/network/chat/ChatHoverable.java b/src/main/java/net/minecraft/network/chat/ChatHoverable.java
+index e53d545cfd..8c80e89727 100644
+--- a/src/main/java/net/minecraft/network/chat/ChatHoverable.java
++++ b/src/main/java/net/minecraft/network/chat/ChatHoverable.java
+@@ -25,21 +25,21 @@ import org.apache.logging.log4j.Logger;
+ public class ChatHoverable {
+ 
+     private static final Logger LOGGER = LogManager.getLogger();
+-    private final ChatHoverable.EnumHoverAction<?> b;
+-    private final Object c;
++    private final ChatHoverable.EnumHoverAction<?> action; // PaperDragon - Resolve Naming Conflict
++    private final Object contents; // PaperDragon - Resolve Naming Conflict
+ 
+     public <T> ChatHoverable(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction, T t0) {
+-        this.b = chathoverable_enumhoveraction;
+-        this.c = t0;
++        this.action = chathoverable_enumhoveraction; // PaperDragon - Resolve Naming Conflict
++        this.contents = t0; // PaperDragon - Resolve Naming Conflict
+     }
+ 
+     public ChatHoverable.EnumHoverAction<?> a() {
+-        return this.b;
++        return this.action; // PaperDragon - Resolve Naming Conflict
+     }
+ 
+     @Nullable
+     public <T> T a(ChatHoverable.EnumHoverAction<T> chathoverable_enumhoveraction) {
+-        return this.b == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.c) : null;
++        return this.action == chathoverable_enumhoveraction ? chathoverable_enumhoveraction.b(this.contents) : null; // PaperDragon - Resolve Naming Conflict
+     }
+ 
+     public boolean equals(Object object) {
+@@ -48,20 +48,20 @@ public class ChatHoverable {
+         } else if (object != null && this.getClass() == object.getClass()) {
+             ChatHoverable chathoverable = (ChatHoverable) object;
+ 
+-            return this.b == chathoverable.b && Objects.equals(this.c, chathoverable.c);
++            return this.action == chathoverable.action && Objects.equals(this.contents, chathoverable.contents); // PaperDragon - Resolve Naming Conflict
+         } else {
+             return false;
+         }
+     }
+ 
+     public String toString() {
+-        return "HoverEvent{action=" + this.b + ", value='" + this.c + '\'' + '}';
++        return "HoverEvent{action=" + this.action + ", value='" + this.contents + '\'' + '}'; // PaperDragon - Resolve Naming Conflict
+     }
+ 
+     public int hashCode() {
+-        int i = this.b.hashCode();
++        int i = this.action.hashCode(); // PaperDragon - Resolve Naming Conflict
+ 
+-        i = 31 * i + (this.c != null ? this.c.hashCode() : 0);
++        i = 31 * i + (this.contents != null ? this.contents.hashCode() : 0); // PaperDragon - Resolve Naming Conflict
+         return i;
+     }
+ 
+@@ -93,8 +93,8 @@ public class ChatHoverable {
+     public JsonObject b() {
+         JsonObject jsonobject = new JsonObject();
+ 
+-        jsonobject.addProperty("action", this.b.b());
+-        jsonobject.add("contents", this.b.a(this.c));
++        jsonobject.addProperty("action", this.action.b()); // PaperDragon - Resolve Naming Conflict
++        jsonobject.add("contents", this.action.a(this.contents)); // PaperDragon - Resolve Naming Conflict
+         return jsonobject;
+     }
+ 
+@@ -140,7 +140,7 @@ public class ChatHoverable {
+         }
+ 
+         private T b(Object object) {
+-            return object;
++            return (T) object; // PaperDragon - Decompile Error
+         }
+ 
+         @Nullable
+@@ -173,7 +173,7 @@ public class ChatHoverable {
+         @Nullable
+         private final NBTTagCompound c;
+ 
+-        c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) {
++        public c(Item item, int i, @Nullable NBTTagCompound nbttagcompound) { // PaperDragon - package-private -> public
+             this.a = item;
+             this.b = i;
+             this.c = nbttagcompound;
+diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
+index fee862951f..e90498fa60 100644
+--- a/src/main/java/net/minecraft/world/item/ItemStack.java
++++ b/src/main/java/net/minecraft/world/item/ItemStack.java
+@@ -944,8 +944,26 @@ public final class ItemStack {
          IChatMutableComponent ichatmutablecomponent1 = ChatComponentUtils.a((IChatBaseComponent) ichatmutablecomponent);
  
          if (!this.j) {
@@ -161,26 +261,6 @@ index afa1dc693b..594903f11b 100644
              });
          }
  
-diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index f43193c109..df1b21638b 100644
---- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
-+++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -290,6 +290,7 @@ public class PacketDataSerializer extends ByteBuf {
-                 // Spigot end
-                 nbttagcompound = itemstack.getTag();
-                 // Paper start
-+                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon
-                 if (nbttagcompound != null && nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
-                     NBTTagCompound owner = nbttagcompound.getCompound("SkullOwner");
-                     if (owner.hasUUID("Id")) {
-@@ -318,6 +319,7 @@ public class PacketDataSerializer extends ByteBuf {
-             // CraftBukkit start
-             if (itemstack.getTag() != null) {
-                 // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
-+                itemstack.tag = com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
-                 if (itemstack.tag.hasKey("SkullOwnerOrig")) {
-                     NBTTagCompound owner = itemstack.tag.getCompound("SkullOwner");
-                     if (itemstack.tag.hasKey("SkullOwnerOrig")) {
 -- 
 2.20.1.windows.1
 

@@ -1,27 +1,26 @@
-From feb190f5b9adf6bdbafdf0fb48e4d2cac87d367e Mon Sep 17 00:00:00 2001
+From dec7f44e399f9a636b8d8361198ff0df3abf7818 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 7 Aug 2016 15:17:26 -0400
 Subject: [PATCH] Implement PlayerHitPlayer Event
 
 Fired when a player hits another player, regardless of gamemode
 ---
- .../domnian/paperdragon/PDEventFactory.java   | 21 +++++++++++++++++++
- .../net/minecraft/server/EntityHuman.java     |  1 +
- 2 files changed, 22 insertions(+)
+ .../domnian/paperdragon/PDEventFactory.java   | 20 +++++++++++++++++++
+ .../world/entity/player/EntityHuman.java      |  1 +
+ 2 files changed, 21 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/PDEventFactory.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
 new file mode 100644
-index 0000000000..1a45cd0c4d
+index 0000000000..f9e7f9f615
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,20 @@
 +package com.domnian.paperdragon;
 +
 +import com.domnian.paperdragon.events.PlayerHitPlayerEvent;
-+import net.minecraft.server.Entity;
-+import net.minecraft.server.EntityPlayer;
-+import org.bukkit.craftbukkit.entity.CraftPlayer;
++import net.minecraft.server.level.EntityPlayer;
++import net.minecraft.world.entity.Entity;
 +import org.bukkit.entity.Player;
 +import org.bukkit.inventory.ItemStack;
 +
@@ -37,11 +36,11 @@ index 0000000000..1a45cd0c4d
 +    }
 +
 +}
-diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index f744fc14c2..e2bb1000a5 100644
---- a/src/main/java/net/minecraft/server/EntityHuman.java
-+++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1018,6 +1018,7 @@ public abstract class EntityHuman extends EntityLiving {
+diff --git a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
+index 362add53ce..f45654d55f 100644
+--- a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
++++ b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
+@@ -1129,6 +1129,7 @@ public abstract class EntityHuman extends EntityLiving {
      public void attack(Entity entity) {
          if (entity.bL()) {
              if (!entity.t(this)) {

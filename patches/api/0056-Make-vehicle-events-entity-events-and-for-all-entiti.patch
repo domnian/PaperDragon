@@ -1,4 +1,4 @@
-From 91af81b4b81654669e25fff3c69a7dd047cc0e29 Mon Sep 17 00:00:00 2001
+From 98f555a910a5b1082b814cc83b3f2a6e58339c83 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 Nov 2015 01:02:10 -0500
 Subject: [PATCH] Make vehicle events entity events and for all entities
@@ -59,7 +59,7 @@ index 63df27056..4c56d456d 100644
      }
  }
 diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
-index 6f0bf51be..f24e760ac 100644
+index ae50ecfbf..6a30f55d9 100644
 --- a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 +++ b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 @@ -1,5 +1,6 @@
@@ -69,7 +69,7 @@ index 6f0bf51be..f24e760ac 100644
  import org.bukkit.entity.LivingEntity;
  import org.bukkit.entity.Vehicle;
  import org.bukkit.event.Cancellable;
-@@ -26,7 +27,7 @@ public class VehicleExitEvent extends VehicleEvent implements Cancellable {
+@@ -25,7 +26,7 @@ public class VehicleExitEvent extends VehicleEvent implements Cancellable {
      private final LivingEntity exited;
      private final boolean isCancellable; // Paper
  

@@ -1,26 +1,26 @@
-From c4d69e7425a98114e1f12806aa56350f78462f1b Mon Sep 17 00:00:00 2001
+From f6bc220372536fdc56bf95bec47c1d56598bd25f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 23:03:44 -0500
 Subject: [PATCH] Add FlowerPotPlantEvent and FlowerPotRemoveEvent
 
 ---
- src/main/java/net/minecraft/server/BlockFlowerPot.java | 7 +++++++
+ .../net/minecraft/world/level/block/BlockFlowerPot.java    | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/BlockFlowerPot.java b/src/main/java/net/minecraft/server/BlockFlowerPot.java
-index c2b3d73c64..b69ae82874 100644
---- a/src/main/java/net/minecraft/server/BlockFlowerPot.java
-+++ b/src/main/java/net/minecraft/server/BlockFlowerPot.java
-@@ -63,8 +63,15 @@ public class BlockFlowerPot extends Block {
+diff --git a/src/main/java/net/minecraft/world/level/block/BlockFlowerPot.java b/src/main/java/net/minecraft/world/level/block/BlockFlowerPot.java
+index 18fefad056..5c66044333 100644
+--- a/src/main/java/net/minecraft/world/level/block/BlockFlowerPot.java
++++ b/src/main/java/net/minecraft/world/level/block/BlockFlowerPot.java
+@@ -81,8 +81,15 @@ public class BlockFlowerPot extends Block {
                  if (!entityhuman.abilities.canInstantlyBuild) {
                      itemstack.subtract(1);
                  }
-+                new com.domnian.paperdragon.events.FlowerPotPlantEvent(MCUtil.toLocation(world, blockposition), itemstack.getBukkitStack()).callEvent(); // PaperDragon
++                new com.domnian.paperdragon.events.FlowerPotPlantEvent(net.minecraft.server.MCUtil.toLocation(world, blockposition), itemstack.getBukkitStack()).callEvent(); // PaperDragon
              } else {
                  ItemStack itemstack1 = new ItemStack(this.c);
 +                // PaperDragon Start
 +                com.domnian.paperdragon.events.FlowerPotRemoveEvent removeEvent = new com.domnian.paperdragon.events.FlowerPotRemoveEvent(
-+                    (org.bukkit.entity.Player) entityhuman.getBukkitEntity(), MCUtil.toLocation(world, blockposition), itemstack1.getBukkitStack());
++                    (org.bukkit.entity.Player) entityhuman.getBukkitEntity(), net.minecraft.server.MCUtil.toLocation(world, blockposition), itemstack1.getBukkitStack());
 +                removeEvent.callEvent();
 +                itemstack1 = ItemStack.fromBukkitCopy(removeEvent.getItem());
 +                // PaperDragon End

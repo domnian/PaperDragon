@@ -1,41 +1,42 @@
-From 38fa49da1be74384c32d1fb0785648d12423f435 Mon Sep 17 00:00:00 2001
+From d16f224bfd2ba780d98f07bf23c6b7eab4c11d0e Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 3 May 2018 21:42:07 -0400
 Subject: [PATCH] Implement Enhanced Death Event
 
 ---
- src/main/java/net/minecraft/server/EntityPlayer.java         | 5 ++++-
- .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ src/main/java/net/minecraft/server/level/EntityPlayer.java  | 6 +++++-
+ .../org/bukkit/craftbukkit/event/CraftEventFactory.java     | 3 ++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c349cb9277..24d875a52c 100644
---- a/src/main/java/net/minecraft/server/EntityPlayer.java
-+++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -673,7 +673,10 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+diff --git a/src/main/java/net/minecraft/server/level/EntityPlayer.java b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+index 05f37d45fc..7a2e73f99c 100644
+--- a/src/main/java/net/minecraft/server/level/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+@@ -805,7 +805,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+ 
          IChatBaseComponent defaultMessage = this.getCombatTracker().getDeathMessage();
  
-         String deathmessage = defaultMessage.getString();
--        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory);
+-        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +        // PaperDragon start - Enhanced Player Death Event
++        String deathmessage = defaultMessage.getString();
 +        String deathKey = (defaultMessage instanceof ChatMessage) ? ((ChatMessage) defaultMessage).getKey() : "death.attack.generic";
-+        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, deathmessage, keepInventory, deathKey);
++        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), deathmessage, keepInventory, deathKey);
 +        // PaperDragon stop
          // Paper start - cancellable death event
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 35ea1932ea..455e609bfe 100644
+index cd81b840e9..928645439e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -863,11 +863,12 @@ public class CraftEventFactory {
+@@ -889,11 +889,12 @@ public class CraftEventFactory {
          return event;
      }
  
--    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage, boolean keepInventory) {
-+    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, String deathMessage, boolean keepInventory, String key) { // PaperDragon - Pass Translation Key to Death Event
+-    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, net.kyori.adventure.text.Component deathMessage, String stringDeathMessage, boolean keepInventory) { // Paper - Adventure
++    public static PlayerDeathEvent callPlayerDeathEvent(EntityPlayer victim, List<org.bukkit.inventory.ItemStack> drops, net.kyori.adventure.text.Component deathMessage, String stringDeathMessage, boolean keepInventory, String key) { // Paper - Adventure // PaperDragon - Pass Translation Key to Death Event
          CraftPlayer entity = victim.getBukkitEntity();
-         PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage);
+         PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage, stringDeathMessage); // Paper - Adventure
          event.setKeepInventory(keepInventory);
          populateFields(victim, event); // Paper - make cancellable
 +        event.setSourceKey(key);

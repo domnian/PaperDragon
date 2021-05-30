@@ -1,26 +1,19 @@
-From 4235f2674b4443116bbd1e6a12320df056497831 Mon Sep 17 00:00:00 2001
+From 5e72c90201f9b954a3d6660db6c3cbc614424fee Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Mon, 19 Jun 2017 00:28:41 -0400
 Subject: [PATCH] Add PaperDragon Command
 
 ---
- .../com/domnian/paperdragon/DragonConfig.java |  2 +
- .../paperdragon/PaperDragonCommand.java       | 42 +++++++++++++++++++
- 2 files changed, 44 insertions(+)
+ .../com/domnian/paperdragon/DragonConfig.java |  1 +
+ .../paperdragon/PaperDragonCommand.java       | 38 +++++++++++++++++++
+ 2 files changed, 39 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 2f7bc8187f..3b1b727768 100644
+index 2f7bc8187f..e1ad836f92 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-@@ -1,5 +1,6 @@
- package com.domnian.paperdragon;
- 
-+import com.destroystokyo.paper.PaperCommand;
- import com.google.common.base.Throwables;
- import net.minecraft.server.MinecraftServer;
- import org.bukkit.Bukkit;
-@@ -47,6 +48,7 @@ public class DragonConfig {
+@@ -47,6 +47,7 @@ public class DragonConfig {
          config.options().copyDefaults(true);
  
          commands = new HashMap<>();
@@ -30,19 +23,15 @@ index 2f7bc8187f..3b1b727768 100644
          set("config-version", 1);
 diff --git a/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 new file mode 100644
-index 0000000000..a88d44d504
+index 0000000000..d704f68118
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,38 @@
 +package com.domnian.paperdragon;
 +
-+import net.minecraft.server.MinecraftServer;
-+import net.minecraft.server.WorldServer;
 +import org.bukkit.ChatColor;
 +import org.bukkit.command.Command;
 +import org.bukkit.command.CommandSender;
-+
-+import java.io.File;
 +
 +public class PaperDragonCommand extends Command {
 +

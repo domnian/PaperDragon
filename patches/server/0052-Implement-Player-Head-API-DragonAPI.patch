@@ -1,20 +1,21 @@
-From f237b9c49d42f1901e2271282d7efdeed047b65b Mon Sep 17 00:00:00 2001
+From 207c33c8763079408d6d80f988da1625cadf3179 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Sun, 10 Dec 2017 13:49:00 -0500
 Subject: [PATCH] Implement Player Head API (DragonAPI)
 
 ---
- .../paperdragon/api/CraftDAPI_Heads.java      | 80 +++++++++++++++++++
+ .../paperdragon/api/CraftDAPI_Heads.java      | 84 +++++++++++++++++++
  .../paperdragon/api/CraftDragonAPI.java       |  1 +
- 2 files changed, 81 insertions(+)
+ .../minecraft/nbt/GameProfileSerializer.java  |  2 +
+ 3 files changed, 87 insertions(+)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 new file mode 100644
-index 0000000000..eb3c2353cc
+index 0000000000..c62c063d8f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,84 @@
 +/*
 + * Copyright (c) 2017. Domnian Development
 + *
@@ -26,7 +27,11 @@ index 0000000000..eb3c2353cc
 +import co.aikar.timings.NullTimingHandler;
 +import co.aikar.timings.Timing;
 +import co.aikar.timings.Timings;
-+import net.minecraft.server.*;
++import net.minecraft.nbt.GameProfileSerializer;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.nbt.NBTTagList;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.item.Items;
 +import org.apache.commons.codec.binary.Base64;
 +import org.bukkit.ChatColor;
 +import org.bukkit.Material;
@@ -78,7 +83,7 @@ index 0000000000..eb3c2353cc
 +                    props = new NBTTagCompound(),
 +                    textData = new NBTTagCompound();
 +            NBTTagList textures = new NBTTagList();
-+            owner.setIntArray("Id", GameProfileSerializer.a(UUID.randomUUID()).getInts());
++            owner.set("Id", GameProfileSerializer.createUUID(UUID.randomUUID()));
 +            textData.setString("Value", getTextureData(url));
 +            textures.add(textData);
 +            props.set("textures", textures);
@@ -107,6 +112,23 @@ index 81ceb7f598..a6408aab4f 100644
      }
  
  }
+diff --git a/src/main/java/net/minecraft/nbt/GameProfileSerializer.java b/src/main/java/net/minecraft/nbt/GameProfileSerializer.java
+index a654ea9e43..1757c88252 100644
+--- a/src/main/java/net/minecraft/nbt/GameProfileSerializer.java
++++ b/src/main/java/net/minecraft/nbt/GameProfileSerializer.java
+@@ -186,10 +186,12 @@ public final class GameProfileSerializer {
+         }
+     }
+ 
++    public static NBTTagIntArray createUUID(UUID uuid) { return GameProfileSerializer.a(uuid); } // PaperDragon - OBF HELPER
+     public static NBTTagIntArray a(UUID uuid) {
+         return new NBTTagIntArray(MinecraftSerializableUUID.a(uuid));
+     }
+ 
++    public static UUID loadUUID(NBTBase nbtbase) { return GameProfileSerializer.a(nbtbase); } // PaperDragon - OBF HELPER
+     public static UUID a(NBTBase nbtbase) {
+         if (nbtbase.b() != NBTTagIntArray.a) {
+             throw new IllegalArgumentException("Expected UUID-Tag to be of type " + NBTTagIntArray.a.a() + ", but found " + nbtbase.b().a() + ".");
 -- 
 2.20.1.windows.1
 

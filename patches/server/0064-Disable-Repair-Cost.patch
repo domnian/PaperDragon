@@ -1,19 +1,19 @@
-From 6308211a71a7a9df67c74ef653577d7d983ad029 Mon Sep 17 00:00:00 2001
+From 08fd1f250e5aab0c28b6c3b31cff7c2b5bbfce02 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 19 May 2015 23:47:32 -0400
 Subject: [PATCH] Disable Repair Cost
 
 Handled on Plugin Level on a Per Player basis
 ---
- src/main/java/net/minecraft/server/ItemStack.java              | 3 +++
+ src/main/java/net/minecraft/world/item/ItemStack.java          | 3 +++
  .../java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java   | 2 +-
  2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index e8c60bbe88..384dc05313 100644
---- a/src/main/java/net/minecraft/server/ItemStack.java
-+++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -185,6 +185,7 @@ public final class ItemStack {
+diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
+index e3c02f2a22..964abfcd70 100644
+--- a/src/main/java/net/minecraft/world/item/ItemStack.java
++++ b/src/main/java/net/minecraft/world/item/ItemStack.java
+@@ -240,6 +240,7 @@ public final class ItemStack {
  
          if (this.getItem().usesDurability()) {
              this.setDamage(this.getDamage());
@@ -21,7 +21,7 @@ index e8c60bbe88..384dc05313 100644
          }
  
      }
-@@ -824,10 +825,12 @@ public final class ItemStack {
+@@ -879,10 +880,12 @@ public final class ItemStack {
      }
  
      public int getRepairCost() {
@@ -35,10 +35,10 @@ index e8c60bbe88..384dc05313 100644
          if (i == 0) {
              this.removeTag("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 93d307dafb..a7586d5f52 100644
+index 221eb7824d..48dacd8ce0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -393,7 +393,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -395,7 +395,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          this.enchantments = buildEnchantments(tag, ENCHANTMENTS);
          this.attributeModifiers = buildModifiers(tag, ATTRIBUTES);
  

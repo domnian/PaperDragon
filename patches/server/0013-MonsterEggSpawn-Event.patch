@@ -1,26 +1,26 @@
-From 242e200c629e6fe1b366c3852033aa7f0020f06f Mon Sep 17 00:00:00 2001
+From 8969a2f471ee04235b4acd6b8c37a6447e3b9333 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 20 Jul 2013 22:40:56 -0400
 Subject: [PATCH] MonsterEggSpawn Event
 
 Get the itemstack used to spawn an entity
 ---
- .../net/minecraft/server/EntityTypes.java     | 29 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ .../minecraft/world/entity/EntityTypes.java   | 28 +++++++++++++++++--
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/EntityTypes.java b/src/main/java/net/minecraft/server/EntityTypes.java
-index 93b5a6471c..f526e60dd1 100644
---- a/src/main/java/net/minecraft/server/EntityTypes.java
-+++ b/src/main/java/net/minecraft/server/EntityTypes.java
-@@ -10,6 +10,7 @@ import java.util.stream.Stream;
- import javax.annotation.Nullable;
+diff --git a/src/main/java/net/minecraft/world/entity/EntityTypes.java b/src/main/java/net/minecraft/world/entity/EntityTypes.java
+index 80c229c185..04f9511476 100644
+--- a/src/main/java/net/minecraft/world/entity/EntityTypes.java
++++ b/src/main/java/net/minecraft/world/entity/EntityTypes.java
+@@ -141,6 +141,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
+ import net.minecraft.world.phys.shapes.VoxelShapes;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
 +import org.bukkit.event.entity.CreatureSpawnEvent; // PaperDragon
  
  public class EntityTypes<T extends Entity> {
  
-@@ -177,15 +178,20 @@ public class EntityTypes<T extends Entity> {
+@@ -308,23 +309,31 @@ public class EntityTypes<T extends Entity> {
  
      @Nullable
      public Entity spawnCreature(WorldServer worldserver, @Nullable ItemStack itemstack, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
@@ -30,28 +30,34 @@ index 93b5a6471c..f526e60dd1 100644
      }
  
      @Nullable
--    public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
-+    public T spawnCreature(WorldServer worldserver, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
+     public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
++        return this.spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
++    }
++    public T spawnCreature(WorldServer worldserver, ItemStack itemStack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
          // CraftBukkit start
 -        return this.spawnCreature(worldserver, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
-+        return this.spawnCreature(worldserver, itemstack, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
++        return this.spawnCreature(worldserver, itemStack, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG, null);
      }
  
-+    @Nullable
-+    public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1) {
-+        return spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, CreatureSpawnEvent.SpawnReason.NATURAL);
-+    }
      @Nullable
      public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
+         // Paper start - add consumer to modify entity before spawn
+-        return this.spawnCreature(worldserver, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason, null);
++        return this.spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason, null);
+     }
+     @Nullable
+     public T spawnCreature(WorldServer worldserver, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason, @Nullable java.util.function.Consumer<T> op) {
+         // Paper end
++        return spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason, op);
++    }
++    public T spawnCreature(WorldServer worldserver, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason, @Nullable java.util.function.Consumer<T> op) {
++        // PaperDragon end - add itemstack to methods
          // Paper start - Call PreCreatureSpawnEvent
-@@ -202,7 +208,24 @@ public class EntityTypes<T extends Entity> {
-             }
+         org.bukkit.entity.EntityType type = org.bukkit.entity.EntityType.fromName(EntityTypes.getName(this).getKey());
+         if (type != null) {
+@@ -340,6 +349,19 @@ public class EntityTypes<T extends Entity> {
          }
          // Paper end
-+        return spawnCreature(worldserver, null, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason);
-+    }
-+    public T spawnCreature(WorldServer worldserver, ItemStack itemstack, @Nullable NBTTagCompound nbttagcompound, @Nullable IChatBaseComponent ichatbasecomponent, @Nullable EntityHuman entityhuman, BlockPosition blockposition, EnumMobSpawn enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
-+        // PaperDragon end - add itemstack to methods
          T t0 = this.createCreature(worldserver, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
 +        // PaperDragon start - if false the spawn was cancelled, add new event
 +        if ((spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || spawnReason == CreatureSpawnEvent.SpawnReason.DISPENSE_EGG) && itemstack != null && t0 != null) {
@@ -66,9 +72,9 @@ index 93b5a6471c..f526e60dd1 100644
 +            }
 +        }
 +        // PaperDragon end
+         if (t0 != null && op != null) op.accept(t0); // Paper
  
          if (t0 != null) {
-             worldserver.addAllEntities(t0, spawnReason);
 -- 
 2.20.1.windows.1
 

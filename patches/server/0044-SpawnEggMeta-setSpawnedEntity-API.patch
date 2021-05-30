@@ -1,4 +1,4 @@
-From 6bbf226ef38f705ef1f946f182956d7cd3f244ef Mon Sep 17 00:00:00 2001
+From 1a0075d6895d3b5dc6eee824c37610e9f8a58d86 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 18 Aug 2018 22:03:33 -0400
 Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
@@ -11,10 +11,10 @@ follow normal spawn behavior in the summon phase.
  1 file changed, 18 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
-index 54c8243313..64e102eae7 100644
+index ab634b01e7..0c32020b21 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
-@@ -192,6 +192,24 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
+@@ -194,6 +194,24 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
          return spawnedType != null;
      }
  

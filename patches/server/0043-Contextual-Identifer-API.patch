@@ -1,4 +1,4 @@
-From ab588545fc8888df0d2ae925174f61e858e2a2db Mon Sep 17 00:00:00 2001
+From 50d622e0b46fcfb7dd19eb5c600c14b1ee1cbd94 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 17 May 2016 19:46:42 -0400
 Subject: [PATCH] Contextual Identifer API
@@ -17,14 +17,14 @@ Objects represented by an Identifier, should be able to use them as their equal/
  1 file changed, 43 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 9d5c320c1c..39caeb4f00 100644
+index 9d3e981b1c..d67c53a21b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -55,6 +55,7 @@ public class CraftChunk implements Chunk {
          worldServer = (WorldServer) getHandle().world;
          x = getHandle().getPos().x;
          z = getHandle().getPos().z;
-+        chunkIdentifier = (chunk instanceof net.minecraft.server.ChunkEmpty) ? null : new ChunkIdentifier(this); // PaperDragon
++        chunkIdentifier = (chunk instanceof net.minecraft.world.level.chunk.ChunkEmpty) ? null : new ChunkIdentifier(this); // PaperDragon
      }
  
      @Override

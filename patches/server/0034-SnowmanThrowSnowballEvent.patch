@@ -1,17 +1,17 @@
-From ccf75c93ff9eac228b9e7aebed0b948df3e409d8 Mon Sep 17 00:00:00 2001
+From 4670e25d49ea99870db0917d117ea4a872809c0b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 21 Dec 2015 13:33:00 -0500
 Subject: [PATCH] SnowmanThrowSnowballEvent
 
 ---
- .../net/minecraft/server/EntitySnowman.java   | 20 +++++++++++++++++++
+ .../world/entity/animal/EntitySnowman.java    | 20 +++++++++++++++++++
  1 file changed, 20 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/EntitySnowman.java b/src/main/java/net/minecraft/server/EntitySnowman.java
-index 48997367a6..8b9d1e052d 100644
---- a/src/main/java/net/minecraft/server/EntitySnowman.java
-+++ b/src/main/java/net/minecraft/server/EntitySnowman.java
-@@ -9,6 +9,25 @@ public class EntitySnowman extends EntityGolem implements IShearable, IRangedEnt
+diff --git a/src/main/java/net/minecraft/world/entity/animal/EntitySnowman.java b/src/main/java/net/minecraft/world/entity/animal/EntitySnowman.java
+index b1e2892c7c..eb14bb3d50 100644
+--- a/src/main/java/net/minecraft/world/entity/animal/EntitySnowman.java
++++ b/src/main/java/net/minecraft/world/entity/animal/EntitySnowman.java
+@@ -46,6 +46,25 @@ public class EntitySnowman extends EntityGolem implements IShearable, IRangedEnt
  
      private static final DataWatcherObject<Byte> b = DataWatcher.a(EntitySnowman.class, DataWatcherRegistry.a);
  
@@ -37,7 +37,7 @@ index 48997367a6..8b9d1e052d 100644
      public EntitySnowman(EntityTypes<? extends EntitySnowman> entitytypes, World world) {
          super(entitytypes, world);
      }
-@@ -96,6 +115,7 @@ public class EntitySnowman extends EntityGolem implements IShearable, IRangedEnt
+@@ -133,6 +152,7 @@ public class EntitySnowman extends EntityGolem implements IShearable, IRangedEnt
          float f1 = MathHelper.sqrt(d1 * d1 + d3 * d3) * 0.2F;
  
          entitysnowball.shoot(d1, d2 + (double) f1, d3, 1.6F, 12.0F);

@@ -1,32 +1,27 @@
-From da3be872f50093c5abda998761ba26497f6bbbb1 Mon Sep 17 00:00:00 2001
+From b2efe38fee2161c16c18a25d1b5d052dbd0ea842 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
 
 This lets us control when an item is consumed and change the item.
 ---
- .../net/minecraft/server/EntityLiving.java    |  2 +-
- .../server/PlayerInteractManager.java         | 88 ++++++++++++++++---
- 2 files changed, 76 insertions(+), 14 deletions(-)
+ .../server/level/PlayerInteractManager.java   | 89 ++++++++++++++++---
+ .../minecraft/world/entity/EntityLiving.java  |  2 +-
+ 2 files changed, 77 insertions(+), 14 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index b7a362bd9c..5814f9c2e4 100644
---- a/src/main/java/net/minecraft/server/EntityLiving.java
-+++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -2082,7 +2082,7 @@ public abstract class EntityLiving extends Entity {
-         }
-     }
- 
--    public void a(EnumHand enumhand, ItemStack itemstack) {
-+    public void setHand(EnumHand hand, ItemStack item) { a(hand, item); } public void a(EnumHand enumhand, ItemStack itemstack) { // Paper - OBFHELPER
-         if (enumhand == EnumHand.MAIN_HAND) {
-             this.setSlot(EnumItemSlot.MAINHAND, itemstack);
-         } else {
-diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 114e986e51..53da599d89 100644
---- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
-+++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-@@ -404,6 +404,15 @@ public class PlayerInteractManager {
+diff --git a/src/main/java/net/minecraft/server/level/PlayerInteractManager.java b/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
+index 8772228569..fbfbc49585 100644
+--- a/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
++++ b/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
+@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.game.PacketPlayInBlockDig;
+ import net.minecraft.network.protocol.game.PacketPlayOutBlockBreak;
+ import net.minecraft.network.protocol.game.PacketPlayOutCloseWindow;
+ import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
++import net.minecraft.server.MCUtil;
+ import net.minecraft.world.EnumHand;
+ import net.minecraft.world.EnumInteractionResult;
+ import net.minecraft.world.ITileInventory;
+@@ -439,6 +440,15 @@ public class PlayerInteractManager {
      }
  
      public EnumInteractionResult a(EntityPlayer entityplayer, World world, ItemStack itemstack, EnumHand enumhand) {
@@ -34,7 +29,7 @@ index 114e986e51..53da599d89 100644
 +        org.bukkit.inventory.EquipmentSlot bukkitHand = enumhand == EnumHand.MAIN_HAND ? org.bukkit.inventory.EquipmentSlot.HAND : org.bukkit.inventory.EquipmentSlot.OFF_HAND;
 +        org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
 +        org.bukkit.craftbukkit.inventory.CraftItemStack origItemClone = craftitem.clone();
-+        com.domnian.paperdragon.events.PlayerUseItemEvent event = new com.domnian.paperdragon.events.PlayerUseItemEvent(player.getBukkitEntity(), craftitem, bukkitHand);
++        com.empireminecraft.customevents.PlayerUseItemEvent event = new com.empireminecraft.customevents.PlayerUseItemEvent(player.getBukkitEntity(), craftitem, bukkitHand);
 +        if (!event.callEvent()) {
 +            return EnumInteractionResult.FAIL;
 +        }
@@ -42,7 +37,7 @@ index 114e986e51..53da599d89 100644
          if (this.gamemode == EnumGamemode.SPECTATOR) {
              return EnumInteractionResult.PASS;
          } else if (entityplayer.getCooldownTracker().hasCooldown(itemstack.getItem())) {
-@@ -411,27 +420,52 @@ public class PlayerInteractManager {
+@@ -446,27 +456,52 @@ public class PlayerInteractManager {
          } else {
              int i = itemstack.getCount();
              int j = itemstack.getDamage();
@@ -101,7 +96,7 @@ index 114e986e51..53da599d89 100644
                      entityplayer.updateInventory(entityplayer.defaultContainer);
                  }
  
-@@ -448,6 +482,7 @@ public class PlayerInteractManager {
+@@ -483,6 +518,7 @@ public class PlayerInteractManager {
      public ItemStack interactItemStack;
      public EnumInteractionResult a(EntityPlayer entityplayer, World world, ItemStack itemstack, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
          BlockPosition blockposition = movingobjectpositionblock.getBlockPosition();
@@ -109,7 +104,7 @@ index 114e986e51..53da599d89 100644
          IBlockData iblockdata = world.getType(blockposition);
          EnumInteractionResult enuminteractionresult = EnumInteractionResult.PASS;
          boolean cancelledBlock = false;
-@@ -521,17 +556,44 @@ public class PlayerInteractManager {
+@@ -550,17 +586,44 @@ public class PlayerInteractManager {
              }
  
              if (!itemstack.isEmpty() && enuminteractionresult != EnumInteractionResult.SUCCESS && !interactResult) { // add !interactResult SPIGOT-764
@@ -118,7 +113,7 @@ index 114e986e51..53da599d89 100644
 +                // Paper start - Allow control over if item should be consumed or not.
 +                org.bukkit.inventory.EquipmentSlot bukkitHand = enumhand == EnumHand.MAIN_HAND ? org.bukkit.inventory.EquipmentSlot.HAND : org.bukkit.inventory.EquipmentSlot.OFF_HAND;
 +                org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
-+                com.domnian.paperdragon.events.PlayerPlaceItemAtEvent eventPlace = new com.domnian.paperdragon.events.PlayerPlaceItemAtEvent(
++                com.empireminecraft.customevents.PlayerPlaceItemAtEvent eventPlace = new com.empireminecraft.customevents.PlayerPlaceItemAtEvent(
 +                        (org.bukkit.entity.Player) entityplayer.getBukkitEntity(), craftitem,
 +                        MCUtil.toLocation(world, blockposition),
 +                        org.bukkit.craftbukkit.block.CraftBlock.notchToBlockFace(movingobjectpositionblock.getDirection()),
@@ -161,6 +156,19 @@ index 114e986e51..53da599d89 100644
  
                  if (enuminteractionresult1.a()) {
                      CriterionTriggers.M.a(entityplayer, blockposition, itemstack1);
+diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
+index 2537c9fcf1..bc9458d786 100644
+--- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
++++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
+@@ -2176,7 +2176,7 @@ public abstract class EntityLiving extends Entity {
+         }
+     }
+ 
+-    public void a(EnumHand enumhand, ItemStack itemstack) {
++    public void setHand(EnumHand hand, ItemStack item) { a(hand, item); } public void a(EnumHand enumhand, ItemStack itemstack) { // Paper - OBFHELPER
+         if (enumhand == EnumHand.MAIN_HAND) {
+             this.setSlot(EnumItemSlot.MAINHAND, itemstack);
+         } else {
 -- 
 2.20.1.windows.1
 

@@ -1,25 +1,25 @@
-From bb0cb13a6a47bbc1781cb0bab916e4124b6553c1 Mon Sep 17 00:00:00 2001
+From a3e796b3321d188d45d20b20c818154cf39bc941 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 19 Dec 2019 03:24:02 -0500
 Subject: [PATCH] Implement WorldBorderUpdateEvent
 
 ---
  .../DragonWorldBorderListener.java            | 37 +++++++++++++++++++
- .../net/minecraft/server/WorldBorder.java     |  2 +-
+ .../world/level/border/WorldBorder.java       |  2 +-
  2 files changed, 38 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
 new file mode 100644
-index 0000000000..3eaf63a356
+index 0000000000..0c505ecb29
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
 @@ -0,0 +1,37 @@
 +package com.domnian.paperdragon;
 +
 +import com.domnian.paperdragon.events.WorldBorderUpdateEvent;
-+import net.minecraft.server.IWorldBorderListener;
-+import net.minecraft.server.WorldBorder;
++import net.minecraft.world.level.border.IWorldBorderListener;
++import net.minecraft.world.level.border.WorldBorder;
 +
 +public class DragonWorldBorderListener implements IWorldBorderListener {
 +
@@ -52,11 +52,11 @@ index 0000000000..3eaf63a356
 +    }
 +
 +}
-diff --git a/src/main/java/net/minecraft/server/WorldBorder.java b/src/main/java/net/minecraft/server/WorldBorder.java
-index f011869880..97f3cdc16d 100644
---- a/src/main/java/net/minecraft/server/WorldBorder.java
-+++ b/src/main/java/net/minecraft/server/WorldBorder.java
-@@ -7,7 +7,7 @@ import java.util.List;
+diff --git a/src/main/java/net/minecraft/world/level/border/WorldBorder.java b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
+index 3c25021835..428fc9ac6b 100644
+--- a/src/main/java/net/minecraft/world/level/border/WorldBorder.java
++++ b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
+@@ -20,7 +20,7 @@ import io.papermc.paper.event.world.border.WorldBorderBoundsChangeEvent; // Pape
  
  public class WorldBorder {
  

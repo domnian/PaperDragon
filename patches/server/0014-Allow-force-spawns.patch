@@ -1,4 +1,4 @@
-From 31a1d68d4e24325cb6b1e90845dd00bdc13110e1 Mon Sep 17 00:00:00 2001
+From efcf15f0352cd4ced5cdaff992f7f4b9fb97dd37 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 26 Jul 2013 22:19:29 -0400
 Subject: [PATCH] Allow force spawns
@@ -6,15 +6,15 @@ Subject: [PATCH] Allow force spawns
 Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 ---
- src/main/java/net/minecraft/server/WorldServer.java           | 4 ++--
+ src/main/java/net/minecraft/server/level/WorldServer.java     | 4 ++--
  .../java/org/bukkit/craftbukkit/event/CraftEventFactory.java  | 2 +-
  2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 59fb2f81b4..04e22c2733 100644
---- a/src/main/java/net/minecraft/server/WorldServer.java
-+++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1105,7 +1105,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
+index d035a4ad64..c7484189f9 100644
+--- a/src/main/java/net/minecraft/server/level/WorldServer.java
++++ b/src/main/java/net/minecraft/server/level/WorldServer.java
+@@ -1219,7 +1219,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          boolean flag = entity.attachedToPlayer;
  
          entity.attachedToPlayer = true;
@@ -23,7 +23,7 @@ index 59fb2f81b4..04e22c2733 100644
          entity.attachedToPlayer = flag;
          this.chunkCheck(entity);
      }
-@@ -1192,7 +1192,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1306,7 +1306,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              // CraftBukkit end
              IChunkAccess ichunkaccess = this.getChunkAt(MathHelper.floor(entity.locX() / 16.0D), MathHelper.floor(entity.locZ() / 16.0D), ChunkStatus.FULL, true); // Paper - always load chunks for entity adds
  
@@ -33,15 +33,15 @@ index 59fb2f81b4..04e22c2733 100644
              } else {
                  ichunkaccess.a(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index feaa48bc02..52edbe0689 100644
+index 4703c067ce..6dbc1c6c93 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -661,7 +661,7 @@ public class CraftEventFactory {
+@@ -682,7 +682,7 @@ public class CraftEventFactory {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
  
 -        if (event != null && (event.isCancelled() || entity.dead)) {
-+        if (spawnReason != SpawnReason.FORCE && event != null && (event.isCancelled() || entity.dead)) { // PaperDragon - add != FORCE
++        if (spawnReason != SpawnReason.FORCE && event != null && (event.isCancelled() || entity.dead)) { // PaperDragon - add != force
              Entity vehicle = entity.getVehicle();
              if (vehicle != null) {
                  vehicle.dead = true;

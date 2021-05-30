@@ -1,4 +1,4 @@
-From 8c5bca50f35bef445ba49fee8e03cf1777680035 Mon Sep 17 00:00:00 2001
+From 1cd831fa50390d74dd46d9952e350a46af7cb189 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 19 Feb 2021 03:57:17 -0500
 Subject: [PATCH] Generate the UUID for the head from the skin hash
@@ -9,27 +9,27 @@ This will always result in the same UUID for a given hash
  1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-index eb3c2353cc..43cbf10349 100644
+index c62c063d8f..5ec7a334d3 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-@@ -11,6 +11,7 @@ import co.aikar.timings.Timing;
- import co.aikar.timings.Timings;
- import net.minecraft.server.*;
+@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagList;
+ import net.minecraft.world.item.ItemStack;
+ import net.minecraft.world.item.Items;
  import org.apache.commons.codec.binary.Base64;
 +import org.apache.commons.lang.StringUtils;
  import org.bukkit.ChatColor;
  import org.bukkit.Material;
  import org.bukkit.inventory.meta.SkullMeta;
-@@ -61,7 +62,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+@@ -65,7 +66,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
                      props = new NBTTagCompound(),
                      textData = new NBTTagCompound();
              NBTTagList textures = new NBTTagList();
--            owner.setIntArray("Id", GameProfileSerializer.a(UUID.randomUUID()).getInts());
-+            owner.setIntArray("Id", GameProfileSerializer.a(skinHashToUUID(hash)).getInts());
+-            owner.set("Id", GameProfileSerializer.createUUID(UUID.randomUUID()));
++            owner.set("Id", GameProfileSerializer.createUUID(skinHashToUUID(hash)));
              textData.setString("Value", getTextureData(url));
              textures.add(textData);
              props.set("textures", textures);
-@@ -72,6 +73,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+@@ -76,6 +77,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
          }
      }
  

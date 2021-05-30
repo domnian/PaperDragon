@@ -1,27 +1,26 @@
-From 88272cfa6e323b652d8f6156c4a3a6e4c5f435a5 Mon Sep 17 00:00:00 2001
+From 08ffd9a7ccc203b35d75fde12a73b2f82821f437 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 12 Jul 2019 03:48:22 -0400
 Subject: [PATCH] Implement method to get player skin hash
 
 ---
- .../paperdragon/api/CraftDAPI_Misc.java        | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ .../domnian/paperdragon/api/CraftDAPI_Misc.java | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index c7fa151e53..0d5c5ac369 100644
+index 03f97c5719..38fee0258a 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -24,15 +24,22 @@
+@@ -24,15 +24,21 @@
  package com.domnian.paperdragon.api;
  
  import com.destroystokyo.paper.MaterialTags;
-+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 +import com.destroystokyo.paper.profile.ProfileProperty;
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
- import net.minecraft.server.ItemStack;
- import net.minecraft.server.NBTTagCompound;
- import net.minecraft.server.NBTTagList;
+ import net.minecraft.world.item.ItemStack;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.nbt.NBTTagList;
  import org.bukkit.craftbukkit.inventory.CraftItemStack;
  import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 +import org.bukkit.entity.Player;
@@ -34,7 +33,7 @@ index c7fa151e53..0d5c5ac369 100644
  
  public class CraftDAPI_Misc implements DAPI_Misc {
  
-@@ -62,6 +69,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+@@ -62,6 +68,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
          return items;
      }
  

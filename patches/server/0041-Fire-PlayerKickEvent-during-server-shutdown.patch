@@ -1,19 +1,19 @@
-From df8cbc5d7597b7f12073457ad6a26bc3d5ec0678 Mon Sep 17 00:00:00 2001
+From 20790caba90b8f7b216530b39de450221c6340b9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 4 Jul 2018 15:49:34 -0400
 Subject: [PATCH] Fire PlayerKickEvent during server shutdown
 
 ---
- src/main/java/net/minecraft/server/PlayerConnection.java | 4 ++--
+ .../java/net/minecraft/server/network/PlayerConnection.java   | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index ce4f0d6e91..14a6b3af1f 100644
---- a/src/main/java/net/minecraft/server/PlayerConnection.java
-+++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -290,11 +290,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index e38a5a795f..f12b7c3d47 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -442,11 +442,11 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
-         PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.player), s, leaveMessage);
+         PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.player), reason, leaveMessage); // Paper - Adventure
  
 -        if (this.server.getServer().isRunning()) {
 +        if (true) { // PaperDragon - don't care if its async either, fire it!

@@ -1,11 +1,11 @@
-From c8753f2fd013150c6b236706e3a538d4bcfedb54 Mon Sep 17 00:00:00 2001
+From cbe058f65bd89c787497aa9ee106af9ce2704bf6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Sep 2013 19:41:07 -0400
 Subject: [PATCH] Better hopper events
 
 ---
  .../domnian/paperdragon/api/HopperEvents.java | 32 +++++++++++++++++++
- .../minecraft/server/TileEntityHopper.java    |  7 +++-
+ .../level/block/entity/TileEntityHopper.java  |  7 +++-
  2 files changed, 38 insertions(+), 1 deletion(-)
  create mode 100644 src/main/java/com/domnian/paperdragon/api/HopperEvents.java
 
@@ -47,11 +47,11 @@ index 0000000000..84f23c673b
 +    }
 +
 +}
-diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index d432de40eb..dd3d123bc7 100644
---- a/src/main/java/net/minecraft/server/TileEntityHopper.java
-+++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -330,6 +330,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
+index 537dc52e5f..069760af5f 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
+@@ -358,6 +358,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
          } else {
              EnumDirection enumdirection = ((EnumDirection) this.getBlock().get(BlockHopper.FACING)).opposite();
  
@@ -59,7 +59,7 @@ index d432de40eb..dd3d123bc7 100644
              if (this.b(iinventory, enumdirection)) {
                  return false;
              } else {
-@@ -437,8 +438,12 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -465,8 +466,12 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              EnumDirection enumdirection = EnumDirection.DOWN;
  
              // Paper start - optimize hoppers and remove streams

@@ -1,25 +1,17 @@
-From 4b3e02c248c1f54c2e7871a5b9c696f70bc5ae08 Mon Sep 17 00:00:00 2001
+From a934ed74e56588963763c587120bae8e78e30dcb Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sat, 7 Mar 2020 10:32:04 -0600
 Subject: [PATCH] EntityAngerEvent
 
 ---
- .../java/net/minecraft/server/IEntityAngerable.java | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ .../net/minecraft/world/entity/IEntityAngerable.java  | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/src/main/java/net/minecraft/server/IEntityAngerable.java b/src/main/java/net/minecraft/server/IEntityAngerable.java
-index 5e2f5536ef..8a06541586 100644
---- a/src/main/java/net/minecraft/server/IEntityAngerable.java
-+++ b/src/main/java/net/minecraft/server/IEntityAngerable.java
-@@ -1,5 +1,7 @@
- package net.minecraft.server;
- 
-+import com.destroystokyo.paper.event.entity.EntityAngerEvent;
-+
- import java.util.Objects;
- import java.util.UUID;
- import javax.annotation.Nullable;
-@@ -56,8 +58,15 @@ public interface IEntityAngerable {
+diff --git a/src/main/java/net/minecraft/world/entity/IEntityAngerable.java b/src/main/java/net/minecraft/world/entity/IEntityAngerable.java
+index 3e390ba135..46bbc589e8 100644
+--- a/src/main/java/net/minecraft/world/entity/IEntityAngerable.java
++++ b/src/main/java/net/minecraft/world/entity/IEntityAngerable.java
+@@ -61,8 +61,15 @@ public interface IEntityAngerable {
              this.pacify();
          } else {
              if (entityliving != null && !Objects.equals(uuid, entityliving.getUniqueID())) {
@@ -27,7 +19,7 @@ index 5e2f5536ef..8a06541586 100644
 -                this.anger();
 +                // Paper start
 +                if (this instanceof Entity) {
-+                    EntityAngerEvent event = new EntityAngerEvent(((Entity)this).getBukkitEntity(), entityliving.getBukkitLivingEntity());
++                    com.destroystokyo.paper.event.entity.EntityAngerEvent event = new com.destroystokyo.paper.event.entity.EntityAngerEvent(((Entity)this).getBukkitEntity(), entityliving.getBukkitLivingEntity());
 +                    if (event.callEvent()) {
 +                        this.setAngerTarget(entityliving.getUniqueID());
 +                        this.anger();

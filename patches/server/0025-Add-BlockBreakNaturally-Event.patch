@@ -1,48 +1,21 @@
-From c7771ab0df8abc0b42fdaa756bc5b8cb01d8f930 Mon Sep 17 00:00:00 2001
+From b12e71496d69df4aa739d412a82677d28b5dc7a3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 18 Dec 2014 22:48:46 -0500
 Subject: [PATCH] Add BlockBreakNaturally Event
 
 To give reliable control over all blocks dropping to world to restore custom item meta
 ---
- src/main/java/net/minecraft/server/Block.java          |  2 ++
- src/main/java/net/minecraft/server/EntityItem.java     |  1 +
- src/main/java/net/minecraft/server/WorldServer.java    |  1 +
+ .../java/net/minecraft/server/level/WorldServer.java   |  1 +
+ .../net/minecraft/world/entity/item/EntityItem.java    |  1 +
+ .../java/net/minecraft/world/level/block/Block.java    |  2 ++
  .../bukkit/craftbukkit/event/CraftEventFactory.java    | 10 ++++++++++
  4 files changed, 14 insertions(+)
 
-diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 1fc98698b8..2fc8b46b16 100644
---- a/src/main/java/net/minecraft/server/Block.java
-+++ b/src/main/java/net/minecraft/server/Block.java
-@@ -234,8 +234,10 @@ public class Block extends BlockBase implements IMaterial {
-             entityitem.defaultPickupDelay();
-             // CraftBukkit start
-             if (world.captureDrops != null) {
-+                entityitem.droppedPosition = blockposition.immutableCopy(); // PaperDragon
-                 world.captureDrops.add(entityitem);
-             } else {
-+                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(MCUtil.toLocation(world, blockposition), (org.bukkit.entity.Item) entityitem.getBukkitEntity()).callEvent(); // EMC
-                 world.addEntity(entityitem);
-             }
-             // CraftBukkit end
-diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 45519db8a0..aa3081f66c 100644
---- a/src/main/java/net/minecraft/server/EntityItem.java
-+++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -17,6 +17,7 @@ public class EntityItem extends Entity {
-     private static final DataWatcherObject<ItemStack> ITEM = DataWatcher.a(EntityItem.class, DataWatcherRegistry.g);
-     public int age;
-     public boolean canDespawn = true; // PaperDragon
-+    public BlockPosition droppedPosition; // PaperDragon
-     public int pickupDelay;
-     private int f;
-     private UUID thrower;
-diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 04e22c2733..790f6f74ca 100644
---- a/src/main/java/net/minecraft/server/WorldServer.java
-+++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1181,6 +1181,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
+index c7484189f9..4bd8a59649 100644
+--- a/src/main/java/net/minecraft/server/level/WorldServer.java
++++ b/src/main/java/net/minecraft/server/level/WorldServer.java
+@@ -1295,6 +1295,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof EntityItem) {
@@ -50,11 +23,38 @@ index 04e22c2733..790f6f74ca 100644
                  captureDrops.add((EntityItem) entity);
                  return true;
              }
+diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
+index 0eaeabb09a..0bd6b09748 100644
+--- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
++++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
+@@ -44,6 +44,7 @@ public class EntityItem extends Entity {
+     private static final DataWatcherObject<ItemStack> ITEM = DataWatcher.a(EntityItem.class, DataWatcherRegistry.g);
+     public int age;
+     public boolean canDespawn = true; // PaperDragon
++    public BlockPosition droppedPosition; // PaperDragon
+     public int pickupDelay;
+     private int f;
+     private UUID thrower;
+diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
+index 596b459731..e44c15f779 100644
+--- a/src/main/java/net/minecraft/world/level/block/Block.java
++++ b/src/main/java/net/minecraft/world/level/block/Block.java
+@@ -273,8 +273,10 @@ public class Block extends BlockBase implements IMaterial {
+             entityitem.defaultPickupDelay();
+             // CraftBukkit start
+             if (world.captureDrops != null) {
++                entityitem.droppedPosition = blockposition.immutableCopy(); // PaperDragon
+                 world.captureDrops.add(entityitem);
+             } else {
++                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(net.minecraft.server.MCUtil.toLocation(world, blockposition), (org.bukkit.entity.Item) entityitem.getBukkitEntity()).callEvent(); // EMC
+                 world.addEntity(entityitem);
+             }
+             // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index d88d5d2ad2..42cc65bda7 100644
+index 43bc8b348a..82dc93f999 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -390,6 +390,16 @@ public class CraftEventFactory {
+@@ -408,6 +408,16 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {

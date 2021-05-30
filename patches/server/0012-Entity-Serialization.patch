@@ -1,38 +1,33 @@
-From fb80e53255148db1323f493b695898ed6d5da653 Mon Sep 17 00:00:00 2001
+From 387b14e306cdb5b1cb4162539e6024cef6a2c290 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 12 Jul 2013 18:58:19 -0400
 Subject: [PATCH] Entity Serialization
 
 Allow serializing an Entity to raw NBT, and to get an Entity object without spawning it into the world.
 ---
- .../paperdragon/api/CraftDAPI_Entity.java     | 60 +++++++++++++++++++
- .../java/net/minecraft/server/Entity.java     |  1 +
+ .../paperdragon/api/CraftDAPI_Entity.java     | 59 +++++++++++++++++++
+ .../net/minecraft/world/entity/Entity.java    |  1 +
  .../craftbukkit/entity/CraftEntity.java       | 10 ++++
- 3 files changed, 71 insertions(+)
+ 3 files changed, 70 insertions(+)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index 1dd0657139..b809114a0b 100644
+index 298be43e85..cfedfd9f70 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-@@ -24,10 +24,17 @@
+@@ -24,6 +24,12 @@
  package com.domnian.paperdragon.api;
  
  import com.destroystokyo.paper.entity.RangedEntity;
-+import net.minecraft.server.DataConverters;
-+import net.minecraft.server.DataConverters.LegacyType;
-+import net.minecraft.server.EntityTypes;
++import net.minecraft.nbt.NBTCompressedStreamTools;
++import net.minecraft.nbt.NBTTagCompound;
++import net.minecraft.server.MCLog;
++import net.minecraft.util.datafix.DataConverters;
++import net.minecraft.world.entity.EntityTypes;
 +import org.bukkit.craftbukkit.CraftWorld;
  import org.bukkit.entity.Mob;
  import net.minecraft.server.EntityTasksHandler;
- import net.minecraft.server.EntityWolf;
-+import net.minecraft.server.MCLog;
- import org.bukkit.Location;
-+import net.minecraft.server.NBTCompressedStreamTools;
-+import net.minecraft.server.NBTTagCompound;
- import org.bukkit.craftbukkit.entity.CraftEntity;
- import org.bukkit.craftbukkit.entity.CraftSpider;
- import org.bukkit.craftbukkit.entity.CraftWolf;
-@@ -39,6 +46,12 @@ import org.bukkit.entity.Item;
+ import net.minecraft.world.entity.animal.EntityWolf;
+@@ -39,6 +45,12 @@ import org.bukkit.entity.Item;
  import org.bukkit.entity.Spider;
  import org.bukkit.entity.Wolf;
  
@@ -45,7 +40,7 @@ index 1dd0657139..b809114a0b 100644
  public class CraftDAPI_Entity implements DAPI_Entity {
  
      public <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task) {
-@@ -169,4 +182,51 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+@@ -169,4 +181,51 @@ public class CraftDAPI_Entity implements DAPI_Entity {
          return EntityAIApi.getEnderSignalLife(enderSignal);
      }
  
@@ -53,7 +48,7 @@ index 1dd0657139..b809114a0b 100644
 +        if (craftentity == null) {
 +            throw new NullPointerException("Entity can not be null for serialization");
 +        }
-+        net.minecraft.server.Entity entity = ((CraftEntity) craftentity).getHandle();
++        net.minecraft.world.entity.Entity entity = ((CraftEntity) craftentity).getHandle();
 +        NBTTagCompound cmp = new NBTTagCompound();
 +        entity.serializeEntity(cmp);
 +        cmp.setInt("DataVersion", DataConverters.DATA_VERSION);
@@ -70,8 +65,8 @@ index 1dd0657139..b809114a0b 100644
 +        try {
 +            NBTTagCompound cmp = readNBT(stream);
 +
-+            cmp = DataConverters.convert(LegacyType.ENTITY, cmp);
-+            net.minecraft.server.Entity entity = EntityTypes.a(cmp, ((CraftWorld) world).getHandle()).orElse(null);
++            cmp = DataConverters.convert(DataConverters.LegacyType.ENTITY, cmp);
++            net.minecraft.world.entity.Entity entity = EntityTypes.a(cmp, ((CraftWorld) world).getHandle()).orElse(null);
 +
 +            return entity != null ? entity.getBukkitEntity() : null;
 +        } catch (IOException e) {
@@ -97,11 +92,11 @@ index 1dd0657139..b809114a0b 100644
 +    }
 +
  }
-diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 963a61a432..128db78839 100644
---- a/src/main/java/net/minecraft/server/Entity.java
-+++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1532,6 +1532,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index fbd59ec73a..e3b17f970a 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -1624,6 +1624,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
          }
      }
  
@@ -110,10 +105,10 @@ index 963a61a432..128db78839 100644
          return this.isPassenger() ? false : this.a_(nbttagcompound);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index c8c0695dfe..a7a0b9f968 100644
+index 95d008fa11..4c7117c2ba 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -184,6 +184,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -188,6 +188,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      private EntityDamageEvent lastDamageEvent;
      private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
  

@@ -1,17 +1,17 @@
-From 58cd7e661e37ff7686ea19ab34618ed7b2b62b61 Mon Sep 17 00:00:00 2001
+From ed24bac193ed1abd3da969441cc7c812dd200618 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 15 Jun 2016 22:06:57 -0400
 Subject: [PATCH] Don't trigger Lootable Refresh for non player interaction
 
 ---
- src/main/java/net/minecraft/server/TileEntityLootable.java | 1 +
+ .../minecraft/world/level/block/entity/TileEntityLootable.java   | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/src/main/java/net/minecraft/server/TileEntityLootable.java b/src/main/java/net/minecraft/server/TileEntityLootable.java
-index c6df231876..cab69b8855 100644
---- a/src/main/java/net/minecraft/server/TileEntityLootable.java
-+++ b/src/main/java/net/minecraft/server/TileEntityLootable.java
-@@ -50,6 +50,7 @@ public abstract class TileEntityLootable extends TileEntityContainer {
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityLootable.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityLootable.java
+index f0da819627..54a219c094 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityLootable.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityLootable.java
+@@ -69,6 +69,7 @@ public abstract class TileEntityLootable extends TileEntityContainer {
      }
  
      public void d(@Nullable EntityHuman entityhuman) {
