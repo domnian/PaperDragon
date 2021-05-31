@@ -1,4 +1,4 @@
-From b2efe38fee2161c16c18a25d1b5d052dbd0ea842 Mon Sep 17 00:00:00 2001
+From 30087c40596144f468e521fb5461f3d14ec51746 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 22 Dec 2012 00:35:15 -0500
 Subject: [PATCH] PlayerUseItem Event
@@ -10,7 +10,7 @@ This lets us control when an item is consumed and change the item.
  2 files changed, 77 insertions(+), 14 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerInteractManager.java b/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
-index 8772228569..fbfbc49585 100644
+index 8772228569..f8773af1f6 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerInteractManager.java
 @@ -8,6 +8,7 @@ import net.minecraft.network.protocol.game.PacketPlayInBlockDig;
@@ -29,7 +29,7 @@ index 8772228569..fbfbc49585 100644
 +        org.bukkit.inventory.EquipmentSlot bukkitHand = enumhand == EnumHand.MAIN_HAND ? org.bukkit.inventory.EquipmentSlot.HAND : org.bukkit.inventory.EquipmentSlot.OFF_HAND;
 +        org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
 +        org.bukkit.craftbukkit.inventory.CraftItemStack origItemClone = craftitem.clone();
-+        com.empireminecraft.customevents.PlayerUseItemEvent event = new com.empireminecraft.customevents.PlayerUseItemEvent(player.getBukkitEntity(), craftitem, bukkitHand);
++        com.domnian.paperdragon.events.PlayerUseItemEvent event = new com.domnian.paperdragon.events.PlayerUseItemEvent(player.getBukkitEntity(), craftitem, bukkitHand);
 +        if (!event.callEvent()) {
 +            return EnumInteractionResult.FAIL;
 +        }
@@ -113,7 +113,7 @@ index 8772228569..fbfbc49585 100644
 +                // Paper start - Allow control over if item should be consumed or not.
 +                org.bukkit.inventory.EquipmentSlot bukkitHand = enumhand == EnumHand.MAIN_HAND ? org.bukkit.inventory.EquipmentSlot.HAND : org.bukkit.inventory.EquipmentSlot.OFF_HAND;
 +                org.bukkit.craftbukkit.inventory.CraftItemStack craftitem = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(itemstack);
-+                com.empireminecraft.customevents.PlayerPlaceItemAtEvent eventPlace = new com.empireminecraft.customevents.PlayerPlaceItemAtEvent(
++                com.domnian.paperdragon.events.PlayerPlaceItemAtEvent eventPlace = new com.domnian.paperdragon.events.PlayerPlaceItemAtEvent(
 +                        (org.bukkit.entity.Player) entityplayer.getBukkitEntity(), craftitem,
 +                        MCUtil.toLocation(world, blockposition),
 +                        org.bukkit.craftbukkit.block.CraftBlock.notchToBlockFace(movingobjectpositionblock.getDirection()),

@@ -1,4 +1,4 @@
-From cbe058f65bd89c787497aa9ee106af9ce2704bf6 Mon Sep 17 00:00:00 2001
+From ce01053935cbf4cbc38a7a80351b5679efb9ecc2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 9 Sep 2013 19:41:07 -0400
 Subject: [PATCH] Better hopper events
@@ -11,7 +11,7 @@ Subject: [PATCH] Better hopper events
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HopperEvents.java b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
 new file mode 100644
-index 0000000000..84f23c673b
+index 0000000000..de1f888f75
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
 @@ -0,0 +1,32 @@
@@ -19,8 +19,8 @@ index 0000000000..84f23c673b
 +
 +import com.domnian.paperdragon.events.HopperDrainEvent;
 +import com.domnian.paperdragon.events.HopperFillEvent;
-+import net.minecraft.server.BlockPosition;
-+import net.minecraft.server.EnumDirection;
++import net.minecraft.core.BlockPosition;
++import net.minecraft.core.EnumDirection;
 +import org.bukkit.Bukkit;
 +import org.bukkit.craftbukkit.CraftWorld;
 +import org.bukkit.inventory.Inventory;
@@ -48,14 +48,14 @@ index 0000000000..84f23c673b
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
-index 537dc52e5f..069760af5f 100644
+index 537dc52e5f..53477ef09c 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 @@ -358,6 +358,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
          } else {
              EnumDirection enumdirection = ((EnumDirection) this.getBlock().get(BlockHopper.FACING)).opposite();
  
-+            if (com.domnian.paperdragon.api.HopperEvents.fill(((WorldServer)world).getWorld(), this.getOwner(false).getInventory(), this.position, enumdirection)) { return false; } // PaperDragon
++            if (com.domnian.paperdragon.api.HopperEvents.fill(world.getWorld(), this.getOwner(false).getInventory(), this.position, enumdirection)) { return false; } // PaperDragon
              if (this.b(iinventory, enumdirection)) {
                  return false;
              } else {

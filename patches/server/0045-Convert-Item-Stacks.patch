@@ -1,4 +1,4 @@
-From 572d011c30794640bf65ed20930489bc749c02ef Mon Sep 17 00:00:00 2001
+From 80e5db6a35f1783f6c46b7aae8b45cd8bda1a3ea Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
@@ -11,7 +11,7 @@ Subject: [PATCH] Convert Item Stacks
  4 files changed, 54 insertions(+), 12 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 18671d5707..e3c02f2a22 100644
+index 18671d5707..24513f205f 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -197,12 +197,23 @@ public final class ItemStack {
@@ -22,12 +22,12 @@ index 18671d5707..e3c02f2a22 100644
      // Called to run this stack through the data converter to handle older storage methods and serialized items
      public void convertStack(int version) {
 -        if (0 < version && version < CraftMagicNumbers.INSTANCE.getDataVersion()) {
-+        if (0 < version && version < DataConverters.DATA_VERSION && tag != null) { // Paper
++        if (0 < version && version < net.minecraft.util.datafix.DataConverters.DATA_VERSION && tag != null) { // Paper
              NBTTagCompound savedStack = new NBTTagCompound();
              this.save(savedStack);
 -            savedStack = (NBTTagCompound) MinecraftServer.getServer().dataConverterManager.update(DataConverterTypes.ITEM_STACK, new Dynamic(DynamicOpsNBT.a, savedStack), version, CraftMagicNumbers.INSTANCE.getDataVersion()).getValue();
 +            NBTTagCompound orig = DEBUG_CONVERSIONS ? savedStack.clone() : null; // Paper
-+            savedStack = DataConverters.convert(DataConverterTypes.ITEM_STACK, savedStack, version); // Paper
++            savedStack = net.minecraft.util.datafix.DataConverters.convert(DataConverterTypes.ITEM_STACK, savedStack, version); // Paper
 +            // Paper start
 +            if (DEBUG_CONVERSIONS) {
 +                boolean equals = orig.equals(savedStack);
