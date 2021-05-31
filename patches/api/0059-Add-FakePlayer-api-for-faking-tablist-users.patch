@@ -1,4 +1,4 @@
-From 37ab24e02ee38dc3c96f8debba4caef60c1c0c7e Mon Sep 17 00:00:00 2001
+From 46d04eeaa40f3f1ab133e99da2244b493a78ce19 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 29 Dec 2020 01:31:22 -0600
 Subject: [PATCH] Add FakePlayer api for faking tablist users
@@ -95,7 +95,7 @@ index 000000000..01b787177
 +
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index b5d8169c8..1ac4cdf7b 100644
+index 67a496b52..7da5466d1 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -7,6 +7,7 @@ import com.destroystokyo.paper.ClientOption; // Paper
@@ -106,7 +106,7 @@ index b5d8169c8..1ac4cdf7b 100644
  import java.util.Date; // Paper
  import org.bukkit.BanEntry; // Paper
  import org.bukkit.BanList; // Paper
-@@ -1229,6 +1230,40 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1237,6 +1238,40 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

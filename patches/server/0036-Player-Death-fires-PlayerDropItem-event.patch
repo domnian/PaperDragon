@@ -1,4 +1,4 @@
-From 0ac458268e5873216dab3bad23de29cd91f2c709 Mon Sep 17 00:00:00 2001
+From 52bd78211e337ff53f25a4aa03b522d92c9f8b1d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 17 Jan 2016 03:42:03 -0500
 Subject: [PATCH] Player Death fires PlayerDropItem event
@@ -21,10 +21,10 @@ index f669b47888..362add53ce 100644
          // Paper start - Fix duplicating /give items on item drop cancel
          return this.drop(itemstack, flag, flag1, false);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 82dc93f999..cd81b840e9 100644
+index d309ecd59d..f514eda386 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -912,7 +912,7 @@ public class CraftEventFactory {
+@@ -915,7 +915,7 @@ public class CraftEventFactory {
          for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
              if (stack == null || stack.getType() == Material.AIR) continue;
  

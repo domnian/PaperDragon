@@ -1,4 +1,4 @@
-From bb7351821ba794878b0160e0739759aca0a3e53a Mon Sep 17 00:00:00 2001
+From 53400b3482b42eb290229068776a053f719f072a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 4 Mar 2013 23:35:02 -0500
 Subject: [PATCH] Persistent and Temporary Meta API
@@ -750,7 +750,7 @@ index 0000000000..5db3a47fe7
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 300884804b..22ad912346 100644
+index 6835401bd7..935c292fa2 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 @@ -1339,6 +1339,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -762,7 +762,7 @@ index 300884804b..22ad912346 100644
                  }
  
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 7e032845fe..c05a7e0cd2 100644
+index f68a252378..02098be281 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -174,7 +174,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -775,7 +775,7 @@ index 7e032845fe..c05a7e0cd2 100644
      public final List<EntityPlayer> players = Lists.newArrayList(); // Paper - private -> public
      public final ChunkProviderServer chunkProvider; // Paper - public
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 429f0591c6..0b60b70210 100644
+index 6fdcd96fd7..f3bcc59337 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -145,6 +145,7 @@ import org.bukkit.plugin.PluginManager;
@@ -784,7 +784,7 @@ index 429f0591c6..0b60b70210 100644
      // CraftBukkit start
 +    public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
      private static final int CURRENT_LEVEL = 2;
-     boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
+     public boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 @@ -1633,6 +1634,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
                  this.yaw = 0;
@@ -803,10 +803,10 @@ index 429f0591c6..0b60b70210 100644
              if (!originTag.isEmpty()) {
                  origin = new org.bukkit.Location(world.getWorld(), originTag.getDoubleAt(0), originTag.getDoubleAt(1), originTag.getDoubleAt(2));
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 2fc9bdcc54..eaa7d63d9e 100644
+index 6ab7906f48..9f9605bd21 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -186,7 +186,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -195,7 +195,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName()); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName(), this.spigotConfig); // Paper
          this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this, executor) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
@@ -815,7 +815,7 @@ index 2fc9bdcc54..eaa7d63d9e 100644
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
-@@ -502,6 +502,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -511,6 +511,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                      this.a(blockposition, iblockdata1, iblockdata2);
                  }
                  */
@@ -910,7 +910,7 @@ index 4eaf497d04..55c5f6d6ba 100644
          nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
          nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 diff --git a/src/main/java/net/minecraft/world/level/storage/WorldDataServer.java b/src/main/java/net/minecraft/world/level/storage/WorldDataServer.java
-index 202d0aea44..cea69e4693 100644
+index 16ebfe8d87..dc64de32f6 100644
 --- a/src/main/java/net/minecraft/world/level/storage/WorldDataServer.java
 +++ b/src/main/java/net/minecraft/world/level/storage/WorldDataServer.java
 @@ -85,6 +85,7 @@ public class WorldDataServer implements IWorldDataServer, SaveData {
@@ -959,10 +959,10 @@ index 98ab124b4d..9d3e981b1c 100644
      private final int x;
      private final int z;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 865ae39938..1a49e4fc17 100644
+index de8c2e9055..ba939d5fdd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -949,6 +949,9 @@ public final class CraftServer implements Server {
+@@ -965,6 +965,9 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }
@@ -1018,10 +1018,10 @@ index 295ffab086..95d008fa11 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index b14cec316b..4703c067ce 100644
+index a678277416..24766ed37b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1466,6 +1466,11 @@ public class CraftEventFactory {
+@@ -1469,6 +1469,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.activeContainer.getBukkitView(), reason); // Paper
          human.world.getServer().getPluginManager().callEvent(event);
          human.activeContainer.transferTo(human.defaultContainer, human.getBukkitEntity());
@@ -1034,7 +1034,7 @@ index b14cec316b..4703c067ce 100644
  
      public static ItemStack handleEditBookEvent(EntityPlayer player, int itemInHandIndex, ItemStack itemInHand, ItemStack newBookItem) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index c3fa97ac34..c582e879ae 100644
+index f6001047ad..dced6fc8f5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 @@ -32,6 +32,17 @@ import org.bukkit.inventory.ItemStack;

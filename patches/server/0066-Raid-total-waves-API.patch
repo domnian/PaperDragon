@@ -1,4 +1,4 @@
-From a3ceb1aeb1798fe01fff2bce85373e95a24c91fe Mon Sep 17 00:00:00 2001
+From 07d68c5b3447c5e5f5a0972c87bc7408cfb37ad7 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Sat, 6 Jun 2020 21:17:28 -0500
 Subject: [PATCH] Raid total waves API
@@ -65,10 +65,10 @@ index aa405523dd..746c019cb1 100644
      public float getTotalHealth() {
          return handle.sumMobHealth();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 928645439e..4f477fda1a 100644
+index 78c7150df3..784eaf25cd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1783,7 +1783,7 @@ public class CraftEventFactory {
+@@ -1786,7 +1786,7 @@ public class CraftEventFactory {
       * Raid events
       */
      public static boolean callRaidTriggerEvent(Raid raid, EntityPlayer player) {

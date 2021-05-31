@@ -1,4 +1,4 @@
-From 47547f23a64d46d3746a297f844a9708e9a85479 Mon Sep 17 00:00:00 2001
+From 77312758e9a2ba6c0498aecbebb9783065c63bad Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Mon, 16 Mar 2020 03:07:02 -0400
 Subject: [PATCH] dont load chunks for physics
@@ -9,10 +9,10 @@ Subject: [PATCH] dont load chunks for physics
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index eaa7d63d9e..a4169c3980 100644
+index 9f9605bd21..07d2351877 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -665,7 +665,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -674,7 +674,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public void neighborChanged(BlockPosition pos, Block blockIn, BlockPosition fromPos) { a(pos, blockIn, fromPos); } // Paper - OBFHELPER
      public void a(BlockPosition blockposition, Block block, BlockPosition blockposition1) {
          if (!this.isClientSide) {

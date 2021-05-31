@@ -1,4 +1,4 @@
-From dc899c21b4cce01ca60e7515e0330f3c26e2bbd2 Mon Sep 17 00:00:00 2001
+From 29b7f06b84c998523cba47b4ef9249e80fa49370 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:08:31 -0400
 Subject: [PATCH] Implement AdvancementBroadcastEvent
@@ -8,25 +8,25 @@ Subject: [PATCH] Implement AdvancementBroadcastEvent
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 7a8a196088..f2d7202e75 100644
+index dfdbc028f6..cc922fc676 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -316,7 +316,14 @@ public class AdvancementDataPlayer {
-                 this.player.world.getServer().getPluginManager().callEvent(new org.bukkit.event.player.PlayerAdvancementDoneEvent(this.player.getBukkitEntity(), advancement.bukkit)); // CraftBukkit
+@@ -324,7 +324,14 @@ public class AdvancementDataPlayer {
                  advancement.d().a(this.player);
-                 if (advancement.c() != null && advancement.c().i() && this.player.world.getGameRules().getBoolean(GameRules.ANNOUNCE_ADVANCEMENTS)) {
--                    this.e.sendMessage(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[]{this.player.getScoreboardDisplayName(), advancement.j()}), ChatMessageType.SYSTEM, SystemUtils.b);
+                 // Paper start - Add Adventure message to PlayerAdvancementDoneEvent
+                 if (message != null && this.player.world.getGameRules().getBoolean(GameRules.ANNOUNCE_ADVANCEMENTS)) {
+-                    this.e.sendMessage(PaperAdventure.asVanilla(message), ChatMessageType.SYSTEM, SystemUtils.getNullUUID());
 +                    // PaperDragon start - AdvancementBroadcastEvent
-+                    net.minecraft.network.chat.IChatBaseComponent adv = org.bukkit.craftbukkit.util.CraftChatMessage.fixComponent(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
-+                    com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());
-+                    event.callEvent();
-+                    for (org.bukkit.entity.Player player : event.getReceivers()) {
-+                        ((org.bukkit.craftbukkit.entity.CraftPlayer) player).getHandle().sendMessage(adv, SystemUtils.b);
++                    com.domnian.paperdragon.events.AdvancementBroadcastEvent bc_event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());
++                    bc_event.callEvent();
++                    for (org.bukkit.entity.Player player : bc_event.getReceivers()) {
++                        org.bukkit.craftbukkit.entity.CraftPlayer craft = ((org.bukkit.craftbukkit.entity.CraftPlayer) player);
++                        craft.getHandle().sendMessage(PaperAdventure.asVanilla(message), ChatMessageType.SYSTEM, SystemUtils.getNullUUID());
 +                    }
 +                    // PaperDragon end
+                     // Paper end
                  }
              }
-         }
 -- 
 2.20.1.windows.1
 

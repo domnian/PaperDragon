@@ -1,18 +1,18 @@
-From 1cd831fa50390d74dd46d9952e350a46af7cb189 Mon Sep 17 00:00:00 2001
+From 3d35715b33bb06eece9c7546c05ddcd99d50ac81 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 19 Feb 2021 03:57:17 -0500
 Subject: [PATCH] Generate the UUID for the head from the skin hash
 
 This will always result in the same UUID for a given hash
 ---
- .../domnian/paperdragon/api/CraftDAPI_Heads.java    | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ .../domnian/paperdragon/api/CraftDAPI_Heads.java   | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-index c62c063d8f..5ec7a334d3 100644
+index c62c063d8f..aef0e593b0 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagList;
+@@ -15,11 +15,13 @@ import net.minecraft.nbt.NBTTagList;
  import net.minecraft.world.item.ItemStack;
  import net.minecraft.world.item.Items;
  import org.apache.commons.codec.binary.Base64;
@@ -20,7 +20,13 @@ index c62c063d8f..5ec7a334d3 100644
  import org.bukkit.ChatColor;
  import org.bukkit.Material;
  import org.bukkit.inventory.meta.SkullMeta;
-@@ -65,7 +66,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+ 
+ import java.lang.reflect.Method;
++import java.math.BigInteger;
+ import java.nio.charset.Charset;
+ import java.util.UUID;
+ 
+@@ -65,7 +67,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
                      props = new NBTTagCompound(),
                      textData = new NBTTagCompound();
              NBTTagList textures = new NBTTagList();
@@ -29,14 +35,14 @@ index c62c063d8f..5ec7a334d3 100644
              textData.setString("Value", getTextureData(url));
              textures.add(textData);
              props.set("textures", textures);
-@@ -76,6 +77,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+@@ -76,6 +78,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
          }
      }
  
 +    private static UUID skinHashToUUID(String hash) {
 +        hash = StringUtils.leftPad(hash, 64, '0');
-+        long high = Long.parseLong(hash.substring(0, 16), 16);
-+        long low = Long.parseLong(hash.substring(48), 16);
++        long high = new BigInteger(hash.substring(0, 16), 16).longValue();
++        long low = new BigInteger(hash.substring(48), 16).longValue();
 +        return new UUID(
 +                (high & 0xFFFFFFFFFFFF0FFFL) | 0x0000000000004000L, // Set version to 4
 +                (low  & 0x3FFFFFFFFFFFFFFFL) | 0x8000000000000000L // Set to IETF variant

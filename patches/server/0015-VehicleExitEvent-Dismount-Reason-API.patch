@@ -1,4 +1,4 @@
-From dc41312af558a3abae489c297252484521845ff4 Mon Sep 17 00:00:00 2001
+From c6ba9dcee762a388cb9ed360926b5d7f32842951 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 7 Aug 2013 19:52:14 -0400
 Subject: [PATCH] VehicleExitEvent Dismount Reason API
@@ -11,7 +11,7 @@ Subject: [PATCH] VehicleExitEvent Dismount Reason API
  4 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index aaa6f3aeaf..2b480afb0e 100644
+index 90776231b1..2dcd80b6ac 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -624,6 +624,7 @@ public abstract class PlayerList {
@@ -23,7 +23,7 @@ index aaa6f3aeaf..2b480afb0e 100644
                  worldserver.removeEntity(entity);
                  entity.dead = true;
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e3b17f970a..4608360f1d 100644
+index f94e79acea..258a712aa4 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -372,6 +372,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
@@ -89,7 +89,7 @@ index e3b17f970a..4608360f1d 100644
          return this.invulnerable && damagesource != DamageSource.OUT_OF_WORLD && !damagesource.v() && !isDisabled; // PaperDragon - add && !isDisabled
      }
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 71afc10166..d767cfaa96 100644
+index 870d3d68b1..fc1e2e29f1 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -404,6 +404,7 @@ public abstract class EntityLiving extends Entity {
@@ -100,7 +100,7 @@ index 71afc10166..d767cfaa96 100644
                      this.stopRiding();
                  }
              } else if (this.getAirTicks() < this.bH()) {
-@@ -3574,6 +3575,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3597,6 +3598,7 @@ public abstract class EntityLiving extends Entity {
  
      public void entitySleep(BlockPosition blockposition) {
          if (this.isPassenger()) {

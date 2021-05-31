@@ -1,4 +1,4 @@
-From fec5b6750f59f56479c3d8b9892fe054b764f2c2 Mon Sep 17 00:00:00 2001
+From de520d94d576ec93bc3f6ef34bf32feede69554d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Tue, 11 Jun 2013 23:15:00 -0400
 Subject: [PATCH] EntityTasks API
@@ -93,7 +93,7 @@ index 0000000000..74b5598889
 +    public static class TaskList extends ArrayList<EntityTask> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index c05a7e0cd2..e569e363b3 100644
+index 02098be281..48f0bb9809 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -949,6 +949,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -114,7 +114,7 @@ index c05a7e0cd2..e569e363b3 100644
              }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 0b60b70210..daa14f510c 100644
+index f3bcc59337..c332a4a237 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -146,6 +146,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
@@ -123,13 +123,13 @@ index 0b60b70210..daa14f510c 100644
      public com.domnian.paperdragon.api.meta.PersistentMetaMap metaMap = null; // PaperDragon
 +    public net.minecraft.server.EntityTasksHandler.TaskList entityTasks = new net.minecraft.server.EntityTasksHandler.TaskList(); // PaperDragon
      private static final int CURRENT_LEVEL = 2;
-     boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
+     public boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
      static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1a49e4fc17..49bde1b677 100644
+index ba939d5fdd..9bb126c713 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -951,6 +951,7 @@ public final class CraftServer implements Server {
+@@ -967,6 +967,7 @@ public final class CraftServer implements Server {
          }
          // PaperDragon start
          net.minecraft.server.MetaApiAccessor.reload();

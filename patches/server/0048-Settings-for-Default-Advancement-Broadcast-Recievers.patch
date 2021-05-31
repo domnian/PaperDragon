@@ -1,4 +1,4 @@
-From f1c3f34a2b9f4b55e5553320df74e7fc8edd9b2e Mon Sep 17 00:00:00 2001
+From 2b50a534fcd54394b2ea68659e17c72d27c88256 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Thu, 15 Jun 2017 17:42:33 -0400
 Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
@@ -40,25 +40,25 @@ index 2a180d5a45..107135de9e 100644
  
  }
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index f2d7202e75..3d5cef1abd 100644
+index cc922fc676..9650080b60 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-@@ -319,6 +319,15 @@ public class AdvancementDataPlayer {
+@@ -326,6 +326,15 @@ public class AdvancementDataPlayer {
+                 if (message != null && this.player.world.getGameRules().getBoolean(GameRules.ANNOUNCE_ADVANCEMENTS)) {
                      // PaperDragon start - AdvancementBroadcastEvent
-                     net.minecraft.network.chat.IChatBaseComponent adv = org.bukkit.craftbukkit.util.CraftChatMessage.fixComponent(new ChatMessage("chat.type.advancement." + advancement.c().e().a(), new Object[] { this.player.getScoreboardDisplayName(), advancement.j()}));
-                     com.domnian.paperdragon.events.AdvancementBroadcastEvent event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());
+                     com.domnian.paperdragon.events.AdvancementBroadcastEvent bc_event = new com.domnian.paperdragon.events.AdvancementBroadcastEvent(this.player.getBukkitEntity());
 +                    if (com.domnian.paperdragon.DragonWorldConfig.broadcastAdvancementsToWorld) {
 +                        List<net.minecraft.world.entity.player.EntityHuman> humans = (List<net.minecraft.world.entity.player.EntityHuman>) this.player.getWorld().getPlayers();
 +                        List<org.bukkit.entity.Player> players = new java.util.ArrayList<>();
 +                        humans.forEach(human -> players.add((org.bukkit.entity.Player) human.getBukkitEntity()));
-+                        event.setReceivers(players);
++                        bc_event.setReceivers(players);
 +                    }
 +                    if (com.domnian.paperdragon.DragonConfig.broadcastAdvancementsToServer) {
-+                        event.setReceivers(new java.util.ArrayList<>(org.bukkit.Bukkit.getOnlinePlayers()));
++                        bc_event.setReceivers(new java.util.ArrayList<>(org.bukkit.Bukkit.getOnlinePlayers()));
 +                    }
-                     event.callEvent();
-                     for (org.bukkit.entity.Player player : event.getReceivers()) {
-                         ((org.bukkit.craftbukkit.entity.CraftPlayer) player).getHandle().sendMessage(adv, SystemUtils.b);
+                     bc_event.callEvent();
+                     for (org.bukkit.entity.Player player : bc_event.getReceivers()) {
+                         org.bukkit.craftbukkit.entity.CraftPlayer craft = ((org.bukkit.craftbukkit.entity.CraftPlayer) player);
 -- 
 2.20.1.windows.1
 

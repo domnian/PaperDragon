@@ -1,4 +1,4 @@
-From b3703695f16688118006a38cf49ab67a576c9712 Mon Sep 17 00:00:00 2001
+From 9d9e298dca292bfe954c6e7fc00e79dae625bb5d Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
 Date: Fri, 10 Jun 2016 04:04:32 -0400
 Subject: [PATCH] PaperDragon Config Files
@@ -267,7 +267,7 @@ index 0000000000..2a180d5a45
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index df8270c40e..41071cf754 100644
+index 1929b992be..2bbb61096b 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -215,6 +215,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -282,7 +282,7 @@ index df8270c40e..41071cf754 100644
          this.setPVP(dedicatedserverproperties.pvp);
          this.setAllowFlight(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 6581fe0d93..2fc9bdcc54 100644
+index f7f593a9e5..6ab7906f48 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -155,6 +155,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -293,7 +293,7 @@ index 6581fe0d93..2fc9bdcc54 100644
      public static BlockPosition lastPhysicsProblem; // Spigot
      private org.spigotmc.TickLimiter entityLimiter;
      private org.spigotmc.TickLimiter tileLimiter;
-@@ -185,6 +186,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -194,6 +195,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName()); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName(), this.spigotConfig); // Paper
          this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this, executor) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
@@ -302,10 +302,10 @@ index 6581fe0d93..2fc9bdcc54 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1a0b3e2313..affd978602 100644
+index cebecee640..9d690c55d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -864,6 +864,7 @@ public final class CraftServer implements Server {
+@@ -880,6 +880,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
@@ -313,7 +313,7 @@ index 1a0b3e2313..affd978602 100644
          for (WorldServer world : console.getWorlds()) {
              world.worldDataServer.setDifficulty(config.difficulty);
              world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -898,6 +899,7 @@ public final class CraftServer implements Server {
+@@ -914,6 +915,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -321,7 +321,7 @@ index 1a0b3e2313..affd978602 100644
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -916,6 +918,8 @@ public final class CraftServer implements Server {
+@@ -932,6 +934,8 @@ public final class CraftServer implements Server {
          reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -330,7 +330,7 @@ index 1a0b3e2313..affd978602 100644
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2343,6 +2347,13 @@ public final class CraftServer implements Server {
+@@ -2371,6 +2375,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -345,12 +345,12 @@ index 1a0b3e2313..affd978602 100644
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 154f3a6a3d..b9732f883f 100644
+index 409fbeeb66..67520500c6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -148,6 +148,14 @@ public class Main {
-                         .defaultsTo("Unknown Server")
-                         .describedAs("Name");
+@@ -160,6 +160,14 @@ public class Main {
+                         .defaultsTo(new File[] {})
+                         .describedAs("Specify paths to extra plugin jars to be loaded in addition to those in the plugins folder. This argument can be specified multiple times, once for each extra plugin jar path.");
                  // Paper end
 +
 +                // PaperDragon Start

@@ -1,17 +1,17 @@
-From 80e5db6a35f1783f6c46b7aae8b45cd8bda1a3ea Mon Sep 17 00:00:00 2001
+From a2a6408f4c5eb4057a4d8d1db67475ca2fc82ae5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sat, 30 Mar 2019 00:45:12 -0400
 Subject: [PATCH] Convert Item Stacks
 
 ---
  .../net/minecraft/world/item/ItemStack.java   | 15 +++++++++++--
- .../inventory/CraftItemFactory.java           | 19 +++++++++++++++--
+ .../inventory/CraftItemFactory.java           | 18 +++++++++++++++-
  .../craftbukkit/inventory/CraftItemStack.java | 21 +++++++++++++++----
  .../craftbukkit/inventory/CraftMetaItem.java  | 11 ++++++----
- 4 files changed, 54 insertions(+), 12 deletions(-)
+ 4 files changed, 54 insertions(+), 11 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 18671d5707..24513f205f 100644
+index 84b303cbdf..22ce5e2d24 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -197,12 +197,23 @@ public final class ItemStack {
@@ -41,14 +41,13 @@ index 18671d5707..24513f205f 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index 6966b9d1ce..4e3b35bc50 100644
+index 347c23d4b7..f298cf0651 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-@@ -342,10 +342,25 @@ public final class CraftItemFactory implements ItemFactory {
-         return net.kyori.adventure.text.event.HoverEvent.showItem(op.apply(net.kyori.adventure.text.event.HoverEvent.ShowItem.of(item.getType().getKey(), item.getAmount(), io.papermc.paper.adventure.PaperAdventure.asBinaryTagHolder(tag))));
+@@ -348,9 +348,25 @@ public final class CraftItemFactory implements ItemFactory {
      }
  
--    // Paper start
+     // Paper start
 +    public ItemStack _asServerItemStack(ItemStack item) {
 +        if (item instanceof CraftItemStack) {
 +            return item;
