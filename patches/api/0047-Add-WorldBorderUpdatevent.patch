@@ -1,0 +1,63 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 19 Dec 2019 03:23:39 -0500
+Subject: [PATCH] Add WorldBorderUpdatevent
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/WorldBorderUpdateEvent.java b/src/main/java/com/domnian/paperdragon/events/WorldBorderUpdateEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..6549b81f433a6e8ee85d50fe39569266b885bf38
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/WorldBorderUpdateEvent.java
+@@ -0,0 +1,51 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.World;
++import org.bukkit.WorldBorder;
++import org.bukkit.event.HandlerList;
++import org.bukkit.event.world.WorldEvent;
++import org.jetbrains.annotations.NotNull;
++
++public class WorldBorderUpdateEvent extends WorldEvent {
++
++    private static HandlerList handlerList = new HandlerList();
++
++    private Type type;
++
++    public WorldBorderUpdateEvent(@NotNull World world, @NotNull Type type) {
++        super(world);
++        this.type = type;
++    }
++
++    @NotNull
++    public Type getUpdateType() {
++        return type;
++    }
++
++    @NotNull
++    public WorldBorder getBorder() {
++        return this.getWorld().getWorldBorder();
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlerList;
++    }
++
++    @NotNull
++    @Override
++    public HandlerList getHandlers() {
++        return handlerList;
++    }
++
++    public enum Type {
++        SIZE,
++        SIZE_TRANSITION,
++        CENTER,
++        WARNING_TIME,
++        WARNING_DISTANCE,
++        DAMAGE_AMOUNT,
++        DAMAGE_BUFFER
++    }
++
++}

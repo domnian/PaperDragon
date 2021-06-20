@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 17 Nov 2015 01:02:10 -0500
+Subject: [PATCH] Make vehicle events entity events and for all entities
+
+
+diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleEnterEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleEnterEvent.java
+index 64f21f684912ed158d03040f442c32983ab49ea7..f65934b4ba8d7bd047f21f651c2618082120fb19 100644
+--- a/src/main/java/org/bukkit/event/vehicle/VehicleEnterEvent.java
++++ b/src/main/java/org/bukkit/event/vehicle/VehicleEnterEvent.java
+@@ -14,7 +14,7 @@ public class VehicleEnterEvent extends VehicleEvent implements Cancellable {
+     private boolean cancelled;
+     private final Entity entered;
+ 
+-    public VehicleEnterEvent(@NotNull final Vehicle vehicle, @NotNull final Entity entered) {
++    public VehicleEnterEvent(@NotNull final Entity vehicle, @NotNull final Entity entered) { // PaperDragon
+         super(vehicle);
+         this.entered = entered;
+     }
+diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleEvent.java
+index 63df270565ed717574d6baa7839d43350944b281..4c56d456d825bb835b5052608b179864decff6a4 100644
+--- a/src/main/java/org/bukkit/event/vehicle/VehicleEvent.java
++++ b/src/main/java/org/bukkit/event/vehicle/VehicleEvent.java
+@@ -1,16 +1,19 @@
+ package org.bukkit.event.vehicle;
+ 
++import org.bukkit.entity.Entity;
+ import org.bukkit.entity.Vehicle;
+ import org.bukkit.event.Event;
+ import org.jetbrains.annotations.NotNull;
++import org.bukkit.event.entity.EntityEvent; // PaperDragon
+ 
+ /**
+  * Represents a vehicle-related event.
+  */
+-public abstract class VehicleEvent extends Event {
+-    protected Vehicle vehicle;
++public abstract class VehicleEvent extends EntityEvent { // PaperDragon
++    protected Entity vehicle; // PaperDragon
+ 
+-    public VehicleEvent(@NotNull final Vehicle vehicle) {
++    public VehicleEvent(@NotNull final Entity vehicle) { // PaperDragon
++        super(vehicle); // PaperDragon
+         this.vehicle = vehicle;
+     }
+ 
+@@ -20,7 +23,7 @@ public abstract class VehicleEvent extends Event {
+      * @return the vehicle
+      */
+     @NotNull
+-    public final Vehicle getVehicle() {
++    public final Entity getVehicle() { // PaperDragon
+         return vehicle;
+     }
+ }
+diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
+index ae50ecfbf4107ccdb6a3a427ca7875d9c498b785..6a30f55d901d7325ceec4d484b5b4c5754ad87b7 100644
+--- a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
++++ b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
+@@ -1,5 +1,6 @@
+ package org.bukkit.event.vehicle;
+ 
++import org.bukkit.entity.Entity; // PaperDragon
+ import org.bukkit.entity.LivingEntity;
+ import org.bukkit.entity.Vehicle;
+ import org.bukkit.event.Cancellable;
+@@ -25,7 +26,7 @@ public class VehicleExitEvent extends VehicleEvent implements Cancellable {
+     private final LivingEntity exited;
+     private final boolean isCancellable; // Paper
+ 
+-    public VehicleExitEvent(@NotNull final Vehicle vehicle, @NotNull final LivingEntity exited, boolean isCancellable) { // Paper
++    public VehicleExitEvent(@NotNull Entity vehicle, @NotNull LivingEntity exited, boolean isCancellable) { // Paper - // PaperDragon
+         super(vehicle);
+         this.exited = exited;
+         // Paper start

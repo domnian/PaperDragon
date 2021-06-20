@@ -1,0 +1,51 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 7 Aug 2016 15:16:15 -0400
+Subject: [PATCH] Add PlayerHitPlayer Event
+
+Fired when a player hits another player, regardless of gamemode
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/PlayerHitPlayerEvent.java b/src/main/java/com/domnian/paperdragon/events/PlayerHitPlayerEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..8bbfb1b5c00a92540148b7f824a469332eb4263c
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/PlayerHitPlayerEvent.java
+@@ -0,0 +1,37 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.entity.Player;
++import org.bukkit.event.HandlerList;
++import org.bukkit.event.player.PlayerEvent;
++import org.bukkit.inventory.ItemStack;
++
++public class PlayerHitPlayerEvent extends PlayerEvent {
++
++    private static final HandlerList handlers = new HandlerList();
++    private final Player target;
++    private ItemStack item;
++
++    public PlayerHitPlayerEvent(Player who, Player target, ItemStack item) {
++        super(who);
++        this.target = target;
++        this.item = item;
++    }
++
++    @Override
++    public HandlerList getHandlers() {
++       return handlers;
++    }
++
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++
++    public Player getTarget() {
++        return target;
++    }
++
++    public ItemStack getItem() {
++        return item;
++    }
++
++}
+\ No newline at end of file
