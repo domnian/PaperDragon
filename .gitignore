@@ -1,7 +1,14 @@
+# Gradle stuff
+.gradle/
+build/
+
 # Eclipse stuff
 .classpath
 .project
 .settings/
+
+# VSCode stuff
+.vscode/
 
 # netbeans
 nbproject/
@@ -18,27 +25,28 @@ dependency-reduced-pom.xml
 .*.sw[a-p]
 
 # various other potential build files
-build/
 bin/
 dist/
 manifest.mf
 
 # Mac filesystem dust
 .DS_Store/
+.DS_Store
 
 # intellij
 *.iml
 *.ipr
 *.iws
 .idea/
+out/
 
 # Linux temp files
 *~
 
 # other stuff
+run/
 
-PaperDragon-Server
 PaperDragon-API
-mc-dev
-origami-*.jar
-ignored
+PaperDragon-Server
+
+!gradle/wrapper/gradle-wrapper.jar
