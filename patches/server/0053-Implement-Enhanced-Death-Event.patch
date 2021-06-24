@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 3 May 2018 21:42:07 -0400
+Subject: [PATCH] Implement Enhanced Death Event
+
+
+diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+index 261c569716f02e15bd91348282d8c6f3d548f410..dd17ada88f30a1dd90865316f3875e92a77ae42f 100644
+--- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
++++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+@@ -829,7 +829,11 @@ public class ServerPlayer extends Player {
+ 
+         Component defaultMessage = this.getCombatTracker().getDeathMessage();
+ 
+-        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
++        // PaperDragon start - Enhanced Player Death Event
++        String deathmessage = defaultMessage.getString();
++        String deathKey = (deathmessage instanceof TranslatableComponent) ? ((TranslatableComponent) defaultMessage).getKey() : "death.attack.generic";
++        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory, deathKey); // Paper - Adventure
++        // PaperDragon end
+         // Paper start - cancellable death event
+         if (event.isCancelled()) {
+             // make compatible with plugins that might have already set the health in an event listener
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 81e762a95849091590ab1ae58759ead8946c7529..543c899ffc557cb0e7d9c9f0f5415394a34b95ba 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -880,11 +880,12 @@ public class CraftEventFactory {
+         return event;
+     }
+ 
+-    public static PlayerDeathEvent callPlayerDeathEvent(ServerPlayer victim, List<org.bukkit.inventory.ItemStack> drops, net.kyori.adventure.text.Component deathMessage, String stringDeathMessage, boolean keepInventory) { // Paper - Adventure
++    public static PlayerDeathEvent callPlayerDeathEvent(ServerPlayer victim, List<org.bukkit.inventory.ItemStack> drops, net.kyori.adventure.text.Component deathMessage, String stringDeathMessage, boolean keepInventory, String key) { // Paper - Adventure // PaperDragon - Pass Translation Key to Death Event
+         CraftPlayer entity = victim.getBukkitEntity();
+         PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage, stringDeathMessage); // Paper - Adventure
+         event.setKeepInventory(keepInventory);
+         populateFields(victim, event); // Paper - make cancellable
++        event.setSourceKey(key);
+         org.bukkit.World world = entity.getWorld();
+         Bukkit.getServer().getPluginManager().callEvent(event);
+         // Paper start - make cancellable

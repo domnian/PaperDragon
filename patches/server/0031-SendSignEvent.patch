@@ -1,0 +1,103 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 8 Jun 2015 23:55:20 -0400
+Subject: [PATCH] SendSignEvent
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a9015d0293a
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+@@ -0,0 +1,44 @@
++package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.events.SendSignEvent;
++import net.minecraft.core.BlockPos;
++import net.minecraft.network.chat.Component;
++import net.minecraft.network.chat.TextComponent;
++import net.minecraft.world.level.Level;
++import org.bukkit.block.Block;
++import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.jetbrains.annotations.NotNull;
++
++public class SendSignEventImpl extends SendSignEvent {
++    public final Component[] lines;
++    private final String[] slines;
++    private final Block block;
++
++    public SendSignEventImpl(Level level, BlockPos position, Component[] lines) {
++        this.block = level.getWorld().getBlockAt(position.getX(), position.getY(), position.getZ());
++        this.lines = new Component[lines.length];
++        this.slines = new String[lines.length];
++        for (int i = 0; i < lines.length; i++) {
++            this.lines[i] = lines[i];
++            slines[i] = CraftChatMessage.fromComponent(lines[i]);
++        }
++    }
++
++    @NotNull
++    public Block getBlock() {
++        return block;
++    }
++
++    @NotNull
++    public String[] getLines() {
++        return slines;
++    }
++
++    public void setLine(int i, @NotNull String line) {
++        slines[i] = line;
++        lines[i] = new TextComponent("");
++        for (Component comp : CraftChatMessage.fromString(line)) {
++            lines[i].getSiblings().add(comp);
++        }
++    }
++}
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
+index f92c97992766e45fa100550d4e29810743092092..4345a5a1d204cb9f8595faa9b85ea87c8bbaec0e 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.world.level.block.entity;
+ 
++import com.domnian.paperdragon.api.SendSignEventImpl;
+ import com.mojang.brigadier.exceptions.CommandSyntaxException;
+ import java.util.UUID;
+ import java.util.function.Function;
+@@ -52,14 +53,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+ 
+     @Override
+     public CompoundTag save(CompoundTag nbt) {
++        // PaperDragon start
++        return save(nbt, this.messages, this.filteredMessages);
++    }
++    public CompoundTag save(CompoundTag nbt, Component[] lines, Component[] filteredMessages) {
++        // PaperDragon end
+         super.save(nbt);
+ 
+         for (int i = 0; i < 4; ++i) {
+-            Component ichatbasecomponent = this.messages[i];
++            Component ichatbasecomponent = lines[i]; // PaperDragon
+             String s = Component.Serializer.toJson(ichatbasecomponent);
+ 
+             nbt.putString(SignBlockEntity.RAW_TEXT_FIELD_NAMES[i], s);
+-            Component ichatbasecomponent1 = this.filteredMessages[i];
++            Component ichatbasecomponent1 = filteredMessages[i]; // PaperDragon
+ 
+             if (!ichatbasecomponent1.equals(ichatbasecomponent)) {
+                 nbt.putString(SignBlockEntity.FILTERED_TEXT_FIELD_NAMES[i], Component.Serializer.toJson(ichatbasecomponent1));
+@@ -188,6 +194,13 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+ 
+     @Override
+     public CompoundTag getUpdateTag() {
++        // PaperDragon start
++        if (this.level != null) {
++            SendSignEventImpl event = new SendSignEventImpl(this.level, this.getBlockPos(), this.messages);
++            event.callEvent();
++            return this.save(new CompoundTag(), event.lines, event.lines);
++        }
++        // PaperDragon end
+         return this.save(new CompoundTag());
+     }
+ 

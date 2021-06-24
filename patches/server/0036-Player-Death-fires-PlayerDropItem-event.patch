@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 17 Jan 2016 03:42:03 -0500
+Subject: [PATCH] Player Death fires PlayerDropItem event
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 86fd0b9084abcfdbc676c1177aefd4f10549cc37..81e762a95849091590ab1ae58759ead8946c7529 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -903,7 +903,7 @@ public class CraftEventFactory {
+         for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
+             if (stack == null || stack.getType() == Material.AIR) continue;
+ 
+-            world.dropItem(entity.getLocation(), stack);
++            victim.drop(CraftItemStack.asNMSCopy(stack), true, false); // PaperDragon
+         }
+ 
+         return event;

@@ -1,0 +1,44 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 27 Jan 2020 00:56:50 -0500
+Subject: [PATCH] Implement teleport() for offline players
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+index 4cf321f536dffae5cb0689d261d39fb149a2cdc4..3c04cd61ff11ab95c2788bb95272df565895d9f4 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -568,5 +568,33 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+             return false;
+         }
+     }
++
++    @Override
++    public boolean teleport(Location loc) {
++        if (isOnline()) {
++            getPlayer().teleport(loc);
++            return true;
++        }
++        CompoundTag data = getData();
++
++        net.minecraft.nbt.ListTag rot = new net.minecraft.nbt.ListTag();
++        rot.add(0, net.minecraft.nbt.FloatTag.valueOf(loc.getYaw()));
++        rot.add(1, net.minecraft.nbt.FloatTag.valueOf(loc.getPitch()));
++        data.put("Rotation", rot);
++
++        net.minecraft.nbt.ListTag pos = new net.minecraft.nbt.ListTag();
++        pos.add(0, net.minecraft.nbt.DoubleTag.valueOf(loc.getX()));
++        pos.add(1, net.minecraft.nbt.DoubleTag.valueOf(loc.getY()));
++        pos.add(2, net.minecraft.nbt.DoubleTag.valueOf(loc.getZ()));
++        data.put("Pos", pos);
++
++        UUID worldUUID = loc.getWorld().getUID();
++        data.put("WorldUUIDMost",  net.minecraft.nbt.LongTag.valueOf(worldUUID.getMostSignificantBits()));
++        data.put("WorldUUIDLeast", net.minecraft.nbt.LongTag.valueOf(worldUUID.getLeastSignificantBits()));
++
++        data.putString("Dragon.DisconnectWorld", loc.getWorld().getName());
++
++        return saveData(data);
++    }
+     // PaperDragon end
+ }

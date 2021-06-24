@@ -1,0 +1,183 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 12 Jul 2013 18:58:19 -0400
+Subject: [PATCH] Entity Serialization
+
+Allow serializing an Entity to raw NBT, and to get an Entity object without spawning it into the world.
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+index c9011ac9e5d8d6c04aec8f63fce606026dee3146..5e61727c4313df4febd5f53e86c11e6e9b8996b3 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -24,9 +24,15 @@
+ package com.domnian.paperdragon.api;
+ 
+ import com.destroystokyo.paper.entity.RangedEntity;
++import com.domnian.paperdragon.DataConverters;
+ import com.domnian.paperdragon.api.meta.Meta;
++import com.domnian.paperdragon.util.MCLog;
++import com.google.common.collect.ImmutableList;
++import net.minecraft.nbt.CompoundTag;
++import net.minecraft.nbt.NbtIo;
+ import net.minecraft.server.MCUtil;
+ import net.minecraft.server.MinecraftServer;
++import net.minecraft.world.entity.EntityType;
+ import net.minecraft.world.entity.PathfinderMob;
+ import net.minecraft.world.entity.ai.goal.Goal;
+ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+@@ -35,6 +41,7 @@ import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
+ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+ import net.minecraft.world.entity.item.ItemEntity;
+ import net.minecraft.world.entity.player.Player;
++import org.bukkit.World;
+ import org.bukkit.craftbukkit.CraftWorld;
+ import org.bukkit.craftbukkit.entity.CraftBlaze;
+ import org.bukkit.craftbukkit.entity.CraftCreature;
+@@ -55,6 +62,11 @@ import org.bukkit.entity.Spider;
+ import org.bukkit.entity.Wolf;
+ import org.jetbrains.annotations.NotNull;
+ 
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.DataInputStream;
++import java.io.IOException;
++
+ import static com.domnian.paperdragon.api.EntityAIApi.ENTITY_AGGRESSIVE_RANGE_KEY;
+ 
+ public class CraftDAPI_Entity implements DAPI_Entity {
+@@ -158,7 +170,7 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+ 
+     @Override
+     public void setEntitySize(@NotNull Entity entity, float width, float height) {
+-        ((CraftEntity) entity).getHandle().setSize(width, height);
++        ((CraftEntity) entity).getHandle().setDimensions(width, height);
+     }
+ 
+     @Override
+@@ -277,4 +289,49 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+     public void setFireballCooldown(@NotNull Ghast ghast, int cooldown) {
+         ((CraftGhast) ghast).getHandle().fireballCooldown = cooldown;
+     }
++
++    @NotNull
++    public final byte[] serializeEntity(@NotNull Entity craftentity) {
++        net.minecraft.world.entity.Entity entity = ((CraftEntity) craftentity).getHandle();
++        CompoundTag cmp = new CompoundTag();
++        final ImmutableList<net.minecraft.world.entity.Entity > pass = entity.passengers;
++        entity.passengers = ImmutableList.of();
++        entity.save(cmp);
++        entity.passengers = pass;
++        cmp.putInt("DataVersion", DataConverters.DATA_VERSION);
++
++        return NBTToBytes(cmp);
++    }
++
++    public final Entity deserializeEntity(@NotNull byte[] data, @NotNull World world) {
++        if (data.length == 0) {
++            throw new NullPointerException("Data can not be empty for deserialization");
++        }
++        ByteArrayInputStream stream = new ByteArrayInputStream(data);
++
++        try {
++            CompoundTag cmp = NbtIo.readCompressed(new DataInputStream(stream));
++
++            cmp = DataConverters.convert(DataConverters.LegacyType.ENTITY, cmp);
++            net.minecraft.world.entity.Entity entity = EntityType.create(cmp, ((CraftWorld) world).getHandle()).orElse(null);
++
++            return entity != null ? entity.getBukkitEntity() : null;
++        } catch (IOException e) {
++            MCLog.exception(e);
++            return null;
++        }
++
++    }
++
++    private static byte[] NBTToBytes(CompoundTag nbttagcompound) {
++        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
++
++        try {
++            NbtIo.writeCompressed(nbttagcompound, bytearrayoutputstream);
++        } catch (IOException ignored) {
++            return null;
++        }
++
++        return bytearrayoutputstream.toByteArray();
++    }
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index ea3d35acc350119bd0a6f3ce6fa73cd7900cea1a..e262f3cc67579c8abcca2b6df4922d9017e8d902 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -301,7 +301,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+     private final Set<String> tags;
+     private final double[] pistonDeltas;
+     private long pistonDeltasGameTime;
+-    private EntityDimensions dimensions; public void setSize(float width, float height) { dimensions = EntityDimensions.fixed(width, height); } // PaperDragon
++    private EntityDimensions dimensions; public void setDimensions(float width, float height) { dimensions = EntityDimensions.fixed(width, height); } // PaperDragon
+     private float eyeHeight;
+     public boolean isInPowderSnow;
+     public boolean wasInPowderSnow;
+diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+index e5a7f32734698aab0e9d4e06ca7f35caf4a47017..bf033993a5fd617a45f7588af2dfd044eae01fdd 100644
+--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+@@ -2839,12 +2839,10 @@ public abstract class LivingEntity extends Entity {
+     public boolean doHurtTarget(Entity target) {
+         // PaperDragon start - make all mobs able to attack
+         boolean flag = target.hurt(DamageSource.mobAttack(this), (float) ((int) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
+-
+         if (flag) {
+             this.doEnchantDamageEffects(this, target);
+             this.setLastHurtMob(target);
+         }
+-
+         return flag;
+         // PaperDragon end
+     }
+diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/FleeSunGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/FleeSunGoal.java
+index c9475aaac5f9d401bfb1eb84d2772f772f8212d4..73b978e19debd237bf47ebeedfba4fa4403c52c5 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/goal/FleeSunGoal.java
++++ b/src/main/java/net/minecraft/world/entity/ai/goal/FleeSunGoal.java
+@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
+ import net.minecraft.world.phys.Vec3;
+ 
+ public class FleeSunGoal extends Goal {
+-    public final PathfinderMob mob; // PaperDragon - make public
++    protected final PathfinderMob mob;
+     private double wantedX;
+     private double wantedY;
+     private double wantedZ;
+diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
+index 6cf7080a11db2747f90d598c4109ce0cde3e7356..d1046fa78bb3d32eda9893effa64d599956a89cf 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
++++ b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
+@@ -12,7 +12,7 @@ public class RangedBowAttackGoal<T extends Monster & RangedAttackMob> extends Go
+     private final T mob;
+     private final double speedModifier;
+     private int attackIntervalMin;
+-    private float attackRadiusSqr; public float getRadiusSquared() { return attackRadiusSqr; } public void setAttackRadius(float range) { this.attackRadiusSqr = range*range; } // PaperDragon - make non-final
++    private float attackRadiusSqr; public void setAttackRadius(float radius) { this.attackRadiusSqr = radius*radius; } // PaperDragon - make non-final
+     private int attackTime = -1;
+     private int seeTime;
+     private boolean strafingClockwise;
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+index adcd1b685bb0e78d8c9104c1ca3303f42754e6cc..676c37744b1ba87e0cb6f520a2fcea50c6988794 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+@@ -200,6 +200,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+     private EntityDamageEvent lastDamageEvent;
+     private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(CraftEntity.DATA_TYPE_REGISTRY);
+ 
++    // PaperDragon start
++    public boolean spawnAt(@NotNull Location loc) {
++        return spawnAt(loc, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DEFAULT);
++    }
++    public boolean spawnAt(@NotNull Location loc, @NotNull org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) { // PaperDragon
++        entity.level = ((CraftWorld) loc.getWorld()).getHandle();
++        entity.absMoveTo(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
++        return !entity.valid && entity.level.addEntity(entity, spawnReason);
++    }
++    // PaperDragon end
+     public CraftEntity(final CraftServer server, final Entity entity) {
+         this.server = server;
+         this.entity = entity;
