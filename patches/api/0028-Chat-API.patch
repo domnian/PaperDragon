@@ -25,37 +25,46 @@ index f78acdd62ad5ca59affb521cf115763e32033a69..509b51848a272b12b143d18afbc5e61e
          return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java b/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..6a5246b4217bdcd0efc660cb4ad2b4ffed89b816
+index 0000000000000000000000000000000000000000..d03c7c968f7ca88642c83106ad999e5d408af95b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,30 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import org.bukkit.ChatColor;
++import org.jetbrains.annotations.NotNull;
 +
 +public interface ChatBuilder {
-+    ChatBuilder color(ChatColor color);
++    @NotNull
++    ChatBuilder color(@NotNull ChatColor color);
 +
-+    ChatBuilder color(String hex);
++    @NotNull
++    ChatBuilder color(@NotNull String hex);
 +
++    @NotNull
 +    ChatBuilder obfuscated();
 +
++    @NotNull
 +    ChatBuilder bold();
 +
++    @NotNull
 +    ChatBuilder strikethrough();
 +
++    @NotNull
 +    ChatBuilder underline();
 +
++    @NotNull
 +    ChatBuilder italic();
 +
++    @NotNull
 +    ChatBuilder reset();
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..ead4a18ae2b8cf721ed4d7f69de23dbed11b1d7f
+index 0000000000000000000000000000000000000000..01cec8d0b8f28c3e517e0e879c59e63d13196432
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,60 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *  
@@ -82,75 +91,92 @@ index 0000000000000000000000000000000000000000..ead4a18ae2b8cf721ed4d7f69de23dbe
 +package com.domnian.paperdragon.api.chat;
 +
 +import org.bukkit.entity.Player;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +import java.util.UUID;
 +
 +public interface DAPI_Chat {
 +
++    @NotNull
 +    FancifulChat createFancyChat();
 +
 +    //TODO:
 +    // FancifulChat fromJson(String json);
 +
-+    void sendTitle(Player player, FancifulChat title, FancifulChat subtitle, Integer fadeIn, Integer stay, Integer fadeOut);
++    void sendTitleAnimations(@NotNull Player player, int fadeIn, int stay, int fadeOut);
++    void sendTitle(@NotNull Player player, @NotNull FancifulChat title);
++    void sendSubtitle(@NotNull Player player, @NotNull FancifulChat subtitle);
 +
-+    void sendAction(Player player, FancifulChat message);
++    void sendAction(@NotNull Player player, @NotNull FancifulChat message);
 +
-+    void sendChat(Player player, FancifulChat message);
++    void sendChat(@NotNull Player player, @NotNull FancifulChat message);
 +
-+    void sendChat(UUID sender, Player player, FancifulChat message);
++    void sendChat(@Nullable UUID sender, @NotNull Player player, @NotNull FancifulChat message);
 +
-+    void sendSystem(Player player, FancifulChat message);
++    void sendSystem(@NotNull Player player, @NotNull FancifulChat message);
 +
-+    /* TODO: Add Advancement Toast API
++    /* TODO: Add advancement api
 +    default void sentToast(Player player, FancifulText title, FancifulText description, ItemStack icon) {
 +        sentToast(player, title, description, icon, null, null, 0F, 0F);
 +    }
 +    void sentToast(Player player, FancifulText title, FancifulText description, ItemStack icon, String frame, String background, Float x, Float y);
 +    */
 +
-+    // TODO: Use FancifulPage for book page setting
++    //todo; Use FancifulPage for book page setting
 +}
-\ No newline at end of file
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0c8dac80d67ba3fa91cf49fd4654624826dd6cad
+index 0000000000000000000000000000000000000000..1dd10709769ec117b8eeb345fa5f433b8b341e08
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,49 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import org.bukkit.entity.Entity;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
 +
 +public interface FancifulChat {
-+    FancifulChat then(String text);
++    @NotNull
++    FancifulChat then(@NotNull String text);
 +
-+    FancifulChat then(Object obj);
++    @NotNull
++    FancifulChat then(@NotNull Object obj);
 +
 +    //TODO:
 +    // String toJson();
 +
 +    //TODO:
-+    // FancifulChat itemTooltip(String itemJSON);
++    // FancifulChat itemTooltip(@NotNull String itemJSON);
 +
-+    FancifulChat tooltip(ItemStack itemStack);
++    @NotNull
++    FancifulChat tooltip(@NotNull ItemStack itemStack);
 +
-+    FancifulChat tooltip(String text);
++    @NotNull
++    FancifulChat tooltip(@NotNull String text);
 +
-+    FancifulChat tooltip(String[] lines);
++    @NotNull
++    FancifulChat tooltip(@NotNull String[] lines);
 +
-+    FancifulChat tooltip(Entity entity);
++    @NotNull
++    FancifulChat tooltip(@NotNull Entity entity);
 +
-+    FancifulChat link(String url);
++    @NotNull
++    FancifulChat link(@NotNull String url);
 +
-+    FancifulChat insert(String text);
++    @NotNull
++    FancifulChat insert(@NotNull String text);
 +
-+    FancifulChat suggest(String command);
++    @NotNull
++    FancifulChat suggest(@NotNull String command);
 +
-+    FancifulChat command(String command);
++    @NotNull
++    FancifulChat command(@NotNull String command);
 +
-+    FancifulChat copy(String text);
++    @NotNull
++    FancifulChat copy(@NotNull String text);
 +
-+    FancifulChat page(String page);
++    @NotNull
++    FancifulChat page(@NotNull String page);
 +}
