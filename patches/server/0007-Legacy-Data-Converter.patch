@@ -6,7 +6,7 @@ Subject: [PATCH] Legacy Data Converter
 
 diff --git a/src/main/java/com/domnian/paperdragon/DataConverters.java b/src/main/java/com/domnian/paperdragon/DataConverters.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2bb473ddfd4e4e528f8c58255c1e7fb22f16887b
+index 0000000000000000000000000000000000000000..08273cfbc6d5c79cc79d7a63a5b0dd4cea1a431c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DataConverters.java
 @@ -0,0 +1,2644 @@
@@ -1589,7 +1589,7 @@ index 0000000000000000000000000000000000000000..2bb473ddfd4e4e528f8c58255c1e7fb2
 +
 +        public CompoundTag convert(CompoundTag cmp) {
 +            if (cmp.contains("UUID", 8)) {
-+                cmp.setUUID("UUID", UUID.fromString(cmp.getString("UUID")));
++                cmp.putUUID("UUID", UUID.fromString(cmp.getString("UUID")));
 +            }
 +
 +            return cmp;

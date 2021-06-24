@@ -41,17 +41,18 @@ index e0cd786f130e34b3401d40663e1548fc0076f74a..0b965b99a3c22df1f8adff146678017e
                          if ( ( split.length == 3 || split.length == 4 ) && ( ServerHandshakePacketListenerImpl.BYPASS_HOSTCHECK || ServerHandshakePacketListenerImpl.HOST_PATTERN.matcher( split[1] ).matches() ) ) { // Paper
                              // Paper start - Unix domain socket support
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 5d26417b5d4e182fdefdf1ef5c81a0b7d7f2d4c1..06f778e827494d0e108691b6315fe91106d3d444 100644
+index 5d26417b5d4e182fdefdf1ef5c81a0b7d7f2d4c1..bd7f3e4fc2f0e067c830402675cb23b114b50861 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -230,6 +230,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
+@@ -230,7 +230,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
      public void handleHello(ServerboundHelloPacket packet) {
          Validate.validState(this.state == ServerLoginPacketListenerImpl.State.HELLO, "Unexpected hello packet", new Object[0]);
          this.gameProfile = packet.getGameProfile();
+-        if (this.server.usesAuthentication() && !this.connection.isMemoryConnection()) {
 +        if (!this.connection.isProxied && this.server.usesAuthentication() && !this.connection.isMemoryConnection()) { // PaperDragon - add !isProxied
-         if (this.server.usesAuthentication() && !this.connection.isMemoryConnection()) {
              this.state = ServerLoginPacketListenerImpl.State.KEY;
              this.connection.send(new ClientboundHelloPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.nonce));
+         } else {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 66a3395a7a0cc8eb1b3cd24761bed9d8c3349f4c..03cfab528aee52da85afaafe7f93942e19d5660b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java

@@ -94,7 +94,7 @@ index 3ab8bd503a599a11c0d50017826cebf6765197f3..63ffa8d11e777ea921f0db762b665bfd
  
          if (iinventory instanceof MenuProvider) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
-index 7a7f3f53aef601f124d474d9890e23d87dd96900..49688541fd6d03e6ffe2df70116aa4cdb947dd71 100644
+index 7a7f3f53aef601f124d474d9890e23d87dd96900..bdb2207aaf0a0fbeae04c5303407ec713452958f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
 @@ -158,8 +158,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
@@ -118,38 +118,3 @@ index 7a7f3f53aef601f124d474d9890e23d87dd96900..49688541fd6d03e6ffe2df70116aa4cd
      }
  
      public static class Smoker extends CraftTileInventoryConverter {
-@@ -170,3 +181,34 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
-         }
-     }
- }
-+<<<<<<< found
-+||||||| expected
-+
-+        @Override
-+        public IInventory getTileEntity() {
-+            return new TileEntityLectern().inventory;
-+        }
-+    }
-+
-+    public static class Smoker extends CraftTileInventoryConverter {
-+=======
-+
-+        @Override
-+        public IInventory getTileEntity() {
-+            // PaperDragon start
-+            TileEntityLectern lectern = new TileEntityLectern();
-+            lectern.virtual = true;
-+            return lectern.inventory;
-+            // PaperDragon end
-+        }
-+
-+        // PaperDragon start
-+        @Override
-+        public Inventory getInventory(IInventory tileEntity) {
-+            return new org.bukkit.craftbukkit.inventory.CraftInventoryLectern(tileEntity);
-+        }
-+        // PaperDragon end
-+    }
-+
-+    public static class Smoker extends CraftTileInventoryConverter {
-+>>>>>>> replacement

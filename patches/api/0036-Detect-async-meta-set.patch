@@ -5,17 +5,18 @@ Subject: [PATCH] Detect async meta set
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
-index 01841f2739e5104e1a796875ddd40676453d082c..953b49e7817c70f9bdb9a58ce318020152237d52 100644
+index b3a41279ec2b6e0a544052112f036afd96c4c4cc..8679cfa2aaff50f65ae335d27f49a869844a93f8 100644
 --- a/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaMap.java
-@@ -23,11 +23,14 @@
+@@ -23,6 +23,7 @@
  
  package com.domnian.paperdragon.api.meta;
  
 +import org.bukkit.Bukkit;
-+
- import javax.annotation.Nonnull;
- import java.util.HashMap;
+ import org.jetbrains.annotations.Contract;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -31,6 +32,7 @@ import java.util.HashMap;
  
  public class MetaMap <K extends MetaKey> extends HashMap<String, Object> {
  
@@ -23,7 +24,7 @@ index 01841f2739e5104e1a796875ddd40676453d082c..953b49e7817c70f9bdb9a58ce3180201
      public MetaMap() {
          super(0);
      }
-@@ -90,6 +93,15 @@ public class MetaMap <K extends MetaKey> extends HashMap<String, Object> {
+@@ -140,6 +142,15 @@ public class MetaMap <K extends MetaKey> extends HashMap<String, Object> {
          return put(key.key(), value);
      }
  
@@ -36,6 +37,6 @@ index 01841f2739e5104e1a796875ddd40676453d082c..953b49e7817c70f9bdb9a58ce3180201
 +        return super.put(key, value);
 +    }
 +
-     public boolean containsKey(K key) {
+     public boolean containsKey(@NotNull K key) {
          return containsKey(key.key());
      }

@@ -5,7 +5,7 @@ Subject: [PATCH] Add API for vehicle exit event reason
 
 
 diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
-index a976c32de6ad5e90b0a96a0f387136ab0f5eb52e..ae50ecfbf4107ccdb6a3a427ca7875d9c498b785 100644
+index a976c32de6ad5e90b0a96a0f387136ab0f5eb52e..310340a1972556f53dc98ebed37da951eb9818f1 100644
 --- a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 +++ b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 @@ -10,6 +10,16 @@ import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ index a976c32de6ad5e90b0a96a0f387136ab0f5eb52e..ae50ecfbf4107ccdb6a3a427ca7875d9
  public class VehicleExitEvent extends VehicleEvent implements Cancellable {
 +    // PaperDragon start
 +    public enum DismountReason {
-+        PLAYER, WATER, DEAD, DEAD_VEHICLE, TRANSFER, UNKNOWN, DISCONNECT;
++        PLAYER, WATER, DEAD, DEAD_VEHICLE, TELEPORT, SPECTATE, LEASH, TRANSFER, UNKNOWN, DISCONNECT;
 +    }
 +    public DismountReason reason = DismountReason.UNKNOWN;
 +

@@ -17,7 +17,7 @@ index fe4f406d0146d038cea56e0f7c5a8828640aaa2f..f027274eed3e33aa0453afd796b75644
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index b20bfe5ab165bf86985e5ff2f93f415d9710e0e4..742e28f992bc25d9854f4dc5cc1b7da263aa5acb 100644
+index b20bfe5ab165bf86985e5ff2f93f415d9710e0e4..1cd06a7b3d6d690ecf5057a2034cc2dcf6bff8c6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 @@ -525,4 +525,31 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
@@ -46,8 +46,8 @@ index b20bfe5ab165bf86985e5ff2f93f415d9710e0e4..742e28f992bc25d9854f4dc5cc1b7da2
 +        return new Location(
 +                world, // World
 +                pos.getDouble(0), pos.getDouble(1), pos.getDouble(2), // X, Y, Z
-+                ((net.minecraft.nbt.FloatTag) rot.get(0)).asFloat(), // Yaw
-+                ((net.minecraft.nbt.FloatTag) rot.get(1)).asFloat() // Pitch
++                ((net.minecraft.nbt.FloatTag) rot.get(0)).getAsFloat(), // Yaw
++                ((net.minecraft.nbt.FloatTag) rot.get(1)).getAsFloat() // Pitch
 +        );
 +    }
 +    // PaperDragon end

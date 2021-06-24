@@ -56,12 +56,12 @@ index 0000000000000000000000000000000000000000..c0ade55bcf2d8563883a75381a374e49
 +
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 25c91348c3b9dedc6cceaed84b13cb857a02de87..02ea3dea7380392318d3daf1d6be711a01550e1a 100644
+index f6905ef43a215e2302abf5b0f589b53e37b0b415..068891f481e18f4523fd9fa003b4b9d1d881ff93 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
-@@ -16,6 +16,9 @@ import org.jetbrains.annotations.NotNull;
-  */
- public interface Chunk extends PersistentDataHolder {
+@@ -24,6 +24,9 @@ public interface Chunk extends PersistentDataHolder {
+     PersistentMetaMap getPersistentMeta();
+     // PaperDragon end
  
 +    @NotNull
 +    com.domnian.paperdragon.Identifier getIdentifier(); // PaperDragon

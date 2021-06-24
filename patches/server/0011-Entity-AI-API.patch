@@ -263,12 +263,13 @@ index cf8ea7d0c03d142fc2cc27d2bbe19efb6c5e398f..c9011ac9e5d8d6c04aec8f63fce60602
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babbd0ec241a
+index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f368696d694
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityAIApi.java
-@@ -0,0 +1,141 @@
+@@ -0,0 +1,142 @@
 +package com.domnian.paperdragon.api;
 +
++import net.minecraft.core.BlockPos;
 +import net.minecraft.world.entity.Entity;
 +import net.minecraft.world.entity.PathfinderMob;
 +import net.minecraft.world.entity.ai.goal.BreakDoorGoal;
@@ -312,7 +313,7 @@ index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babb
 +        if (entity instanceof PathfinderMob) {
 +            Number range = Meta.getEntityMeta(entity.getBukkitEntity(), ENTITY_AGGRESSIVE_RANGE_KEY);
 +            if (range != null) {
-+                API.entity.makeAggressive((org.bukkit.entity.Creature) entity.getBukkitEntity(), range.floatValue());
++                DragonAPI.entity.makeAggressive((org.bukkit.entity.Creature) entity.getBukkitEntity(), range.floatValue());
 +            }
 +        }
 +    }
@@ -369,7 +370,7 @@ index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babb
 +
 +
 +    private static Path getPathEntity(Mob entity) {
-+        return getMobHandle(entity).getNavigation().getPathEntity();
++        return getMobHandle(entity).getNavigation().getPath();
 +    }
 +
 +    private static Path getPathEntity(Location loc, net.minecraft.world.entity.Mob handle) {
@@ -377,7 +378,7 @@ index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babb
 +        handle.setOnGround(true);
 +        Path path = null;
 +        if (loc != null) {
-+            path = handle.getNavigation().calculateDestination(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
++            path = handle.getNavigation().createPath(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), 0);
 +        }
 +
 +        handle.setOnGround(onGround);
@@ -390,7 +391,7 @@ index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babb
 +        handle.setOnGround(true);
 +        Path path = null;
 +        if (target != null) {
-+            path = handle.getNavigation().calculateDestination(((CraftEntity) target).getHandle());
++            path = handle.getNavigation().createPath(((CraftEntity) target).getHandle(), 0);
 +        }
 +
 +        handle.setOnGround(onGround);
@@ -401,7 +402,7 @@ index 0000000000000000000000000000000000000000..62b64a2942bc219a013a49edb0f1babb
 +        if (pathEntity == null) {
 +            return null;
 +        }
-+        final Node pathPoint = pathEntity.getFinalPoint();
++        final Node pathPoint = pathEntity.getEndNode();
 +        if (pathPoint == null) {
 +            return null;
 +        }

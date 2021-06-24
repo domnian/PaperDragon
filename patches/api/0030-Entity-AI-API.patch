@@ -5,23 +5,31 @@ Subject: [PATCH] Entity AI API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 85d4b770a24cadeae7da156f166836081796da12..de4144b0902d456bd0e181d1d28ce56e4801c906 100644
+index 85d4b770a24cadeae7da156f166836081796da12..07b9b420863ed9575451032b1a3076a056217fa5 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -1,8 +1,11 @@
+@@ -1,8 +1,20 @@
  package com.domnian.paperdragon.api;
  
 +import com.destroystokyo.paper.entity.RangedEntity;
-+import org.bukkit.entity.*;
++import org.bukkit.entity.Blaze;
++import org.bukkit.entity.Ghast;
++import org.bukkit.entity.Mob;
  import com.domnian.paperdragon.api.EntityTask.TaskHandler;
-+import org.bukkit.Location;
  import org.bukkit.World;
--import org.bukkit.entity.Entity;
++import org.bukkit.entity.Creature;
++import org.bukkit.entity.EnderSignal;
+ import org.bukkit.entity.Entity;
 +import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++import org.bukkit.entity.Item;
++import org.bukkit.entity.Spider;
++import org.bukkit.entity.Wolf;
  
  public interface DAPI_Entity {
  
-@@ -67,4 +70,66 @@ public interface DAPI_Entity {
+@@ -67,4 +79,65 @@ public interface DAPI_Entity {
  
      <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task);
  
@@ -37,9 +45,9 @@ index 85d4b770a24cadeae7da156f166836081796da12..de4144b0902d456bd0e181d1d28ce56e
 +     */
 +    void setDisabledEntity(@NotNull org.bukkit.entity.Entity entity, boolean disabled);
 +
-+    void setFireProof(@NotNull Mob entity, boolean flag);
++    void setFireProof(@NotNull Mob mob, boolean flag);
 +
-+    void setFirePanicProof(@NotNull Mob entity, boolean flag);
++    void setFirePanicProof(@NotNull Mob mob, boolean flag);
 +
 +    void makeAggressive(@NotNull Creature creature, float range);
 +
@@ -47,19 +55,19 @@ index 85d4b770a24cadeae7da156f166836081796da12..de4144b0902d456bd0e181d1d28ce56e
 +
 +    boolean isAggressive(@NotNull Creature creature);
 +
-+    void makePeaceful(@NotNull Mob entity);
++    void makePeaceful(@NotNull Mob mob);
 +
-+    void addGoalByName(@NotNull Mob entity, String goalName, boolean isTargetGoal, int tickRate, Class<?>[] argClasses, Object... args);
++    void addGoalByName(@NotNull Mob mob, @NotNull String goalName, boolean isTargetGoal, int tickRate, @NotNull Class<?>[] argClasses, @NotNull Object... args);
 +
-+    void removeGoalByName(@NotNull Mob entity, String goalName);
++    void removeGoalByName(@NotNull Mob mob, @NotNull String goalName);
 +
-+    void setEntitySize(@NotNull org.bukkit.entity.Entity entity, float width, float height);
++    void setEntitySize(@NotNull Entity mob, float width, float height);
 +
-+    void setTargetRange(@NotNull Mob entity, Double range);
++    void setTargetRange(@NotNull Mob mob, @Nullable Double range);
 +
-+    void setRangedAttackDistance(@NotNull RangedEntity monster, float range);
++    void setRangedAttackDistance(@NotNull RangedEntity ranged, float range);
 +
-+    void setRangedAttackSpeed(@NotNull RangedEntity monster, Integer min, Integer max);
++    void setRangedAttackSpeed(@NotNull RangedEntity ranged, @Nullable Integer min, @Nullable Integer max);
 +
 +    void setAlwaysAngry(@NotNull Wolf wolf, boolean alwaysAngry);
 +
@@ -86,61 +94,4 @@ index 85d4b770a24cadeae7da156f166836081796da12..de4144b0902d456bd0e181d1d28ce56e
 +    int getFireballCooldown(@NotNull Ghast ghast);
 +
 +    void setFireballCooldown(@NotNull Ghast ghast, int cooldown);
-+
  }
-diff --git a/src/main/java/org/bukkit/entity/Blaze.java b/src/main/java/org/bukkit/entity/Blaze.java
-index 7a5505b7fa84629f81c152fb6da90bdb2392f9df..9611c49104dcf9759084bad14c75be32d90adaf9 100644
---- a/src/main/java/org/bukkit/entity/Blaze.java
-+++ b/src/main/java/org/bukkit/entity/Blaze.java
-@@ -4,5 +4,10 @@ package org.bukkit.entity;
-  * Represents a Blaze monster
-  */
- public interface Blaze extends Monster {
--
-+    // PaperDragon start
-+    void setFireballs(int num);
-+    int getNumFireballs();
-+    int getTimeBetweenFireballs();
-+    void setTimeBetweenFireballs(int timeBetweenFireballs);
-+    // PaperDragon end
- }
-diff --git a/src/main/java/org/bukkit/entity/EnderSignal.java b/src/main/java/org/bukkit/entity/EnderSignal.java
-index 1bba155d80621852acd187e181423afc577899ea..7aab75c58465e24f28d519daf37aaa7a4ddb05dc 100644
---- a/src/main/java/org/bukkit/entity/EnderSignal.java
-+++ b/src/main/java/org/bukkit/entity/EnderSignal.java
-@@ -17,7 +17,7 @@ public interface EnderSignal extends Entity {
-      */
-     @NotNull
-     public Location getTargetLocation();
--
-+    // PaperDragon start
-     /**
-      * Set the {@link Location} this EnderSignal is moving towards.
-      * <br>
-@@ -26,7 +26,11 @@ public interface EnderSignal extends Entity {
-      *
-      * @param location the new target location
-      */
--    public void setTargetLocation(@NotNull Location location);
-+    public default void setTargetLocation(@NotNull Location location) {
-+        setTargetLocation(location, false);
-+    }
-+    public void setTargetLocation(@NotNull Location location, boolean useExactTarget);
-+    // PaperDragon end
- 
-     /**
-      * Gets if the EnderSignal should drop an item on death.<br>
-diff --git a/src/main/java/org/bukkit/entity/Ghast.java b/src/main/java/org/bukkit/entity/Ghast.java
-index 3f5edf76ce303502cf4eeeb76f22f21f568dad5a..b96600c88f11cff0ce97cc97302729a61e746b39 100644
---- a/src/main/java/org/bukkit/entity/Ghast.java
-+++ b/src/main/java/org/bukkit/entity/Ghast.java
-@@ -3,4 +3,8 @@ package org.bukkit.entity;
- /**
-  * Represents a Ghast.
-  */
--public interface Ghast extends Flying {}
-+public interface Ghast extends Flying {
-+
-+    int getFireballCooldown(); // PaperDragon
-+    void setFireballCooldown(int cooldown); // PaperDragon
-+}

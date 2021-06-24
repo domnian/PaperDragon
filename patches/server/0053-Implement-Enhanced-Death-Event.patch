@@ -5,17 +5,16 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 261c569716f02e15bd91348282d8c6f3d548f410..dd17ada88f30a1dd90865316f3875e92a77ae42f 100644
+index 261c569716f02e15bd91348282d8c6f3d548f410..4e3355d636e12cc3a5621317ee510a3a48bf11ab 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -829,7 +829,11 @@ public class ServerPlayer extends Player {
+@@ -829,7 +829,10 @@ public class ServerPlayer extends Player {
  
          Component defaultMessage = this.getCombatTracker().getDeathMessage();
  
 -        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +        // PaperDragon start - Enhanced Player Death Event
-+        String deathmessage = defaultMessage.getString();
-+        String deathKey = (deathmessage instanceof TranslatableComponent) ? ((TranslatableComponent) defaultMessage).getKey() : "death.attack.generic";
++        String deathKey = (defaultMessage instanceof TranslatableComponent) ? ((TranslatableComponent) defaultMessage).getKey() : "death.attack.generic";
 +        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory, deathKey); // Paper - Adventure
 +        // PaperDragon end
          // Paper start - cancellable death event

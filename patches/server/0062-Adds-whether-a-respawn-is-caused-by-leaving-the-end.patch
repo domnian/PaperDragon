@@ -5,7 +5,7 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e85edcda9cb21fe726cac0f65af77ca53e027252..abb8289aa3d679970b0cdfcd909b1e8d819b191d 100644
+index e85edcda9cb21fe726cac0f65af77ca53e027252..092e97c99bb7dc2d58f887bc98210a646e60cc46 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -904,7 +904,8 @@ public abstract class PlayerList {
@@ -13,7 +13,7 @@ index e85edcda9cb21fe726cac0f65af77ca53e027252..abb8289aa3d679970b0cdfcd909b1e8d
  
              Player respawnPlayer = entityplayer1.getBukkitEntity();
 -            PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn && !isAnchorSpawn, isAnchorSpawn, com.google.common.collect.ImmutableSet.<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag>builder().add(respawnFlags)); // Paper - Fix anchor respawn acting as a bed respawn from the end portal
-+            boolean isEndPortal = worldserver.getTypeKey() == DimensionType.OVERWORLD_LOCATION && entityplayer.level.getTypeKey() == DimensionType.THE_END_LOCATION; // PaperDragon
++            boolean isEndPortal = worldserver.getTypeKey() == DimensionType.OVERWORLD_LOCATION && entityplayer.level.getTypeKey() == DimensionType.END_LOCATION; // PaperDragon
 +            PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn && !isAnchorSpawn, isAnchorSpawn, isEndPortal, com.google.common.collect.ImmutableSet.<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag>builder().add(respawnFlags)); // Paper - Fix anchor respawn acting as a bed respawn from the end portal // PaperDragon - add isLeavingEnd
              this.cserver.getPluginManager().callEvent(respawnEvent);
              // Spigot Start
