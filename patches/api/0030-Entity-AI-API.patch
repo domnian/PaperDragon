@@ -5,29 +5,23 @@ Subject: [PATCH] Entity AI API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 85d4b770a24cadeae7da156f166836081796da12..16e770c7dfe8035895501f091699cc5c9869a2fd 100644
+index 85d4b770a24cadeae7da156f166836081796da12..de4144b0902d456bd0e181d1d28ce56e4801c906 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -1,8 +1,18 @@
+@@ -1,8 +1,11 @@
  package com.domnian.paperdragon.api;
  
 +import com.destroystokyo.paper.entity.RangedEntity;
-+import org.bukkit.entity.Mob;
++import org.bukkit.entity.*;
  import com.domnian.paperdragon.api.EntityTask.TaskHandler;
 +import org.bukkit.Location;
  import org.bukkit.World;
-+import org.bukkit.entity.Animals;
-+import org.bukkit.entity.Creature;
-+import org.bukkit.entity.EnderSignal;
- import org.bukkit.entity.Entity;
-+import org.bukkit.entity.Item;
-+import org.bukkit.entity.Spider;
-+import org.bukkit.entity.Wolf;
+-import org.bukkit.entity.Entity;
 +import org.jetbrains.annotations.NotNull;
  
  public interface DAPI_Entity {
  
-@@ -67,4 +77,56 @@ public interface DAPI_Entity {
+@@ -67,4 +70,66 @@ public interface DAPI_Entity {
  
      <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task);
  
@@ -42,10 +36,6 @@ index 85d4b770a24cadeae7da156f166836081796da12..16e770c7dfe8035895501f091699cc5c
 +     * @param disabled
 +     */
 +    void setDisabledEntity(@NotNull org.bukkit.entity.Entity entity, boolean disabled);
-+
-+    int getLove(@NotNull Animals animal);
-+
-+    void setLove(@NotNull Animals animal, int love);
 +
 +    void setFireProof(@NotNull Mob entity, boolean flag);
 +
@@ -65,7 +55,7 @@ index 85d4b770a24cadeae7da156f166836081796da12..16e770c7dfe8035895501f091699cc5c
 +
 +    void setEntitySize(@NotNull org.bukkit.entity.Entity entity, float width, float height);
 +
-+    void setTargetRange(@NotNull Mob entity, float range);
++    void setTargetRange(@NotNull Mob entity, Double range);
 +
 +    void setRangedAttackDistance(@NotNull RangedEntity monster, float range);
 +
@@ -75,13 +65,27 @@ index 85d4b770a24cadeae7da156f166836081796da12..16e770c7dfe8035895501f091699cc5c
 +
 +    void respawnEntity(@NotNull org.bukkit.entity.Entity entity);
 +
++    void setEnderSignalExactTarget(@NotNull EnderSignal enderSignal, boolean exact);
++
 +    void setEnderSignalLife(@NotNull EnderSignal enderSignal, int lifeTime);
 +
 +    int getEnderSignalLife(@NotNull EnderSignal enderSignal);
 +
 +    void setEnderSignalSpeed(@NotNull EnderSignal enderSignal, double speed);
 +
-+    void setEnderSignalDestination(@NotNull EnderSignal enderSignal, Location target);
++    double getEnderSignalSpeed(@NotNull EnderSignal enderSignal);
++
++    void setFireballs(@NotNull Blaze blaze, int num);
++
++    int getNumFireballs(@NotNull Blaze blaze);
++
++    int getTimeBetweenFireballs(@NotNull Blaze blaze);
++
++    void setTimeBetweenFireballs(@NotNull Blaze blaze, int timeBetweenFireballs);
++
++    int getFireballCooldown(@NotNull Ghast ghast);
++
++    void setFireballCooldown(@NotNull Ghast ghast, int cooldown);
 +
  }
 diff --git a/src/main/java/org/bukkit/entity/Blaze.java b/src/main/java/org/bukkit/entity/Blaze.java
