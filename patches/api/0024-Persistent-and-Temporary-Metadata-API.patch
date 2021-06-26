@@ -1377,11 +1377,11 @@ index 0000000000000000000000000000000000000000..0ab30295a7abd195d57aeb1b5bf1b0fc
 +
 +public class TempMetaMap extends MetaMap<TempKey> {
 +}
-diff --git a/src/main/java/com/domnian/paperdragon/customevents/BlockWithPersistentMetaClearedEvent.java b/src/main/java/com/domnian/paperdragon/customevents/BlockWithPersistentMetaClearedEvent.java
+diff --git a/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1196143bb
 --- /dev/null
-+++ b/src/main/java/com/domnian/paperdragon/customevents/BlockWithPersistentMetaClearedEvent.java
++++ b/src/main/java/com/domnian/paperdragon/events/BlockWithPersistentMetaClearedEvent.java
 @@ -0,0 +1,53 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
