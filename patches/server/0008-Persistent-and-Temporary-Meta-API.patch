@@ -78,10 +78,10 @@ index 0000000000000000000000000000000000000000..b83a26738b5b2f35736b47fdfd358845
 \ No newline at end of file
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0c3d240058254c5ce07081f7c2ae86c921e78769
+index 0000000000000000000000000000000000000000..ce30efab72e891fbc9a4b92aca10540a0179e623
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
-@@ -0,0 +1,602 @@
+@@ -0,0 +1,603 @@
 +package com.domnian.paperdragon.api.meta;
 +
 +import com.domnian.paperdragon.DataConverters;
@@ -630,6 +630,7 @@ index 0000000000000000000000000000000000000000..0c3d240058254c5ce07081f7c2ae86c9
 +    private static void reloadChunks(@NotNull Collection<ChunkHolder> playerChunks) {
 +        for (ChunkHolder playerChunk : playerChunks) {
 +            LevelChunk chunk = playerChunk.getFullChunkUnchecked();
++            if (chunk == null) continue;
 +            chunk.chunkTempMeta.clear();
 +            chunk.blockTempMeta.clear();
 +            chunk.getBukkitChunk().getTempMeta().clear();
@@ -1019,7 +1020,7 @@ index 08a5fabb1d13db26014bb5751aa271c0a0bdcb7a..5a8626dbaea7ac9fab9eb1c3cbf8277b
      private final ServerLevel worldServer;
      private final int x;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a3614412c041ff5057b8f18572e512e69695839d..7de87361c41b8498204f2096be861e1196021fb4 100644
+index 8484361270659ef8549b104c815e9f14029dcd06..9a563adb69fd0dde393d51cda3757cd84f90df41 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
