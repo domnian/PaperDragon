@@ -18,8 +18,8 @@ index 85795c337587a9bb1244f6f4d284829fb6af3daa..c94e115b835bdb2272ad5697dbb79a9d
 +            if (entity.getVehicle() != null) {
 +                entity.getVehicle().remove();
 +            }
-+            if (entity.getPassenger() != null) {
-+                entity.getPassenger().remove();
++            for (org.bukkit.entity.Entity passenger : entity.getPassengers()) {
++                passenger.remove();
 +            }
 +        }
 +        // PaperDragon end
