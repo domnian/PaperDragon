@@ -1,0 +1,109 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 27 Jun 2021 11:45:09 -0400
+Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
+index 6703b328aa81545d0845a6d4a29f4635c48f60a5..66a10ff33ebbcc68815246073f0bc83c93653272 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
+@@ -2,8 +2,15 @@ package com.domnian.paperdragon.api;
+ 
+ import com.destroystokyo.paper.profile.PlayerProfile;
+ import com.google.common.collect.Maps;
++import com.google.gson.JsonArray;
++import com.google.gson.JsonElement;
++import com.google.gson.JsonObject;
++import com.google.gson.JsonPrimitive;
+ import net.kyori.adventure.text.Component;
++import net.minecraft.nbt.*;
+ import org.bukkit.GameMode;
++import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.inventory.ItemStack;
+ import org.jetbrains.annotations.NotNull;
+ 
+ import javax.annotation.Nullable;
+@@ -32,4 +39,82 @@ public class CraftDAPI_Server implements DAPI_Server {
+         return Set.copyOf(fakePlayerMap.values());
+     }
+ 
++    @NotNull
++    @Override
++    public String getSerializesItemTag(@NotNull ItemStack stack) {
++        net.minecraft.world.item.ItemStack nmsItem = ((CraftItemStack)stack).handle;
++        return nmsItem.tag != null ? nbtToJson(nmsItem.tag).toString() : "";
++    }
++
++    private static JsonElement nbtToJson(Tag nbt) {
++        switch (nbt.getType().getPrettyName()) {
++            case "TAG_Byte": { // Byte
++                return new JsonPrimitive(((ByteTag) nbt).getAsByte());
++            }
++            case "TAG_Short": { // Short
++                return new JsonPrimitive(((ShortTag) nbt).getAsShort());
++            }
++            case "TAG_Int": { // Int
++                return new JsonPrimitive(((IntTag) nbt).getAsInt());
++            }
++            case "TAG_Long": { // Long
++                return new JsonPrimitive(((LongTag) nbt).getAsLong());
++            }
++            case "TAG_Float": { // Float
++                return new JsonPrimitive(((FloatTag) nbt).getAsFloat());
++            }
++            case "TAG_Double": { // Double
++                return new JsonPrimitive(((DoubleTag) nbt).getAsDouble());
++            }
++            case "TAG_Byte_Array": { // Byte Array
++                JsonArray result = new JsonArray();
++                ((ByteArrayTag) nbt).forEach(val -> result.add(val.getAsByte()));
++                return result;
++            }
++            case "TAG_String": { // String
++                return new JsonPrimitive(nbt.getAsString());
++            }
++            case "TAG_List": { // List
++                JsonArray result = new JsonArray();
++                ((ListTag) nbt).forEach(val -> result.add(nbtToJson(val)));
++                return result;
++            }
++            case "TAG_Compound": { // Compound (Map)
++                JsonObject result = new JsonObject();
++                ((net.minecraft.nbt.CompoundTag) nbt).tags.forEach((key, val) -> {
++                    JsonElement serialized = nbtToJson(val);
++                    if (serialized == null || serialized.isJsonNull()) {
++                        result.add(key, null);
++                    } else if (serialized.isJsonObject() || serialized.isJsonArray()) {
++                        result.add(key, serialized);
++                    } else {
++                        JsonPrimitive primitive = serialized.getAsJsonPrimitive();
++                        if (primitive.isString()) {
++                            result.addProperty(key, primitive.getAsString());
++                        } else if (primitive.isBoolean()) {
++                            result.addProperty(key, primitive.getAsBoolean());
++                        } else if (primitive.isNumber()) {
++                            result.addProperty(key, primitive.getAsNumber());
++                        } else {
++                            result.add(key, primitive);
++                        }
++                    }
++                });
++                return result;
++            }
++            case "TAG_Int_Array": { // Int Array
++                JsonArray result = new JsonArray();
++                ((IntArrayTag) nbt).forEach(val -> result.add(val.getAsInt()));
++                return result;
++            }
++            case "TAG_Long_Array": { // Long Array
++                JsonArray result = new JsonArray();
++                ((LongArrayTag) nbt).forEach(val -> result.add(val.getAsLong()));
++                return result;
++            }
++            default:
++                return null;
++        }
++    }
++
+ }

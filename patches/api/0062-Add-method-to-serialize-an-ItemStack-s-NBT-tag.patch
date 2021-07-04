@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 27 Jun 2021 11:44:05 -0400
+Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
+index 1b44a3f93d3accf859284af1956e3004c5460cb4..96b9aec4c1c7a486dfc60adc5f87615d04394cf1 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
+@@ -1,8 +1,10 @@
+ package com.domnian.paperdragon.api;
+ 
+ import com.destroystokyo.paper.profile.PlayerProfile;
++import com.google.gson.JsonElement;
+ import net.kyori.adventure.text.Component;
+ import org.bukkit.GameMode;
++import org.bukkit.inventory.ItemStack;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ 
+@@ -17,4 +19,8 @@ public interface DAPI_Server {
+     FakePlayer createFakePlayer(@NotNull PlayerProfile profile, int ping, @NotNull GameMode gameMode, @NotNull Component playerListName) throws IllegalArgumentException;
+     @NotNull
+     Set<FakePlayer> getJoinedFakePlayers();
++
++    @NotNull
++    String getSerializesItemTag(@NotNull ItemStack stack);
++
+ }
