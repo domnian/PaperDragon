@@ -410,7 +410,7 @@ index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f36
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 2e0803a17445022d5b051412eaad7e8009de752e..6b48253b91a8866110d977716fa93580a34bdb2c 100644
+index 86d0933c42e4fb7ba56294a442930ef3d5649eca..2a73e92843d8e714e3f6da1b80a1cd740e610d18 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -939,7 +939,7 @@ public class ServerLevel extends net.minecraft.world.level.Level implements Worl
@@ -431,7 +431,7 @@ index 2e0803a17445022d5b051412eaad7e8009de752e..6b48253b91a8866110d977716fa93580
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5b8c45ad39a87ffe8c0e13fcf8816bb936282194..ea3d35acc350119bd0a6f3ce6fa73cd7900cea1a 100644
+index 18fff8259eb655f0c878cb33b0d45824bf038f84..e3053a81f248e9c713825b822a88716eb1b5b6f5 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -266,6 +266,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
@@ -543,7 +543,7 @@ index 5b8c45ad39a87ffe8c0e13fcf8816bb936282194..ea3d35acc350119bd0a6f3ce6fa73cd7
  
      public boolean isInvulnerable() {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 57c448ee93df76fc2a17c75fafc78408d720ced3..e5a7f32734698aab0e9d4e06ca7f35caf4a47017 100644
+index 92fd98540e8d5ada4eaaf83bee8cdd276c4458a7..f9976de1ade4e8c254b9aa81e7268b2e0b2eae55 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -336,7 +336,7 @@ public abstract class LivingEntity extends Entity {
@@ -576,7 +576,7 @@ index 57c448ee93df76fc2a17c75fafc78408d720ced3..e5a7f32734698aab0e9d4e06ca7f35ca
          }
  
          if (nbt.contains("ActiveEffects", 9)) {
-@@ -2825,8 +2837,16 @@ public abstract class LivingEntity extends Entity {
+@@ -2831,8 +2843,16 @@ public abstract class LivingEntity extends Entity {
      }
  
      public boolean doHurtTarget(Entity target) {
@@ -596,10 +596,10 @@ index 57c448ee93df76fc2a17c75fafc78408d720ced3..e5a7f32734698aab0e9d4e06ca7f35ca
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index c4c5c35e37b793f3b74349ff03c0829f4913b91c..0496fe6640cf48d8f0069426b4b8085036ed1ca8 100644
+index 0ce0e7a923da812a02d9ab83607d3cc9c87047df..20d9ec76d68b671da59026a0e0d0b866562b5b29 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -123,6 +123,8 @@ public abstract class Mob extends LivingEntity {
+@@ -124,6 +124,8 @@ public abstract class Mob extends LivingEntity {
      private CompoundTag leashInfoTag;
      private BlockPos restrictCenter;
      private float restrictRadius;

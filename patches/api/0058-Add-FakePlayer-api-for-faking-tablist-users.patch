@@ -187,7 +187,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9f84a075e166e01270a69ea36959c2ad8d784009..403a3d24035a0329798f3ffe8f0f3c31d45788c8 100644
+index ded87313693e865ae1cb9468ef024a1814cc69d0..5441ceb21c309ff719eb95ade76717ca85c0a4b0 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -7,6 +7,7 @@ import com.destroystokyo.paper.ClientOption; // Paper

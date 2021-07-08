@@ -5,10 +5,10 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e85edcda9cb21fe726cac0f65af77ca53e027252..092e97c99bb7dc2d58f887bc98210a646e60cc46 100644
+index 94aed4a72a565e184d5981106c616a374d28678b..360eecaf41858cbfcaa0e60f1c24d123fd282974 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -904,7 +904,8 @@ public abstract class PlayerList {
+@@ -906,7 +906,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = entityplayer1.getBukkitEntity();

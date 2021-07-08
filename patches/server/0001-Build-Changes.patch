@@ -5,7 +5,7 @@ Subject: [PATCH] Build Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 39beb0331282b297f4f3857560d24ce6a616210d..7764dcc7caebc9f12a6775ae1aec2c2da49d24ae 100644
+index 4605634d1e0d2c6592d4152e697680e078380868..08c5c626839c4eee608ad0a99bce9e4244c90630 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -30,8 +30,8 @@ repositories {
@@ -19,7 +19,7 @@ index 39beb0331282b297f4f3857560d24ce6a616210d..7764dcc7caebc9f12a6775ae1aec2c2d
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.12.1")
      implementation("net.minecrell:terminalconsoleappender:1.2.0")
-@@ -66,6 +66,12 @@ dependencies {
+@@ -64,6 +64,12 @@ dependencies {
  
      implementation("org.quiltmc:tiny-mappings-parser:0.3.0") // Paper - needed to read mappings for stacktrace deobfuscation
  
@@ -32,7 +32,7 @@ index 39beb0331282b297f4f3857560d24ce6a616210d..7764dcc7caebc9f12a6775ae1aec2c2d
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.1")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
-@@ -82,7 +88,7 @@ tasks.jar {
+@@ -80,7 +86,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -41,7 +41,7 @@ index 39beb0331282b297f4f3857560d24ce6a616210d..7764dcc7caebc9f12a6775ae1aec2c2d
              "Implementation-Vendor" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Date()), // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
-@@ -114,7 +120,7 @@ tasks.shadowJar {
+@@ -112,7 +118,7 @@ tasks.shadowJar {
  
      // Needed for Paperclip's install to maven local feature
      from(generatePom) {
@@ -50,7 +50,7 @@ index 39beb0331282b297f4f3857560d24ce6a616210d..7764dcc7caebc9f12a6775ae1aec2c2d
          rename { "pom.xml" }
      }
  
-@@ -178,7 +184,7 @@ tasks.test {
+@@ -176,7 +182,7 @@ tasks.test {
  fun TaskContainer.registerRunTask(
      name: String, block: JavaExec.() -> Unit
  ): TaskProvider<JavaExec> = register<JavaExec>(name) {

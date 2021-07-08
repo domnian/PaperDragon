@@ -105,7 +105,7 @@ index c9011ac9e5d8d6c04aec8f63fce606026dee3146..5e61727c4313df4febd5f53e86c11e6e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index ea3d35acc350119bd0a6f3ce6fa73cd7900cea1a..e262f3cc67579c8abcca2b6df4922d9017e8d902 100644
+index e3053a81f248e9c713825b822a88716eb1b5b6f5..2ae03d65bf1cc370a00791b7e561128a6a432181 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -301,7 +301,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
@@ -118,10 +118,10 @@ index ea3d35acc350119bd0a6f3ce6fa73cd7900cea1a..e262f3cc67579c8abcca2b6df4922d90
      public boolean isInPowderSnow;
      public boolean wasInPowderSnow;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index e5a7f32734698aab0e9d4e06ca7f35caf4a47017..bf033993a5fd617a45f7588af2dfd044eae01fdd 100644
+index f9976de1ade4e8c254b9aa81e7268b2e0b2eae55..27eca8ccb9aeedbe70006de3c8a9767a6a6d3542 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -2839,12 +2839,10 @@ public abstract class LivingEntity extends Entity {
+@@ -2845,12 +2845,10 @@ public abstract class LivingEntity extends Entity {
      public boolean doHurtTarget(Entity target) {
          // PaperDragon start - make all mobs able to attack
          boolean flag = target.hurt(DamageSource.mobAttack(this), (float) ((int) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));

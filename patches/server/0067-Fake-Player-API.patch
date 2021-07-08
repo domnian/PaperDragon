@@ -244,10 +244,10 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..bcb60aef5674fd9c496cddaabb62fae5
          this.action = action;
          this.entries = Lists.newArrayListWithCapacity(players.length);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index abb8289aa3d679970b0cdfcd909b1e8d819b191d..233f9f34385ba67695c644187e3ec559fd5a2d21 100644
+index 360eecaf41858cbfcaa0e60f1c24d123fd282974..d35cea4bd89d8d336fae5426abe67a6ebdb4469d 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -371,6 +371,13 @@ public abstract class PlayerList {
+@@ -373,6 +373,13 @@ public abstract class PlayerList {
          }
          // CraftBukkit end
  
@@ -262,7 +262,7 @@ index abb8289aa3d679970b0cdfcd909b1e8d819b191d..233f9f34385ba67695c644187e3ec559
          ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, player);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358eb5468f5 100644
+index ee2ffd96865604106dd4c3648a8c4a1a17c79f9f..244aec1f053b1b88c2dd88e89217200c7887ca81 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -290,21 +290,21 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -631,7 +631,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
      // Paper end
      @Override
      public int getPing() {
-@@ -2301,8 +2387,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2302,8 +2388,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      @Override
      public void stopSound(final net.kyori.adventure.sound.SoundStop stop) {
          this.getHandle().connection.send(new ClientboundStopSoundPacket(
@@ -642,7 +642,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
          ));
      }
  
-@@ -2360,12 +2446,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2362,12 +2448,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      // Paper end
  
      // Spigot start
@@ -657,7 +657,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
              return (InetSocketAddress) CraftPlayer.this.getHandle().connection.connection.getRawAddress();
          }
  
-@@ -2380,34 +2464,30 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2382,34 +2466,30 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          }
  
          @Override
@@ -701,7 +701,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
  
              ClientboundChatPacket packet = new ClientboundChatPacket(null, net.minecraft.network.chat.ChatType.SYSTEM, Util.NIL_UUID);
              packet.components = components;
-@@ -2426,12 +2506,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2428,12 +2508,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          @Override
          public void sendMessage(net.md_5.bungee.api.ChatMessageType position, BaseComponent component) {
@@ -716,7 +716,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
  
              ClientboundChatPacket packet = new ClientboundChatPacket(null, net.minecraft.network.chat.ChatType.getForIndex((byte) position.ordinal()), Util.NIL_UUID);
              packet.components = components;
-@@ -2440,12 +2520,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2442,12 +2522,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          @Override
          public void sendMessage(net.md_5.bungee.api.ChatMessageType position, UUID sender, BaseComponent component) {
@@ -731,7 +731,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
  
              ClientboundChatPacket packet = new ClientboundChatPacket(null, net.minecraft.network.chat.ChatType.getForIndex((byte) position.ordinal()), sender == null ? Util.NIL_UUID : sender);
              packet.components = components;
-@@ -2454,8 +2534,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2456,8 +2536,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          // Paper start
          @Override
@@ -741,7 +741,7 @@ index a60740075d974d5a2850f6fb8145f87876925966..c676d3efd27f79eacfcb3edc59057358
              return getHandle().latency;
          }
          // Paper end
-@@ -2468,14 +2547,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2470,14 +2549,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      }
      // Paper end
  

@@ -5,10 +5,10 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 261c569716f02e15bd91348282d8c6f3d548f410..4e3355d636e12cc3a5621317ee510a3a48bf11ab 100644
+index 2d8adb81ee3b3fb05820c61fc795c3d7d4db0803..ff366fedefd9783e80b8bf03b8bd16f03ee71d07 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -829,7 +829,10 @@ public class ServerPlayer extends Player {
+@@ -830,7 +830,10 @@ public class ServerPlayer extends Player {
  
          Component defaultMessage = this.getCombatTracker().getDeathMessage();
  
@@ -21,7 +21,7 @@ index 261c569716f02e15bd91348282d8c6f3d548f410..4e3355d636e12cc3a5621317ee510a3a
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 81e762a95849091590ab1ae58759ead8946c7529..543c899ffc557cb0e7d9c9f0f5415394a34b95ba 100644
+index 7407eb0a36cae14d0bb10132284fbc3172ca4358..4011580c0f224ab98288cc512a12c0a070fd5811 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -880,11 +880,12 @@ public class CraftEventFactory {

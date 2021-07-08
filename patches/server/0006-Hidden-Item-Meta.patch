@@ -15,7 +15,7 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..4fd2df47edee792327da7fbb434f184a7bec44ef
+index 0000000000000000000000000000000000000000..6be220dffca034452747e5a713f001ae343787ac
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 @@ -0,0 +1,98 @@
@@ -118,10 +118,10 @@ index 0000000000000000000000000000000000000000..4fd2df47edee792327da7fbb434f184a
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/network/FriendlyByteBuf.java b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-index 70fb9001b12b105fbf471bd0127d8414e03f9329..03158e5cf6753d5bec2f8d4b47ae72f725f154b3 100644
+index e3b80334164ba48e83cca0b9a7f3a8ddf05dd598..9e0979a653566146ca93090f263faf43f1e27d30 100644
 --- a/src/main/java/net/minecraft/network/FriendlyByteBuf.java
 +++ b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-@@ -476,6 +476,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -501,6 +501,7 @@ public class FriendlyByteBuf extends ByteBuf {
                  // Spigot end
                  nbttagcompound = stack.getTag();
                  // Paper start
@@ -129,7 +129,7 @@ index 70fb9001b12b105fbf471bd0127d8414e03f9329..03158e5cf6753d5bec2f8d4b47ae72f7
                  if (nbttagcompound != null && nbttagcompound.contains("SkullOwner", 10)) {
                      CompoundTag owner = nbttagcompound.getCompound("SkullOwner");
                      if (owner.hasUUID("Id")) {
-@@ -504,6 +505,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -529,6 +530,7 @@ public class FriendlyByteBuf extends ByteBuf {
              // CraftBukkit start
              if (itemstack.getTag() != null) {
                  // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
@@ -138,7 +138,7 @@ index 70fb9001b12b105fbf471bd0127d8414e03f9329..03158e5cf6753d5bec2f8d4b47ae72f7
                      CompoundTag owner = itemstack.tag.getCompound("SkullOwner");
                      if (itemstack.tag.contains("SkullOwnerOrig")) {
 diff --git a/src/main/java/net/minecraft/network/chat/HoverEvent.java b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..86134db69f9a34fc4a2188fe369bdb056466cfd2 100644
+index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..ec9a03adbd3c8becd1104edff020cf76089da7ad 100644
 --- a/src/main/java/net/minecraft/network/chat/HoverEvent.java
 +++ b/src/main/java/net/minecraft/network/chat/HoverEvent.java
 @@ -247,7 +247,7 @@ public class HoverEvent {
@@ -151,7 +151,7 @@ index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..86134db69f9a34fc4a2188fe369bdb05
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index aa0680291d042b9b4510008965d80cfd075f277c..016c035d2efcf7a5f906daa31ca3224c233ffdb3 100644
+index 86aa07827ce0e02939ebb594956b1023ffd83ad4..dbd5735055280a118dc04385667a24c7024142fe 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -71,6 +71,7 @@ import net.minecraft.core.Registry;
@@ -162,7 +162,7 @@ index aa0680291d042b9b4510008965d80cfd075f277c..016c035d2efcf7a5f906daa31ca3224c
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.ComponentUtils;
  import net.minecraft.network.chat.HoverEvent;
-@@ -1224,8 +1225,26 @@ public final class ItemStack {
+@@ -1221,8 +1222,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets((Component) ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {

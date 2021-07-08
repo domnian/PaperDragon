@@ -5,10 +5,10 @@ Subject: [PATCH] Remove "Copy of" from Written Books
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index c1604f46944905103ab7027bea070bf2d0e43fb8..028bcf9c3f549121e338b0228f26ec5d54409a93 100644
+index dbd5735055280a118dc04385667a24c7024142fe..7753198166345f8ad1887783aa66f76fcef1e41c 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -256,6 +256,7 @@ public final class ItemStack {
+@@ -254,6 +254,7 @@ public final class ItemStack {
              // CraftBukkit end
              this.processEnchantOrder(this.tag); // Paper
              this.processText(); // Paper

@@ -6,10 +6,10 @@ Subject: [PATCH] Allow Vehicle/Passenger Teleporting for Bukkit API
 If Bukkit teleport is called, teleport the whole set of entities together and maintain the chain.
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 0991ed466d2b674f753d7cf086fade7385ad0821..af7902b2af783a1764b731eb5e0277899919f8f9 100644
+index dc6ce8524ad16fee7b40fd11fc0c8e1d270178c6..8bce47e6ca692da53f27bcf22c48eb256cc5a2cb 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -243,12 +243,12 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -242,12 +242,12 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
      private double lastGoodZ;
      @Nullable
      private Entity lastVehicle;
@@ -28,7 +28,7 @@ index 0991ed466d2b674f753d7cf086fade7385ad0821..af7902b2af783a1764b731eb5e027789
      @Nullable
      private Vec3 awaitingPositionFromClient;
      private int awaitingTeleport;
-@@ -330,7 +330,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -329,7 +329,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
          }
  
          this.lastVehicle = this.player.getRootVehicle();
@@ -37,7 +37,7 @@ index 0991ed466d2b674f753d7cf086fade7385ad0821..af7902b2af783a1764b731eb5e027789
              this.vehicleFirstGoodX = this.lastVehicle.getX();
              this.vehicleFirstGoodY = this.lastVehicle.getY();
              this.vehicleFirstGoodZ = this.lastVehicle.getZ();
-@@ -404,6 +404,17 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -403,6 +403,17 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
          this.lastGoodX = this.player.getX();
          this.lastGoodY = this.player.getY();
          this.lastGoodZ = this.player.getZ();
@@ -55,7 +55,7 @@ index 0991ed466d2b674f753d7cf086fade7385ad0821..af7902b2af783a1764b731eb5e027789
      }
  
      @Override
-@@ -2470,7 +2481,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -2450,7 +2461,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
              case PERFORM_RESPAWN:
                  if (this.player.wonGame) {
                      this.player.wonGame = false;
@@ -65,10 +65,10 @@ index 0991ed466d2b674f753d7cf086fade7385ad0821..af7902b2af783a1764b731eb5e027789
                  } else {
                      if (this.player.getHealth() > 0.0F) {
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 233f9f34385ba67695c644187e3ec559fd5a2d21..eecbd28234b4d299746aeb3fc541749b5027b745 100644
+index d35cea4bd89d8d336fae5426abe67a6ebdb4469d..9e45ce700f030de068971e88acb253bb80601490 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -816,12 +816,18 @@ public abstract class PlayerList {
+@@ -818,12 +818,18 @@ public abstract class PlayerList {
  
      public ServerPlayer moveToWorld(ServerPlayer entityplayer, ServerLevel worldserver, boolean flag, Location location, boolean avoidSuffocation) {
          // Paper start
@@ -91,7 +91,7 @@ index 233f9f34385ba67695c644187e3ec559fd5a2d21..eecbd28234b4d299746aeb3fc541749b
          this.playersByName.remove(entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          entityplayer.getLevel().removePlayerImmediately(entityplayer, Entity.RemovalReason.DISCARDED);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index f027274eed3e33aa0453afd796b756446f97b84d..59f24df550bddf4a972ac4c9eaf244a7373d5576 100644
+index b922a0ef8dc40083eef30c6fd6c56733eca802a0..725a58f320989be8c48c82a1bf3b40f80fb2f2a3 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -11,6 +11,8 @@ import com.google.common.collect.Sets;
@@ -242,7 +242,7 @@ index 676c37744b1ba87e0cb6f520a2fcea50c6988794..e404449c841334b7a18392bdd72d6634
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index c676d3efd27f79eacfcb3edc59057358eb5468f5..df81ad3c1b3ce67f10825bd0af949e0ededecce6 100644
+index 244aec1f053b1b88c2dd88e89217200c7887ca81..da7bb63c917c6e19bffd5ebb00e026c295fedffb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -965,7 +965,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

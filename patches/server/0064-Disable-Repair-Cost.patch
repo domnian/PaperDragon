@@ -6,10 +6,10 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 8a4cbf1880c5bfcffb58517a7b9c42fa32ce0fef..6edee84dd859231a671a199ea8e4cd520caab690 100644
+index ac6fd9cc940fa4de25f517d55e774e46ece493f1..5249324b7f4f01383cd9f45c8de6289fd017efe3 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -275,6 +275,7 @@ public final class ItemStack {
+@@ -273,6 +273,7 @@ public final class ItemStack {
  
          if (this.getItem().canBeDepleted()) {
              this.setDamageValue(this.getDamageValue());
@@ -17,7 +17,7 @@ index 8a4cbf1880c5bfcffb58517a7b9c42fa32ce0fef..6edee84dd859231a671a199ea8e4cd52
          }
  
      }
-@@ -1162,10 +1163,12 @@ public final class ItemStack {
+@@ -1159,10 +1160,12 @@ public final class ItemStack {
      }
  
      public int getBaseRepairCost() {
@@ -31,10 +31,10 @@ index 8a4cbf1880c5bfcffb58517a7b9c42fa32ce0fef..6edee84dd859231a671a199ea8e4cd52
          if (repairCost == 0) {
              this.removeTagKey("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index d2ac20fb3426b51f59367df3fd624a4756e1e13b..1df6bb7ec8c23266c8579056d1b9f756f53951b3 100644
+index da24db835e2d818510b34ed99a3b9be8de665302..5513afab2e1ffd93c10fdf46f7642c83c336e5ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -392,7 +392,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -393,7 +393,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          this.enchantments = CraftMetaItem.buildEnchantments(tag, CraftMetaItem.ENCHANTMENTS);
          this.attributeModifiers = CraftMetaItem.buildModifiers(tag, CraftMetaItem.ATTRIBUTES);
  

@@ -54,7 +54,7 @@ index 63df270565ed717574d6baa7839d43350944b281..4c56d456d825bb835b5052608b179864
      }
  }
 diff --git a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
-index ae50ecfbf4107ccdb6a3a427ca7875d9c498b785..6a30f55d901d7325ceec4d484b5b4c5754ad87b7 100644
+index 310340a1972556f53dc98ebed37da951eb9818f1..1f302d7ee78b08e857c2d46bd40c79d3a1571dec 100644
 --- a/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 +++ b/src/main/java/org/bukkit/event/vehicle/VehicleExitEvent.java
 @@ -1,5 +1,6 @@

@@ -5,10 +5,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index b5158151960db5c474b3aaa24bfa428e2a158fd9..449f64c85095d51debdf5ffaf079c12fd43bfe97 100644
+index 66580ade2cd8b8795b2d79f7958460162c3a17db..2d68b88ad75fbd8e38edcc407b9f7c8c065bbcaa 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1982,4 +1982,13 @@ public final class Bukkit {
+@@ -2006,4 +2006,13 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -23,10 +23,10 @@ index b5158151960db5c474b3aaa24bfa428e2a158fd9..449f64c85095d51debdf5ffaf079c12f
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index d10e189892c5f40c576ed20bb0ea40bc1aff4490..4fddc0bc83c76509321fdefa30c84c75ac10f2a2 100644
+index 5d58b9790abda0a2b84701a38a4d42dbf746882c..cb689753f175ecad3ecdbde3cf669aad344584b1 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1723,4 +1723,11 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1743,4 +1743,11 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
      @NotNull
      io.papermc.paper.datapack.DatapackManager getDatapackManager();
      // Paper end

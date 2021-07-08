@@ -25,7 +25,7 @@ index d0109df7fad51fc0444459f5d367254c8f4c355e..676ec539428bda43eb7cec8e8bb7bb79
                  if (((ServerPlayer) target).isSleeping()) {
                      ((ServerPlayer) target).stopSleepInBed(true, true);
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index be71fa4eea34dfb049536aa517b379d44f5f2cef..fc9c290e866c5e17c78707cb1c6bbf7ce1252b66 100644
+index 10f4efb19a89e6cb96a2003d69acc5306c48091a..eaadc574a45abf2801e4cb36c63847ee160b8f8c 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -163,6 +163,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -53,10 +53,10 @@ index be71fa4eea34dfb049536aa517b379d44f5f2cef..fc9c290e866c5e17c78707cb1c6bbf7c
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3d548f410 100644
+index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7d4db0803 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -161,6 +161,7 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
+@@ -167,6 +167,7 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
  import org.bukkit.event.player.PlayerPortalEvent;
  import org.bukkit.event.player.PlayerTeleportEvent;
  import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -64,7 +64,7 @@ index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3
  import org.bukkit.inventory.MainHand;
  // CraftBukkit end
  
-@@ -1629,10 +1630,11 @@ public class ServerPlayer extends Player {
+@@ -1630,10 +1631,11 @@ public class ServerPlayer extends Player {
  
      public void disconnect() {
          this.disconnected = true;
@@ -77,7 +77,7 @@ index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3
              this.stopRiding();
          }
          // Paper end
-@@ -1798,6 +1800,7 @@ public class ServerPlayer extends Player {
+@@ -1799,6 +1801,7 @@ public class ServerPlayer extends Player {
              this.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.CHANGE_GAME_MODE, (float) gameMode.getId()));
              if (gameMode == GameType.SPECTATOR) {
                  this.removeEntitiesOnShoulder();
@@ -85,7 +85,7 @@ index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3
                  this.stopRiding();
              } else {
                  this.setCamera(this);
-@@ -1971,7 +1974,7 @@ public class ServerPlayer extends Player {
+@@ -1972,7 +1975,7 @@ public class ServerPlayer extends Player {
  
          if (entity != this) {
              // Make sure we're in the right place
@@ -94,7 +94,7 @@ index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3
              this.getBukkitEntity().teleport(new Location(entity.getCommandSenderWorld().getWorld(), entity.getX(), entity.getY(), entity.getZ(), this.getYRot(), this.getXRot()), TeleportCause.SPECTATE); // Correctly handle cross-world entities from api calls by using CB teleport
  
              // Make sure we're tracking the entity before sending
-@@ -2039,6 +2042,7 @@ public class ServerPlayer extends Player {
+@@ -2040,6 +2043,7 @@ public class ServerPlayer extends Player {
      public void a(ServerLevel worldserver, double d0, double d1, double d2, float f, float f1, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause cause) {
          // CraftBukkit end
          this.setCamera(this);
@@ -103,10 +103,10 @@ index 817d40c309b0fb54cac1b32f0dac827773b33052..261c569716f02e15bd91348282d8c6f3
          /* CraftBukkit start - replace with bukkit handling for multi-world
          if (worldserver == this.level) {
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a6ecbb7eb1df7923d58366327e0f00512a3a1677..e85edcda9cb21fe726cac0f65af77ca53e027252 100644
+index 65657c009f6d5a5d5740e80f912a5893333c7085..94aed4a72a565e184d5981106c616a374d28678b 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -117,6 +117,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
+@@ -119,6 +119,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  import org.bukkit.event.player.PlayerLoginEvent;
  import org.bukkit.event.player.PlayerQuitEvent;
  import org.bukkit.event.player.PlayerRespawnEvent;
@@ -114,7 +114,7 @@ index a6ecbb7eb1df7923d58366327e0f00512a3a1677..e85edcda9cb21fe726cac0f65af77ca5
  // CraftBukkit end
  
  public abstract class PlayerList {
-@@ -626,6 +627,7 @@ public abstract class PlayerList {
+@@ -628,6 +629,7 @@ public abstract class PlayerList {
  
              if (entity.hasExactlyOnePlayerPassenger()) {
                  PlayerList.LOGGER.debug("Removing player mount");
@@ -123,7 +123,7 @@ index a6ecbb7eb1df7923d58366327e0f00512a3a1677..e85edcda9cb21fe726cac0f65af77ca5
                  entity.getPassengersAndSelf().forEach((entity1) -> {
                      // Paper start
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e262f3cc67579c8abcca2b6df4922d9017e8d902..b1f24dae1d7475710494360f123566d8f50316c9 100644
+index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa187b7c5f 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -648,6 +648,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
@@ -199,7 +199,7 @@ index e262f3cc67579c8abcca2b6df4922d9017e8d902..b1f24dae1d7475710494360f123566d8
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index bf033993a5fd617a45f7588af2dfd044eae01fdd..425e5bdf0581ad45b5cbd8e7c9fbe2bd7cc28795 100644
+index 27eca8ccb9aeedbe70006de3c8a9767a6a6d3542..a35318240be52e18c1887d26e60121b03db83521 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -436,6 +436,7 @@ public abstract class LivingEntity extends Entity {
@@ -210,7 +210,7 @@ index bf033993a5fd617a45f7588af2dfd044eae01fdd..425e5bdf0581ad45b5cbd8e7c9fbe2bd
                      this.stopRiding();
                  }
              } else if (this.getAirSupply() < this.getMaxAirSupply()) {
-@@ -4004,6 +4005,7 @@ public abstract class LivingEntity extends Entity {
+@@ -4010,6 +4011,7 @@ public abstract class LivingEntity extends Entity {
  
      public void startSleeping(BlockPos pos) {
          if (this.isPassenger()) {
@@ -219,7 +219,7 @@ index bf033993a5fd617a45f7588af2dfd044eae01fdd..425e5bdf0581ad45b5cbd8e7c9fbe2bd
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 0496fe6640cf48d8f0069426b4b8085036ed1ca8..6e2962348bb9e24c70f5802d626bcd78ab61925d 100644
+index 20d9ec76d68b671da59026a0e0d0b866562b5b29..9e62c9d97f9c81bb48156b8d919c95628cea1d38 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -81,6 +81,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
@@ -230,7 +230,7 @@ index 0496fe6640cf48d8f0069426b4b8085036ed1ca8..6e2962348bb9e24c70f5802d626bcd78
  // CraftBukkit end
  
  public abstract class Mob extends LivingEntity {
-@@ -1428,6 +1429,7 @@ public abstract class Mob extends LivingEntity {
+@@ -1429,6 +1430,7 @@ public abstract class Mob extends LivingEntity {
          }
  
          if (this.isPassenger()) {
@@ -239,7 +239,7 @@ index 0496fe6640cf48d8f0069426b4b8085036ed1ca8..6e2962348bb9e24c70f5802d626bcd78
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 1bccd932851045c374e3092d33dc77fab680d0db..06a1c9c68b5d53b8b4c1373c4c81139cc15c9da2 100644
+index 19980b2d627eb3cacf8d0c3e6785ad2206910fbc..65cf299c1110fd4e5ad00e2bcc48cc5211e959ca 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -506,6 +506,7 @@ public abstract class Player extends LivingEntity {
