@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index fc9c290e866c5e17c78707cb1c6bbf7ce1252b66..a55241da7330aae094f4afaaacffe6be10bc3fec 100644
+index d36d3811bc8e4fc2534c2a2316e7444ce2f07143..e53196b520a79609cce8923cda1e3243c482d4ef 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1214,6 +1214,7 @@ public class ServerLevel extends net.minecraft.world.level.Level implements Worl
+@@ -1175,6 +1175,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -18,7 +18,7 @@ index fc9c290e866c5e17c78707cb1c6bbf7ce1252b66..a55241da7330aae094f4afaaacffe6be
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index b5e369fdbeeab1a21ac006c81d2fdb878c96a22f..4a82b7701c97477c44a9a4aef7f76d6fd4be7748 100644
+index 8de0e8d9d53cb716667c6989f35056c37e3ce154..a724afd9db1081effb8ef51f3b5863df215698d2 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -47,6 +47,7 @@ public class ItemEntity extends Entity {
@@ -30,7 +30,7 @@ index b5e369fdbeeab1a21ac006c81d2fdb878c96a22f..4a82b7701c97477c44a9a4aef7f76d6f
      private int health;
      private UUID thrower;
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 878cdfc49253e7916d038495f79fec7cce75aa50..d8d00b1770a8f490396491f74b1110f6e9cf274d 100644
+index 8c30e28b97ac7e8b54322c903e0b75ee8135620b..daf0e2300d7516a6dccfb779f46c6d26663c1277 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -23,6 +23,7 @@ import net.minecraft.core.Vec3i;
@@ -41,7 +41,7 @@ index 878cdfc49253e7916d038495f79fec7cce75aa50..d8d00b1770a8f490396491f74b1110f6
  import net.minecraft.server.level.ServerLevel;
  import net.minecraft.stats.Stats;
  import net.minecraft.tags.BlockTags;
-@@ -350,7 +351,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -369,7 +370,7 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack);
@@ -50,7 +50,7 @@ index 878cdfc49253e7916d038495f79fec7cce75aa50..d8d00b1770a8f490396491f74b1110f6
      }
  
      public static void popResourceFromFace(Level world, BlockPos pos, Direction direction, ItemStack stack) {
-@@ -368,18 +369,20 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -389,18 +390,20 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack, d3, d4, d5);
@@ -74,7 +74,7 @@ index 878cdfc49253e7916d038495f79fec7cce75aa50..d8d00b1770a8f490396491f74b1110f6
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index c94e115b835bdb2272ad5697dbb79a9d72af9c9e..86fd0b9084abcfdbc676c1177aefd4f10549cc37 100644
+index 17c5291c2a62638964eb194f0ddf48fae5f6fe6e..d1aa89d84c419c95921a42e51827b75da905ee84 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -400,6 +400,16 @@ public class CraftEventFactory {

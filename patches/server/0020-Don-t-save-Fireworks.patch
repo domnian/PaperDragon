@@ -9,10 +9,10 @@ launcher can very easily fill a chunk.
 Prevent saving Fireworks so that chunk unloads will wipe a chunks fireworks in this case.
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b1f24dae1d7475710494360f123566d8f50316c9..5e6ab1b2171a6c0fdb1eff971c3003c9a0442c12 100644
+index c72e0ffbf7a24c37cc9df14310e7a5cb26547988..c6ec682117bea9eb9da030d2a126ade0b7f91a9d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1834,6 +1834,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -1836,6 +1836,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
      }
  
      public boolean save(CompoundTag nbt) {

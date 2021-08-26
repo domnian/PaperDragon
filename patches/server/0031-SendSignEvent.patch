@@ -55,7 +55,7 @@ index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a90
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index f92c97992766e45fa100550d4e29810743092092..4345a5a1d204cb9f8595faa9b85ea87c8bbaec0e 100644
+index fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3..89b6a0a5e901940b5abdca6b870a54edd8648900 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
@@ -65,7 +65,7 @@ index f92c97992766e45fa100550d4e29810743092092..4345a5a1d204cb9f8595faa9b85ea87c
  import com.mojang.brigadier.exceptions.CommandSyntaxException;
  import java.util.UUID;
  import java.util.function.Function;
-@@ -52,14 +53,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -53,14 +54,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag save(CompoundTag nbt) {
@@ -87,7 +87,7 @@ index f92c97992766e45fa100550d4e29810743092092..4345a5a1d204cb9f8595faa9b85ea87c
  
              if (!ichatbasecomponent1.equals(ichatbasecomponent)) {
                  nbt.putString(SignBlockEntity.FILTERED_TEXT_FIELD_NAMES[i], Component.Serializer.toJson(ichatbasecomponent1));
-@@ -188,6 +194,13 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -189,6 +195,13 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag getUpdateTag() {

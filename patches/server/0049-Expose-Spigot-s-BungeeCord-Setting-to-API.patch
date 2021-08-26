@@ -5,10 +5,10 @@ Subject: [PATCH] Expose Spigot's BungeeCord Setting to API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f101adec6bf058cbec7a5c8bb1b1d938caa10c2c..ebbbc32b53a4e143b5b849ca7b5e46017c010942 100644
+index 57241ac0a2c72127266c5531c5f8a078b63b7790..de9d9865286f9ed6badf1058f0c784836d0cf536 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2546,4 +2546,11 @@ public final class CraftServer implements Server {
+@@ -2684,4 +2684,11 @@ public final class CraftServer implements Server {
      }
  
      // Paper end

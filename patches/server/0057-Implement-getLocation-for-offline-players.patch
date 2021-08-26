@@ -5,10 +5,10 @@ Subject: [PATCH] Implement getLocation() for offline players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index fe4f406d0146d038cea56e0f7c5a8828640aaa2f..f027274eed3e33aa0453afd796b756446f97b84d 100644
+index d8b0d147e3ab2c125fea584f09654465b24b0b56..8ef9b02b3342d9bf0a718056336c596bbebda827 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1974,6 +1974,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -1976,6 +1976,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
                  nbt.putBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end

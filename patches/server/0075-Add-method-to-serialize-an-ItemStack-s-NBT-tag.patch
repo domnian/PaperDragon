@@ -5,7 +5,7 @@ Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
-index 6703b328aa81545d0845a6d4a29f4635c48f60a5..66a10ff33ebbcc68815246073f0bc83c93653272 100644
+index 54dfe6cff043602669b060efadcc59b214808feb..da9b3c31a926ef3a20dc2c2e2104d64efda78922 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
 @@ -2,8 +2,15 @@ package com.domnian.paperdragon.api;
@@ -107,3 +107,4 @@ index 6703b328aa81545d0845a6d4a29f4635c48f60a5..66a10ff33ebbcc68815246073f0bc83c
 +    }
 +
  }
+\ No newline at end of file

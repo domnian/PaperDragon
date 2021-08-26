@@ -105,7 +105,7 @@ index c9011ac9e5d8d6c04aec8f63fce606026dee3146..5e61727c4313df4febd5f53e86c11e6e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e3053a81f248e9c713825b822a88716eb1b5b6f5..2ae03d65bf1cc370a00791b7e561128a6a432181 100644
+index b366e26cf2ebed0b5dd80f8b6fabf81ef5250159..53eef45ca5fda281e71c0525ac234b3eb12e95ba 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -301,7 +301,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
@@ -118,10 +118,10 @@ index e3053a81f248e9c713825b822a88716eb1b5b6f5..2ae03d65bf1cc370a00791b7e561128a
      public boolean isInPowderSnow;
      public boolean wasInPowderSnow;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index f9976de1ade4e8c254b9aa81e7268b2e0b2eae55..27eca8ccb9aeedbe70006de3c8a9767a6a6d3542 100644
+index 22540f36cd6b25115080471ce1e0b9e5bf891171..01317c6a0cf922000e2eb06b937dbb39259ccdf0 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -2845,12 +2845,10 @@ public abstract class LivingEntity extends Entity {
+@@ -2846,12 +2846,10 @@ public abstract class LivingEntity extends Entity {
      public boolean doHurtTarget(Entity target) {
          // PaperDragon start - make all mobs able to attack
          boolean flag = target.hurt(DamageSource.mobAttack(this), (float) ((int) this.getAttribute(Attributes.ATTACK_DAMAGE).getValue()));
@@ -161,10 +161,10 @@ index 6cf7080a11db2747f90d598c4109ce0cde3e7356..d1046fa78bb3d32eda9893effa64d599
      private int seeTime;
      private boolean strafingClockwise;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index adcd1b685bb0e78d8c9104c1ca3303f42754e6cc..676c37744b1ba87e0cb6f520a2fcea50c6988794 100644
+index 61516f13476f534c35f8c1a39fa1d4ccec0b760e..d23cab2e8ab649bec0afc1f26dd7c4c0312b5071 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -200,6 +200,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -202,6 +202,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      private EntityDamageEvent lastDamageEvent;
      private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(CraftEntity.DATA_TYPE_REGISTRY);
  

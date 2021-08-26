@@ -187,7 +187,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index ded87313693e865ae1cb9468ef024a1814cc69d0..5441ceb21c309ff719eb95ade76717ca85c0a4b0 100644
+index cda835b6d23042cd372c48571141884a76c64137..48b18004f0e79f568520a2c6621c6232c37e6ee4 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -7,6 +7,7 @@ import com.destroystokyo.paper.ClientOption; // Paper
@@ -198,7 +198,7 @@ index ded87313693e865ae1cb9468ef024a1814cc69d0..5441ceb21c309ff719eb95ade76717ca
  import java.util.Date; // Paper
  import org.bukkit.BanEntry; // Paper
  import org.bukkit.BanList; // Paper
-@@ -1263,7 +1264,39 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1332,7 +1333,39 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       *     player
       */
      public boolean canSee(@NotNull Player player);

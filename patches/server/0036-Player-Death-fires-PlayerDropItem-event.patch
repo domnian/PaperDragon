@@ -5,10 +5,10 @@ Subject: [PATCH] Player Death fires PlayerDropItem event
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 86fd0b9084abcfdbc676c1177aefd4f10549cc37..81e762a95849091590ab1ae58759ead8946c7529 100644
+index d1aa89d84c419c95921a42e51827b75da905ee84..7d5b3c072e544a283a4a3a51d6ab35e4b4ab3192 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -903,7 +903,7 @@ public class CraftEventFactory {
+@@ -919,7 +919,7 @@ public class CraftEventFactory {
          for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
              if (stack == null || stack.getType() == Material.AIR) continue;
  

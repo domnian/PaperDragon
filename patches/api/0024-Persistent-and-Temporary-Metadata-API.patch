@@ -1661,22 +1661,23 @@ index 98263d896f316983609432c45b85401a2692432d..f6905ef43a215e2302abf5b0f589b53e
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 8ae9198ba7fdb006dc420504a984627add20dbb5..cec340385dd8688f8d0f20f48251a0afc0b0d750 100644
+index 33fcb19ca3df01ba494439c91f2b564ca0a365f0..fed3d6d8edeb81853a8ee86f301cbee48416fdcc 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2,6 +2,8 @@ package org.bukkit;
+@@ -1,6 +1,9 @@
+ package org.bukkit;
  
  import java.io.File;
- 
++
 +import com.domnian.paperdragon.api.meta.PersistentMetaMap;
 +import com.domnian.paperdragon.api.meta.TempMetaMap;
- import org.bukkit.event.entity.CreatureSpawnEvent;
  import org.bukkit.generator.ChunkGenerator;
  
-@@ -44,6 +46,12 @@ import org.jetbrains.annotations.Nullable;
+ import java.util.ArrayList;
+@@ -42,6 +45,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a world, which may contain entities, chunks and blocks
   */
- public interface World extends PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
+ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
 +    // PaperDragon start
 +    @NotNull
 +    PersistentMetaMap getPersistentMeta();

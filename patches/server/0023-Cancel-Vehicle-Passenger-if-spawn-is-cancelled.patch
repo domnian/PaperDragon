@@ -6,10 +6,10 @@ Subject: [PATCH] Cancel Vehicle/Passenger if spawn is cancelled
 Otherwise lots of chickens
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 85795c337587a9bb1244f6f4d284829fb6af3daa..c94e115b835bdb2272ad5697dbb79a9d72af9c9e 100644
+index 2cad2c5a4fcbe3ebdf17f6529a03c8ce739d69e2..17c5291c2a62638964eb194f0ddf48fae5f6fe6e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -707,6 +707,16 @@ public class CraftEventFactory {
+@@ -722,6 +722,16 @@ public class CraftEventFactory {
  
          CreatureSpawnEvent event = new CreatureSpawnEvent(entity, spawnReason);
          craftServer.getPluginManager().callEvent(event);

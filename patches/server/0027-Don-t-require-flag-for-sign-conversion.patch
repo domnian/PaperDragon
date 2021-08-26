@@ -6,7 +6,7 @@ Subject: [PATCH] Don't require flag for sign conversion
 Also reverts part of Paper's old sign conversion patch
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index 9b5d11ece006d7aa893360a84ba652c666517ac1..f92c97992766e45fa100550d4e29810743092092 100644
+index 344d3a8c1162f1a4ab5fc2b7676680ddace46649..fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec2;
@@ -18,7 +18,7 @@ index 9b5d11ece006d7aa893360a84ba652c666517ac1..f92c97992766e45fa100550d4e298107
  
      public static final int LINES = 4;
      private static final String[] RAW_TEXT_FIELD_NAMES = new String[]{"Text1", "Text2", "Text3", "Text4"};
-@@ -86,7 +86,7 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -87,7 +87,7 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
          // CraftBukkit start - Add an option to convert signs correctly
          // This is done with a flag instead of all the time because
          // we have no way to tell whether a sign is from 1.7.10 or 1.8

@@ -25,10 +25,10 @@ index d0109df7fad51fc0444459f5d367254c8f4c355e..676ec539428bda43eb7cec8e8bb7bb79
                  if (((ServerPlayer) target).isSleeping()) {
                      ((ServerPlayer) target).stopSleepInBed(true, true);
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 10f4efb19a89e6cb96a2003d69acc5306c48091a..eaadc574a45abf2801e4cb36c63847ee160b8f8c 100644
+index 155c079f08b52ba224851ef5b99119299e7a6977..d36d3811bc8e4fc2534c2a2316e7444ce2f07143 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -163,6 +163,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
+@@ -159,6 +159,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.WorldUUID;
  import org.bukkit.event.entity.CreatureSpawnEvent;
  import org.bukkit.event.server.MapInitializeEvent;
@@ -36,7 +36,7 @@ index 10f4efb19a89e6cb96a2003d69acc5306c48091a..eaadc574a45abf2801e4cb36c63847ee
  import org.bukkit.event.weather.LightningStrikeEvent;
  import org.bukkit.event.world.TimeSkipEvent;
  // CraftBukkit end
-@@ -633,6 +634,7 @@ public class ServerLevel extends net.minecraft.world.level.Level implements Worl
+@@ -594,6 +595,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                                  return;
                              }
  
@@ -44,7 +44,7 @@ index 10f4efb19a89e6cb96a2003d69acc5306c48091a..eaadc574a45abf2801e4cb36c63847ee
                              entity.stopRiding();
                          }
  
-@@ -998,6 +1000,7 @@ public class ServerLevel extends net.minecraft.world.level.Level implements Worl
+@@ -959,6 +961,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              } finally { timer.stopTiming(); }// Paper - EAR2 timings
              }
          } else {
@@ -53,7 +53,7 @@ index 10f4efb19a89e6cb96a2003d69acc5306c48091a..eaadc574a45abf2801e4cb36c63847ee
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7d4db0803 100644
+index 4668bcdaa08bbb0b01010408834e707d2ed058ab..69dd74fad97f2b263d3274fdd2fde8eac6d1601c 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -167,6 +167,7 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
@@ -64,7 +64,7 @@ index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7
  import org.bukkit.inventory.MainHand;
  // CraftBukkit end
  
-@@ -1630,10 +1631,11 @@ public class ServerPlayer extends Player {
+@@ -1612,10 +1613,11 @@ public class ServerPlayer extends Player {
  
      public void disconnect() {
          this.disconnected = true;
@@ -77,7 +77,7 @@ index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7
              this.stopRiding();
          }
          // Paper end
-@@ -1799,6 +1801,7 @@ public class ServerPlayer extends Player {
+@@ -1781,6 +1783,7 @@ public class ServerPlayer extends Player {
              this.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.CHANGE_GAME_MODE, (float) gameMode.getId()));
              if (gameMode == GameType.SPECTATOR) {
                  this.removeEntitiesOnShoulder();
@@ -85,7 +85,7 @@ index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7
                  this.stopRiding();
              } else {
                  this.setCamera(this);
-@@ -1972,7 +1975,7 @@ public class ServerPlayer extends Player {
+@@ -1954,7 +1957,7 @@ public class ServerPlayer extends Player {
  
          if (entity != this) {
              // Make sure we're in the right place
@@ -94,7 +94,7 @@ index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7
              this.getBukkitEntity().teleport(new Location(entity.getCommandSenderWorld().getWorld(), entity.getX(), entity.getY(), entity.getZ(), this.getYRot(), this.getXRot()), TeleportCause.SPECTATE); // Correctly handle cross-world entities from api calls by using CB teleport
  
              // Make sure we're tracking the entity before sending
-@@ -2040,6 +2043,7 @@ public class ServerPlayer extends Player {
+@@ -2022,6 +2025,7 @@ public class ServerPlayer extends Player {
      public void a(ServerLevel worldserver, double d0, double d1, double d2, float f, float f1, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause cause) {
          // CraftBukkit end
          this.setCamera(this);
@@ -103,7 +103,7 @@ index 88b6474d498f0442e4c2358abf07636048f4ce10..2d8adb81ee3b3fb05820c61fc795c3d7
          /* CraftBukkit start - replace with bukkit handling for multi-world
          if (worldserver == this.level) {
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 65657c009f6d5a5d5740e80f912a5893333c7085..94aed4a72a565e184d5981106c616a374d28678b 100644
+index 6d057d6969cd1abff3da5967b9db5a830209b206..df23fbfad3070a3b1079b53321e19914c06ad0ca 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -119,6 +119,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
@@ -114,7 +114,7 @@ index 65657c009f6d5a5d5740e80f912a5893333c7085..94aed4a72a565e184d5981106c616a37
  // CraftBukkit end
  
  public abstract class PlayerList {
-@@ -628,6 +629,7 @@ public abstract class PlayerList {
+@@ -633,6 +634,7 @@ public abstract class PlayerList {
  
              if (entity.hasExactlyOnePlayerPassenger()) {
                  PlayerList.LOGGER.debug("Removing player mount");
@@ -123,10 +123,10 @@ index 65657c009f6d5a5d5740e80f912a5893333c7085..94aed4a72a565e184d5981106c616a37
                  entity.getPassengersAndSelf().forEach((entity1) -> {
                      // Paper start
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa187b7c5f 100644
+index 53eef45ca5fda281e71c0525ac234b3eb12e95ba..c72e0ffbf7a24c37cc9df14310e7a5cb26547988 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -648,6 +648,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -649,6 +649,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
          if (isDisabled) { return; } // PaperDragon
          this.level.getProfiler().push("entityBaseTick");
          if (this.isPassenger() && this.getVehicle().isRemoved()) {
@@ -134,7 +134,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
              this.stopRiding();
          }
  
-@@ -2335,6 +2336,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2337,6 +2338,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
                  return false;
              } else {
                  if (this.isPassenger()) {
@@ -142,7 +142,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
                      this.stopRiding();
                  }
  
-@@ -2360,7 +2362,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2362,7 +2364,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
      }
  
      public void ejectPassengers() {
@@ -156,7 +156,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
              ((Entity) this.passengers.get(i)).stopRiding();
          }
  
-@@ -2440,6 +2448,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2442,6 +2450,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
      // Paper start
      protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
      protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
@@ -165,7 +165,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2452,6 +2462,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2454,6 +2464,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
                          (Vehicle) this.getBukkitEntity(),
                          (LivingEntity) entity.getBukkitEntity(), !suppressCancellation // Paper
                  );
@@ -173,7 +173,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
                  // Suppress during worldgen
                  if (this.valid) {
                      Bukkit.getPluginManager().callEvent(event);
-@@ -2947,7 +2958,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2949,7 +2960,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
      public String toString() {
          return String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cpos=%s, tl=%d, v=%b, rR=%s]", new Object[] { this.getClass().getSimpleName(), this.getName().getString(), Integer.valueOf(this.id), this.uuid.toString(), this.level == null ? "~NULL~" : this.level.toString(), Double.valueOf(this.getX()), Double.valueOf(this.getY()), Double.valueOf(this.getZ()), this.chunkPosition(), this.tickCount, this.valid, this.removalReason}); // Paper - add more information
      }
@@ -182,7 +182,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
      public boolean isInvulnerableTo(DamageSource damageSource) {
          return this.isRemoved() || this.invulnerable && damageSource != DamageSource.OUT_OF_WORLD && !damageSource.isCreativePlayer() && !isDisabled; // PaperDragon - add !isDisabled
      }
-@@ -3917,10 +3928,14 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -3939,10 +3950,14 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
          }
  
          if (this.removalReason.shouldDestroy()) {
@@ -199,7 +199,7 @@ index 2ae03d65bf1cc370a00791b7e561128a6a432181..d4b02b799323a281e1f63f453af1edfa
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 27eca8ccb9aeedbe70006de3c8a9767a6a6d3542..a35318240be52e18c1887d26e60121b03db83521 100644
+index 01317c6a0cf922000e2eb06b937dbb39259ccdf0..de418c7f067fc198a69c26e1e4a0c12f59b37010 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -436,6 +436,7 @@ public abstract class LivingEntity extends Entity {
@@ -210,7 +210,7 @@ index 27eca8ccb9aeedbe70006de3c8a9767a6a6d3542..a35318240be52e18c1887d26e60121b0
                      this.stopRiding();
                  }
              } else if (this.getAirSupply() < this.getMaxAirSupply()) {
-@@ -4010,6 +4011,7 @@ public abstract class LivingEntity extends Entity {
+@@ -4011,6 +4012,7 @@ public abstract class LivingEntity extends Entity {
  
      public void startSleeping(BlockPos pos) {
          if (this.isPassenger()) {
@@ -219,7 +219,7 @@ index 27eca8ccb9aeedbe70006de3c8a9767a6a6d3542..a35318240be52e18c1887d26e60121b0
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 20d9ec76d68b671da59026a0e0d0b866562b5b29..9e62c9d97f9c81bb48156b8d919c95628cea1d38 100644
+index ad2bd7441cbbe437cf78034a51835292d95aa7b1..5709ad18299bb261194d3b0eb5189088bf4979c6 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -81,6 +81,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
@@ -230,7 +230,7 @@ index 20d9ec76d68b671da59026a0e0d0b866562b5b29..9e62c9d97f9c81bb48156b8d919c9562
  // CraftBukkit end
  
  public abstract class Mob extends LivingEntity {
-@@ -1429,6 +1430,7 @@ public abstract class Mob extends LivingEntity {
+@@ -1433,6 +1434,7 @@ public abstract class Mob extends LivingEntity {
          }
  
          if (this.isPassenger()) {
@@ -239,7 +239,7 @@ index 20d9ec76d68b671da59026a0e0d0b866562b5b29..9e62c9d97f9c81bb48156b8d919c9562
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 19980b2d627eb3cacf8d0c3e6785ad2206910fbc..65cf299c1110fd4e5ad00e2bcc48cc5211e959ca 100644
+index d8780f06efc261a42389e466573a0bcf10c333f6..7f52da9c11c7e595e0ef1d509f4cd45f07ef79dc 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -506,6 +506,7 @@ public abstract class Player extends LivingEntity {

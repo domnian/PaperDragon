@@ -5,10 +5,10 @@ Subject: [PATCH] Build Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4605634d1e0d2c6592d4152e697680e078380868..08c5c626839c4eee608ad0a99bce9e4244c90630 100644
+index 1876481a830228fd15fcd2a4be5f2c28bd7e51fe..f0c542af04da2b746929894fa49bd7c97687405f 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -30,8 +30,8 @@ repositories {
+@@ -28,8 +28,8 @@ repositories {
  }
  
  dependencies {
@@ -19,7 +19,7 @@ index 4605634d1e0d2c6592d4152e697680e078380868..08c5c626839c4eee608ad0a99bce9e42
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.12.1")
      implementation("net.minecrell:terminalconsoleappender:1.2.0")
-@@ -64,6 +64,12 @@ dependencies {
+@@ -63,6 +63,12 @@ dependencies {
  
      implementation("org.quiltmc:tiny-mappings-parser:0.3.0") // Paper - needed to read mappings for stacktrace deobfuscation
  
@@ -38,10 +38,10 @@ index 4605634d1e0d2c6592d4152e697680e078380868..08c5c626839c4eee608ad0a99bce9e42
              "Implementation-Title" to "CraftBukkit",
 -            "Implementation-Version" to "git-Paper-$implementationVersion",
 +            "Implementation-Version" to "git-PaperDragon-$implementationVersion", // PaperDragon
-             "Implementation-Vendor" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Date()), // Paper
+             "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
-@@ -112,7 +118,7 @@ tasks.shadowJar {
+@@ -145,7 +151,7 @@ tasks.shadowJar {
  
      // Needed for Paperclip's install to maven local feature
      from(generatePom) {
@@ -50,7 +50,7 @@ index 4605634d1e0d2c6592d4152e697680e078380868..08c5c626839c4eee608ad0a99bce9e42
          rename { "pom.xml" }
      }
  
-@@ -176,7 +182,7 @@ tasks.test {
+@@ -205,7 +211,7 @@ tasks.test {
  fun TaskContainer.registerRunTask(
      name: String, block: JavaExec.() -> Unit
  ): TaskProvider<JavaExec> = register<JavaExec>(name) {

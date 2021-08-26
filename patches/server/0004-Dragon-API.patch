@@ -113,11 +113,11 @@ index 0000000000000000000000000000000000000000..21bd42ff9d3f744ce9eb06d269d13495
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6492247b1d047cfe185c9ae7f0c100c80ee9ac30..a3614412c041ff5057b8f18572e512e69695839d 100644
+index 6bb7553cf06d58b3e32fdfcfde6cbc1731b40883..5c23702755cc453ef8d7d4608a0fbd86c68763ad 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -270,6 +270,7 @@ public final class CraftServer implements Server {
-     public static Exception excessiveVelEx; // Paper - Velocity warnings
+@@ -287,6 +287,7 @@ public final class CraftServer implements Server {
+     private final SysoutCatcher sysoutCatcher = new SysoutCatcher(); // Paper
  
      static {
 +        com.domnian.paperdragon.api.DragonAPI api = com.domnian.paperdragon.api.CraftDragonAPI.instance; // PaperDragon - Dragon API - Force load at server start

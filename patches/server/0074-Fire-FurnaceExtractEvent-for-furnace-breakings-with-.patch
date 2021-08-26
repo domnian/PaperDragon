@@ -7,10 +7,10 @@ Subject: [PATCH] Fire FurnaceExtractEvent for furnace breakings with null
 temp
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index 348e485897c34cca19113cc35f055a58778ca38b..fc13985e1a2336c07ba6c416a54468bb257ebfc9 100644
+index 242d9b2ecb852d812d4887883cb2aabfd21e3715..10c331518074e12cb7b04852652fac25dccd5204 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-@@ -604,14 +604,14 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -618,14 +618,14 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
  
              worldserver.getRecipeManager().byKey((ResourceLocation) entry.getKey()).ifPresent((irecipe) -> {
                  list.add(irecipe);
@@ -27,7 +27,7 @@ index 348e485897c34cca19113cc35f055a58778ca38b..fc13985e1a2336c07ba6c416a54468bb
          int j = Mth.floor((float) i * f);
          float f1 = Mth.frac((float) i * f);
  
-@@ -621,8 +621,8 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -635,8 +635,8 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
  
          // CraftBukkit start - fire FurnaceExtractEvent / BlockExpEvent
          BlockExpEvent event;

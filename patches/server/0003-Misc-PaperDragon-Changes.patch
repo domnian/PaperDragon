@@ -216,10 +216,10 @@ index 0000000000000000000000000000000000000000..93c5f2162735d36d7e9e197c825f235b
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 3dded5c491ace6b073a7bc3178976bd70f0b9393..15fb9acc027f627140878fb6cd3fe7b19bc3ac71 100644
+index 25c3a96ca88494650d93efcaeecf5ae08ed0810f..46acae9ef6357bfdabe26f78c350588eb6645883 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1651,7 +1651,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1666,7 +1666,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -228,24 +228,11 @@ index 3dded5c491ace6b073a7bc3178976bd70f0b9393..15fb9acc027f627140878fb6cd3fe7b1
      }
  
      public SystemReport fillSystemReport(SystemReport details) {
-diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 8e2bccc3a9ddb17a4978596056189eb776976338..88b6474d498f0442e4c2358abf07636048f4ce10 100644
---- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
-+++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2088,7 +2088,7 @@ public class ServerPlayer extends Player {
-         if (pos != null) {
-             boolean flag2 = pos.equals(this.respawnPosition) && dimension.equals(this.respawnDimension);
- 
--            if (sendMessage && !flag2) {
-+            if (spawnPointSet & sendMessage && !flag2) { // PaperDragon - let plugins handle the message
-                 this.sendMessage(new TranslatableComponent("block.minecraft.set_spawn"), Util.NIL_UUID);
-             }
- 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c9df0e4f1b205305ae07816892e5125d315f1198..c7e55b1e61a103f0ddc72594dd1e26a0d463a64b 100644
+index ac9a57cd418a55d063298a4df8429d132edcaa0a..6bb7553cf06d58b3e32fdfcfde6cbc1731b40883 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -230,7 +230,7 @@ import javax.annotation.Nullable; // Paper
+@@ -246,7 +246,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -255,10 +242,10 @@ index c9df0e4f1b205305ae07816892e5125d315f1198..c7e55b1e61a103f0ddc72594dd1e26a0
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 7a8db8d481e9487ea83a640af208242f4987ad28..9bc8b3209bce4022c853b382a3eefbca8e4ddcc1 100644
+index 72cfffd80ad76abe7cb16bc9133730338c07b6f6..62658f0ea2bfdc08725b33f5835b0efcff09dc05 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -395,7 +395,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -394,7 +394,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

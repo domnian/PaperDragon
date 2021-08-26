@@ -5,26 +5,25 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 2d8adb81ee3b3fb05820c61fc795c3d7d4db0803..ff366fedefd9783e80b8bf03b8bd16f03ee71d07 100644
+index 69dd74fad97f2b263d3274fdd2fde8eac6d1601c..e1d8f1987824f5e275085d7416ad53f78db6c9fd 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -830,7 +830,10 @@ public class ServerPlayer extends Player {
+@@ -808,7 +808,9 @@ public class ServerPlayer extends Player {
  
-         Component defaultMessage = this.getCombatTracker().getDeathMessage();
- 
+         String deathmessage = defaultMessage.getString();
+         this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel
 -        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +        // PaperDragon start - Enhanced Player Death Event
 +        String deathKey = (defaultMessage instanceof TranslatableComponent) ? ((TranslatableComponent) defaultMessage).getKey() : "death.attack.generic";
 +        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory, deathKey); // Paper - Adventure
-+        // PaperDragon end
          // Paper start - cancellable death event
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 7407eb0a36cae14d0bb10132284fbc3172ca4358..4011580c0f224ab98288cc512a12c0a070fd5811 100644
+index 7d5b3c072e544a283a4a3a51d6ab35e4b4ab3192..0014db72bab636db9715970629a10d9dfa2a5eaf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -880,11 +880,12 @@ public class CraftEventFactory {
+@@ -895,12 +895,13 @@ public class CraftEventFactory {
          return event;
      }
  
@@ -33,6 +32,7 @@ index 7407eb0a36cae14d0bb10132284fbc3172ca4358..4011580c0f224ab98288cc512a12c0a0
          CraftPlayer entity = victim.getBukkitEntity();
          PlayerDeathEvent event = new PlayerDeathEvent(entity, drops, victim.getExpReward(), 0, deathMessage, stringDeathMessage); // Paper - Adventure
          event.setKeepInventory(keepInventory);
+         event.setKeepLevel(victim.keepLevel); // SPIGOT-2222: pre-set keepLevel
          populateFields(victim, event); // Paper - make cancellable
 +        event.setSourceKey(key);
          org.bukkit.World world = entity.getWorld();

@@ -1,29 +1,26 @@
+import io.papermc.paperweight.util.constants.*
+
 plugins {
     java
+    `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.0.0" apply false
-    id("io.papermc.paperweight.patcher") version "1.1.9"
+    id("io.papermc.paperweight.patcher") version "1.1.11"
 }
 
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/") {
-        content {
-            onlyForConfigurations("paperclip")
-        }
-    }
-    maven("https://maven.quiltmc.org/repository/release/") {
-        content {
-            onlyForConfigurations("remapper")
-        }
+        content { onlyForConfigurations(PAPERCLIP_CONFIG) }
     }
 }
 
 dependencies {
-    remapper("org.quiltmc:tiny-remapper:0.4.1")
-    paperclip("io.papermc:paperclip:2.0.0-SNAPSHOT@jar")
+    remapper("org.quiltmc:tiny-remapper:0.4.3")
+    decompiler("net.minecraftforge:forgeflower:1.5.498.12")
+    paperclip("io.papermc:paperclip:2.0.1")
 }
 
-subprojects {
+allprojects {
     apply(plugin = "java")
 
     java {
@@ -31,10 +28,15 @@ subprojects {
             languageVersion.set(JavaLanguageVersion.of(16))
         }
     }
+}
 
+subprojects {
     tasks.withType<JavaCompile>().configureEach {
-        options.encoding = "UTF-8"
+        options.encoding = Charsets.UTF_8.name()
         options.release.set(16)
+    }
+    tasks.withType<Javadoc>().configureEach {
+        options.encoding = Charsets.UTF_8.name()
     }
 
     repositories {
@@ -50,6 +52,9 @@ subprojects {
 
 paperweight {
     serverProject.set(project(":PaperDragon-Server"))
+
+    remapRepo.set("https://maven.quiltmc.org/repository/release/")
+    decompileRepo.set("https://files.minecraftforge.net/maven/")
 
     usePaperUpstream(providers.gradleProperty("paperRef")) {
         withPaperPatcher {
