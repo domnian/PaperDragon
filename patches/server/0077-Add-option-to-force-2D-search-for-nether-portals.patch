@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 12 Sep 2021 16:01:22 -0400
+Subject: [PATCH] Add option to force 2D search for nether portals
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index 107135de9e1b06074f69c84d654a6b22ee8a1c67..a153f90efd1ae27f5fb84381fe57df83ed6b8bab 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -78,6 +78,11 @@ public class DragonWorldConfig {
+     private void advancements() {
+         broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
+     }
++
++    public boolean force2DPortalSearch = false;
++    private void portalOverrides() {
++        force2DPortalSearch = getBoolean("force-2d-portal-search", false);
++    }
+     // TODO Add New Settings!! :D
+ 
+ }
+diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+index 4e3987e6233e84647d019e41ba6afe7c5d09ea80..bfcec3ad8e984f4b6e344dd49e1ca89c4d12c6f3 100644
+--- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
++++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+@@ -71,6 +71,19 @@ public class PortalForcer {
+             blockposition, i, Double.MAX_VALUE, PoiManager.Occupancy.ANY, true, records
+         );
+ 
++        // PaperDragon start
++        if (level.dragonConfig.force2DPortalSearch) {
++            optional = villageplace.getInSquare(type -> {
++                return type == PoiType.NETHER_PORTAL;
++            }, blockposition, i, PoiManager.Occupancy.ANY).sorted(Comparator.comparingDouble((PoiRecord record) -> {
++                return record.getPos().atY(0).distSqr(blockposition.atY(0));
++            }).thenComparingInt(record -> {
++                return record.getPos().getY();
++            })).filter(record -> {
++                return level.getBlockState(record.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS);
++            }).findFirst();
++        } else {
++        // PaperDragon end
+         // this gets us most of the way there, but we bias towards lower y values.
+         PoiRecord lowestYRecord = null;
+         for (PoiRecord record : records) {
+@@ -83,6 +96,7 @@ public class PortalForcer {
+         // now we're done
+         optional = Optional.ofNullable(lowestYRecord);
+         // Paper end - optimise portals
++        } // PaperDragon
+ 
+         return optional.map((villageplacerecord) -> {
+             BlockPos blockposition1 = villageplacerecord.getPos();

@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 26 Jul 2013 22:19:29 -0400
+Subject: [PATCH] Allow force spawns
+
+Pass spawn reason force to not allow plugins to block
+Force some cases where plugins should not be allowed to block it.
+
+diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
+index d1b05f91822563feebb4060371520856e53b534a..b23f12d002fe748198e5c2bec155ed3ddeaab07c 100644
+--- a/src/main/java/net/minecraft/server/level/ServerLevel.java
++++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
+@@ -1321,7 +1321,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+ 
+     public void addDuringTeleport(Entity entity) {
+         // CraftBukkit start
+-        this.addEntity0(entity, CreatureSpawnEvent.SpawnReason.DEFAULT);
++        this.addEntity0(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
+     }
+ 
+     public void addEntityTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index ea4fb13ac89a81b6033537cdaa6636e716662754..96fbf5341f8d2480f7c28667e18d3c349823be67 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -691,7 +691,7 @@ public class CraftEventFactory {
+             event = CraftEventFactory.callEntitySpawnEvent(entity);
+         }
+ 
+-        if (event != null && (event.isCancelled() || entity.isRemoved())) {
++        if (spawnReason != SpawnReason.FORCE && event != null && (event.isCancelled() || entity.isRemoved())) { // PaperDragon - add != force
+             Entity vehicle = entity.getVehicle();
+             if (vehicle != null) {
+                 vehicle.discard();

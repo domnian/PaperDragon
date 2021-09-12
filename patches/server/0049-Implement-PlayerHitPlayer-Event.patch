@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 7 Aug 2016 15:17:26 -0400
+Subject: [PATCH] Implement PlayerHitPlayer Event
+
+Fired when a player hits another player, regardless of gamemode
+
+diff --git a/src/main/java/com/domnian/paperdragon/PDEventFactory.java b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..8e11aa0faa8083d7624d49e8f372e6063011ac22
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/PDEventFactory.java
+@@ -0,0 +1,20 @@
++package com.domnian.paperdragon;
++
++import com.domnian.paperdragon.events.PlayerHitPlayerEvent;
++import net.minecraft.server.level.ServerPlayer;
++import net.minecraft.world.entity.Entity;
++import org.bukkit.entity.Player;
++import org.bukkit.inventory.ItemStack;
++
++public class PDEventFactory {
++
++    public static void handlePlayerHitPlayer(Entity damager, Entity target) {
++        if ((damager instanceof ServerPlayer) && (target instanceof ServerPlayer)) {
++            Player from = (Player) damager.getBukkitEntity();
++            Player to = (Player) target.getBukkitEntity();
++            ItemStack item = from.getInventory().getItemInMainHand();
++            new PlayerHitPlayerEvent(from, to, item).callEvent();
++        }
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
+index b0dab2aacf5e4a69e22e4998dedbf802c13f7494..f3498bfb734d4649a16b6903e34c68f34dc6d967 100644
+--- a/src/main/java/net/minecraft/world/entity/player/Player.java
++++ b/src/main/java/net/minecraft/world/entity/player/Player.java
+@@ -1193,6 +1193,7 @@ public abstract class Player extends LivingEntity {
+     public void attack(Entity target) {
+         if (target.isAttackable()) {
+             if (!target.skipAttackInteraction(this)) {
++                com.domnian.paperdragon.PDEventFactory.handlePlayerHitPlayer(this, target); // PaperDragon - Implement PlayerHitPlayerEvent
+                 float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+                 float f1;
+ 

@@ -1,0 +1,113 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 12 Jul 2013 18:58:19 -0400
+Subject: [PATCH] Entity Serialization
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+index bdbcf8d1375e8f0bebdfa49b16b1a020e5dc968d..46f3ffcd13a623826e67d7bccff1047d5476fc20 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -25,8 +25,16 @@ package com.domnian.paperdragon.api;
+ 
+ import com.destroystokyo.paper.entity.RangedEntity;
+ import com.domnian.paperdragon.api.meta.Meta;
++import com.domnian.paperdragon.util.MCLog;
++import com.google.common.collect.ImmutableList;
++import com.mojang.serialization.Dynamic;
++import net.minecraft.SharedConstants;
++import net.minecraft.nbt.CompoundTag;
++import net.minecraft.nbt.NbtIo;
++import net.minecraft.nbt.NbtOps;
+ import net.minecraft.server.MCUtil;
+ import net.minecraft.server.MinecraftServer;
++import net.minecraft.util.datafix.fixes.References;
+ import net.minecraft.world.entity.PathfinderMob;
+ import net.minecraft.world.entity.ai.goal.Goal;
+ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+@@ -36,11 +44,17 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
+ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+ import net.minecraft.world.entity.item.ItemEntity;
+ import net.minecraft.world.entity.player.Player;
++import org.bukkit.World;
+ import org.bukkit.craftbukkit.CraftWorld;
+ import org.bukkit.craftbukkit.entity.*;
++import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.bukkit.entity.*;
+ import org.jetbrains.annotations.NotNull;
+ 
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.DataInputStream;
++import java.io.IOException;
+ import java.util.HashSet;
+ import java.util.Set;
+ import java.util.regex.Pattern;
+@@ -282,5 +296,46 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+     public void setFireballCooldown(@NotNull Ghast ghast, int cooldown) {
+         ((CraftGhast) ghast).getHandle().fireballCooldown = cooldown;
+     }
++
++    @NotNull
++    public final byte[] serializeEntity(@NotNull Entity craftentity) {
++        net.minecraft.world.entity.Entity entity = ((CraftEntity) craftentity).getHandle();
++        CompoundTag cmp = new CompoundTag();
++        final ImmutableList<net.minecraft.world.entity.Entity > pass = entity.passengers;
++        entity.passengers = ImmutableList.of();
++        entity.save(cmp);
++        entity.passengers = pass;
++        cmp.putInt("DataVersion", SharedConstants.getCurrentVersion().getWorldVersion());
++        return NBTToBytes(cmp);
++    }
++
++    public final Entity deserializeEntity(@NotNull byte[] data, @NotNull World world) {
++        if (data.length == 0) {
++            throw new NullPointerException("Data can not be empty for deserialization");
++        }
++        ByteArrayInputStream stream = new ByteArrayInputStream(data);
++        try {
++            CompoundTag cmp = NbtIo.readCompressed(new DataInputStream(stream));
++            int version = cmp.contains("DataVersion") ? cmp.getInt("DataVersion") : -1;
++            cmp = (CompoundTag) MinecraftServer.getServer().fixerUpper.update(References.ENTITY, new Dynamic(NbtOps.INSTANCE, cmp), version, CraftMagicNumbers.INSTANCE.getDataVersion()).getValue();
++            //DataConverters.convert(DataConverters.LegacyType.ENTITY, cmp);
++            net.minecraft.world.entity.Entity entity = net.minecraft.world.entity.EntityType.create(cmp, ((CraftWorld) world).getHandle()).orElse(null);
++            return entity != null ? entity.getBukkitEntity() : null;
++        } catch (IOException e) {
++            MCLog.exception(e);
++            return null;
++        }
++    }
++
++    private static byte[] NBTToBytes(CompoundTag nbttagcompound) {
++        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
++        try {
++            NbtIo.writeCompressed(nbttagcompound, bytearrayoutputstream);
++        } catch (IOException ignored) {
++            return null;
++        }
++        return bytearrayoutputstream.toByteArray();
++    }
++
+ }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+index f7e9a10c627143e38ca3642210e38d70e3b8a625..41156aa6ea1e884adba38ceb98a63afc79b91025 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+@@ -202,6 +202,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+     private EntityDamageEvent lastDamageEvent;
+     private final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(CraftEntity.DATA_TYPE_REGISTRY);
+ 
++    // PaperDragon start
++    public boolean spawnAt(@NotNull Location loc) {
++        return spawnAt(loc, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DEFAULT);
++    }
++    public boolean spawnAt(@NotNull Location loc, @NotNull org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) { // PaperDragon
++        entity.level = ((CraftWorld) loc.getWorld()).getHandle();
++        entity.absMoveTo(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
++        return !entity.valid && entity.level.addEntity(entity, spawnReason);
++    }
++    // PaperDragon end
+     public CraftEntity(final CraftServer server, final Entity entity) {
+         this.server = server;
+         this.entity = entity;

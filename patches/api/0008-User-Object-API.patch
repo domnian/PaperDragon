@@ -6,10 +6,10 @@ Subject: [PATCH] User Object API
 Allow Plugins to Store User Objects on the Player
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 3ec1be36b90dbedb8631135555da4b69110e4791..cda835b6d23042cd372c48571141884a76c64137 100644
+index afa245018192a63e5db8bc568ddea2790bf5b8a2..3ad813c7b10daa7e5e8c04cac97e598ea96ac8f5 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -2259,4 +2259,12 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -2293,4 +2293,12 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
      @Override
      Spigot spigot();
      // Spigot end

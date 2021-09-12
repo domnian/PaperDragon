@@ -31,11 +31,11 @@ index 0000000000000000000000000000000000000000..1b44a3f93d3accf859284af1956e3004
 +    Set<FakePlayer> getJoinedFakePlayers();
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 1cc3dc69f4edc44cd43be22c288b0017a604a3d2..cd7d6ff2131049578a2edc5006bb14ae7735f69e 100644
+index 7559326ec555de974d4108964dd30ad14cb5139e..2f383a95b02b893dba2da010e72eef7f2d54c473 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -11,6 +11,7 @@ public class DragonAPI {
-     public static DAPI_Misc misc;
+     public static DAPI_Meta meta;
      public static DAPI_Chat chat;
      public static DAPI_Heads heads;
 +    public static DAPI_Server server;
@@ -187,7 +187,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index cda835b6d23042cd372c48571141884a76c64137..48b18004f0e79f568520a2c6621c6232c37e6ee4 100644
+index 3ad813c7b10daa7e5e8c04cac97e598ea96ac8f5..abb88c2bbf5ba4a390ac89771f64359b88af65d2 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -7,6 +7,7 @@ import com.destroystokyo.paper.ClientOption; // Paper

@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 23 Jun 2016 22:30:39 -0400
+Subject: [PATCH] Implement User Object API
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 8c8698f6e17562651fe790dc19825e428d5d0352..3f300cda089dfad3d828712061f1827b7625db22 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -2549,4 +2549,17 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         return this.spigot;
+     }
+     // Spigot end
++
++    // PaperDragon start - User Object API
++    private final java.util.Map<org.bukkit.NamespacedKey, Object> userObjects = new java.util.HashMap<>();
++    public void setUserObject(@org.jetbrains.annotations.NotNull org.bukkit.NamespacedKey key, Object object) {
++        userObjects.put(key, object);
++    }
++
++    @SuppressWarnings("unchecked")
++    public <T> T getUserObject(@org.jetbrains.annotations.NotNull org.bukkit.NamespacedKey key) {
++        return (T) userObjects.getOrDefault(key, null);
++    }
++    // PaperDragon end
++
+ }

@@ -6,7 +6,7 @@ Subject: [PATCH] amend ensureServerConversions
 pending paper merge, store data version on stacks
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemFactory.java b/src/main/java/org/bukkit/inventory/ItemFactory.java
-index 0a4466c6ca519c3a5da76ff870fb2a4e3a06effd..96e634bc0f45022f983cbb0804a0c2877322f595 100644
+index 0a4466c6ca519c3a5da76ff870fb2a4e3a06effd..a7fdd265342632681ca8050aeadfd2b9551adee6 100644
 --- a/src/main/java/org/bukkit/inventory/ItemFactory.java
 +++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
 @@ -174,13 +174,18 @@ public interface ItemFactory {
@@ -23,8 +23,8 @@ index 0a4466c6ca519c3a5da76ff870fb2a4e3a06effd..96e634bc0f45022f983cbb0804a0c287
 +     * @deprecated Don't use this
 +     */
 +    @Deprecated
-+    ItemStack _asServerItemStack(ItemStack item);
-+
++    @NotNull
++    ItemStack _asServerItemStack(@NotNull ItemStack item);
 +    /**
 +     * Runs all Minecraft Data Fixer updates on this ItemStack that are needed.
       *
@@ -35,7 +35,7 @@ index 0a4466c6ca519c3a5da76ff870fb2a4e3a06effd..96e634bc0f45022f983cbb0804a0c287
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index d86609b999440fb5970b36387f72a48c321fd188..e412a2615c5a9ebb666f57926bfe2b65da7b19c6 100644
+index d86609b999440fb5970b36387f72a48c321fd188..5de93fd03c8815e6eac575a2e5f8afe14f0cf15f 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
@@ -43,7 +43,7 @@ index d86609b999440fb5970b36387f72a48c321fd188..e412a2615c5a9ebb666f57926bfe2b65
      private MaterialData data = null;
      private ItemMeta meta;
 +    // Paper start
-+    protected int dataVersion = Bukkit.getUnsafe().getDataVersion();
++    protected int dataVersion = 2730;
 +
 +    /**
 +     * Get's the DataVersion of this item stack, usually always the current version.
@@ -62,7 +62,7 @@ index d86609b999440fb5970b36387f72a48c321fd188..e412a2615c5a9ebb666f57926bfe2b65
 +     * @return previous data version
 +     */
 +    public int setDataVersion(int dataVersion) {
-+        int previousDataVersion = this.dataVersion;
++        int previousDataVersion = this.getDataVersion();
 +        this.dataVersion = dataVersion;
 +        return previousDataVersion;
 +    }
@@ -75,7 +75,7 @@ index d86609b999440fb5970b36387f72a48c321fd188..e412a2615c5a9ebb666f57926bfe2b65
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
 -        result.put("v", Bukkit.getUnsafe().getDataVersion()); // Include version to indicate we are using modern material names (or LEGACY prefix)
-+        result.put("v", this.dataVersion); // Paper
++        result.put("v", this.getDataVersion()); // Paper
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
@@ -87,21 +87,20 @@ index d86609b999440fb5970b36387f72a48c321fd188..e412a2615c5a9ebb666f57926bfe2b65
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -694,7 +720,6 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
-     public net.kyori.adventure.text.event.HoverEvent<net.kyori.adventure.text.event.HoverEvent.ShowItem> asHoverEvent(final @NotNull java.util.function.UnaryOperator<net.kyori.adventure.text.event.HoverEvent.ShowItem> op) {
+@@ -695,6 +721,10 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
          return org.bukkit.Bukkit.getServer().getItemFactory().asHoverEvent(this, op);
      }
--
-     /**
-      * Get the formatted display name of the {@link ItemStack}.
-      *
-@@ -704,13 +729,13 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
-         return Bukkit.getServer().getItemFactory().displayName(this);
-     }
  
++    @NotNull
 +    protected ItemStack asCraftItemStack() {
 +        return Bukkit.getServer().getItemFactory()._asServerItemStack(this);
 +    }
+     /**
+      * Get the formatted display name of the {@link ItemStack}.
+      *
+@@ -705,12 +735,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+     }
+ 
      /**
 -     * Minecraft updates are converting simple item stacks into more complex NBT oriented Item Stacks.
 -     *

@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 19 May 2015 23:47:32 -0400
+Subject: [PATCH] Disable Repair Cost
+
+Handled on Plugin Level on a Per Player basis
+
+diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
+index 91755a4a4129b0e228ec5d9258dfe0122a41b1da..a4892874b10648981f8bdbccdbe39f4bb6736d61 100644
+--- a/src/main/java/net/minecraft/world/item/ItemStack.java
++++ b/src/main/java/net/minecraft/world/item/ItemStack.java
+@@ -261,6 +261,7 @@ public final class ItemStack {
+ 
+         if (this.getItem().canBeDepleted()) {
+             this.setDamageValue(this.getDamageValue());
++            if (this.tag != null && this.tag.contains("RepairCost")) this.tag.remove("RepairCost"); // PaperDragon
+         }
+ 
+     }
+@@ -1155,10 +1156,12 @@ public final class ItemStack {
+     }
+ 
+     public int getBaseRepairCost() {
++        if (true) { return 0; } // PaperDragon
+         return this.hasTag() && this.tag.contains("RepairCost", 3) ? this.tag.getInt("RepairCost") : 0;
+     }
+ 
+     public void setRepairCost(int repairCost) {
++        if (true) { return; } // PaperDragon
+         // CraftBukkit start - remove RepairCost tag when 0 (SPIGOT-3945)
+         if (repairCost == 0) {
+             this.removeTagKey("RepairCost");
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
+index 5e2431f24ccb361dd198bb48acf65d7b35bc6f5c..d9f8e0d12c8ce2be07d17d0aa494e4568b5652cc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
+@@ -393,7 +393,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+         this.enchantments = CraftMetaItem.buildEnchantments(tag, CraftMetaItem.ENCHANTMENTS);
+         this.attributeModifiers = CraftMetaItem.buildModifiers(tag, CraftMetaItem.ATTRIBUTES);
+ 
+-        if (tag.contains(REPAIR.NBT)) {
++        if (false && tag.contains(REPAIR.NBT)) { // PaperDragon
+             this.repairCost = tag.getInt(REPAIR.NBT);
+         }
+ 

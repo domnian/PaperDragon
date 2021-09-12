@@ -6,20 +6,23 @@ Subject: [PATCH] Persistent and Temporary Metadata API
 Entity, TileEntity, World, Chunk, Block, Inventory API's
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 74c4c59efe4f84fc6526d9e1284a964c88350159..ca9c48f7b3b3a0a26c6fce2c6497fc6d29c05f8b 100644
+index 74c4c59efe4f84fc6526d9e1284a964c88350159..f78acdd62ad5ca59affb521cf115763e32033a69 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -1,8 +1,10 @@
+@@ -1,11 +1,13 @@
  package com.domnian.paperdragon.api;
  
 +import com.domnian.paperdragon.api.meta.DAPI_Meta;
  import org.apache.commons.lang.exception.ExceptionUtils;
  
  public class DragonAPI {
-+    public static DAPI_Meta meta;
  
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
++    public static DAPI_Meta meta;
+ 
+     public static String stack() {
+         return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..117f8e4c1db47ef815366ad74dece81768926b55
@@ -1635,7 +1638,7 @@ index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 98263d896f316983609432c45b85401a2692432d..f6905ef43a215e2302abf5b0f589b53e37b0b415 100644
+index 5a4884db36d448c885e49c965ae329a0638dd628..0259f2b81a8ef5f2e24055a7866451570b99e9c6 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,8 @@ package org.bukkit;
@@ -1661,20 +1664,19 @@ index 98263d896f316983609432c45b85401a2692432d..f6905ef43a215e2302abf5b0f589b53e
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 33fcb19ca3df01ba494439c91f2b564ca0a365f0..fed3d6d8edeb81853a8ee86f301cbee48416fdcc 100644
+index dc497606ebf9903c2d32276ecddda3231457346a..78fd01bd5a7d63cd5a7282080f45f381b3da5f3c 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1,6 +1,9 @@
+@@ -1,6 +1,8 @@
  package org.bukkit;
  
  import java.io.File;
-+
 +import com.domnian.paperdragon.api.meta.PersistentMetaMap;
 +import com.domnian.paperdragon.api.meta.TempMetaMap;
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -42,6 +45,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -42,6 +44,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a world, which may contain entities, chunks and blocks
   */
  public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
