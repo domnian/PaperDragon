@@ -6,10 +6,10 @@ Subject: [PATCH] PlayerUseItemEvent
 
 diff --git a/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..8e83d0d9ae5f592ab6528550a4bd7bd669566d11
+index 0000000000000000000000000000000000000000..49ceb6e72ebd5a10fa01ac9e3508a29819acb25f
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostPlaceItemAtEvent.java
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,88 @@
 +/*
 + * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
 + *
@@ -43,6 +43,7 @@ index 0000000000000000000000000000000000000000..8e83d0d9ae5f592ab6528550a4bd7bd6
 +import org.bukkit.inventory.EquipmentSlot;
 +import org.bukkit.inventory.ItemStack;
 +import org.bukkit.util.Vector;
++import org.jetbrains.annotations.NotNull;
 +
 +public class PlayerPostPlaceItemAtEvent extends PlayerEvent {
 +    private final ItemStack usedItem;
@@ -51,7 +52,7 @@ index 0000000000000000000000000000000000000000..8e83d0d9ae5f592ab6528550a4bd7bd6
 +    private final Vector hitVector;
 +    private final EquipmentSlot hand;
 +
-+    public PlayerPostPlaceItemAtEvent(Player player, ItemStack usedItem, Location targetLoc, BlockFace clickFace, Vector hitVector, EquipmentSlot hand) {
++    public PlayerPostPlaceItemAtEvent(@NotNull Player player, @NotNull ItemStack usedItem, @NotNull Location targetLoc, @NotNull BlockFace clickFace, @NotNull Vector hitVector, @NotNull EquipmentSlot hand) {
 +        super(player);
 +        this.usedItem = usedItem;
 +        this.targetLoc = targetLoc;
@@ -60,42 +61,49 @@ index 0000000000000000000000000000000000000000..8e83d0d9ae5f592ab6528550a4bd7bd6
 +        this.hand = hand;
 +    }
 +
++    @NotNull
 +    public Location getTargetLoc() {
 +        return targetLoc;
 +    }
 +
++    @NotNull
 +    public BlockFace getClickFace() {
 +        return clickFace;
 +    }
 +
++    @NotNull
 +    public Vector getHitVector() {
 +        return hitVector;
 +    }
 +
++    @NotNull
 +    public EquipmentSlot getHand() {
 +        return hand;
 +    }
 +
++    @NotNull
 +    public ItemStack getUsedItem() {
 +        return usedItem;
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +}
 diff --git a/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..511082ea1ca694eb1c947003f803853d5d7a8bb4
+index 0000000000000000000000000000000000000000..1986e296ad944b97dc4ed40eb15031ce0c0dbc7e
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/event/player/PlayerPostUseItemEvent.java
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,76 @@
 +/*
 + * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
 + *
@@ -126,51 +134,58 @@ index 0000000000000000000000000000000000000000..511082ea1ca694eb1c947003f803853d
 +import org.bukkit.event.player.PlayerEvent;
 +import org.bukkit.inventory.EquipmentSlot;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
 +
 +public class PlayerPostUseItemEvent extends PlayerEvent {
 +    private final ItemStack usedItem;
 +    private ItemStack newItem;
 +    private final EquipmentSlot hand;
 +
-+    public PlayerPostUseItemEvent(Player player, ItemStack usedItem, ItemStack newItem, EquipmentSlot hand) {
++    public PlayerPostUseItemEvent(@NotNull Player player, @NotNull ItemStack usedItem, @NotNull ItemStack newItem, @NotNull EquipmentSlot hand) {
 +        super(player);
 +        this.usedItem = usedItem;
 +        this.newItem = newItem;
 +        this.hand = hand;
 +    }
 +
++    @NotNull
 +    public EquipmentSlot getHand() {
 +        return hand;
 +    }
 +
++    @NotNull
 +    public ItemStack getUsedItem() {
 +        return usedItem;
 +    }
 +
++    @NotNull
 +    public ItemStack getNewItem() {
 +        return newItem;
 +    }
 +
-+    public void setNewItem(ItemStack newItem) {
++    @NotNull
++    public void setNewItem(@NotNull ItemStack newItem) {
 +        this.newItem = newItem;
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java b/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2c3d82cb11701e60d1dd21f6e0b7370a3d662b4f
+index 0000000000000000000000000000000000000000..ebbba8e7e78208f6ee09d3b927065a97c0f3d8eb
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/PlayerPlaceItemAtEvent.java
-@@ -0,0 +1,110 @@
+@@ -0,0 +1,121 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -205,6 +220,8 @@ index 0000000000000000000000000000000000000000..2c3d82cb11701e60d1dd21f6e0b7370a
 +import org.bukkit.inventory.EquipmentSlot;
 +import org.bukkit.inventory.ItemStack;
 +import org.bukkit.util.Vector;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +public class PlayerPlaceItemAtEvent extends PlayerEvent implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -218,7 +235,8 @@ index 0000000000000000000000000000000000000000..2c3d82cb11701e60d1dd21f6e0b7370a
 +    private boolean consume = true;
 +
 +
-+    public PlayerPlaceItemAtEvent(Player player, ItemStack item, Location targetLoc, BlockFace clickFace, Vector hitVector, EquipmentSlot hand) {
++    public PlayerPlaceItemAtEvent(@NotNull Player player, @NotNull ItemStack item, @NotNull Location targetLoc, @NotNull BlockFace clickFace,
++                                  @NotNull Vector hitVector, @NotNull EquipmentSlot hand) {
 +        super(player);
 +        this.item = item;
 +        this.targetLoc = targetLoc;
@@ -227,31 +245,37 @@ index 0000000000000000000000000000000000000000..2c3d82cb11701e60d1dd21f6e0b7370a
 +        this.hand = hand;
 +    }
 +
++    @NotNull
 +    public ItemStack getItem() {
 +        return item;
 +    }
 +
++    @NotNull
 +    public EquipmentSlot getHand() {
 +        return hand;
 +    }
 +
++    @NotNull
 +    public Location getTargetLoc() {
 +        return targetLoc;
 +    }
 +
++    @NotNull
 +    public BlockFace getClickFace() {
 +        return clickFace;
 +    }
 +
++    @NotNull
 +    public Vector getHitVector() {
 +        return hitVector;
 +    }
 +
++    @Nullable
 +    public ItemStack getTempItem() {
 +        return this.tempItem;
 +    }
 +
-+    public void setTempItem(ItemStack item) {
++    public void setTempItem(@Nullable ItemStack item) {
 +        if (item == null) {
 +            canceled = true;
 +        }
@@ -273,20 +297,22 @@ index 0000000000000000000000000000000000000000..2c3d82cb11701e60d1dd21f6e0b7370a
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java b/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..17f2f54944ab55aa5d1cb1aac2df2268833df60d
+index 0000000000000000000000000000000000000000..726eca92754531c4a7ec61f3b0f156816b7eaef3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/PlayerUseItemEvent.java
-@@ -0,0 +1,89 @@
+@@ -0,0 +1,96 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -318,6 +344,8 @@ index 0000000000000000000000000000000000000000..17f2f54944ab55aa5d1cb1aac2df2268
 +import org.bukkit.event.player.PlayerEvent;
 +import org.bukkit.inventory.EquipmentSlot;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +public class PlayerUseItemEvent extends PlayerEvent implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -327,25 +355,28 @@ index 0000000000000000000000000000000000000000..17f2f54944ab55aa5d1cb1aac2df2268
 +    private ItemStack tempItem;
 +    private boolean consumeItem = true;
 +
-+    public PlayerUseItemEvent(Player player, ItemStack item, EquipmentSlot hand) {
++    public PlayerUseItemEvent(@NotNull Player player, @NotNull ItemStack item, @NotNull EquipmentSlot hand) {
 +        super(player);
 +        this.item = item;
 +        this.hand = hand;
 +    }
 +
++    @NotNull
 +    public EquipmentSlot getHand() {
 +        return hand;
 +    }
 +
++    @NotNull
 +    public ItemStack getItem() {
 +        return this.item;
 +    }
 +
++    @Nullable
 +    public ItemStack getTempItem() {
 +        return this.tempItem;
 +    }
 +
-+    public void setTempItem(ItemStack item) {
++    public void setTempItem(@Nullable ItemStack item) {
 +        if (item == null) {
 +            canceled = true;
 +        }
@@ -368,10 +399,12 @@ index 0000000000000000000000000000000000000000..17f2f54944ab55aa5d1cb1aac2df2268
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

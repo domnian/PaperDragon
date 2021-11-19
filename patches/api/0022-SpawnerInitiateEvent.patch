@@ -6,10 +6,10 @@ Subject: [PATCH] SpawnerInitiateEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d63d8892dab60adbfc270a1abce1ad1db314de06
+index 0000000000000000000000000000000000000000..065a8ba4c48d27cd4d87b9442dac7cf8124cabc8
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,93 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -43,8 +43,8 @@ index 0000000000000000000000000000000000000000..d63d8892dab60adbfc270a1abce1ad1d
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
-+
-+import javax.annotation.Nullable;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +public class SpawnerInitiateEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -54,30 +54,33 @@ index 0000000000000000000000000000000000000000..d63d8892dab60adbfc270a1abce1ad1d
 +    private final HumanEntity entity;
 +    private NamespacedKey mob;
 +
-+    public SpawnerInitiateEvent(NamespacedKey mob, World world, Location loc, HumanEntity entity) {
++    public SpawnerInitiateEvent(@NotNull NamespacedKey mob, @NotNull World world, @NotNull Location loc, @NotNull HumanEntity entity) {
 +        this.world = world;
 +        this.loc = loc;
 +        this.mob = mob;
 +        this.entity = entity;
 +    }
 +
++    @NotNull
 +    public World getWorld() {
 +        return this.world;
 +    }
 +
 +    @Nullable
 +    public EntityType getMobType() {
-+        return mob != null ? EntityType.fromName(mob.getKey()) : null;
++        return EntityType.fromName(mob.getKey());
 +    }
 +
-+    public void setMobType(NamespacedKey key) {
++    public void setMobType(@NotNull NamespacedKey key) {
 +        this.mob = key;
 +    }
 +
++    @NotNull
 +    public HumanEntity getTriggeringPlayer() {
 +        return this.entity;
 +    }
 +
++    @NotNull
 +    public Location getSpawnerLocation() {
 +        return this.loc;
 +    }
@@ -90,10 +93,12 @@ index 0000000000000000000000000000000000000000..d63d8892dab60adbfc270a1abce1ad1d
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

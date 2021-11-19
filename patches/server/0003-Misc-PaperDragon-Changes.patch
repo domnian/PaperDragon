@@ -135,10 +135,10 @@ index 0000000000000000000000000000000000000000..0d86be85a4fd88a88d1c5c9a60f765b6
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/util/MCLog.java b/src/main/java/com/domnian/paperdragon/util/MCLog.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..93c5f2162735d36d7e9e197c825f235b46f08d6c
+index 0000000000000000000000000000000000000000..bd6dd638c4db5a106d7e5b53c4fed1ff9efc1991
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/util/MCLog.java
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,72 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -173,13 +173,9 @@ index 0000000000000000000000000000000000000000..93c5f2162735d36d7e9e197c825f235b
 +    private static final Logger LOGGER = Logger.getLogger("NMS");
 +    private static final Pattern NEWLINE = Pattern.compile("\n");
 +
-+    private MCLog() {}
-+
-+
 +    public static void log(String message) {
 +        info(message);
 +    }
-+    
 +
 +    public static void info(String message) {
 +        for (String s : NEWLINE.split(message)) {
@@ -216,23 +212,23 @@ index 0000000000000000000000000000000000000000..93c5f2162735d36d7e9e197c825f235b
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 099db3a627c1d3c08f3b923bb02a1cb8a0a268ab..f5dca11c3b188288d93aa5842a11d6217b49d63e 100644
+index 5a4172faaf960d48939d6a485719041987df9242..eeb9252e01af8ecbfb0da7c9a831debd0117edc6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1721,7 +1721,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1729,7 +1729,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
--        return "Paper"; //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "PaperDragon"; // PaperDragon - PaperDragon = //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+-        return "Paper"; // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "PaperDragon"; // PaperDragon - PaperDragon = // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
      }
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2bebf1efb236f83ff217e3cd568afad3aa40dd6a..343e6dd12b38dc3961088faa999dcdf3071fba39 100644
+index 41c71e8709157f9e4c6dde525f363fcb851e2f32..10519d96f85e64139351f3bebfb194bfbd2e77ab 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -246,7 +246,7 @@ import javax.annotation.Nullable; // Paper
+@@ -251,7 +251,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -242,7 +238,7 @@ index 2bebf1efb236f83ff217e3cd568afad3aa40dd6a..343e6dd12b38dc3961088faa999dcdf3
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 72cfffd80ad76abe7cb16bc9133730338c07b6f6..62658f0ea2bfdc08725b33f5835b0efcff09dc05 100644
+index 424f3a9a645d57ad43c52932f5b388b5f146b9f0..4e0a14b744d340d7917ee9a140a580c6f134981f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -394,7 +394,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -250,7 +246,7 @@ index 72cfffd80ad76abe7cb16bc9133730338c07b6f6..62658f0ea2bfdc08725b33f5835b0efc
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
 -        return new com.destroystokyo.paper.PaperVersionFetcher();
-+        return new com.domnian.paperdragon.DragonVersionFetcher();
++        return new com.domnian.paperdragon.DragonVersionFetcher(); // PaperDragon
      }
  
      @Override

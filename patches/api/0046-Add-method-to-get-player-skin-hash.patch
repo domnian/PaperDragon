@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Wed, 10 Jul 2019 04:47:04 -0400
+Subject: [PATCH] Add method to get player skin hash
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+index 8bcc116d53d720d4c7c9a3c427a95ac5c28dd74a..fe23d1ae53230dd326f5ca5a80b8a84716401785 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+@@ -24,6 +24,7 @@
+ package com.domnian.paperdragon.api;
+ 
+ import org.bukkit.Location;
++import org.bukkit.entity.Player;
+ import org.bukkit.inventory.ItemStack;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -50,4 +51,11 @@ public interface DAPI_Misc {
+     @Nullable
+     List<ItemStack> getShulkerInventory(@NotNull ItemStack shulker);
+ 
++    /**
++     * Fetches a Player's skin hash
++     * @param player
++     * @return player's skin hash
++     */
++    String getSkinHash(@NotNull Player player);
++
+ }

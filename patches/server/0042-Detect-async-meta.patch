@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 8 Jul 2018 23:21:47 -0400
+Subject: [PATCH] Detect async meta
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
+index 022649cba83de2b8dc3629f44c2ce6fb2825b3c6..abd115c5c22ce666dd05bd33b9ee7a842380906b 100644
+--- a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
++++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
+@@ -454,12 +454,14 @@ public final class MetaApiAccessor {
+     @NotNull
+     private static PersistentMetaMap getMetaMapFromCompound(@NotNull CompoundTag cmp) {
+         PersistentMetaMap map = new PersistentMetaMap();
++        map.allowAsync = true;
+         for (Entry<String, Tag> entry : cmp.tags.entrySet()) {
+             final Object metaData = getObjectFromNbt(entry.getValue());
+             if (metaData != null) {
+                 map.put(entry.getKey(), metaData);
+             }
+         }
++        map.allowAsync = false;
+         return map;
+     }
+ 

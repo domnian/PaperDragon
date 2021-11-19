@@ -5,10 +5,10 @@ Subject: [PATCH] DispenserWaxBlockEvent
 
 
 diff --git a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-index 71a2c2181fa09b94b8459d2fb8e77edf8f76a0cb..31478344962d3fbec07ff137fc6e5a979569db74 100644
+index b515b194b4231f49f029b992ce3a12c86c915443..5e2df0fbf925e66eec14abb0793e630c801ebcc1 100644
 --- a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
 +++ b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-@@ -1023,6 +1023,13 @@ public interface DispenseItemBehavior {
+@@ -1105,6 +1105,13 @@ public interface DispenseItemBehavior {
                  Optional<BlockState> optional = HoneycombItem.getWaxed(iblockdata);
  
                  if (optional.isPresent()) {

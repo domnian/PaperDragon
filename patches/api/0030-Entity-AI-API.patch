@@ -5,31 +5,37 @@ Subject: [PATCH] Entity AI API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 85d4b770a24cadeae7da156f166836081796da12..717f501c3bdc7a8ea5074e86c9d583c251ec7522 100644
+index 15c7f1a4bdec6e1fd62c0178541cdf5bc4539172..6b8f46fc1e987ffd365c8e0ce12d18522ea595e8 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -1,8 +1,13 @@
+@@ -23,12 +23,23 @@
+ 
  package com.domnian.paperdragon.api;
  
 +import com.destroystokyo.paper.entity.RangedEntity;
++import org.bukkit.entity.Blaze;
++import org.bukkit.entity.Ghast;
++import org.bukkit.entity.Mob;
  import com.domnian.paperdragon.api.EntityTask.TaskHandler;
  import org.bukkit.World;
--import org.bukkit.entity.Entity;
-+import org.bukkit.entity.*;
-+import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
-+
-+import java.util.Set;
++import org.bukkit.entity.Creature;
++import org.bukkit.entity.EnderSignal;
+ import org.bukkit.entity.Entity;
++import org.bukkit.entity.Item;
++import org.bukkit.entity.Spider;
++import org.bukkit.entity.Wolf;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
  
++import java.util.Set;
++
  public interface DAPI_Entity {
  
-@@ -65,6 +70,71 @@ public interface DAPI_Entity {
-         });
-     }
+     @NotNull byte[] serializeEntity(@NotNull Entity craftentity);
+@@ -98,4 +109,69 @@ public interface DAPI_Entity {
  
--    <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task);
-+    @NotNull
-+    <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task);
+     @NotNull
+     <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task);
 +
 +    boolean isEntityDisabled(@NotNull org.bukkit.entity.Entity entity);
 +
@@ -93,7 +99,7 @@ index 85d4b770a24cadeae7da156f166836081796da12..717f501c3bdc7a8ea5074e86c9d583c2
 +    void setTimeBetweenFireballs(@NotNull Blaze blaze, int timeBetweenFireballs);
 +
 +    int getFireballCooldown(@NotNull Ghast ghast);
- 
++
 +    void setFireballCooldown(@NotNull Ghast ghast, int cooldown);
  }
 diff --git a/src/main/java/org/bukkit/entity/EnderSignal.java b/src/main/java/org/bukkit/entity/EnderSignal.java

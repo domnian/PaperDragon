@@ -6,23 +6,25 @@ Subject: [PATCH] Persistent and Temporary Metadata API
 Entity, TileEntity, World, Chunk, Block, Inventory API's
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 74c4c59efe4f84fc6526d9e1284a964c88350159..f78acdd62ad5ca59affb521cf115763e32033a69 100644
+index e58dfc8780b55af7154b1d2054f321a3c867decb..f69eca81eade4b86e51b2dbfbc25ed719df3c1c7 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -1,11 +1,13 @@
+@@ -23,6 +23,7 @@
+ 
  package com.domnian.paperdragon.api;
  
 +import com.domnian.paperdragon.api.meta.DAPI_Meta;
  import org.apache.commons.lang.exception.ExceptionUtils;
- 
- public class DragonAPI {
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -31,6 +32,7 @@ public abstract class DragonAPI {
  
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
 +    public static DAPI_Meta meta;
  
+     @NotNull
      public static String stack() {
-         return ExceptionUtils.getFullStackTrace(new Throwable());
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..117f8e4c1db47ef815366ad74dece81768926b55
@@ -1664,7 +1666,7 @@ index 5a4884db36d448c885e49c965ae329a0638dd628..0259f2b81a8ef5f2e24055a786645157
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index dc497606ebf9903c2d32276ecddda3231457346a..78fd01bd5a7d63cd5a7282080f45f381b3da5f3c 100644
+index 4f673e9123145dc78564dc3eef0edf75795dafc2..8263e019598a99d13a120556e6c28078093d8a05 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1690,18 +1692,18 @@ index dc497606ebf9903c2d32276ecddda3231457346a..78fd01bd5a7d63cd5a7282080f45f381
      // Paper start
      /**
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 631cbf2be51040eee00aa39a39c5ec4003f91843..d5a390d945b2ff435f6944dac2c5b56591743c2f 100644
+index 96cde879922c796f3ac8d14ee99d7b190ff67bd9..310e9f34ebaafc83571aadcd43312be2fe797d88 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
-@@ -221,4 +221,6 @@ public interface BlockState extends Metadatable {
-      *         or 'virtual' (e.g. on an itemstack)
+@@ -230,4 +230,6 @@ public interface BlockState extends Metadatable {
       */
-     boolean isPlaced();
+     boolean isCollidable();
+     // Paper end
 +
 +    boolean isTileEntity(); // PaperDragon
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index e284091560579df236ad4bf97746b3353063c047..2ae70c12cfb09d15ee8f91b15d80719e1d3929f2 100644
+index bafad5764cc3933fcd9602d37bd2e68424cbd575..5322b1fa4e7b1808637edacc1f1b839d70633f33 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1717,7 +1719,7 @@ index e284091560579df236ad4bf97746b3353063c047..2ae70c12cfb09d15ee8f91b15d80719e
 @@ -27,7 +30,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a base entity in the world
   */
- public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity> { // Paper
+ public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity>, net.kyori.adventure.sound.Sound.Emitter { // Paper
 -
 +    // PaperDragon start
 +    @NotNull
@@ -1725,11 +1727,11 @@ index e284091560579df236ad4bf97746b3353063c047..2ae70c12cfb09d15ee8f91b15d80719e
 +    @NotNull
 +    TempMetaMap getTempMeta();
 +    // PaperDragon end
-     // PaperDragon start
-     public boolean spawnAt(@NotNull Location loc);
-     public boolean spawnAt(@NotNull Location loc, @NotNull org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason);
+     /**
+      * Gets the entity's current position
+      *
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index a769cc265379c51f2c83aa4b533eacbf0ee9e24f..9c83b9c6de4aee226c3907d1ee4d05e9c18bee9f 100644
+index 9420e7c9c0320cd9ed65c942a0aa40f099b37555..00a07f3739f6088d666a7d8d8d7f45ac063921e5 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;

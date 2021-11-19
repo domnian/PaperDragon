@@ -7,7 +7,7 @@ Secure BungeeCord with IP Whitelist for IP/UUID forwarding
 Allow online-mode to be set to true, and skip online-mode for bungee IP's
 
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index 5f43459884daea61178c3fdb913204e64f833f61..2cbc9861ad6f12194fc6d5a8d82a7640b4585e34 100644
+index 291241502bdbb4bac666735b0d6365b612612e04..d2eceb7031182ccc55d1973d1b4bab270c900541 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
 @@ -76,6 +76,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -41,10 +41,10 @@ index 451ca1a1d84227274fd59fc5d46654a441561710..724d2fed1c6deb792dbe0a69174182ac
                          if ( ( split.length == 3 || split.length == 4 ) && ( ServerHandshakePacketListenerImpl.BYPASS_HOSTCHECK || ServerHandshakePacketListenerImpl.HOST_PATTERN.matcher( split[1] ).matches() ) ) { // Paper
                              // Paper start - Unix domain socket support
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 01fee879c946b6640da34d5890d686f0152437dc..8b8adcd3ef588b101e4e24d4d882144b75ae3eb4 100644
+index 494ca8fa8c742d4eac9fb11878d3b3170d850265..53828c3e817a2db3ec6e5429015df28d3dbe6750 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -230,7 +230,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
+@@ -233,7 +233,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
      public void handleHello(ServerboundHelloPacket packet) {
          Validate.validState(this.state == ServerLoginPacketListenerImpl.State.HELLO, "Unexpected hello packet", new Object[0]);
          this.gameProfile = packet.getGameProfile();
@@ -54,7 +54,7 @@ index 01fee879c946b6640da34d5890d686f0152437dc..8b8adcd3ef588b101e4e24d4d882144b
              this.connection.send(new ClientboundHelloPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.nonce));
          } else {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index ba0e8902e7205bc6da88efd28be70ece04cc1974..cbb013df8b38db0cf230f28ab37b6af5328f0fcf 100644
+index ec7938202e3890bccb809a8092362458d0f4ca75..b2a470d1eddfea623b798707e832460fd5faa60b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -233,6 +233,7 @@ public class SpigotConfig

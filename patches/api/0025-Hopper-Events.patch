@@ -6,10 +6,10 @@ Subject: [PATCH] Hopper Events
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a5fce59e99399c5072c05daa51951a90c1fab238
+index 0000000000000000000000000000000000000000..834126a3d7411f594594455f6dad922c2856109f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,72 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -41,16 +41,20 @@ index 0000000000000000000000000000000000000000..a5fce59e99399c5072c05daa51951a90
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.inventory.Inventory;
++import org.jetbrains.annotations.NotNull;
 +
 +public class HopperDrainEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
 +    private final Inventory inventory;
 +    private boolean canceled;
 +    private final Location loc;
-+    public HopperDrainEvent(World world, Inventory inventory, double x, double y, double z) {
++
++    public HopperDrainEvent(@NotNull World world, @NotNull Inventory inventory, double x, double y, double z) {
 +        this.inventory = inventory;
 +        loc = new Location(world, x, y, z);
 +    }
++
++    @NotNull
 +    public Location getHopperLocation() {
 +        return this.loc;
 +    }
@@ -63,24 +67,27 @@ index 0000000000000000000000000000000000000000..a5fce59e99399c5072c05daa51951a90
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public Inventory getInventory() {
 +        return inventory;
 +    }
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..6bae207afa2c4e0274c750052797752b30e33ca0
+index 0000000000000000000000000000000000000000..be6f531f72cdc24332674b81eced7afaed68a5d4
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
-@@ -0,0 +1,70 @@
+@@ -0,0 +1,76 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -112,6 +119,7 @@ index 0000000000000000000000000000000000000000..6bae207afa2c4e0274c750052797752b
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.inventory.Inventory;
++import org.jetbrains.annotations.NotNull;
 +
 +public class HopperFillEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -119,14 +127,16 @@ index 0000000000000000000000000000000000000000..6bae207afa2c4e0274c750052797752b
 +    private boolean canceled;
 +    private final Location loc;
 +    private final Location target;
-+    public HopperFillEvent(World world, Inventory inventory, double x, double y, double z, double tx, double ty, double tz) {
++    public HopperFillEvent(@NotNull World world, @NotNull Inventory inventory, double x, double y, double z, double tx, double ty, double tz) {
 +        this.inventory = inventory;
 +        loc = new Location(world, x, y, z);
 +        target = new Location(world, x, y, z);
 +    }
++    @NotNull
 +    public Location getHopperLocation() {
 +        return this.loc;
 +    }
++    @NotNull
 +    public Location getTarget() {
 +        return this.target;
 +    }
@@ -139,14 +149,17 @@ index 0000000000000000000000000000000000000000..6bae207afa2c4e0274c750052797752b
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public Inventory getInventory() {
 +        return inventory;
 +    }

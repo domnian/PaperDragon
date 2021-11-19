@@ -6,25 +6,30 @@ Subject: [PATCH] ServerReloadEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..f8cef41e9bfebd562642ae77718a4d5f1293dae5
+index 0000000000000000000000000000000000000000..5e1cfdc3dfa81af7d94ad415403b94719b8eb01c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ServerReloadEvent.java
-@@ -0,0 +1,18 @@
+@@ -0,0 +1,23 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +public class ServerReloadEvent extends Event {
++    public ServerReloadEvent() {
++    }
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
-+
 +}

@@ -5,10 +5,10 @@ Subject: [PATCH] dont load chunks for physics
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 75229a2a71a00a28b4f2e5a9f61c49470cfd7f8f..73ddcd94949b59004e1a58a898ee5875a3a0d563 100644
+index 016abdfae57333baaff387dc11f155b892f49a3b..d543124e268e9924deaa608c4e5b8250752d3d1e 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -812,7 +812,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -803,7 +803,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public void neighborChanged(BlockPos pos, Block sourceBlock, BlockPos neighborPos) {
          if (!this.isClientSide) {
@@ -19,7 +19,7 @@ index 75229a2a71a00a28b4f2e5a9f61c49470cfd7f8f..73ddcd94949b59004e1a58a898ee5875
              try {
                  // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
-index d87f8d106834678364f8720447d671de60c2454e..4ee86d4cb26f90747a06358fc5e1b938818a2ad5 100644
+index 83d813025efca5846538e36508a5d4fe38b02108..258d1e9d6bbeb3fb9202b4acd997b6ae293b6bfe 100644
 --- a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -889,7 +889,8 @@ public abstract class BlockBehaviour {

@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Mon, 6 Sep 2021 02:05:16 -0500
+Subject: [PATCH] Mitigate ConcurrentModificationException by copying
+ entitySection access
+
+
+diff --git a/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java b/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
+index 8cb246863e06c5b95ba1442e2ec47095026c4f39..1997e8d54b13684c492d0be1b8f5baf38b62dd6c 100644
+--- a/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
++++ b/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
+@@ -264,23 +264,23 @@ public class PersistentEntitySectionManager<T extends EntityAccess> implements A
+             if (flag2 && !flag3) {
+                 entitysection.getEntities().filter((entityaccess) -> {
+                     return !entityaccess.isAlwaysTicking();
+-                }).forEach(this::stopTicking);
++                }).collect(Collectors.toList()).forEach(this::stopTicking); // PaperDragon
+             }
+ 
+             if (flag && !flag1) {
+                 entitysection.getEntities().filter((entityaccess) -> {
+                     return !entityaccess.isAlwaysTicking();
+-                }).forEach(this::stopTracking);
++                }).collect(Collectors.toList()).forEach(this::stopTracking); // PaperDragon
+             } else if (!flag && flag1) {
+                 entitysection.getEntities().filter((entityaccess) -> {
+                     return !entityaccess.isAlwaysTicking();
+-                }).forEach(this::startTracking);
++                }).collect(Collectors.toList()).forEach(this::startTracking); // PaperDragon
+             }
+ 
+             if (!flag2 && flag3) {
+                 entitysection.getEntities().filter((entityaccess) -> {
+                     return !entityaccess.isAlwaysTicking();
+-                }).forEach(this::startTicking);
++                }).collect(Collectors.toList()).forEach(this::startTicking); // PaperDragon
+             }
+ 
+         });

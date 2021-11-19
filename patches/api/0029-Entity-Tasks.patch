@@ -5,85 +5,92 @@ Subject: [PATCH] Entity Tasks
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 7f99d075b20d8cedfaa00c0e5a6fe086ecae9ca5..85d4b770a24cadeae7da156f166836081796da12 100644
+index 001b210b3101f2c7c4e0b6ac9c47ca46d6b19181..15c7f1a4bdec6e1fd62c0178541cdf5bc4539172 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -1,5 +1,6 @@
+@@ -23,6 +23,7 @@
+ 
  package com.domnian.paperdragon.api;
  
 +import com.domnian.paperdragon.api.EntityTask.TaskHandler;
  import org.bukkit.World;
  import org.bukkit.entity.Entity;
+ import org.jetbrains.annotations.NotNull;
+@@ -33,4 +34,68 @@ public interface DAPI_Entity {
+     @NotNull byte[] serializeEntity(@NotNull Entity craftentity);
+     @Nullable Entity deserializeEntity(@NotNull byte[] data, @NotNull World world);
  
-@@ -8,4 +9,62 @@ public interface DAPI_Entity {
-     byte[] serializeEntity(Entity craftentity);
-     Entity deserializeEntity(byte[] data, World world);
- 
-+    void cancelTasks(Entity entity);
++    void cancelTasks(@NotNull Entity entity);
 +
-+    default <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, Runnable task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull Runnable task) {
 +        return scheduleTask(entity, interval, new EntityTask<T>() {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run();
 +            }
 +        });
 +    }
 +
-+    default <T extends Entity> EntityTask<T> scheduleDelayedTask(T entity, int delay, Runnable task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleDelayedTask(@NotNull T entity, int delay, @NotNull Runnable task) {
 +        return scheduleTask(entity, delay, new EntityTask<T>(1) {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run();
 +            }
 +        });
 +    }
 +
-+    default <T extends Entity> EntityTask<T> scheduleDelayedTask(T entity, int delay, TaskHandler<T> task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleDelayedTask(@NotNull T entity, int delay, @NotNull TaskHandler<T> task) {
 +        return scheduleTask(entity, delay, new EntityTask<T>(1) {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run(entity, this);
 +            }
 +        });
 +    }
 +
-+    default <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, TaskHandler<T> task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull TaskHandler<T> task) {
 +        return scheduleTask(entity, interval, new EntityTask<T>() {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run(entity, this);
 +            }
 +        });
 +    }
 +
-+    default <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, int limit, TaskHandler<T> task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, int limit, @NotNull TaskHandler<T> task) {
 +        return scheduleTask(entity, interval, new EntityTask<T>(limit) {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run(entity, this);
 +            }
 +        });
 +    }
 +
-+    default <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, int limit, Runnable task) {
++    @NotNull
++    default <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, int limit, @NotNull Runnable task) {
 +        return scheduleTask(entity, interval, new EntityTask<T>(limit) {
 +            @Override
-+            public void run(T entity) {
++            public void run(@NotNull T entity) {
 +                task.run();
 +            }
 +        });
 +    }
 +
-+    <T extends Entity> EntityTask<T> scheduleTask(T entity, int interval, EntityTask<T> task);
-+
++    @NotNull
++    <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task);
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityTask.java b/src/main/java/com/domnian/paperdragon/api/EntityTask.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982da54afebc
+index 0000000000000000000000000000000000000000..9e43bc4866ff39814d35815e78bf752d14427821
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityTask.java
-@@ -0,0 +1,106 @@
+@@ -0,0 +1,110 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -110,6 +117,8 @@ index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982d
 +package com.domnian.paperdragon.api;
 +
 +import org.bukkit.entity.Entity;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +public abstract class EntityTask<T extends Entity> {
 +    private int limit = -1;
@@ -123,7 +132,7 @@ index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982d
 +        this.limit = limit;
 +    }
 +
-+    public void init(T entity, int interval) {
++    public void init(@NotNull T entity, int interval) {
 +        if (this.entity != null) {
 +            throw new IllegalStateException("Already initialized");
 +        }
@@ -132,8 +141,9 @@ index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982d
 +        tickEvery = interval;
 +    }
 +
-+    public abstract void run(T entity);
++    public abstract void run(@NotNull T entity);
 +
++    @NotNull
 +    public EntityTask<T> invokeNow() {
 +        run(entity);
 +        return this;
@@ -177,6 +187,7 @@ index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982d
 +        this.tickEvery = ticks;
 +    }
 +
++    @Nullable
 +    public T getEntity() {
 +        return entity;
 +    }
@@ -187,6 +198,6 @@ index 0000000000000000000000000000000000000000..578fc7222112ed07d753cc143849982d
 +    }
 +
 +    public interface TaskHandler<T extends Entity> {
-+        void run(T entity, EntityTask<T> task);
++        void run(@NotNull T entity, @NotNull EntityTask<T> task);
 +    }
 +}

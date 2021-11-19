@@ -6,10 +6,10 @@ Subject: [PATCH] AnvilEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/AnvilEvent.java b/src/main/java/com/domnian/paperdragon/events/AnvilEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7667f9aa8
+index 0000000000000000000000000000000000000000..95795277a00ccbb9c96668c94fdfad456e48ff98
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/AnvilEvent.java
-@@ -0,0 +1,91 @@
+@@ -0,0 +1,98 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -40,6 +40,7 @@ index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
 +
 +public class AnvilEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -49,7 +50,7 @@ index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7
 +    final ItemStack right;
 +    ItemStack result;
 +    int cost;
-+    public AnvilEvent(Player player, ItemStack left, ItemStack right, ItemStack result, int cost) {
++    public AnvilEvent(@NotNull Player player, @NotNull ItemStack left, @NotNull ItemStack right, @NotNull ItemStack result, int cost) {
 +        this.player = player;
 +        this.left = left;
 +        this.right = right;
@@ -57,18 +58,22 @@ index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7
 +        this.cost = cost;
 +    }
 +
++    @NotNull
 +    public Player getPlayer() {
 +        return player;
 +    }
 +
++    @NotNull
 +    public ItemStack getLeft() {
 +        return left;
 +    }
 +
++    @NotNull
 +    public ItemStack getRight() {
 +        return right;
 +    }
 +
++    @NotNull
 +    public ItemStack getResult() {
 +        return result;
 +    }
@@ -81,7 +86,7 @@ index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7
 +        this.cost = cost;
 +    }
 +
-+    public void setResult(ItemStack result) {
++    public void setResult(@NotNull ItemStack result) {
 +        this.result = result;
 +    }
 +
@@ -93,10 +98,12 @@ index 0000000000000000000000000000000000000000..a075deff76ee954695db62f6a0cd48e7
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

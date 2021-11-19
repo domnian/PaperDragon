@@ -1,0 +1,92 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 1 Jan 2017 20:36:31 -0500
+Subject: [PATCH] ShulkerBox API
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+index 9333ca32a5b65482c3f0162c62aa63979f820eaa..204e4b0be7f6ae2d4f7acf28e39b33748d5b4db2 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -23,7 +23,10 @@
+ 
+ package com.domnian.paperdragon.api;
+ 
++import com.destroystokyo.paper.MaterialTags;
+ import net.minecraft.core.BlockPos;
++import net.minecraft.nbt.CompoundTag;
++import net.minecraft.nbt.ListTag;
+ import net.minecraft.network.chat.TranslatableComponent;
+ import net.minecraft.server.MCUtil;
+ import net.minecraft.server.level.ServerLevel;
+@@ -33,8 +36,12 @@ import net.minecraft.world.level.saveddata.maps.MapDecoration;
+ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+ import org.bukkit.Location;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
++import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.jetbrains.annotations.NotNull;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ public class CraftDAPI_Misc implements DAPI_Misc {
+ 
+     @Override
+@@ -53,4 +60,57 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+         itemstack.setHoverName(new TranslatableComponent("filled_map." + mapType.toLowerCase()));
+         return CraftItemStack.asCraftMirror(itemstack);
+     }
++
++    @Override
++    public boolean hasShulkerInventory(@NotNull org.bukkit.inventory.ItemStack shulker) {
++        return getNBTItems(shulker) != null;
++    }
++
++    @Override
++    public List<org.bukkit.inventory.ItemStack> getShulkerInventory(@NotNull org.bukkit.inventory.ItemStack shulker) {
++        ListTag listTag = getNBTItems(shulker);
++        if (listTag == null) {
++            return null;
++        }
++        List<org.bukkit.inventory.ItemStack> items = new ArrayList<>(listTag.size());
++        for (int i = 0; i < listTag.size(); ++i) {
++            items.add(i, null);
++        }
++        for (int i = 0; i < listTag.size(); ++i) {
++            CompoundTag tag1 = listTag.getCompound(i);
++            int j = tag1.getByte("Slot") & 255;
++            for (int x = listTag.size(); x < j; ++x) {
++                items.add(x, null);
++            }
++            items.add(j, CraftItemStack.asCraftMirror(ItemStack.of(tag1)));
++        }
++        return items;
++    }
++
++    private static ListTag getNBTItems(org.bukkit.inventory.ItemStack shulker) {
++        if (shulker == null) {
++            throw new NullPointerException("Itemstack can not be null");
++        }
++        if (!MaterialTags.SHULKER_BOXES.isTagged(shulker)) {
++            throw new IllegalArgumentException("Not a shulker box");
++        }
++
++        final CraftItemStack craft;
++        if (shulker instanceof CraftItemStack) {
++            craft = ((CraftItemStack) shulker);
++        } else {
++            craft = CraftItemStack.asCraftCopy(shulker);
++        }
++        ItemStack handle = craft.handle;
++        if (handle == null || handle.tag == null || !handle.tag.contains("BlockEntityTag", CraftMagicNumbers.NBT.TAG_COMPOUND)) {
++            return null;
++        }
++        final CompoundTag tag = handle.tag.getCompound("BlockEntityTag");
++        if (tag.contains("Items", CraftMagicNumbers.NBT.TAG_LIST)) {
++            final ListTag items = tag.getList("Items", CraftMagicNumbers.NBT.TAG_COMPOUND);
++            return items.isEmpty() ? null : items;
++        }
++        return null;
++    }
++
+ }

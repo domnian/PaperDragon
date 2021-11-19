@@ -151,7 +151,7 @@ index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..ec9a03adbd3c8becd1104edff020cf76
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 3e5e358e24bd84a05785a9391526f316475e95ff..1aa3e5a0c9613f65bc70dd57f25227b948d6618e 100644
+index 7695a5ec88023720d873f81fc36f78ad60fb9589..ef5e23b3e0c1f89a8057aa0e3e84439d03ed06b6 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -71,6 +71,7 @@ import net.minecraft.core.Registry;
@@ -162,7 +162,7 @@ index 3e5e358e24bd84a05785a9391526f316475e95ff..1aa3e5a0c9613f65bc70dd57f25227b9
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.ComponentUtils;
  import net.minecraft.network.chat.HoverEvent;
-@@ -1229,8 +1230,26 @@ public final class ItemStack {
+@@ -1231,8 +1232,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets((Component) ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {

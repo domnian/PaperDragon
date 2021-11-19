@@ -31,7 +31,7 @@ index fc4d3bcd9b16097086fef7975274d825b65adb10..13e8ce4d7a4477988b69269acb893f74
  
      /**
 diff --git a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
-index 196e6d2ab5f9410e4b0f2900ed09870baaa542d2..aa535b5cd74ea8ee63d546046e6710f0793d68ca 100644
+index 07538e1b94921429ddb277c154e5d5c83d095b3e..9d4b4a8070eddcbc1ccce0c9c855ebf003255cab 100644
 --- a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
 @@ -205,12 +205,11 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
@@ -49,15 +49,16 @@ index 196e6d2ab5f9410e4b0f2900ed09870baaa542d2..aa535b5cd74ea8ee63d546046e6710f0
          /**
           * This represents the amount of damage being done, also known as the
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 8f00cb2e3bc9963e9657c1b2493e8b015a6664d0..a769cc265379c51f2c83aa4b533eacbf0ee9e24f 100644
+index 8f00cb2e3bc9963e9657c1b2493e8b015a6664d0..9420e7c9c0320cd9ed65c942a0aa40f099b37555 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -156,19 +156,23 @@ public interface Inventory extends Iterable<ItemStack> {
      /**
       * Returns all ItemStacks from the inventory
       *
-+     * @deprecated because people love breaking API's for no reason. you probally want @{see {@link #getStorageContents()}}
-      * @return An array of ItemStacks from the inventory. Individual items may be null.
+-     * @return An array of ItemStacks from the inventory. Individual items may be null.
++     * @deprecated because people love breaking API's for no reason. you probably want @{see {@link #getStorageContents()}}
++     * @return An array of ItemStacks from the inventory.
       */
 +    @Deprecated
      public @org.checkerframework.checker.nullness.qual.Nullable ItemStack @org.checkerframework.checker.nullness.qual.NonNull [] getContents(); // Paper - make array elements nullable instead array
@@ -66,7 +67,7 @@ index 8f00cb2e3bc9963e9657c1b2493e8b015a6664d0..a769cc265379c51f2c83aa4b533eacbf
       * Completely replaces the inventory's contents. Removes all existing
       * contents and replaces it with the ItemStacks given in the array.
       *
-+      @deprecated because people love breaking API's for no reason. you probally want @{see {@link #setStorageContents(ItemStack[])}}
++     * @deprecated because people love breaking API's for no reason. you probably want @{see {@link #setStorageContents(ItemStack[])}}
       * @param items A complete replacement for the contents; the length must
       *     be less than or equal to {@link #getSize()}.
       * @throws IllegalArgumentException If the array has more items than the

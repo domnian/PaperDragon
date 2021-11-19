@@ -1,15 +1,15 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Derek Williams <GreenMeanieMC@gmail.com>
-Date: Sun, 17 Dec 2017 01:46:00 -0500
+From: Aikar <aikar@aikar.co>
+Date: Sun, 4 Dec 2016 22:06:10 -0500
 Subject: [PATCH] SendSignEvent
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..ec93ab544d28f56f4451dfc019a51eb82f77f225
+index 0000000000000000000000000000000000000000..090b117fe328ccd7a0e79cd093781178e8b2d49b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
-@@ -0,0 +1,46 @@
+@@ -0,0 +1,52 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -32,28 +32,33 @@ index 0000000000000000000000000000000000000000..ec93ab544d28f56f4451dfc019a51eb8
 + *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 + *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 + */
++
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.block.Block;
-+import org.bukkit.entity.Player;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +public abstract class SendSignEvent extends Event {
 +
++    @NotNull
 +    public abstract Block getBlock();
++
++    @NotNull
 +    public abstract String[] getLines();
-+    public abstract void setLine(int i, String line);
++
++    public abstract void setLine(int i, @NotNull String line);
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
-+
 +}
-\ No newline at end of file

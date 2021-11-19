@@ -6,35 +6,41 @@ Subject: [PATCH] ServerShutdownEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..ba4b03d7a5cd817019a5dbec9175bb581ccb5dd6
+index 0000000000000000000000000000000000000000..11c93e1e986d5796d9db36fcd91cbfab651eaf85
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,35 @@
 +package com.domnian.paperdragon.events;
 +
++import org.bukkit.Bukkit;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +public class ServerShutdownEvent extends Event {
 +    private String reason;
-+    public ServerShutdownEvent(String reason) {
++    public ServerShutdownEvent(@NotNull String reason) {
++        super(!Bukkit.isPrimaryThread());
 +        this.reason = reason;
 +    }
 +
++    @NotNull
 +    public String getReason() {
 +        return reason;
 +    }
 +
-+    public void setReason(String reason) {
++    public void setReason(@NotNull String reason) {
 +        this.reason = reason;
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

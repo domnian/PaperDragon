@@ -6,16 +6,17 @@ Subject: [PATCH] BlockBreakNaturallyEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..311ff5ebe68bc59daf8090cc6027a2fab7ad0d5a
+index 0000000000000000000000000000000000000000..906fe462ff34e5c8e57a8df7b20864f4101e20fb
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,40 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.Location;
 +import org.bukkit.entity.Item;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.block.BlockEvent;
++import org.jetbrains.annotations.NotNull;
 +
 +import java.util.Collection;
 +import java.util.Collections;
@@ -23,28 +24,29 @@ index 0000000000000000000000000000000000000000..311ff5ebe68bc59daf8090cc6027a2fa
 +public class BlockBreakNaturallyEvent extends BlockEvent {
 +    private final Collection<Item> items;
 +
-+    public BlockBreakNaturallyEvent(Location pos, Collection<Item> items) {
++    public BlockBreakNaturallyEvent(@NotNull Location pos, @NotNull Collection<Item> items) {
 +        super(pos.getBlock());
 +        this.items = items;
 +    }
 +
-+    public BlockBreakNaturallyEvent(Location pos, Item item) {
++    public BlockBreakNaturallyEvent(@NotNull Location pos, @NotNull Item item) {
 +        this(pos, Collections.singleton(item));
 +    }
 +
++    @NotNull
 +    public Collection<Item> getItems() {
 +        return items;
 +    }
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
-+
 +}
-+

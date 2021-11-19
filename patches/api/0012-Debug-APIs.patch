@@ -1,32 +1,36 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: willies952002 <admin@domnian.com>
+From: Aikar <aikar@aikar.co>
 Date: Sat, 3 Dec 2016 22:27:48 -0500
 Subject: [PATCH] Debug APIs
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 6f9eef3638eb7f00b83af95ca6a5c0bc4f70e5a9..74c4c59efe4f84fc6526d9e1284a964c88350159 100644
+index d326bfd4e1d4f279ea40a42d01a6e552646c7909..e58dfc8780b55af7154b1d2054f321a3c867decb 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -1,8 +1,30 @@
+@@ -23,9 +23,33 @@
+ 
  package com.domnian.paperdragon.api;
  
 +import org.apache.commons.lang.exception.ExceptionUtils;
-+
- public class DragonAPI {
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ public abstract class DragonAPI {
  
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
- 
++
++    @NotNull
 +    public static String stack() {
 +        return ExceptionUtils.getFullStackTrace(new Throwable());
 +    }
 +
-+    public static void exception(Throwable e) {
++    public static void exception(@NotNull Throwable e) {
 +        exception(null, e);
 +    }
 +
-+    public static void exception(String msg, Throwable e) {
++    public static void exception(@Nullable String msg, @NotNull Throwable e) {
 +        if (msg != null) {
 +            System.err.println(msg);
 +        }
@@ -37,5 +41,4 @@ index 6f9eef3638eb7f00b83af95ca6a5c0bc4f70e5a9..74c4c59efe4f84fc6526d9e1284a964c
 +            System.err.println(line);
 +        }
 +    }
-+    
  }

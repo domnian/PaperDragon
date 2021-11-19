@@ -4,52 +4,12 @@ Date: Sun, 4 Dec 2016 15:02:53 -0500
 Subject: [PATCH] FlowerPot Events
 
 
-diff --git a/src/main/java/com/domnian/paperdragon/events/FlowerPotPlantEvent.java b/src/main/java/com/domnian/paperdragon/events/FlowerPotPlantEvent.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..655ffaf5692e3ffc30ef1b141c34e36b3896e57b
---- /dev/null
-+++ b/src/main/java/com/domnian/paperdragon/events/FlowerPotPlantEvent.java
-@@ -0,0 +1,34 @@
-+package com.domnian.paperdragon.events;
-+
-+import org.bukkit.Location;
-+import org.bukkit.block.Block;
-+import org.bukkit.event.Event;
-+import org.bukkit.event.HandlerList;
-+import org.bukkit.inventory.ItemStack;
-+
-+public class FlowerPotPlantEvent extends Event {
-+    private final Block block;
-+    private final ItemStack item;
-+    public FlowerPotPlantEvent(Location loc, ItemStack itemstack) {
-+        this.block = loc.getBlock();
-+        this.item = itemstack;
-+    }
-+
-+    public Block getBlock() {
-+        return block;
-+    }
-+
-+    public ItemStack getItem() {
-+        return item;
-+    }
-+
-+    private static final HandlerList handlers = new HandlerList();
-+
-+    public HandlerList getHandlers() {
-+        return handlers;
-+    }
-+
-+    public static HandlerList getHandlerList() {
-+        return handlers;
-+    }
-+}
 diff --git a/src/main/java/com/domnian/paperdragon/events/FlowerPotRemoveEvent.java b/src/main/java/com/domnian/paperdragon/events/FlowerPotRemoveEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..e47bc9fe229f3c5ee82fb29687cbee8eff47ec86
+index 0000000000000000000000000000000000000000..2953bca8d4a655732d42fd519242e2278696a423
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/FlowerPotRemoveEvent.java
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,70 @@
 +/*
 + * Copyright (c) 2019 Daniel Ennis (Aikar) MIT License
 + *
@@ -87,21 +47,23 @@ index 0000000000000000000000000000000000000000..e47bc9fe229f3c5ee82fb29687cbee8e
 +    private final Block block;
 +    private ItemStack item;
 +
-+    public FlowerPotRemoveEvent(Player player, Location loc, ItemStack itemstack) {
++    public FlowerPotRemoveEvent(@NotNull Player player, @NotNull Location loc, @NotNull ItemStack itemstack) {
 +        super(player);
 +        this.block = loc.getBlock();
 +        this.item = itemstack;
 +    }
 +
++    @NotNull
 +    public Block getBlock() {
 +        return block;
 +    }
 +
++    @NotNull
 +    public ItemStack getItem() {
 +        return item;
 +    }
 +
-+    public void setItem(ItemStack itemStack) {
++    public void setItem(@NotNull ItemStack itemStack) {
 +        item = itemStack;
 +    }
 +
@@ -112,6 +74,7 @@ index 0000000000000000000000000000000000000000..e47bc9fe229f3c5ee82fb29687cbee8e
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

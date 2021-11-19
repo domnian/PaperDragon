@@ -6,10 +6,10 @@ Subject: [PATCH] MonsterEggSpawn Event
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..dd5e0c79f135a90fb57dd1d78fc16d9da8eb5435
+index 0000000000000000000000000000000000000000..25e66e6eff1b9301e27f9169ab461b3b36984690
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
-@@ -0,0 +1,62 @@
+@@ -0,0 +1,64 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.HumanEntity;
@@ -19,6 +19,8 @@ index 0000000000000000000000000000000000000000..dd5e0c79f135a90fb57dd1d78fc16d9d
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
 +
 +public class MonsterEggSpawnEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
@@ -29,21 +31,23 @@ index 0000000000000000000000000000000000000000..dd5e0c79f135a90fb57dd1d78fc16d9d
 +    private LivingEntity entity;
 +    private final ItemStack item;
 +
-+    public MonsterEggSpawnEvent(HumanEntity player, LivingEntity entity, ItemStack item) {
++    public MonsterEggSpawnEvent(@Nullable HumanEntity player, @NotNull LivingEntity entity, @NotNull ItemStack item) {
 +        this.player = (Player) player;
 +        this.entity = entity;
 +        this.item = item;
 +    }
 +
++    @Nullable
 +    public Player getPlayer() {
 +        return player;
 +    }
 +
++    @NotNull
 +    public LivingEntity getEntity() {
 +        return entity;
 +    }
 +
-+    public void setEntity(LivingEntity entity) {
++    public void setEntity(@Nullable LivingEntity entity) {
 +        if (entity == null) {
 +            canceled = true;
 +            return;
@@ -51,6 +55,7 @@ index 0000000000000000000000000000000000000000..dd5e0c79f135a90fb57dd1d78fc16d9d
 +        this.entity = entity;
 +    }
 +
++    @NotNull
 +    public ItemStack getItem() {
 +        return item;
 +    }
@@ -63,13 +68,9 @@ index 0000000000000000000000000000000000000000..dd5e0c79f135a90fb57dd1d78fc16d9d
 +        canceled = cancel;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
-+    public static HandlerList getHandlerList() {
-+        return handlers;
-+    }
-+
 +}
-\ No newline at end of file

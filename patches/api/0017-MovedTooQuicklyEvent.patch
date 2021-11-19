@@ -6,16 +6,17 @@ Subject: [PATCH] MovedTooQuicklyEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..50c13427ad0b7984b823126c362bc7452f117dc1
+index 0000000000000000000000000000000000000000..40ef38a5c6e203b393945469430d0b3d03d7d1cd
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
-@@ -0,0 +1,46 @@
+@@ -0,0 +1,49 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +public class MovedTooQuicklyEvent extends Event implements Cancellable {
 +
@@ -24,19 +25,22 @@ index 0000000000000000000000000000000000000000..50c13427ad0b7984b823126c362bc745
 +    private final Player player;
 +    private boolean cancelled = false;
 +
-+    public MovedTooQuicklyEvent(double speed, Player player) {
++    public MovedTooQuicklyEvent(double speed, @NotNull Player player) {
 +        this.speed = speed;
 +        this.player = player;
 +    }
 +
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public Player getPlayer() {
 +        return player;
 +    }
@@ -54,5 +58,4 @@ index 0000000000000000000000000000000000000000..50c13427ad0b7984b823126c362bc745
 +    public void setCancelled(boolean cancel) {
 +        cancelled = cancel;
 +    }
-+
 +}

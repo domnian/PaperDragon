@@ -113,10 +113,10 @@ index 0000000000000000000000000000000000000000..21bd42ff9d3f744ce9eb06d269d13495
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6bb7553cf06d58b3e32fdfcfde6cbc1731b40883..5c23702755cc453ef8d7d4608a0fbd86c68763ad 100644
+index 10519d96f85e64139351f3bebfb194bfbd2e77ab..cc5b4df1151ed6ba085e8956fc732f0202b4c592 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -287,6 +287,7 @@ public final class CraftServer implements Server {
+@@ -294,6 +294,7 @@ public final class CraftServer implements Server {
      private final SysoutCatcher sysoutCatcher = new SysoutCatcher(); // Paper
  
      static {

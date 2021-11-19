@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 4 Jul 2018 15:49:34 -0400
+Subject: [PATCH] Fire PlayerKickEvent during server shutdown
+
+
+diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+index dd0e665e3ef30707d3fb05c925f042d680427489..3a8d4232bf858613bd146956fc36263b2021f7c1 100644
+--- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -441,11 +441,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+ 
+         PlayerKickEvent event = new PlayerKickEvent(this.player.getBukkitEntity(), reason, leaveMessage, cause); // Paper - Adventure & kick event reason
+ 
+-        if (this.cserver.getServer().isRunning()) {
++        if (true) { // PaperDragon - don't care if its async either, fire it!
+             this.cserver.getPluginManager().callEvent(event);
+         }
+ 
+-        if (event.isCancelled()) {
++        if (!server.hasStopped() && event.isCancelled()) { // PaperDragon
+             // Do not kick the player
+             return;
+         }

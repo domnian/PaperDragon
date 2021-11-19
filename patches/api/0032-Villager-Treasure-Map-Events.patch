@@ -1,0 +1,127 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 13 Dec 2016 00:40:35 -0500
+Subject: [PATCH] Villager Treasure Map Events
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+index 58da48b696ecccf1dd1c859f5b3db32569134a34..6ae7ca0c6e913ccc0d3421b4403a1c356cb65c22 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+@@ -23,5 +23,18 @@
+ 
+ package com.domnian.paperdragon.api;
+ 
++import org.bukkit.Location;
++import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++
+ public interface DAPI_Misc {
++
++    /**
++     *
++     * @param mapType
++     * @param loc
++     * @return
++     */
++    @NotNull
++    ItemStack createTreasureMap(@NotNull String mapType, int iconType, @NotNull Location loc);
+ }
+diff --git a/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java b/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..92658ea8e68def6425b69d802491b9bf5ad5f377
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java
+@@ -0,0 +1,92 @@
++/*
++ * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.domnian.paperdragon.events;
++
++import org.bukkit.event.Event;
++import org.bukkit.event.HandlerList;
++import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++public class CreateTreasureMapEvent extends Event {
++    private final String mapType;
++    private final int iconTypeId;
++    private int emeraldCost;
++    private int maxUses;
++    private ItemStack item;
++
++    public CreateTreasureMapEvent(@NotNull ItemStack originalItem, int originalCost, @NotNull String mapType, int iconTypeId) {
++        this.item = originalItem;
++        this.emeraldCost = originalCost;
++        this.mapType = mapType;
++        this.iconTypeId = iconTypeId;
++    }
++
++    @NotNull
++    public String getMapType() {
++        return mapType;
++    }
++
++    public int getIconTypeId() {
++        return iconTypeId;
++    }
++
++    @Nullable
++    public ItemStack getItem() {
++        return item;
++    }
++
++    public void setItem(@Nullable ItemStack item) {
++        this.item = item;
++    }
++
++    private static final HandlerList handlers = new HandlerList();
++
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++
++    public int getEmeraldCost() {
++        return emeraldCost;
++    }
++
++    public void setEmeraldCost(int cost) {
++        this.emeraldCost = cost;
++    }
++
++    public int getMaxUses() {
++        return maxUses;
++    }
++
++    public void setMaxUses(int uses) {
++        this.maxUses = uses;
++    }
++
++}

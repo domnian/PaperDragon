@@ -11,7 +11,7 @@ For example, lore can be used to identify a custom item, but then if a player re
 This new boolean allows you to verify if the item is the same ignoring the name field by temporarily nulling it during the check.
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index cd4643bb3adce1905c95d7c9d11ba5ee115fd032..d86609b999440fb5970b36387f72a48c321fd188 100644
+index 096293d43e97c71253ca5fe9c83662c8966e380a..f1f673b7adbfd28703c997a5550798b45ad00017 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -282,8 +282,36 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
@@ -51,11 +51,12 @@ index cd4643bb3adce1905c95d7c9d11ba5ee115fd032..d86609b999440fb5970b36387f72a48c
          if (stack == null) {
              return false;
          }
-@@ -291,7 +319,42 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -291,7 +319,43 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
              return true;
          }
          Material comparisonType = (this.getType().isLegacy()) ? Bukkit.getUnsafe().fromLegacy(this.getData(), true) : this.getType(); // This may be called from legacy item stacks, try to get the right material // Paper - use getType() instead of type field
 -        return comparisonType == stack.getType() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true);
++        //return comparisonType == stack.getType() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true);
 +        if (comparisonType != stack.getType() || (!skipDur && getDurability() != stack.getDurability())) {
 +            return false;
 +        }

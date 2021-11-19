@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 18 Aug 2018 22:03:33 -0400
+Subject: [PATCH] SpawnEggMeta#setSpawnedEntity API
+
+lets you copy an entities data into a spawn egg.
+Partial data is supported through a predicate, letting MC
+follow normal spawn behavior in the summon phase.
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
+index 4838390435178bf6e7af35efbb8022e26d7184cf..1b878364eb78846a81649a97735d883afc12f122 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
+@@ -198,6 +198,24 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
+         return this.spawnedType != null;
+     }
+ 
++    // Paper start
++    private static final String[] removeKeys = {
++        "UUID", "Pos", "PortalCooldown", "Paper.Origin", "Paper.FromMobSpawner", "Passengers", "Dimension"
++    };
++
++    @Override
++    public void setSpawnedEntity(org.bukkit.entity.Entity entity, java.util.function.Predicate<String> keyFilter) {
++        entityTag = ((org.bukkit.craftbukkit.entity.CraftEntity) entity).getHandle().saveWithoutId(new CompoundTag());
++        for (String removeKey : removeKeys) {
++            entityTag.remove(removeKey);
++        }
++        if (keyFilter != null) {
++            entityTag.tags.keySet().removeIf(keyFilter);
++        }
++        entityTag.putBoolean("Paper.CustomSpawnEgg", true);
++    }
++    // Paper end
++
+     @Override
+     public EntityType getSpawnedType() {
+         throw new UnsupportedOperationException("Must check item type to get spawned type");

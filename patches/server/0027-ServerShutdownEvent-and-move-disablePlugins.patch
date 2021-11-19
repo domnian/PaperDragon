@@ -5,7 +5,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f5dca11c3b188288d93aa5842a11d6217b49d63e..e6b948f9cefe6807431d3a1b3bf6ebb5f5ace723 100644
+index eeb9252e01af8ecbfb0da7c9a831debd0117edc6..a09b04839a30dfc8ec4d0ad264d5f87924077f5a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -241,6 +241,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -16,7 +16,7 @@ index f5dca11c3b188288d93aa5842a11d6217b49d63e..e6b948f9cefe6807431d3a1b3bf6ebb5
      private boolean pvp;
      private boolean allowFlight;
      @Nullable
-@@ -1042,8 +1043,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1050,8 +1051,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -28,7 +28,7 @@ index f5dca11c3b188288d93aa5842a11d6217b49d63e..e6b948f9cefe6807431d3a1b3bf6ebb5
          }
          // CraftBukkit end
          if (this.getConnection() != null) {
-@@ -1081,6 +1083,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1089,6 +1091,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  }
              }
          }
@@ -36,7 +36,7 @@ index f5dca11c3b188288d93aa5842a11d6217b49d63e..e6b948f9cefe6807431d3a1b3bf6ebb5
  
          if (this.snooper.isStarted()) {
              this.snooper.interrupt();
-@@ -1133,6 +1136,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1141,6 +1144,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          this.safeShutdown(flag, false);
      }
      public void safeShutdown(boolean flag, boolean isRestarting) {

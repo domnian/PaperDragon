@@ -1,0 +1,247 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Tue, 29 Dec 2020 01:31:22 -0600
+Subject: [PATCH] Add FakePlayer api for faking tablist users
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..1b44a3f93d3accf859284af1956e3004c5460cb4
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
+@@ -0,0 +1,20 @@
++package com.domnian.paperdragon.api;
++
++import com.destroystokyo.paper.profile.PlayerProfile;
++import net.kyori.adventure.text.Component;
++import org.bukkit.GameMode;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++import java.util.Set;
++import java.util.UUID;
++
++public interface DAPI_Server {
++
++    @Nullable
++    FakePlayer getFakePlayer(@NotNull UUID uuid);
++    @NotNull
++    FakePlayer createFakePlayer(@NotNull PlayerProfile profile, int ping, @NotNull GameMode gameMode, @NotNull Component playerListName) throws IllegalArgumentException;
++    @NotNull
++    Set<FakePlayer> getJoinedFakePlayers();
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+index e7abdc7480adb2b1d204c20368f6a3cd27fe7943..6ea5be42632c261beaeafbd2fff3ecd1da38fe01 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
++++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+@@ -36,6 +36,7 @@ public abstract class DragonAPI {
+     public static DAPI_Meta meta;
+     public static DAPI_Chat chat;
+     public static DAPI_Heads heads;
++    public static DAPI_Server server;
+ 
+     @NotNull
+     public static String stack() {
+diff --git a/src/main/java/com/domnian/paperdragon/api/FakePlayer.java b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..dd5706571687691f44117b6d7b7a40f985f102a8
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
+@@ -0,0 +1,48 @@
++package com.domnian.paperdragon.api;
++
++import com.destroystokyo.paper.profile.PlayerProfile;
++import net.kyori.adventure.text.Component;
++import org.bukkit.GameMode;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++import java.util.UUID;
++
++public interface FakePlayer {
++
++    @NotNull
++    PlayerProfile getProfile();
++
++    @NotNull
++    Component getPlayerListName();
++
++    int getPing();
++
++    @NotNull
++    GameMode getGameMode();
++
++    @Nullable
++    UUID getUniqueId();
++
++    void join();
++    void quit();
++
++    default void setPing(int ping) {
++        setPing(ping, true);
++    }
++    void setPing(int ping, boolean update);
++
++    default void setGameMode(@NotNull GameMode gameMode) {
++        setGameMode(gameMode, true);
++    }
++    void setGameMode(@NotNull GameMode gameMode, boolean update);
++
++    default void setPlayerListName(@NotNull Component playerListName) {
++        setPlayerListName(playerListName, true);
++    }
++    void setPlayerListName(@NotNull Component playerListName, boolean update);
++
++    void update();
++
++    boolean isJoined();
++}
+diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..272f4bc9fd729b3c7a67d1ea3d9e34d9c9bca3b5
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java
+@@ -0,0 +1,26 @@
++package com.domnian.paperdragon.events;
++
++import com.domnian.paperdragon.api.FakePlayer;
++import org.bukkit.event.Event;
++import org.jetbrains.annotations.NotNull;
++
++/**
++ * Represents a fakeplayer related event
++ */
++public abstract class FakePlayerEvent extends Event {
++    protected FakePlayer fakePlayer;
++
++    public FakePlayerEvent(@NotNull final FakePlayer who) {
++        fakePlayer = who;
++    }
++
++    /**
++     * Returns the fakeplayer involved in this event
++     *
++     * @return Player who is involved in this event
++     */
++    @NotNull
++    public final FakePlayer getFakePlayer() {
++        return fakePlayer;
++    }
++}
+diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..7d3fc6797ee9205332f3820514ce7a64e07603cd
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java
+@@ -0,0 +1,23 @@
++package com.domnian.paperdragon.events;
++
++import com.domnian.paperdragon.api.FakePlayer;
++import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
++
++public class FakePlayerJoinEvent extends FakePlayerEvent {
++    public FakePlayerJoinEvent(@NotNull FakePlayer who) {
++        super(who);
++    }
++
++    private static final HandlerList handlers = new HandlerList();
++
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++}
+diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834ec6c6d92
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java
+@@ -0,0 +1,23 @@
++package com.domnian.paperdragon.events;
++
++import com.domnian.paperdragon.api.FakePlayer;
++import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
++
++public class FakePlayerQuitEvent extends FakePlayerEvent {
++    public FakePlayerQuitEvent(@NotNull FakePlayer who) {
++        super(who);
++    }
++
++    private static final HandlerList handlers = new HandlerList();
++
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++}
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index bf423726b48544a4b78abfc7941286d0d194597a..544c74f14dac5d41e3c3b400d3eb646d174b46c2 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1,11 +1,13 @@
+ package org.bukkit.entity;
+ 
+ import java.net.InetSocketAddress;
++import java.util.Set; // PaperDragon
+ import java.util.UUID;
+ import com.destroystokyo.paper.ClientOption; // Paper
+ import com.destroystokyo.paper.Title; // Paper
+ import net.kyori.adventure.text.Component;
+ import com.destroystokyo.paper.profile.PlayerProfile; // Paper
++import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
+ import java.util.Date; // Paper
+ import org.bukkit.BanEntry; // Paper
+ import org.bukkit.BanList; // Paper
+@@ -1336,7 +1338,39 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+      *     player
+      */
+     public boolean canSee(@NotNull Player player);
+-
++    // PaperDragon start
++    /**
++     * Checks to see if a fake player has been hidden from this player
++     *
++     * @param fakePlayer FakePlayer to check
++     * @return True if the provided fakePlayer is not being hidden from this
++     *     player
++     */
++    boolean canSee(@NotNull FakePlayer fakePlayer);
++    /**
++     * Hides a fake player from this player
++     *
++     * @param plugin Plugin that wants to hide the fake player
++     * @param fakePlayer FakePlayer to hide
++     */
++    void hideFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer);
++    /**
++     * Allows this player to see a fake player that was previously hidden. If
++     * another another plugin had hidden the fake player too, then the player will
++     * remain hidden until the other plugin calls this method too.
++     *
++     * @param plugin Plugin that wants to show the fake player
++     * @param fakePlayer FakePlayer to show
++     */
++    void showFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer);
++    /**
++     * Gets all fake players hidden with {@link #hideFakePlayer(Plugin, FakePlayer)}.
++     *
++     * @return a Set with all hidden fake players
++     */
++    @NotNull
++    Set<FakePlayer> getHiddenFakePlayers();
++    // PaperDragon end
+     /**
+      * Checks to see if this player is currently flying or not.
+      *

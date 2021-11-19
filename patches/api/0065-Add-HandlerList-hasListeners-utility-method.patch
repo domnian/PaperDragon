@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sat, 20 Nov 2021 17:20:55 -0500
+Subject: [PATCH] Add HandlerList#hasListeners() utility method
+
+This allows for easily checking if there are any listeners registered for an event
+
+diff --git a/src/main/java/org/bukkit/event/HandlerList.java b/src/main/java/org/bukkit/event/HandlerList.java
+index ed78cca71f83b296d082d0af147ca8d622c7606a..02f94660c53d80205e81d811411518533a3ffcd3 100644
+--- a/src/main/java/org/bukkit/event/HandlerList.java
++++ b/src/main/java/org/bukkit/event/HandlerList.java
+@@ -197,6 +197,17 @@ public class HandlerList {
+         return handlers;
+     }
+ 
++    // PaperDragon start
++    /**
++     * Check whether this handler list has any registered listeners
++     *
++     * @return true if there are any registered listeners
++     */
++    public boolean hasListeners() {
++        return handlers.length > 0;
++    }
++    // PaperDragon end
++
+     /**
+      * Get a specific plugin's registered listeners associated with this
+      * handler list
