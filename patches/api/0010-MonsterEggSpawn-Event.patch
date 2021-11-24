@@ -6,10 +6,10 @@ Subject: [PATCH] MonsterEggSpawn Event
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..25e66e6eff1b9301e27f9169ab461b3b36984690
+index 0000000000000000000000000000000000000000..895ff6bc15228f4a5986b25ff5890046359bc76f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,67 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.HumanEntity;
@@ -25,7 +25,6 @@ index 0000000000000000000000000000000000000000..25e66e6eff1b9301e27f9169ab461b3b
 +public class MonsterEggSpawnEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
 +    private boolean canceled;
-+
 +
 +    private final Player player;
 +    private LivingEntity entity;
@@ -70,6 +69,10 @@ index 0000000000000000000000000000000000000000..25e66e6eff1b9301e27f9169ab461b3b
 +
 +    @NotNull
 +    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
 +
