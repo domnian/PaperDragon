@@ -7,4 +7,4 @@ pluginManagement {
 
 rootProject.name = "PaperDragon"
 
-include(":PaperDragon-API", "PaperDragon-Server")
+include("PaperDragon-API", "PaperDragon-Server")
