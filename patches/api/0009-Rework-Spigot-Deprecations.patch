@@ -49,7 +49,7 @@ index 07538e1b94921429ddb277c154e5d5c83d095b3e..9d4b4a8070eddcbc1ccce0c9c855ebf0
          /**
           * This represents the amount of damage being done, also known as the
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 8f00cb2e3bc9963e9657c1b2493e8b015a6664d0..9420e7c9c0320cd9ed65c942a0aa40f099b37555 100644
+index 8864124c4a6ba48523ff217a78b9bac676da592f..fd9e0cd2ed80252ffe76a5df12d32038fad2dfbc 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -156,19 +156,23 @@ public interface Inventory extends Iterable<ItemStack> {
@@ -61,8 +61,8 @@ index 8f00cb2e3bc9963e9657c1b2493e8b015a6664d0..9420e7c9c0320cd9ed65c942a0aa40f0
 +     * @return An array of ItemStacks from the inventory.
       */
 +    @Deprecated
-     public @org.checkerframework.checker.nullness.qual.Nullable ItemStack @org.checkerframework.checker.nullness.qual.NonNull [] getContents(); // Paper - make array elements nullable instead array
-     
+     public @Nullable ItemStack @NotNull [] getContents(); // Paper - make array elements nullable instead array
+ 
      /**
       * Completely replaces the inventory's contents. Removes all existing
       * contents and replaces it with the ItemStacks given in the array.

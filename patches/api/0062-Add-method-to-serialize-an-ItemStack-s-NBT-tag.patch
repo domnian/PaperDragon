@@ -4,27 +4,15 @@ Date: Sun, 27 Jun 2021 11:44:05 -0400
 Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
 
 
-diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-index 1b44a3f93d3accf859284af1956e3004c5460cb4..96b9aec4c1c7a486dfc60adc5f87615d04394cf1 100644
---- a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-+++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-@@ -1,8 +1,10 @@
- package com.domnian.paperdragon.api;
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+index fe23d1ae53230dd326f5ca5a80b8a84716401785..e5a22552ec06e924c65c1bb6090ab9f5c0684590 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
+@@ -58,4 +58,7 @@ public interface DAPI_Misc {
+      */
+     String getSkinHash(@NotNull Player player);
  
- import com.destroystokyo.paper.profile.PlayerProfile;
-+import com.google.gson.JsonElement;
- import net.kyori.adventure.text.Component;
- import org.bukkit.GameMode;
-+import org.bukkit.inventory.ItemStack;
- import org.jetbrains.annotations.NotNull;
- import org.jetbrains.annotations.Nullable;
- 
-@@ -17,4 +19,8 @@ public interface DAPI_Server {
-     FakePlayer createFakePlayer(@NotNull PlayerProfile profile, int ping, @NotNull GameMode gameMode, @NotNull Component playerListName) throws IllegalArgumentException;
-     @NotNull
-     Set<FakePlayer> getJoinedFakePlayers();
-+
 +    @NotNull
-+    String getSerializesItemTag(@NotNull ItemStack stack);
++    String getSerializedItemTag(@NotNull ItemStack stack);
 +
  }

@@ -1666,7 +1666,7 @@ index 5a4884db36d448c885e49c965ae329a0638dd628..0259f2b81a8ef5f2e24055a786645157
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 4f673e9123145dc78564dc3eef0edf75795dafc2..8263e019598a99d13a120556e6c28078093d8a05 100644
+index 1f8a51897d9de00f0004ab1de479198390483f7d..f676756dbb900e446f269ec81c9079e19981cf58 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1692,18 +1692,20 @@ index 4f673e9123145dc78564dc3eef0edf75795dafc2..8263e019598a99d13a120556e6c28078
      // Paper start
      /**
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 96cde879922c796f3ac8d14ee99d7b190ff67bd9..310e9f34ebaafc83571aadcd43312be2fe797d88 100644
+index 96cde879922c796f3ac8d14ee99d7b190ff67bd9..d73fb862201dfb0fcea5a5528c6f2f5194ae87c4 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
-@@ -230,4 +230,6 @@ public interface BlockState extends Metadatable {
+@@ -221,7 +221,7 @@ public interface BlockState extends Metadatable {
+      *         or 'virtual' (e.g. on an itemstack)
       */
-     boolean isCollidable();
-     // Paper end
-+
+     boolean isPlaced();
+-
 +    boolean isTileEntity(); // PaperDragon
- }
+     // Paper start
+     /**
+      * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index bafad5764cc3933fcd9602d37bd2e68424cbd575..5322b1fa4e7b1808637edacc1f1b839d70633f33 100644
+index bafad5764cc3933fcd9602d37bd2e68424cbd575..23c4b5f6aec9abc19b15f896c175c19437dd5e93 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1716,11 +1718,10 @@ index bafad5764cc3933fcd9602d37bd2e68424cbd575..5322b1fa4e7b1808637edacc1f1b839d
  import org.bukkit.Chunk; // Paper
  import org.bukkit.EntityEffect;
  import org.bukkit.Location;
-@@ -27,7 +30,12 @@ import org.jetbrains.annotations.Nullable;
-  * Represents a base entity in the world
+@@ -28,6 +31,12 @@ import org.jetbrains.annotations.Nullable;
   */
  public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity>, net.kyori.adventure.sound.Sound.Emitter { // Paper
--
+ 
 +    // PaperDragon start
 +    @NotNull
 +    PersistentMetaMap getPersistentMeta();
@@ -1731,7 +1732,7 @@ index bafad5764cc3933fcd9602d37bd2e68424cbd575..5322b1fa4e7b1808637edacc1f1b839d
       * Gets the entity's current position
       *
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 9420e7c9c0320cd9ed65c942a0aa40f099b37555..00a07f3739f6088d666a7d8d8d7f45ac063921e5 100644
+index fd9e0cd2ed80252ffe76a5df12d32038fad2dfbc..f4d47f6e836003191039840d169f9e08994120a2 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
