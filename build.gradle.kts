@@ -54,7 +54,7 @@ subprojects {
 }
 
 paperweight {
-    serverProject.set(project(":PaperDragon-Server"))
+    serverProject.set(project(":paperdragon-server"))
 
     remapRepo.set("https://maven.fabricmc.net/")
     decompileRepo.set("https://files.minecraftforge.net/maven/")
@@ -62,10 +62,10 @@ paperweight {
     usePaperUpstream(providers.gradleProperty("paperRef")) {
         withPaperPatcher {
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
-            apiOutputDir.set(layout.projectDirectory.dir("PaperDragon-API"))
+            apiOutputDir.set(layout.projectDirectory.dir("paperdragon-api"))
 
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
-            serverOutputDir.set(layout.projectDirectory.dir("PaperDragon-Server"))
+            serverOutputDir.set(layout.projectDirectory.dir("paperdragon-server"))
         }
     }
 }
