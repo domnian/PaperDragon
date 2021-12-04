@@ -63,10 +63,10 @@ index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7
 +
 +}
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index eb0aa2a2a9def0270341ee15d8a7a0629a67a823..90108569c7094b884318d08e495c0eb1d821d12b 100644
+index eb0aa2a2a9def0270341ee15d8a7a0629a67a823..84501dfad9a49bbe88e0e3c5df657f76be7c129e 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -2120,4 +2120,13 @@ public final class Bukkit {
+@@ -2120,4 +2120,14 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -75,16 +75,17 @@ index eb0aa2a2a9def0270341ee15d8a7a0629a67a823..90108569c7094b884318d08e495c0eb1
 +    /**
 +     * Get what proxy mode the server is operating in
 +     */
++    @NotNull
 +    public static com.domnian.paperdragon.ProxyMode getProxyMode() {
 +        return server.getProxyMode();
 +    }
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 967a4bc45de9fdf55d0f65ec7faf2556fb69a6f7..2cc12bfcdd7e32c73b5d8b47f279ab7804a74ddf 100644
+index 967a4bc45de9fdf55d0f65ec7faf2556fb69a6f7..c59ddb704977cf6d675eea0ace71b14146c39ce5 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1844,4 +1844,11 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1844,4 +1844,12 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
      @NotNull
      io.papermc.paper.datapack.DatapackManager getDatapackManager();
      // Paper end
@@ -93,6 +94,7 @@ index 967a4bc45de9fdf55d0f65ec7faf2556fb69a6f7..2cc12bfcdd7e32c73b5d8b47f279ab78
 +    /**
 +     * Get what proxy mode the server is operating in
 +     */
++    @NotNull
 +    com.domnian.paperdragon.ProxyMode getProxyMode();
 +    // PaperDragon end
  }

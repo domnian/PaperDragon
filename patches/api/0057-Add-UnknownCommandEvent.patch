@@ -6,46 +6,52 @@ Subject: [PATCH] Add UnknownCommandEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java b/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..1dd90bee2fe271a94efd0766c7047dbc2b06aebc
+index 0000000000000000000000000000000000000000..6e81766537fe825962c9490b36e19c7097cc24d7
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/UnknownCommandEvent.java
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,58 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.command.CommandSender;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.jetbrains.annotations.NotNull;
 +
 +public class UnknownCommandEvent extends Event implements Cancellable {
++    private static final HandlerList handlers = new HandlerList();
++
 +    private final CommandSender sender;
 +    private final String sentCommandLabel;
 +    private final String commandLine;
 +
-+    public UnknownCommandEvent(CommandSender sender, String sentCommandLabel, String commandLine) {
++    public UnknownCommandEvent(@NotNull CommandSender sender, @NotNull String sentCommandLabel, @NotNull String commandLine) {
 +        this.sender = sender;
 +        this.sentCommandLabel = sentCommandLabel;
 +        this.commandLine = commandLine;
 +    }
 +
++    @NotNull
 +    public CommandSender getSender() {
 +        return sender;
 +    }
 +
++    @NotNull
 +    public String getSentCommandLabel() {
 +        return sentCommandLabel;
 +    }
 +
++    @NotNull
 +    public String getCommandLine() {
 +        return commandLine;
 +    }
 +
-+    private static final HandlerList handlers = new HandlerList();
-+
++    @NotNull
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
