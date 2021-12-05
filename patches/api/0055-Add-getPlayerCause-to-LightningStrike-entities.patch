@@ -8,7 +8,7 @@ lightning if thrown during a thunderstorm.
 This returns if a player caused the lightning strike.
 
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 6f5b6901032eb03606c4566b24459a03baac0c73..809880d0a8fa5a81267de63126211971d01a18cc 100644
+index 6f5b6901032eb03606c4566b24459a03baac0c73..cf7cfca73a89e6243ebbf089835a38e084468e9f 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -1,6 +1,7 @@
@@ -19,11 +19,10 @@ index 6f5b6901032eb03606c4566b24459a03baac0c73..809880d0a8fa5a81267de63126211971
  
  /**
   * Represents an instance of a lightning strike. May or may not do damage.
-@@ -99,4 +100,14 @@ public interface LightningStrike extends Entity {
-      */
-     void setCausingPlayer(@org.jetbrains.annotations.Nullable Player causingPlayer);
-     // Paper end
-+
+@@ -85,6 +86,19 @@ public interface LightningStrike extends Entity {
+     @org.jetbrains.annotations.Nullable
+     Entity getCausingEntity();
+ 
 +    // PaperDragon start
 +    /**
 +     * Returns the player that caused this lightning using a trident or null if not applicable.
@@ -31,6 +30,12 @@ index 6f5b6901032eb03606c4566b24459a03baac0c73..809880d0a8fa5a81267de63126211971
 +     * @return the player that caused the strike or else null
 +     */
 +    @Nullable
-+    public Player getPlayerCause();
++    default Player getPlayerCause() {
++        Entity cause = getCausingEntity();
++        return cause instanceof Player ? (Player) cause : null;
++    }
 +    // PaperDragon end
- }
++
+     /**
+      * Updates the player that caused this lightning to be summoned into the world.
+      * By default, players that channel their {@link Trident} will be the cause of the respective lightning.
