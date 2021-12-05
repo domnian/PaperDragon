@@ -30,6 +30,18 @@ index 0000000000000000000000000000000000000000..1b44a3f93d3accf859284af1956e3004
 +    @NotNull
 +    Set<FakePlayer> getJoinedFakePlayers();
 +}
+diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+index e7abdc7480adb2b1d204c20368f6a3cd27fe7943..6ea5be42632c261beaeafbd2fff3ecd1da38fe01 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
++++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+@@ -36,6 +36,7 @@ public abstract class DragonAPI {
+     public static DAPI_Meta meta;
+     public static DAPI_Chat chat;
+     public static DAPI_Heads heads;
++    public static DAPI_Server server;
+ 
+     @NotNull
+     public static String stack() {
 diff --git a/src/main/java/com/domnian/paperdragon/api/FakePlayer.java b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..dd5706571687691f44117b6d7b7a40f985f102a8
