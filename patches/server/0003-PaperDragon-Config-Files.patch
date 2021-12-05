@@ -327,3 +327,22 @@ index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059
          @Override
          public void restart() {
              org.spigotmc.RestartCommand.restart();
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 450518903c0a10301b177d8dd7fe05aca3b8b37e..dc14b4b2fb5efba50ef5b2f3f8fdf5cfc3e20590 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -160,6 +160,14 @@ public class Main {
+                         .defaultsTo("Unknown Server")
+                         .describedAs("Name");
+                 // Paper end
++
++                // PaperDragon start
++                acceptsAll(asList("dragon", "dragon-settings"), "File for PaperDragon settings")
++                        .withRequiredArg()
++                        .ofType(File.class)
++                        .defaultsTo(new File("dragon.yml"))
++                        .describedAs("Yml File");
++                // PaperDragon end
+             }
+         };
+ 
