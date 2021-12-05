@@ -118,10 +118,10 @@ index 0000000000000000000000000000000000000000..6be220dffca034452747e5a713f001ae
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/network/FriendlyByteBuf.java b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-index e3b80334164ba48e83cca0b9a7f3a8ddf05dd598..9e0979a653566146ca93090f263faf43f1e27d30 100644
+index 896a4237f871d46cf39b0721e909c2cc3b5fc728..439d78b6473b39ebb0738b09b9171071328781b5 100644
 --- a/src/main/java/net/minecraft/network/FriendlyByteBuf.java
 +++ b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-@@ -501,6 +501,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -500,6 +500,7 @@ public class FriendlyByteBuf extends ByteBuf {
                  // Spigot end
                  nbttagcompound = stack.getTag();
                  // Paper start
@@ -129,7 +129,7 @@ index e3b80334164ba48e83cca0b9a7f3a8ddf05dd598..9e0979a653566146ca93090f263faf43
                  if (nbttagcompound != null && nbttagcompound.contains("SkullOwner", 10)) {
                      CompoundTag owner = nbttagcompound.getCompound("SkullOwner");
                      if (owner.hasUUID("Id")) {
-@@ -529,6 +530,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -528,6 +529,7 @@ public class FriendlyByteBuf extends ByteBuf {
              // CraftBukkit start
              if (itemstack.getTag() != null) {
                  // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
@@ -151,10 +151,10 @@ index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..ec9a03adbd3c8becd1104edff020cf76
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 7695a5ec88023720d873f81fc36f78ad60fb9589..ef5e23b3e0c1f89a8057aa0e3e84439d03ed06b6 100644
+index 8f2f516b1f473ce18a07e9f130b49b795dd6b46e..8162409d0ac92deda5580f13f2824623f3807930 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -71,6 +71,7 @@ import net.minecraft.core.Registry;
+@@ -69,6 +69,7 @@ import net.minecraft.core.Registry;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.nbt.NbtOps;
@@ -162,8 +162,8 @@ index 7695a5ec88023720d873f81fc36f78ad60fb9589..ef5e23b3e0c1f89a8057aa0e3e84439d
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.ComponentUtils;
  import net.minecraft.network.chat.HoverEvent;
-@@ -1231,8 +1232,26 @@ public final class ItemStack {
-         MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets((Component) ichatmutablecomponent);
+@@ -1233,8 +1234,26 @@ public final class ItemStack {
+         MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {
 +            // PaperDragon start

@@ -7,18 +7,18 @@ Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 474a4b299bfa1db22ab3b2376cd736e00d465486..17e0cfcd12a49e6133f5dc12524cdf17a4746c5f 100644
+index c61ee8eb0d79d9832533ca2d6e30d83f3372e376..c2e72761fd0ec5dd0ed4817eb376283bd5d715a7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1327,7 +1327,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1332,7 +1332,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      public void addDuringTeleport(Entity entity) {
          // CraftBukkit start
--        this.addEntity0(entity, CreatureSpawnEvent.SpawnReason.DEFAULT);
-+        this.addEntity0(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
+-        this.addDuringTeleport(entity, CreatureSpawnEvent.SpawnReason.DEFAULT);
++        this.addDuringTeleport(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.FORCE); // PaperDragon
      }
  
-     public void addEntityTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
+     public void addDuringTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 index 513fdcb79112107d221cc94b2983874f84df922f..0920a524c994bd29bb400b48b0a8c0d13e5338d5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java

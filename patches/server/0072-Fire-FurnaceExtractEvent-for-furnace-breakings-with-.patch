@@ -7,10 +7,10 @@ Subject: [PATCH] Fire FurnaceExtractEvent for furnace breakings with null
 temp
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index 1bb79768fe3be8a44a00e1f8686f95eed0dc2cf2..45809da5677ace3f86ba3be814c0429e0c998528 100644
+index fb15ece736dde16066818216749fb2efba0b3b21..5d0cb0790d2f794da129ec3b2d0ed338f8d1cdae 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-@@ -618,14 +618,14 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -617,14 +617,14 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
  
              worldserver.getRecipeManager().byKey((ResourceLocation) entry.getKey()).ifPresent((irecipe) -> {
                  list.add(irecipe);
@@ -23,11 +23,11 @@ index 1bb79768fe3be8a44a00e1f8686f95eed0dc2cf2..45809da5677ace3f86ba3be814c0429e
      }
  
 -    private static void createExperience(ServerLevel worldserver, Vec3 vec3d, int i, float f, BlockPos blockposition, net.minecraft.world.entity.player.Player entityhuman, ItemStack itemstack, int amount) { // CraftBukkit
-+    private static void createExperience(ServerLevel worldserver, Vec3 vec3d, int i, float f, BlockPos blockposition, @Nullable net.minecraft.world.entity.player.Player entityhuman, @Nullable ItemStack itemstack, int amount, ItemStack result) { // CraftBukkit // PaperDragon - add result item
++    private static void createExperience(ServerLevel worldserver, Vec3 vec3d, int i, float f, BlockPos blockposition, net.minecraft.world.entity.player.Player entityhuman, ItemStack itemstack, int amount, ItemStack result) { // CraftBukkit // PaperDragon - add result item
          int j = Mth.floor((float) i * f);
          float f1 = Mth.frac((float) i * f);
  
-@@ -635,8 +635,8 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -634,8 +634,8 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
  
          // CraftBukkit start - fire FurnaceExtractEvent / BlockExpEvent
          BlockExpEvent event;

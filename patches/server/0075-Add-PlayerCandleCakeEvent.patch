@@ -5,22 +5,14 @@ Subject: [PATCH] Add PlayerCandleCakeEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/CakeBlock.java b/src/main/java/net/minecraft/world/level/block/CakeBlock.java
-index d2c78a0daaabc35f72a746ad0d60472383759b6f..d0e9939f0f1209e5826cb2f6d70c2fb079bd3cbb 100644
+index 1a87a1553bb94e33c86b9d8947cf39fd193e7859..5f1f490a2f7cea17a21f5afca1b2a1990a077fce 100644
 --- a/src/main/java/net/minecraft/world/level/block/CakeBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/CakeBlock.java
-@@ -2,6 +2,7 @@ package net.minecraft.world.level.block;
- 
- import net.minecraft.core.BlockPos;
- import net.minecraft.core.Direction;
-+import net.minecraft.server.MCUtil;
- import net.minecraft.sounds.SoundEvents;
- import net.minecraft.sounds.SoundSource;
- import net.minecraft.stats.Stats;
-@@ -56,6 +57,7 @@ public class CakeBlock extends Block {
+@@ -55,6 +55,7 @@ public class CakeBlock extends Block {
              Block block = Block.byItem(item);
  
              if (block instanceof CandleBlock) {
-+                new com.domnian.paperdragon.events.PlayerCandleCakeEvent((org.bukkit.entity.Player) player.getBukkitEntity(), MCUtil.toLocation(world, pos), itemstack.getBukkitStack()).callEvent(); // PaperDragon
++                new com.domnian.paperdragon.events.PlayerCandleCakeEvent((org.bukkit.entity.Player) player.getBukkitEntity(), net.minecraft.server.MCUtil.toLocation(world, pos), itemstack.getBukkitStack()).callEvent(); // PaperDragon
                  if (!player.isCreative()) {
                      itemstack.shrink(1);
                  }

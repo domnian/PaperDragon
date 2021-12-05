@@ -14,10 +14,10 @@ But we may want to store counting data by chunk, but also by Residence, and cach
 Objects represented by an Identifier, should be able to use them as their equal/hashcodes.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 796d558d57c1fe86772be966045dcd2ee6f463d8..fa065b21181354e57d6d55f0f5e0b9b74ef96f79 100644
+index 63404db06918a46eb2d6affad3a816194b90a5ee..d033c98f9750b372d7eec79d3a3af793e1fea1f6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -73,6 +73,7 @@ public class CraftChunk implements Chunk {
+@@ -74,6 +74,7 @@ public class CraftChunk implements Chunk {
          this.worldServer = (ServerLevel) this.getHandle().level;
          this.x = this.getHandle().getPos().x;
          this.z = this.getHandle().getPos().z;
@@ -25,7 +25,7 @@ index 796d558d57c1fe86772be966045dcd2ee6f463d8..fa065b21181354e57d6d55f0f5e0b9b7
      }
  
      public CraftChunk(ServerLevel worldServer, int x, int z) {
-@@ -80,6 +81,7 @@ public class CraftChunk implements Chunk {
+@@ -81,6 +82,7 @@ public class CraftChunk implements Chunk {
          this.worldServer = worldServer;
          this.x = x;
          this.z = z;
@@ -33,7 +33,7 @@ index 796d558d57c1fe86772be966045dcd2ee6f463d8..fa065b21181354e57d6d55f0f5e0b9b7
      }
  
      @Override
-@@ -381,4 +383,47 @@ public class CraftChunk implements Chunk {
+@@ -375,4 +377,47 @@ public class CraftChunk implements Chunk {
      static {
          Arrays.fill(emptyLight, (byte) 0xFF);
      }

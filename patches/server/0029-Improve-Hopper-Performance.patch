@@ -6,24 +6,24 @@ Subject: [PATCH] Improve Hopper Performance
 Only do an item "suck in" action once per second
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 597c6be66a83956a4ad8513ecbbddde057e0475d..96a4ba70eaef203263813ce78d17039fce7b4c6f 100644
+index fdbf858ebaae8157a4cefaaa3a96c39fce737e20..b7ea64d36a55c4f8800442c1ee1521e1d5e4f26f 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -23,11 +23,13 @@ import net.minecraft.world.entity.Entity;
+@@ -19,11 +19,13 @@ import net.minecraft.world.entity.Entity;
  import net.minecraft.world.entity.EntityType;
  import net.minecraft.world.entity.MoverType;
  import net.minecraft.world.entity.player.Player;
-+import net.minecraft.world.entity.vehicle.MinecartHopper;
++import net.minecraft.world.entity.vehicle.MinecartHopper; // PaperDragon
  import net.minecraft.world.item.Item;
  import net.minecraft.world.item.ItemStack;
  import net.minecraft.world.item.Items;
  import net.minecraft.world.level.Level;
  import net.minecraft.world.level.gameevent.GameEvent;
-+import net.minecraft.world.phys.AABB;
++import net.minecraft.world.phys.AABB; // PaperDragon
  import net.minecraft.world.phys.Vec3;
  // CraftBukkit start
  import net.minecraft.server.MinecraftServer;
-@@ -186,10 +188,23 @@ public class ItemEntity extends Entity {
+@@ -185,10 +187,23 @@ public class ItemEntity extends Entity {
                  // CraftBukkit end
                  this.discard();
              }
@@ -47,7 +47,7 @@ index 597c6be66a83956a4ad8513ecbbddde057e0475d..96a4ba70eaef203263813ce78d17039f
      // Spigot start - copied from above
      @Override
      public void inactiveTick() {
-@@ -210,6 +225,7 @@ public class ItemEntity extends Entity {
+@@ -209,6 +224,7 @@ public class ItemEntity extends Entity {
              // CraftBukkit end
              this.discard();
          }
@@ -56,7 +56,7 @@ index 597c6be66a83956a4ad8513ecbbddde057e0475d..96a4ba70eaef203263813ce78d17039f
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index c738cb0433ea4a86d82372bf66e29c01f991d2c6..7f2f8dfebfdea312b4599ac86d40f9fc86c3af91 100644
+index 449d2e7b18608ca36282f1a29e69457fc525307e..dbe1ce0557c04a4754aefb170bfa0cf11c25c643 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -22,6 +22,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
@@ -67,7 +67,7 @@ index c738cb0433ea4a86d82372bf66e29c01f991d2c6..7f2f8dfebfdea312b4599ac86d40f9fc
  
      public MinecartHopper(EntityType<? extends MinecartHopper> type, Level world) {
          super(type, world);
-@@ -160,4 +161,11 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
+@@ -153,4 +154,11 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
      public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
          return new HopperMenu(syncId, playerInventory, this);
      }
@@ -80,11 +80,11 @@ index c738cb0433ea4a86d82372bf66e29c01f991d2c6..7f2f8dfebfdea312b4599ac86d40f9fc
 +    // PaperDragon stop
  }
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/Hopper.java b/src/main/java/net/minecraft/world/level/block/entity/Hopper.java
-index 71dd26ca6626631b94d53818cd06b93f61485369..e84509a9540465e5a2405353eea532eaae16edee 100644
+index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8ead0dcb9f 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/Hopper.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/Hopper.java
-@@ -17,6 +17,7 @@ public interface Hopper extends Container {
-     net.minecraft.world.level.Level getLevel(); // Paper
+@@ -15,6 +15,7 @@ public interface Hopper extends Container {
+     }
  
      default net.minecraft.core.BlockPos getBlockPosition() { return new net.minecraft.core.BlockPos(getLevelX(), getLevelY(), getLevelZ()); } // Paper
 +    long getAndIncrementAttemptCounter(); // PaperDragon
@@ -92,18 +92,18 @@ index 71dd26ca6626631b94d53818cd06b93f61485369..e84509a9540465e5a2405353eea532ea
      double getLevelX();
  
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 1903813b051d1d59629b071f795ddd800b74f504..a0b8df1c4abd3285c148de835539f6e54f54a021 100644
+index 3e6c058313ee6e541d04d7e672ce94c5e021332a..87350180b4ebe3b9655061389faeb8ec3cc2d609 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.TranslatableComponent;
-+import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.MinecraftServer; // PaperDragon
  import net.minecraft.world.CompoundContainer;
  import net.minecraft.world.Container;
  import net.minecraft.world.ContainerHelper;
-@@ -119,6 +120,21 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -118,6 +119,21 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          return ContainerHelper.removeItem(this.getItems(), slot, amount);
      }
  
@@ -113,7 +113,7 @@ index 1903813b051d1d59629b071f795ddd800b74f504..a0b8df1c4abd3285c148de835539f6e5
 +    public long getAndIncrementAttemptCounter() {
 +        return tickAttempts++;
 +    }
-+    private static boolean shouldSuckin(Hopper hopper) {
++    private static boolean shouldSuckIn(Hopper hopper) {
 +        if (hopper instanceof MinecartHopper && ((MinecartHopper) hopper).pickupImmunity > MinecraftServer.currentTick) {
 +            return true;
 +        }
@@ -125,16 +125,16 @@ index 1903813b051d1d59629b071f795ddd800b74f504..a0b8df1c4abd3285c148de835539f6e5
      @Override
      public void setItem(int slot, ItemStack stack) {
          this.unpackLootTable((Player) null);
-@@ -473,7 +489,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -471,7 +487,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                  }
                  // Paper end
              });
 -        } else {
-+        } else if (shouldSuckin(hopper)) { // PaperDragon
++        } else if (shouldSuckIn(hopper)) { // PaperDragon
              Iterator iterator = HopperBlockEntity.getItemsAtAndAbove(world, hopper).iterator();
  
              ItemEntity entityitem;
-@@ -488,6 +504,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -486,6 +502,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
              return true;
          }

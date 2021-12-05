@@ -5,10 +5,10 @@ Subject: [PATCH] SnowmanThrowSnowballEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java b/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
-index 8c2f447d0d307df35d84b4907000023eb82ac6c2..9e356f4bc9aef44f6e30ec08aa64fbb86cb4fcd1 100644
+index dbc0ebf7e1d7ae7c89bafad19b0d9f209674b2c9..bc98120c7815f38e9e998e8a07e6c0e82494e232 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
-@@ -136,10 +136,27 @@ public class SnowGolem extends AbstractGolem implements Shearable, RangedAttackM
+@@ -139,10 +139,27 @@ public class SnowGolem extends AbstractGolem implements Shearable, RangedAttackM
          double d4 = Math.sqrt(d1 * d1 + d3 * d3) * 0.20000000298023224D;
  
          entitysnowball.shoot(d1, d2 + d4, d3, 1.6F, 12.0F);

@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index d7cd81dc2e2debe4a9ca93f20cd2a507b12aa760..a10ef17882d3f9812bf214d344ecad957d5c8a34 100644
+index 9b64ae0ca95333e48b06128d8b52cfab5d159592..cd54b150df46e80dafd73ee50c0cef5ba0e113b0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1397,6 +1397,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1402,6 +1402,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -18,30 +18,30 @@ index d7cd81dc2e2debe4a9ca93f20cd2a507b12aa760..a10ef17882d3f9812bf214d344ecad95
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 1711f576b334bc02eb0b7e88a7160d76163b6060..597c6be66a83956a4ad8513ecbbddde057e0475d 100644
+index 8d10bea6c29cb12485b6a5cbc4b48c4ab09b9d57..fdbf858ebaae8157a4cefaaa3a96c39fce737e20 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -47,6 +47,7 @@ public class ItemEntity extends Entity {
+@@ -46,6 +46,7 @@ public class ItemEntity extends Entity {
      private static final int INFINITE_LIFETIME = -32768;
      public int age;
      public boolean canDespawn = true; // PaperDragon
 +    public BlockPos droppedPosition; // PaperDragon
      public int pickupDelay;
      private int health;
-     private UUID thrower;
+     @Nullable
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 8c30e28b97ac7e8b54322c903e0b75ee8135620b..daf0e2300d7516a6dccfb779f46c6d26663c1277 100644
+index ab5b9f00123e2ede2931ffc520684e482aac49b4..3c96d96585ef92c285d138cdb87e63a039b6086f 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -23,6 +23,7 @@ import net.minecraft.core.Vec3i;
+@@ -21,6 +21,7 @@ import net.minecraft.core.Registry;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.MutableComponent;
  import net.minecraft.network.chat.TranslatableComponent;
-+import net.minecraft.server.MCUtil;
++import net.minecraft.server.MCUtil; // PaperDragon
  import net.minecraft.server.level.ServerLevel;
  import net.minecraft.stats.Stats;
  import net.minecraft.tags.BlockTags;
-@@ -369,7 +370,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -367,7 +368,7 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack);
@@ -50,7 +50,7 @@ index 8c30e28b97ac7e8b54322c903e0b75ee8135620b..daf0e2300d7516a6dccfb779f46c6d26
      }
  
      public static void popResourceFromFace(Level world, BlockPos pos, Direction direction, ItemStack stack) {
-@@ -389,18 +390,20 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -387,18 +388,20 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack, d3, d4, d5);
@@ -74,7 +74,7 @@ index 8c30e28b97ac7e8b54322c903e0b75ee8135620b..daf0e2300d7516a6dccfb779f46c6d26
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index b491b918cd2b5b70d598a8d36b464b4e22c1a16a..db6a7e00822d4218ab119cd13c0f12de45a8eb48 100644
+index 0920a524c994bd29bb400b48b0a8c0d13e5338d5..f9a5f24b32b3f6e97d9934e7c277ecb5d2d3cf15 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -405,6 +405,16 @@ public class CraftEventFactory {

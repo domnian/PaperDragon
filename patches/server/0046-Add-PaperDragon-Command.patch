@@ -5,10 +5,10 @@ Subject: [PATCH] Add PaperDragon Command
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 2f7bc8187f74099841a6572d35541bad8f60c5d9..e1ad836f928a1f337b461eda92d655556e030822 100644
+index 5f05a7cf4a6ec2fc0c8f29b9b1de78269edbaf4a..86258b285cb8d39961a130618f1a9fed54dac889 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-@@ -47,6 +47,7 @@ public class DragonConfig {
+@@ -50,6 +50,7 @@ public class DragonConfig {
          config.options().copyDefaults(true);
  
          commands = new HashMap<>();
@@ -18,10 +18,10 @@ index 2f7bc8187f74099841a6572d35541bad8f60c5d9..e1ad836f928a1f337b461eda92d65555
          set("config-version", 1);
 diff --git a/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d704f68118e1fe2e2c4b992c154960e68d4b5281
+index 0000000000000000000000000000000000000000..c92bc17f973f4e004e8ae1424c83c1b1069ae0d7
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,32 @@
 +package com.domnian.paperdragon;
 +
 +import org.bukkit.ChatColor;
@@ -47,14 +47,8 @@ index 0000000000000000000000000000000000000000..d704f68118e1fe2e2c4b992c154960e6
 +        }
 +
 +        switch (args[0]) {
-+            case "metrics":
-+            case "stats": {
-+                sender.sendMessage(ChatColor.GREEN + "PaperDragon Metrics: " + ChatColor.AQUA + ChatColor.UNDERLINE + "https://bstats.org/plugin/server-implementation/PaperDragon");
-+                break;
-+            }
-+            default: {
-+                sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-+            }
++            case "metrics", "stats" -> sender.sendMessage(ChatColor.GREEN + "PaperDragon Metrics: " + ChatColor.AQUA + ChatColor.UNDERLINE + "https://bstats.org/plugin/server-implementation/PaperDragon");
++            default -> sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
 +        }
 +
 +        return true;

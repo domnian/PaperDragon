@@ -6,10 +6,10 @@ Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
-index fc996199616156d04d6ae06ddc3da8d2c159c771..35cdaf2a1b51469c2f424fbf226a9fd45a2fbec1 100644
+index 96b6e914441ee1faa059aa5ddcf77ffb74e76ae9..023b333382e291daf40a9be9145a3b6ae12b2b55 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
-@@ -230,6 +230,14 @@ public class ConduitBlockEntity extends BlockEntity {
+@@ -228,6 +228,14 @@ public class ConduitBlockEntity extends BlockEntity {
                  return entityliving1 instanceof Enemy && entityliving1.isInWaterOrRain();
              });
  
@@ -24,7 +24,7 @@ index fc996199616156d04d6ae06ddc3da8d2c159c771..35cdaf2a1b51469c2f424fbf226a9fd4
              if (!list1.isEmpty()) {
                  blockEntity.destroyTarget = (LivingEntity) list1.get(world.random.nextInt(list1.size()));
              }
-@@ -242,7 +250,7 @@ public class ConduitBlockEntity extends BlockEntity {
+@@ -240,7 +248,7 @@ public class ConduitBlockEntity extends BlockEntity {
              CraftEventFactory.blockDamage = CraftBlock.at(world, pos);
              if (blockEntity.destroyTarget.hurt(DamageSource.MAGIC, 4.0F)) {
                  world.playSound((Player) null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);

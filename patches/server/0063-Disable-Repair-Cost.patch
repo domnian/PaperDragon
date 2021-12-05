@@ -6,18 +6,18 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 13ab736f831d73168a909bce493c16d3716f3684..653051d4e3d2c68686234a546e9427445cb10718 100644
+index 0a947451349f94d2f9851fa6ae592f987ab87709..a298c3106a3b97fe75d81332c42a5daa11bc354d 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -261,6 +261,7 @@ public final class ItemStack {
- 
+@@ -263,6 +263,7 @@ public final class ItemStack {
+         processEnchantOrder(this.tag); // Paper
          if (this.getItem().canBeDepleted()) {
              this.setDamageValue(this.getDamageValue());
 +            if (this.tag != null && this.tag.contains("RepairCost")) this.tag.remove("RepairCost"); // PaperDragon
          }
  
      }
-@@ -1157,10 +1158,12 @@ public final class ItemStack {
+@@ -1159,10 +1160,12 @@ public final class ItemStack {
      }
  
      public int getBaseRepairCost() {
@@ -31,10 +31,10 @@ index 13ab736f831d73168a909bce493c16d3716f3684..653051d4e3d2c68686234a546e942744
          if (repairCost == 0) {
              this.removeTagKey("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 5e2431f24ccb361dd198bb48acf65d7b35bc6f5c..d9f8e0d12c8ce2be07d17d0aa494e4568b5652cc 100644
+index ff8930a60876b3a092543d43b2aa67e6e2db8832..b13b6fd913b729762c5aae4a939e76a0a8afaf05 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -393,7 +393,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -395,7 +395,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          this.enchantments = CraftMetaItem.buildEnchantments(tag, CraftMetaItem.ENCHANTMENTS);
          this.attributeModifiers = CraftMetaItem.buildModifiers(tag, CraftMetaItem.ATTRIBUTES);
  

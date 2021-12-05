@@ -5,10 +5,10 @@ Subject: [PATCH] Convert EntityTag attributes on creature spawn
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 04971f0a726e2c43b06c524d9749f7c767a52020..dc43d8751c6aad0a83df2f412b1f9ecf0f941571 100644
+index a057f5fd3e3addcb63e9793dcd388d5a17882fe0..81fcd013dffb8b6327b55b91511ca914d8592948 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
-@@ -366,6 +366,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
+@@ -365,6 +365,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
              }
          }
          // Paper end
@@ -16,7 +16,7 @@ index 04971f0a726e2c43b06c524d9749f7c767a52020..dc43d8751c6aad0a83df2f412b1f9ecf
          T t0 = this.create(worldserver, nbttagcompound, ichatbasecomponent, entityhuman, blockposition, enummobspawn, flag, flag1);
          // PaperDragon start - if false the spawn was cancelled, add new event
          if ((spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || spawnReason == CreatureSpawnEvent.SpawnReason.DISPENSE_EGG) && itemstack != null && t0 != null) {
-@@ -391,6 +392,33 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
+@@ -390,6 +391,33 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
          return t0;
      }
  
@@ -49,4 +49,4 @@ index 04971f0a726e2c43b06c524d9749f7c767a52020..dc43d8751c6aad0a83df2f412b1f9ecf
 +    // PaperDragon end
      @Nullable
      public T create(ServerLevel world, @Nullable CompoundTag itemNbt, @Nullable Component name, @Nullable Player player, BlockPos pos, MobSpawnType spawnReason, boolean alignPosition, boolean invertY) {
-         T t0 = this.create((Level) world);
+         T t0 = this.create(world);

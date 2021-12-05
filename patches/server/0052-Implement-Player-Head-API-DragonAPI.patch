@@ -6,7 +6,7 @@ Subject: [PATCH] Implement Player Head API (DragonAPI)
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7532519daa63ba084b364dc3c56ba2ab70eb62a4
+index 0000000000000000000000000000000000000000..0eebeb6761882b695233f3f43d253ed27da17363
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 @@ -0,0 +1,83 @@
@@ -78,8 +78,8 @@ index 0000000000000000000000000000000000000000..7532519daa63ba084b364dc3c56ba2ab
 +            ListTag textures = new ListTag();
 +            owner.putUUID("Id", UUID.randomUUID());
 +            textData.putString("Value", getTextureData(url));
-+            textures.add(textures.size(), textData);
-+            props.put("textures", (net.minecraft.nbt.Tag) textures);
++            textures.add(0, textData);
++            props.put("textures", textures);
 +            owner.put("Properties", props);
 +            tag.put("SkullOwner", owner);
 +            skull.setTag(tag);

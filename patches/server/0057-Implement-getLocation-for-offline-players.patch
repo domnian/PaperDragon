@@ -5,10 +5,10 @@ Subject: [PATCH] Implement getLocation() for offline players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 2ba2ae970c1872a6306f20558a13f523e3a33ffd..bfa48aa84873574f9c641a5e40a80dda09e818dc 100644
+index e6d679a47f71223eedf8a07436d5349311abe650..bc0a954108b7c4257b14614677bd3746a97fc5f8 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2179,6 +2179,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -2085,6 +2085,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
                  nbt.putBoolean("Paper.FromNetherPortal", true);
              }
              // Paper end
@@ -17,18 +17,27 @@ index 2ba2ae970c1872a6306f20558a13f523e3a33ffd..bfa48aa84873574f9c641a5e40a80dda
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index b20bfe5ab165bf86985e5ff2f93f415d9710e0e4..1cd06a7b3d6d690ecf5057a2034cc2dcf6bff8c6 100644
+index 88bc0807e8bf66a65422f85f1112336334eb3de2..76ed77f71c2c008a8dc2045ee52f8c5661bce0cd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -525,4 +525,31 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -23,6 +23,7 @@ import org.bukkit.entity.EntityType;
+ import org.bukkit.entity.Player;
+ import org.bukkit.metadata.MetadataValue;
+ import org.bukkit.plugin.Plugin;
++import org.jetbrains.annotations.NotNull;
+ 
+ @SerializableAs("Player")
+ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializable {
+@@ -525,4 +526,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
              manager.save();
          }
      }
 +
 +    // PaperDragon start
++    @NotNull
 +    @Override
 +    public Location getLocation() {
-+        if (isOnline()) return getPlayer().getLocation();
++        if (this.getPlayer() != null) return getPlayer().getLocation();
 +        CompoundTag data = getData();
 +        net.minecraft.nbt.ListTag pos = data.getList("Pos", 6); // 6 = NBTTagDouble
 +        net.minecraft.nbt.ListTag rot = data.getList("Rotation", 5); // 5 = NBTTagFloat

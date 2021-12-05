@@ -5,7 +5,7 @@ Subject: [PATCH] Implement method to get player skin hash
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 204e4b0be7f6ae2d4f7acf28e39b33748d5b4db2..77b514e6bc0a945701cc3ee9e7905395555474b7 100644
+index 4f99b40ea3c6a1ab2a8dac0c2119074fffde2055..8d9f32f0a4a8c3168ca6f0189373cd4720e50b47 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -24,6 +24,9 @@
@@ -33,10 +33,11 @@ index 204e4b0be7f6ae2d4f7acf28e39b33748d5b4db2..77b514e6bc0a945701cc3ee9e7905395
  
  public class CraftDAPI_Misc implements DAPI_Misc {
  
-@@ -113,4 +120,17 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+@@ -109,4 +116,18 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+         }
          return null;
      }
- 
++
 +    @Override
 +    public String getSkinHash(@NotNull Player player) {
 +        if (!player.getPlayerProfile().hasTextures()) return null;

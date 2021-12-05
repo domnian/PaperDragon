@@ -6,13 +6,13 @@ Subject: [PATCH] AchievementBroadcastEvent
 Used to control who sees achievement message
 
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index 7d6dc0a8ee35274052b122bbc446bc54750de0a6..5cc2163c68b86a5017243a7cd3ee389a14204928 100644
+index f7959fe8d5247504dd79a18010470d98781c7cfe..5f55931fa628bd2e5541fc1cf582e71608544555 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -1,5 +1,6 @@
  package net.minecraft.server;
  
-+import com.domnian.paperdragon.events.AdvancementBroadcastEvent;
++import com.domnian.paperdragon.events.AdvancementBroadcastEvent; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.collect.Lists;
  import com.google.common.collect.Maps;

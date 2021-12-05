@@ -43,7 +43,7 @@ index 0000000000000000000000000000000000000000..e352eb1ab8b0c31fd192e8dc2b9d4f9f
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index d41851f9119c334cae3fc2c433d6450a3eed9096..1903813b051d1d59629b071f795ddd800b74f504 100644
+index a19642740f42ee8c683ed7a86f6edd2bc887b6dd..3e6c058313ee6e541d04d7e672ce94c5e021332a 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -5,6 +5,8 @@ import java.util.List;
@@ -55,7 +55,7 @@ index d41851f9119c334cae3fc2c433d6450a3eed9096..1903813b051d1d59629b071f795ddd80
  import net.minecraft.core.BlockPos;
  import net.minecraft.core.Direction;
  import net.minecraft.core.NonNullList;
-@@ -352,6 +354,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -350,6 +352,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          } else {
              Direction enumdirection = ((Direction) iblockdata.getValue(HopperBlock.FACING)).getOpposite();
  
@@ -63,17 +63,17 @@ index d41851f9119c334cae3fc2c433d6450a3eed9096..1903813b051d1d59629b071f795ddd80
              if (HopperBlockEntity.isFullContainer(iinventory1, enumdirection)) {
                  return false;
              } else {
-@@ -456,8 +459,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -454,8 +457,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              Direction enumdirection = Direction.DOWN;
  
              // Paper start - optimize hoppers and remove streams
 +            // PaperDragon start
 +            if (HopperBlockEntity.isEmptyContainer(iinventory, enumdirection)) { return false; }
-+            if (HopperEvents.drain((hopper.getLevel()).getWorld(), new org.bukkit.craftbukkit.inventory.CraftInventory(hopper), hopper.getLocation().getX(), hopper.getLocation().getY(), hopper.getLocation().getZ())) { return false; }
++            if (HopperEvents.drain((world).getWorld(), new org.bukkit.craftbukkit.inventory.CraftInventory(hopper), hopper.getLocation().getX(), hopper.getLocation().getY(), hopper.getLocation().getZ())) { return false; }
              skipPullModeEventFire = skipHopperEvents;
 -            return !HopperBlockEntity.isEmptyContainer(iinventory, enumdirection) && anyMatch(iinventory, enumdirection, (item, i) -> {
 +            return anyMatch(iinventory, enumdirection, (item, i) -> {
 +                // PaperDragon end
                  // Logic copied from below to avoid extra getItem calls
                  if (!item.isEmpty() && canTakeItemFromContainer(iinventory, item, i, enumdirection)) {
-                     return hopperPull(hopper, iinventory, item, i);
+                     return hopperPull(world, hopper, iinventory, item, i);

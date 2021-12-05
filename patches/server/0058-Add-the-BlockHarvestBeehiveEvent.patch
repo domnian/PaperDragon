@@ -5,11 +5,11 @@ Subject: [PATCH] Add the BlockHarvestBeehiveEvent
 
 
 diff --git a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-index 915c68888963b879bf74dc67cc6ffb174228f9e4..b515b194b4231f49f029b992ce3a12c86c915443 100644
+index 59db245fe11384282af84ec1d5be08ab0e9484ca..11cc97e8903f0f561dd1a1a87b169cca8e4172a3 100644
 --- a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
 +++ b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-@@ -1056,6 +1056,11 @@ public interface DispenseItemBehavior {
-                 if (iblockdata.is((Tag) BlockTags.BEEHIVES, (blockbase_blockdata) -> {
+@@ -1053,6 +1053,11 @@ public interface DispenseItemBehavior {
+                 if (iblockdata.is(BlockTags.BEEHIVES, (blockbase_blockdata) -> {
                      return blockbase_blockdata.hasProperty(BeehiveBlock.HONEY_LEVEL);
                  }) && (Integer) iblockdata.getValue(BeehiveBlock.HONEY_LEVEL) >= 5) {
 +                    // PaperDragon start
@@ -17,6 +17,6 @@ index 915c68888963b879bf74dc67cc6ffb174228f9e4..b515b194b4231f49f029b992ce3a12c8
 +                        return stack;
 +                    }
 +                    // PaperDragon end
-                     ((BeehiveBlock) iblockdata.getBlock()).releaseBeesAndResetHoneyLevel((Level) worldserver, iblockdata, blockposition, (Player) null, BeehiveBlockEntity.BeeReleaseStatus.BEE_RELEASED);
+                     ((BeehiveBlock) iblockdata.getBlock()).releaseBeesAndResetHoneyLevel(worldserver, iblockdata, blockposition, (Player) null, BeehiveBlockEntity.BeeReleaseStatus.BEE_RELEASED);
                      this.setSuccess(true);
                      return this.takeLiquid(pointer, stack, new ItemStack(Items.HONEY_BOTTLE));

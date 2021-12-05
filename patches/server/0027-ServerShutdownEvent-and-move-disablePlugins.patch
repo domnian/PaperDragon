@@ -5,10 +5,10 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index eeb9252e01af8ecbfb0da7c9a831debd0117edc6..a09b04839a30dfc8ec4d0ad264d5f87924077f5a 100644
+index b3e8954046378975ad59ae2fd6bbfdd7a4c97400..8f1569975b8bb85f142f9d8cae7540c81110c649 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -241,6 +241,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -238,6 +238,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      protected final Proxy proxy;
      private boolean onlineMode;
      private boolean preventProxyConnections;
@@ -16,7 +16,7 @@ index eeb9252e01af8ecbfb0da7c9a831debd0117edc6..a09b04839a30dfc8ec4d0ad264d5f879
      private boolean pvp;
      private boolean allowFlight;
      @Nullable
-@@ -1050,8 +1051,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1032,8 +1033,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -28,19 +28,11 @@ index eeb9252e01af8ecbfb0da7c9a831debd0117edc6..a09b04839a30dfc8ec4d0ad264d5f879
          }
          // CraftBukkit end
          if (this.getConnection() != null) {
-@@ -1089,6 +1091,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1073,6 +1075,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  }
              }
          }
 +        if (server != null) { this.server.disablePlugins(); this.server.waitForAsyncTasksShutdown(); } // PaperDragon
  
-         if (this.snooper.isStarted()) {
-             this.snooper.interrupt();
-@@ -1141,6 +1144,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
-         this.safeShutdown(flag, false);
-     }
-     public void safeShutdown(boolean flag, boolean isRestarting) {
-+        if (shutdownReason == null) { shutdownReason = "Server Shutting Down"; } // PaperDragon
-         this.isRestarting = isRestarting;
-         this.hasLoggedStop = true; // Paper
-         if (isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread("Server stopped"); // Paper
+         this.isSaving = false;
+         this.resources.close();

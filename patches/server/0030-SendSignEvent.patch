@@ -55,26 +55,26 @@ index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a90
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3..89b6a0a5e901940b5abdca6b870a54edd8648900 100644
+index 79ec416ec38d2df376f9a086da5914b1fb168efe..e54f5e36724662c5ecd56d6395d62585f0007975 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
  package net.minecraft.world.level.block.entity;
  
-+import com.domnian.paperdragon.api.SendSignEventImpl;
++import com.domnian.paperdragon.api.SendSignEventImpl; // PaperDragon
  import com.mojang.brigadier.exceptions.CommandSyntaxException;
  import java.util.UUID;
  import java.util.function.Function;
-@@ -53,14 +54,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -52,14 +53,18 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
-     public CompoundTag save(CompoundTag nbt) {
+     protected void saveAdditional(CompoundTag nbt) {
+-        super.saveAdditional(nbt);
 +        // PaperDragon start
-+        return save(nbt, this.messages, this.filteredMessages);
++        saveAdditional(nbt, this.messages, this.filteredMessages);
 +    }
-+    public CompoundTag save(CompoundTag nbt, Component[] lines, Component[] filteredMessages) {
++    protected void saveAdditional(CompoundTag nbt, Component[] lines, Component[] filteredMessages) {
 +        // PaperDragon end
-         super.save(nbt);
  
          for (int i = 0; i < 4; ++i) {
 -            Component ichatbasecomponent = this.messages[i];
@@ -87,7 +87,7 @@ index fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3..89b6a0a5e901940b5abdca6b870a54ed
  
              if (!ichatbasecomponent1.equals(ichatbasecomponent)) {
                  nbt.putString(SignBlockEntity.FILTERED_TEXT_FIELD_NAMES[i], Component.Serializer.toJson(ichatbasecomponent1));
-@@ -189,6 +195,13 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -186,6 +191,20 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag getUpdateTag() {
@@ -95,9 +95,16 @@ index fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3..89b6a0a5e901940b5abdca6b870a54ed
 +        if (this.level != null) {
 +            SendSignEventImpl event = new SendSignEventImpl(this.level, this.getBlockPos(), this.messages);
 +            event.callEvent();
-+            return this.save(new CompoundTag(), event.lines, event.lines);
++            CompoundTag tag = new CompoundTag();
++            this.saveAdditional(tag, event.lines, event.lines);
++            // CraftBukkit start - store container // PaperDragon - copied from BlockEntity
++            if (this.persistentDataContainer != null && !this.persistentDataContainer.isEmpty()) {
++                tag.put("PublicBukkitValues", this.persistentDataContainer.toTagCompound());
++            }
++            // CraftBukkit end
++            return tag;
 +        }
 +        // PaperDragon end
-         return this.save(new CompoundTag());
+         return this.saveWithoutMetadata();
      }
  

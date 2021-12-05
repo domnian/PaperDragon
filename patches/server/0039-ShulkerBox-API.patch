@@ -5,7 +5,7 @@ Subject: [PATCH] ShulkerBox API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 9333ca32a5b65482c3f0162c62aa63979f820eaa..204e4b0be7f6ae2d4f7acf28e39b33748d5b4db2 100644
+index 9333ca32a5b65482c3f0162c62aa63979f820eaa..4f99b40ea3c6a1ab2a8dac0c2119074fffde2055 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -23,7 +23,10 @@
@@ -32,7 +32,7 @@ index 9333ca32a5b65482c3f0162c62aa63979f820eaa..204e4b0be7f6ae2d4f7acf28e39b3374
  public class CraftDAPI_Misc implements DAPI_Misc {
  
      @Override
-@@ -53,4 +60,57 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+@@ -53,4 +60,53 @@ public class CraftDAPI_Misc implements DAPI_Misc {
          itemstack.setHoverName(new TranslatableComponent("filled_map." + mapType.toLowerCase()));
          return CraftItemStack.asCraftMirror(itemstack);
      }
@@ -63,10 +63,7 @@ index 9333ca32a5b65482c3f0162c62aa63979f820eaa..204e4b0be7f6ae2d4f7acf28e39b3374
 +        return items;
 +    }
 +
-+    private static ListTag getNBTItems(org.bukkit.inventory.ItemStack shulker) {
-+        if (shulker == null) {
-+            throw new NullPointerException("Itemstack can not be null");
-+        }
++    private static ListTag getNBTItems(@NotNull org.bukkit.inventory.ItemStack shulker) {
 +        if (!MaterialTags.SHULKER_BOXES.isTagged(shulker)) {
 +            throw new IllegalArgumentException("Not a shulker box");
 +        }
@@ -88,5 +85,4 @@ index 9333ca32a5b65482c3f0162c62aa63979f820eaa..204e4b0be7f6ae2d4f7acf28e39b3374
 +        }
 +        return null;
 +    }
-+
  }

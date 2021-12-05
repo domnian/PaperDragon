@@ -5,10 +5,10 @@ Subject: [PATCH] Add option to force 2D search for nether portals
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 107135de9e1b06074f69c84d654a6b22ee8a1c67..a153f90efd1ae27f5fb84381fe57df83ed6b8bab 100644
+index f2fe260d8a0ac860b2af742735ade7ac70b0457a..92f1c6fb19dea9c55835bf9ad88fbec14a8f162b 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-@@ -78,6 +78,11 @@ public class DragonWorldConfig {
+@@ -77,6 +77,11 @@ public class DragonWorldConfig {
      private void advancements() {
          broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
      }
@@ -21,10 +21,10 @@ index 107135de9e1b06074f69c84d654a6b22ee8a1c67..a153f90efd1ae27f5fb84381fe57df83
  
  }
 diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
-index 4e3987e6233e84647d019e41ba6afe7c5d09ea80..bfcec3ad8e984f4b6e344dd49e1ca89c4d12c6f3 100644
+index d990d1652b71205816d678618bf360a60f309ad2..fd48e8d362809783eed72172bda120f97103a8a6 100644
 --- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 +++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
-@@ -71,6 +71,19 @@ public class PortalForcer {
+@@ -73,6 +73,19 @@ public class PortalForcer {
              blockposition, i, Double.MAX_VALUE, PoiManager.Occupancy.ANY, true, records
          );
  
@@ -44,7 +44,7 @@ index 4e3987e6233e84647d019e41ba6afe7c5d09ea80..bfcec3ad8e984f4b6e344dd49e1ca89c
          // this gets us most of the way there, but we bias towards lower y values.
          PoiRecord lowestYRecord = null;
          for (PoiRecord record : records) {
-@@ -83,6 +96,7 @@ public class PortalForcer {
+@@ -85,6 +98,7 @@ public class PortalForcer {
          // now we're done
          optional = Optional.ofNullable(lowestYRecord);
          // Paper end - optimise portals

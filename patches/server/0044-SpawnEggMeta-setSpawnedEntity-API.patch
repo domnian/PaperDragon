@@ -8,10 +8,10 @@ Partial data is supported through a predicate, letting MC
 follow normal spawn behavior in the summon phase.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
-index 4838390435178bf6e7af35efbb8022e26d7184cf..1b878364eb78846a81649a97735d883afc12f122 100644
+index 4838390435178bf6e7af35efbb8022e26d7184cf..84322713cc9b1581a4cc138b74c7e545bed407ee 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSpawnEgg.java
-@@ -198,6 +198,24 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
+@@ -198,6 +198,25 @@ public class CraftMetaSpawnEgg extends CraftMetaItem implements SpawnEggMeta {
          return this.spawnedType != null;
      }
  
@@ -22,12 +22,13 @@ index 4838390435178bf6e7af35efbb8022e26d7184cf..1b878364eb78846a81649a97735d883a
 +
 +    @Override
 +    public void setSpawnedEntity(org.bukkit.entity.Entity entity, java.util.function.Predicate<String> keyFilter) {
-+        entityTag = ((org.bukkit.craftbukkit.entity.CraftEntity) entity).getHandle().saveWithoutId(new CompoundTag());
++        entityTag = new CompoundTag();
++        ((org.bukkit.craftbukkit.entity.CraftEntity) entity).getHandle().save(entityTag);
 +        for (String removeKey : removeKeys) {
 +            entityTag.remove(removeKey);
 +        }
 +        if (keyFilter != null) {
-+            entityTag.tags.keySet().removeIf(keyFilter);
++            entityTag.getAllKeys().removeIf(keyFilter);
 +        }
 +        entityTag.putBoolean("Paper.CustomSpawnEgg", true);
 +    }

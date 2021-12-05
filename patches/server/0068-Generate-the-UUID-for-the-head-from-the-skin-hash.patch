@@ -6,7 +6,7 @@ Subject: [PATCH] Generate the UUID for the head from the skin hash
 This will always result in the same UUID for a given hash
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
-index 7532519daa63ba084b364dc3c56ba2ab70eb62a4..e3329690039ef56b6a67cdb9fb69cd9f806b3a75 100644
+index 0eebeb6761882b695233f3f43d253ed27da17363..b3e605149aecb4aef6e13210c2e6eca7e152699e 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
 @@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
@@ -32,8 +32,8 @@ index 7532519daa63ba084b364dc3c56ba2ab70eb62a4..e3329690039ef56b6a67cdb9fb69cd9f
 -            owner.putUUID("Id", UUID.randomUUID());
 +            owner.putUUID("Id", skinHashToUUID(hash));
              textData.putString("Value", getTextureData(url));
-             textures.add(textures.size(), textData);
-             props.put("textures", (net.minecraft.nbt.Tag) textures);
+             textures.add(0, textData);
+             props.put("textures", textures);
 @@ -75,6 +77,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
          }
      }

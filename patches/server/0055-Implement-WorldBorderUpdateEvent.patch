@@ -48,13 +48,13 @@ index 0000000000000000000000000000000000000000..7bd794937475ed7037f489e0144972aa
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/border/WorldBorder.java b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
-index 1e1a9102e067762c9d1bd091388f108ef8170989..bc7fe0044a7ae9fd30ad6284ce6ba076fadc986e 100644
+index 3063a45e5d124d4405e940daff24877866165d3f..912523a962c5190ab271e281606c07bdf711e5bf 100644
 --- a/src/main/java/net/minecraft/world/level/border/WorldBorder.java
 +++ b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
-@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
- public class WorldBorder {
+@@ -19,7 +19,7 @@ public class WorldBorder {
  
      public static final double MAX_SIZE = 5.9999968E7D;
+     public static final double MAX_CENTER_COORDINATE = 2.9999984E7D;
 -    private final List<BorderChangeListener> listeners = Lists.newArrayList();
 +    private final List<BorderChangeListener> listeners = Lists.newArrayList(new com.domnian.paperdragon.DragonWorldBorderListener()); // PaperDragon - WorldBorderUpdateEvent
      private double damagePerBlock = 0.2D;

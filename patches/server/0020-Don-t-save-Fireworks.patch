@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 28 Dec 2013 21:25:06 -0500
+Subject: [PATCH] Don't save Fireworks
+
+Fireworks can bug out and not detonate, and an automated
+launcher can very easily fill a chunk.
+
+Prevent saving Fireworks so that chunk unloads will wipe a chunks fireworks in this case.
+
+diff --git a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
+index fe502e148e218ae404e0049c0251d3e3ca08c825..e38ef0eb7f08fd1b7f1b0e5c4f0b508efb26abf0 100644
+--- a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
++++ b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
+@@ -355,4 +355,10 @@ public class FireworkRocketEntity extends Projectile implements ItemSupplier {
+     public boolean isAttackable() {
+         return false;
+     }
++    // PaperDragon start
++    @Override
++    public boolean shouldBeSaved() {
++        return false;
++    }
++    // PaperDragon end
+ }

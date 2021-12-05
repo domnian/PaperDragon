@@ -7,15 +7,15 @@ Previously "Flammable" blocks would burn for ages, this makes them burn out the 
 This is so that blocks that have ignite/burn events cancelled will actually burn out.
 
 diff --git a/src/main/java/net/minecraft/world/level/block/FireBlock.java b/src/main/java/net/minecraft/world/level/block/FireBlock.java
-index c8a58cd67bb7f7491de04bda703e2a1f166fb845..4983eb896e612450fb4d3c016c0ceaa58d0a38df 100644
+index d8e4fda2d501545e5f891bca317e2aa5f9368f47..44622cb1e8b331dc10c1dc473cf2e3c0a3ba2358 100644
 --- a/src/main/java/net/minecraft/world/level/block/FireBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/FireBlock.java
-@@ -196,7 +196,7 @@ public class FireBlock extends BaseFireBlock {
+@@ -195,7 +195,7 @@ public class FireBlock extends BaseFireBlock {
                          return;
                      }
  
 -                    if (i == 15 && random.nextInt(4) == 0 && !this.canBurn(world.getBlockState(pos.below()))) {
-+                    if (i == 15 && random.nextInt(4) == 0/* && !this.canBurn(world.getBlockState(pos.below()))*/) {
++                    if (i == 15 && random.nextInt(4) == 0/* && !this.canBurn(world.getBlockState(pos.below()))*/) { // PaperDragon
                          fireExtinguished(world, pos); // CraftBukkit
                          return;
                      }

@@ -5,10 +5,10 @@ Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index e1ad836f928a1f337b461eda92d655556e030822..f931462873b0421a80526b978ab8642c88b690b7 100644
+index 86258b285cb8d39961a130618f1a9fed54dac889..c25990d237c3408917a69396efca8fc2aeb36c2c 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-@@ -157,6 +157,10 @@ public class DragonConfig {
+@@ -160,6 +160,10 @@ public class DragonConfig {
          return config.getString(path, config.getString(path));
      }
  
@@ -20,10 +20,10 @@ index e1ad836f928a1f337b461eda92d655556e030822..f931462873b0421a80526b978ab8642c
  
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 2a180d5a45fc0fbfb3f973564b3b50feaf9e9970..107135de9e1b06074f69c84d654a6b22ee8a1c67 100644
+index 71f698d648872341b7fef1326d45fdafd0694c32..f2fe260d8a0ac860b2af742735ade7ac70b0457a 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-@@ -74,6 +74,10 @@ public class DragonWorldConfig {
+@@ -73,6 +73,10 @@ public class DragonWorldConfig {
          return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
      }
  
@@ -35,7 +35,7 @@ index 2a180d5a45fc0fbfb3f973564b3b50feaf9e9970..107135de9e1b06074f69c84d654a6b22
  
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index ab14de98c50ae384bcf0c22343446b4234227138..6da431e19e5a7e486bfd3195b1222f2d68e57bf4 100644
+index 5f55931fa628bd2e5541fc1cf582e71608544555..acc86a040445118bf2fd892b10477671582ac396 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -307,6 +307,15 @@ public class PlayerAdvancements {

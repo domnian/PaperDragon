@@ -5,15 +5,23 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 162d4950746a7c375bb04355d3f961163399762e..026b096c0c860abd17377e26f87f03759e282e70 100644
+index 78fb7e0a568f0746af803cbe81247f5e680ae685..e8474049e85a664dfa74f27c744563e2b08b0af5 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -912,7 +912,8 @@ public abstract class PlayerList {
+@@ -83,6 +83,7 @@ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.border.BorderChangeListener;
+ import net.minecraft.world.level.border.WorldBorder;
+ import net.minecraft.world.level.dimension.DimensionType;
++import net.minecraft.world.level.dimension.LevelStem; // PaperDragon
+ import net.minecraft.world.level.storage.LevelData;
+ import net.minecraft.world.level.storage.LevelResource;
+ import net.minecraft.world.level.storage.PlayerDataStorage;
+@@ -910,7 +911,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = entityplayer1.getBukkitEntity();
 -            PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn && !isAnchorSpawn, isAnchorSpawn, com.google.common.collect.ImmutableSet.<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag>builder().add(respawnFlags)); // Paper - Fix anchor respawn acting as a bed respawn from the end portal
-+            boolean isEndPortal = worldserver.getTypeKey() == DimensionType.OVERWORLD_LOCATION && entityplayer.level.getTypeKey() == DimensionType.END_LOCATION; // PaperDragon
++            boolean isEndPortal = worldserver.getTypeKey() == LevelStem.OVERWORLD && entityplayer.level.getTypeKey() == LevelStem.END; // PaperDragon
 +            PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn && !isAnchorSpawn, isAnchorSpawn, isEndPortal, com.google.common.collect.ImmutableSet.<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag>builder().add(respawnFlags)); // Paper - Fix anchor respawn acting as a bed respawn from the end portal // PaperDragon - add isLeavingEnd
              this.cserver.getPluginManager().callEvent(respawnEvent);
              // Spigot Start

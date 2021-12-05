@@ -6,10 +6,10 @@ Subject: [PATCH] Don't require flag for sign conversion
 Also reverts part of Paper's old sign conversion patch
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index 344d3a8c1162f1a4ab5fc2b7676680ddace46649..fa1f4e094a2ee21605b4d70c6d0dac2cd1b400d3 100644
+index 6371176fba41218a209ea59b4cafe5b2d4a685fd..79ec416ec38d2df376f9a086da5914b1fb168efe 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec2;
+@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec2;
  import net.minecraft.world.phys.Vec3;
  
  public class SignBlockEntity extends BlockEntity implements CommandSource { // CraftBukkit - implements
@@ -18,7 +18,7 @@ index 344d3a8c1162f1a4ab5fc2b7676680ddace46649..fa1f4e094a2ee21605b4d70c6d0dac2c
  
      public static final int LINES = 4;
      private static final String[] RAW_TEXT_FIELD_NAMES = new String[]{"Text1", "Text2", "Text3", "Text4"};
-@@ -87,7 +87,7 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -85,7 +85,7 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
          // CraftBukkit start - Add an option to convert signs correctly
          // This is done with a flag instead of all the time because
          // we have no way to tell whether a sign is from 1.7.10 or 1.8

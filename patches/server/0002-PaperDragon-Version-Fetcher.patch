@@ -1,0 +1,114 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sat, 4 Dec 2021 18:19:32 -0500
+Subject: [PATCH] PaperDragon Version Fetcher
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..ff9d2fb2592ed6c87d23f29cbd56b8062a81512f
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
+@@ -0,0 +1,88 @@
++package com.domnian.paperdragon;
++
++import com.destroystokyo.paper.VersionHistoryManager;
++import com.destroystokyo.paper.util.VersionFetcher;
++import com.google.common.base.Charsets;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
++import com.google.gson.JsonSyntaxException;
++import net.kyori.adventure.text.Component;
++import net.kyori.adventure.text.JoinConfiguration;
++import net.kyori.adventure.text.TextComponent;
++import net.kyori.adventure.text.format.NamedTextColor;
++import net.kyori.adventure.text.format.TextDecoration;
++import org.checkerframework.checker.nullness.qual.NonNull;
++import org.checkerframework.checker.nullness.qual.Nullable;
++import java.io.BufferedReader;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.net.HttpURLConnection;
++import java.net.URL;
++
++public class DragonVersionFetcher implements VersionFetcher {
++
++    private static final String GITHUB_BRANCH_NAME = "master";
++
++    @Override
++    public long getCacheTime() {
++        return 720000;
++    }
++
++    @NonNull
++    @Override
++    public Component getVersionMessage(@NonNull String serverVersion) {
++        String[] parts = serverVersion.substring("git-PaperDragon-".length()).split("[-\\s]");
++        final Component updateMessage = getUpdateStatusMessage("domnian/PaperDragon", GITHUB_BRANCH_NAME, parts[0]);
++        final Component history = getHistory();
++
++        return history != null ? Component.join(JoinConfiguration.noSeparators(), updateMessage, Component.newline(), history) : updateMessage;
++    }
++
++    private static Component getUpdateStatusMessage(@NonNull String repo, @NonNull String branch, @NonNull String versionInfo) {
++        versionInfo = versionInfo.replace("\"", "");
++        int distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
++
++        return switch (distance) {
++            case -1 -> Component.text("Error obtaining version information", NamedTextColor.YELLOW);
++            case 0 -> Component.text("You are running the latest version", NamedTextColor.GREEN);
++            case -2 -> Component.text("Unknown version", NamedTextColor.YELLOW);
++            default -> Component.text("You are " + distance + " version(s) behind", NamedTextColor.YELLOW);
++        };
++    }
++
++    // Contributed by Techcable <Techcable@outlook.com> in GH-65
++    private static int fetchDistanceFromGitHub(@NonNull String repo, @NonNull String branch, @NonNull String hash) {
++        try {
++            HttpURLConnection connection = (HttpURLConnection) new URL("https://api.github.com/repos/" + repo + "/compare/" + branch + "..." + hash).openConnection();
++            connection.connect();
++            if (connection.getResponseCode() == HttpURLConnection.HTTP_NOT_FOUND) return -2; // Unknown commit
++            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charsets.UTF_8))) {
++                JsonObject obj = new Gson().fromJson(reader, JsonObject.class);
++                String status = obj.get("status").getAsString();
++                return switch (status) {
++                    case "identical" -> 0;
++                    case "behind" -> obj.get("behind_by").getAsInt();
++                    default -> -1;
++                };
++            } catch (JsonSyntaxException | NumberFormatException e) {
++                e.printStackTrace();
++                return -1;
++            }
++        } catch (IOException e) {
++            e.printStackTrace();
++            return -1;
++        }
++    }
++
++    @Nullable
++    private TextComponent getHistory() {
++        final VersionHistoryManager.VersionData data = VersionHistoryManager.INSTANCE.getVersionData();
++        if (data == null) return null;
++
++        final String oldVersion = data.getOldVersion();
++        if (oldVersion == null) return null;
++
++        return Component.text("Previous version: " + oldVersion, NamedTextColor.GRAY, TextDecoration.ITALIC);
++    }
++
++}
+\ No newline at end of file
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+index d51c63496b55d64ac7ee6175bc364012df897891..e15eeb9a171220dd58d4b95be50a7f3ec8befdc9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+@@ -394,7 +394,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+ 
+     @Override
+     public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
+-        return new com.destroystokyo.paper.PaperVersionFetcher();
++        return new com.domnian.paperdragon.DragonVersionFetcher(); // PaperDragon
+     }
+ 
+     @Override
