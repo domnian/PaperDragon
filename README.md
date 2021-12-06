@@ -2,7 +2,7 @@ PaperDragon
 ===========
 PaperDragon is a fork of the Paper server software with patches from other forks, namely [EmpireCraft][empirecraft] and [Tuinity][tuinity]. It is not meant for widespread use, and is primarily a side-project. You are free to use PaperDragon for your server, but support will be limited compared to that of Paper.
 
-It is recommended that you either look into using [Paper][paper] or [Tuinity][tuinity] over using Lodestone.
+It is recommended that you either look into using [Paper][paper] or [Tuinity][tuinity] over using PaperDragon.
 
 How To (Plugin Developers)
 ------
@@ -16,7 +16,7 @@ This will come with time. For now, you just need to build it locally.
 <dependency>
     <groupId>com.domnian.paperdragon</groupId>
     <artifactId>paperdragon-api</artifactId>
-    <version>1.17.1-R0.1-SNAPSHOT</version>
+    <version>1.18-R0.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
  ```
@@ -29,7 +29,7 @@ This will come with time. For now, you just need to build it locally.
 * Artifact:
 ```groovy
 dependencies {
-    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.18-R0.1-SNAPSHOT'
 }
 ```
 
@@ -39,7 +39,7 @@ How To (Compiling Jar From Source)
 
 To compile PaperDragon, you need JDK 16 and an internet connection.
 
-Clone this repo, run `./gradlew applyPatches`, then `./gradlew reobfJar` from your terminal. You can find the compiled jar in the `PaperDragon-Server/build/libs` directory.
+Clone this repo, run `./gradlew applyPatches`, then `./gradlew createReobfBundlerJar` from your terminal. You can find the compiled jar in the `PaperDragon-Server/build/libs` directory.
 
 To get a full list of tasks, run `./gradlew tasks`.
 
