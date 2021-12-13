@@ -4,7 +4,7 @@ plugins {
     java
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.1.0" apply false
-    id("io.papermc.paperweight.patcher") version "1.3.1"
+    id("io.papermc.paperweight.patcher") version "1.3.2"
 }
 
 repositories {
@@ -66,6 +66,27 @@ paperweight {
 
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
             serverOutputDir.set(layout.projectDirectory.dir("paperdragon-server"))
+        }
+    }
+}
+
+tasks.generateDevelopmentBundle {
+    apiCoordinates.set("com.domnian.paperdragon:paperdragon-api")
+    mojangApiCoordinates.set("io.papermc.paper:paper-mojangapi")
+    libraryRepositories.addAll(
+        "https://repo.maven.apache.org/maven2/",
+        "https://libraries.minecraft.net/",
+        "https://papermc.io/repo/repository/maven-public/",
+        "https://maven.fabricmc.net/",
+    )
+}
+
+publishing {
+    if (project.providers.gradleProperty("publishDevBundle").forUseAtConfigurationTime().isPresent) {
+        publications.create<MavenPublication>("devBundle") {
+            artifact(tasks.generateDevelopmentBundle) {
+                artifactId = "dev-bundle"
+            }
         }
     }
 }
