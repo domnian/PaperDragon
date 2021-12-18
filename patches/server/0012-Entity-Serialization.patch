@@ -6,7 +6,7 @@ Subject: [PATCH] Entity Serialization
 Allow serializing an Entity to raw NBT, and to get an Entity object without spawning it into the world.
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index a1560edd185286675430216848506841fcc67ffd..18ab39f3fd9cab1c336a53843e0efb64842c1a63 100644
+index e411cd2cca237470e6620f5a69deec5d0c6eb63e..d8c187870234a5197075354b929a14aeda4c456a 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 @@ -23,10 +23,21 @@
@@ -58,7 +58,7 @@ index a1560edd185286675430216848506841fcc67ffd..18ab39f3fd9cab1c336a53843e0efb64
  import java.util.HashSet;
  import java.util.Set;
  import java.util.regex.Pattern;
-@@ -163,6 +180,7 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+@@ -162,6 +179,7 @@ public class CraftDAPI_Entity implements DAPI_Entity {
                                              .equalsIgnoreCase(goalName));
          }
      }
@@ -66,7 +66,7 @@ index a1560edd185286675430216848506841fcc67ffd..18ab39f3fd9cab1c336a53843e0efb64
      @NotNull
      @Override
      public Set<String> listGoalNames(@NotNull Mob mob) {
-@@ -297,4 +315,52 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+@@ -296,4 +314,52 @@ public class CraftDAPI_Entity implements DAPI_Entity {
      public void setFireballCooldown(@NotNull Ghast ghast, int cooldown) {
          ((CraftGhast) ghast).getHandle().fireballCooldown = cooldown;
      }

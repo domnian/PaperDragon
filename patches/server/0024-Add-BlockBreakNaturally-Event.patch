@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 9b64ae0ca95333e48b06128d8b52cfab5d159592..cd54b150df46e80dafd73ee50c0cef5ba0e113b0 100644
+index 876c7160bf7fa3113dee6527631682d729a94612..dc783c0476c5aa96bc147c556cef6d9c1c9b94b1 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1402,6 +1402,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1405,6 +1405,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -74,7 +74,7 @@ index ab5b9f00123e2ede2931ffc520684e482aac49b4..3c96d96585ef92c285d138cdb87e63a0
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 0920a524c994bd29bb400b48b0a8c0d13e5338d5..f9a5f24b32b3f6e97d9934e7c277ecb5d2d3cf15 100644
+index 2b53e6da769d46b50884813e38d728bc6c9fecdd..ec96c445a6e2b71f4703b1f45b6609eb2f46b3bb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -405,6 +405,16 @@ public class CraftEventFactory {

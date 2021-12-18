@@ -7,10 +7,10 @@ Allows scheduling repeating task timers on an entity level.
 Avoids Bukkit system so that tasks will simply maintain themselves on entity removal.
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index d5c6381045b5c9a54b37c18c3a0c3f38374a402a..cf8ea7d0c03d142fc2cc27d2bbe19efb6c5e398f 100644
+index d5c6381045b5c9a54b37c18c3a0c3f38374a402a..13e53765916b1c18bd5540663c907ab06cedaa0c 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-@@ -23,5 +23,21 @@
+@@ -23,5 +23,20 @@
  
  package com.domnian.paperdragon.api;
  
@@ -22,8 +22,7 @@ index d5c6381045b5c9a54b37c18c3a0c3f38374a402a..cf8ea7d0c03d142fc2cc27d2bbe19efb
 +
 +    @NotNull
 +    public <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task) {
-+        final EntityTasksHandler.TaskList entityTasks = ((CraftEntity) entity).getHandle().entityTasks;
-+        entityTasks.add(task);
++        ((CraftEntity) entity).getHandle().entityTasks.add(task);
 +        task.init(entity, interval);
 +        return task;
 +    }
@@ -97,7 +96,7 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +    public static class TaskList extends ArrayList<EntityTask<?>> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index f055d25394d20afb208e8612fb31d77af141876b..b0a42f98567483aea5c860eb4de76e613bd3c72b 100644
+index 28f605c3daa969c1a54745e552d55ecb874120a9..885314a1e5e0f80e6c645c408c115db1f6a9ad0c 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -107,7 +106,7 @@ index f055d25394d20afb208e8612fb31d77af141876b..b0a42f98567483aea5c860eb4de76e61
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1116,6 +1117,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1119,6 +1120,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
@@ -115,7 +114,7 @@ index f055d25394d20afb208e8612fb31d77af141876b..b0a42f98567483aea5c860eb4de76e61
          this.getProfiler().push(() -> {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1154,6 +1156,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1157,6 +1159,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -124,7 +123,7 @@ index f055d25394d20afb208e8612fb31d77af141876b..b0a42f98567483aea5c860eb4de76e61
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index ae81b9b649c1e76fae7b0021cd5fadf3e1026244..c8e184c3b9c2eb2fc5201ab206ed28678c7bd04b 100644
+index 4f06df6817ebc124025b68d3a545a5ea6a696a5f..62ce5788062b691d5e5700943c4a947b536e11c8 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -138,12 +137,12 @@ index ae81b9b649c1e76fae7b0021cd5fadf3e1026244..c8e184c3b9c2eb2fc5201ab206ed2867
      // PaperDragon start
      public final PersistentMetaMap metaMap = new PersistentMetaMap();
      public final TempMetaMap tempMeta = new TempMetaMap();
-+    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList();
++    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
      // PaperDragon end
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 50e688c305c483f4121eea84969ce43222bfe5ae..93ca03c21bf842171b1551407f63d3d933711772 100644
+index 733c717d06c896b2c10b7ff132fdf4d8423e960c..e547bb0924d35d0e1361b76b0146a11441a7298f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -153,7 +152,7 @@ index 50e688c305c483f4121eea84969ce43222bfe5ae..93ca03c21bf842171b1551407f63d3d9
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
-@@ -1017,7 +1018,10 @@ public final class CraftServer implements Server {
+@@ -1015,7 +1016,10 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }

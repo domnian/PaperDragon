@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Vehicle/Passenger Teleporting for Bukkit API
 If Bukkit teleport is called, teleport the whole set of entities together and maintain the chain.
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index cc3849bbe405bf68c0744369b3d4457617468591..49b1e895cacacd5cce64174fdbc68eccf51413d0 100644
+index 8bf24148c8f1650781fb0451a25cfa747dd0a8bb..d3fa251cb1dbcf03a9c1f454deab2340c2b9ed86 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -829,7 +829,7 @@ public abstract class PlayerList {
@@ -19,7 +19,7 @@ index cc3849bbe405bf68c0744369b3d4457617468591..49b1e895cacacd5cce64174fdbc68ecc
          this.playersByName.remove(entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          entityplayer.getLevel().removePlayerImmediately(entityplayer, Entity.RemovalReason.DISCARDED);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index bc0a954108b7c4257b14614677bd3746a97fc5f8..3b8038acabbdee970f47677c63add46ef87cc2d7 100644
+index 9e8d36ef91bad6af2b98c5f299bdad398920ff27..5249928144530d70b8c4866ab5f336a98523605d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -225,7 +225,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -158,10 +158,10 @@ index f34b4cbf606ec80e640cfd6b13c6bce840607748..3ccdb92ad541afe3445ef9f3600267d1
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d527be7f83bb9e2d22f6fddb9393467b8c6f8163..9c57a35828b0b75d4a3daf079a1dcb5df90f25b5 100644
+index a636492bd2ce0c764c1a032fab6a333446a406e3..3a2135a3f60d6f488ec16b16eeec1454ec038eb2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -980,7 +980,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -981,7 +981,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          }
  
          // If this player is riding another entity, we must dismount before teleporting.
@@ -170,7 +170,7 @@ index d527be7f83bb9e2d22f6fddb9393467b8c6f8163..9c57a35828b0b75d4a3daf079a1dcb5d
  
          // SPIGOT-5509: Wakeup, similar to riding
          if (this.isSleeping()) {
-@@ -1002,12 +1002,27 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1003,12 +1003,27 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          // Check if the fromWorld and toWorld are the same.
          if (fromWorld == toWorld) {

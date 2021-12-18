@@ -5,7 +5,7 @@ Subject: [PATCH] dont load chunks for physics
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index a4c2ba7f86b9d26c81ebe08a174f0d3edbca4862..5dda03e93493db19b9bc896986e28d25e3ee313f 100644
+index 0536f3653456d3d9e13d21ceb1712b37643a4088..077581edbfef31db213ffee5d92adcdcdd48eb4f 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -795,7 +795,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -13,13 +13,13 @@ index a4c2ba7f86b9d26c81ebe08a174f0d3edbca4862..5dda03e93493db19b9bc896986e28d25
      public void neighborChanged(BlockPos pos, Block sourceBlock, BlockPos neighborPos) {
          if (!this.isClientSide) {
 -            BlockState iblockdata = this.getBlockState(pos);
-+            BlockState iblockdata = this.getTypeIfLoaded(pos); // PaperDragon
++            BlockState iblockdata = this.getBlockStateIfLoaded(pos); // PaperDragon
 +            if (iblockdata == null) return; // PaperDragon
  
              try {
                  // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 1831588b275f11aff37573fead835f6ddabfece1..3fee8d75c5a6c0789848b3fa47ca917acaa7e985 100644
+index 05c46f3b3bce5225b819d86e6e06729a5093e092..b959228df65b42bc3b03ec129ae27b18fb99fab1 100644
 --- a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -930,7 +930,8 @@ public abstract class BlockBehaviour {
@@ -27,7 +27,7 @@ index 1831588b275f11aff37573fead835f6ddabfece1..3fee8d75c5a6c0789848b3fa47ca917a
  
                  blockposition_mutableblockposition.setWithOffset(pos, enumdirection);
 -                BlockState iblockdata = world.getBlockState(blockposition_mutableblockposition);
-+                BlockState iblockdata = world.getTypeIfLoaded(blockposition_mutableblockposition); // PaperDragon
++                BlockState iblockdata = world.getBlockStateIfLoaded(blockposition_mutableblockposition); // PaperDragon
 +                if (iblockdata == null) { continue; } // PaperDragon
                  BlockState iblockdata1 = iblockdata.updateShape(enumdirection.getOpposite(), this.asState(), world, blockposition_mutableblockposition, pos);
  

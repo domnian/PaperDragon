@@ -14,7 +14,7 @@ But we may want to store counting data by chunk, but also by Residence, and cach
 Objects represented by an Identifier, should be able to use them as their equal/hashcodes.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 63404db06918a46eb2d6affad3a816194b90a5ee..d033c98f9750b372d7eec79d3a3af793e1fea1f6 100644
+index b22ffe354e73b58734b04876d5c18aa45eda8200..97a746ece4247a226a9eeeb8a50d010bda5d88b6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -74,6 +74,7 @@ public class CraftChunk implements Chunk {
@@ -33,7 +33,7 @@ index 63404db06918a46eb2d6affad3a816194b90a5ee..d033c98f9750b372d7eec79d3a3af793
      }
  
      @Override
-@@ -375,4 +377,47 @@ public class CraftChunk implements Chunk {
+@@ -377,4 +379,47 @@ public class CraftChunk implements Chunk {
      static {
          Arrays.fill(emptyLight, (byte) 0xFF);
      }

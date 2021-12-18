@@ -274,7 +274,7 @@ index 38a0fb9a7c4ade9cacfd30dffabfea7e6b773981..060eeff2880ba9339d215b2f942384cd
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index c2220d5157d3065a256cd17410760c6aedf24987..fc51afe89818f845069af531b94585873458c034 100644
+index 4247dcb003626535dbb997f48ad9f61380bd17e9..1219d10569f47ec071538828d5900ffea7b58a1e 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -170,6 +170,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -286,10 +286,10 @@ index c2220d5157d3065a256cd17410760c6aedf24987..fc51afe89818f845069af531b9458587
      private org.spigotmc.TickLimiter entityLimiter;
      private org.spigotmc.TickLimiter tileLimiter;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059808b4647 100644
+index d053f7dc483e729fb8ec2c342c48a52093ffae83..d38b223e6ca71d8c448d8ecc39e4171101eef1b1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -933,6 +933,7 @@ public final class CraftServer implements Server {
+@@ -931,6 +931,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
          com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
@@ -297,7 +297,7 @@ index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059
          for (ServerLevel world : this.console.getAllLevels()) {
              // world.serverLevelData.setDifficulty(config.difficulty); // Paper - per level difficulty
              world.setSpawnSettings(world.serverLevelData.getDifficulty() != Difficulty.PEACEFUL && config.spawnMonsters, config.spawnAnimals); // Paper - per level difficulty (from MinecraftServer#setDifficulty(ServerLevel, Difficulty, boolean))
-@@ -973,6 +974,7 @@ public final class CraftServer implements Server {
+@@ -971,6 +972,7 @@ public final class CraftServer implements Server {
              }
              world.spigotConfig.init(); // Spigot
              world.paperConfig.init(); // Paper
@@ -305,7 +305,7 @@ index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -988,6 +990,7 @@ public final class CraftServer implements Server {
+@@ -986,6 +988,7 @@ public final class CraftServer implements Server {
          this.reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
@@ -313,7 +313,7 @@ index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2550,6 +2553,13 @@ public final class CraftServer implements Server {
+@@ -2641,6 +2644,13 @@ public final class CraftServer implements Server {
              return com.destroystokyo.paper.PaperConfig.config;
          }
  
@@ -328,7 +328,7 @@ index 7f393b9608b55c0d852e9b05b0fe6164c8b077cb..30b9cbb84a2eeb5af8f1fd81469ff059
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 450518903c0a10301b177d8dd7fe05aca3b8b37e..dc14b4b2fb5efba50ef5b2f3f8fdf5cfc3e20590 100644
+index 55bae3efbc630be6d40d415509de4c3e744a5004..ebce9fc69b76e76ffa0fba0a5cb82097cc447a48 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -160,6 +160,14 @@ public class Main {

@@ -6,18 +6,18 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 0a947451349f94d2f9851fa6ae592f987ab87709..a298c3106a3b97fe75d81332c42a5daa11bc354d 100644
+index b84fa7a977ba7baef97a846b53c7ed5f6591ec7b..0746f2f2af28f2d50e8de8bd2c6c75a76e8ec597 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -263,6 +263,7 @@ public final class ItemStack {
-         processEnchantOrder(this.tag); // Paper
+@@ -261,6 +261,7 @@ public final class ItemStack {
+ 
          if (this.getItem().canBeDepleted()) {
              this.setDamageValue(this.getDamageValue());
 +            if (this.tag != null && this.tag.contains("RepairCost")) this.tag.remove("RepairCost"); // PaperDragon
          }
  
      }
-@@ -1159,10 +1160,12 @@ public final class ItemStack {
+@@ -1158,10 +1159,12 @@ public final class ItemStack {
      }
  
      public int getBaseRepairCost() {

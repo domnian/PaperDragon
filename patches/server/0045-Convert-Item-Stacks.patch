@@ -5,10 +5,10 @@ Subject: [PATCH] Convert Item Stacks
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index fe8291286b6c42863909c3894caa0aca8568b521..0a947451349f94d2f9851fa6ae592f987ab87709 100644
+index 16b2abfde744a349f258b4c1afddcafb4513c6f4..b84fa7a977ba7baef97a846b53c7ed5f6591ec7b 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -229,6 +229,7 @@ public final class ItemStack {
+@@ -228,6 +228,7 @@ public final class ItemStack {
          this.updateEmptyCacheFlag();
      }
  

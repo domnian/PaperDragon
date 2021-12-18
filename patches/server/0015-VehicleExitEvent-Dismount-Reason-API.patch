@@ -25,10 +25,10 @@ index ced3b3ed227dacf1c4928ee2dfa4f390f13c8a8b..6c4affb6bf8efbf07168c841eea9ddd5
                  if (((ServerPlayer) target).isSleeping()) {
                      ((ServerPlayer) target).stopSleepInBed(true, true);
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index c2e72761fd0ec5dd0ed4817eb376283bd5d715a7..9b64ae0ca95333e48b06128d8b52cfab5d159592 100644
+index 790b340024f378e3f14b765a690e28c73a4e1fab..876c7160bf7fa3113dee6527631682d729a94612 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -156,6 +156,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
+@@ -158,6 +158,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.WorldUUID;
  import org.bukkit.event.entity.CreatureSpawnEvent;
  import org.bukkit.event.server.MapInitializeEvent;
@@ -36,7 +36,7 @@ index c2e72761fd0ec5dd0ed4817eb376283bd5d715a7..9b64ae0ca95333e48b06128d8b52cfab
  import org.bukkit.event.weather.LightningStrikeEvent;
  import org.bukkit.event.world.TimeSkipEvent;
  // CraftBukkit end
-@@ -661,6 +662,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -664,6 +665,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                                      return;
                                  }
  
@@ -44,7 +44,7 @@ index c2e72761fd0ec5dd0ed4817eb376283bd5d715a7..9b64ae0ca95333e48b06128d8b52cfab
                                  entity.stopRiding();
                              }
  
-@@ -1186,6 +1188,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1189,6 +1191,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              } finally { timer.stopTiming(); }// Paper - EAR2 timings
              }
          } else {
@@ -53,7 +53,7 @@ index c2e72761fd0ec5dd0ed4817eb376283bd5d715a7..9b64ae0ca95333e48b06128d8b52cfab
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index b6f9c99d580d985f2b84efaa655d9ae40073e72b..91b0cdd153eb183c83d4d947a83b6dc6a0882266 100644
+index 7b23535a680d2a8534dcb8dd87770f66fb982c13..c2a9319c20d8dc76d4733a06afe8343913da955e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -163,6 +163,7 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
@@ -103,7 +103,7 @@ index b6f9c99d580d985f2b84efaa655d9ae40073e72b..91b0cdd153eb183c83d4d947a83b6dc6
          /* CraftBukkit start - replace with bukkit handling for multi-world
          if (worldserver == this.level) {
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 40d55cade76d0e8f39f91a322bc8a821877efa2c..78fb7e0a568f0746af803cbe81247f5e680ae685 100644
+index 042be2cf60a9d01698808d84f2e537a5eb952079..8d0c0878857ddd44fd992a29d34924dde4b606d7 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -118,6 +118,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
@@ -123,7 +123,7 @@ index 40d55cade76d0e8f39f91a322bc8a821877efa2c..78fb7e0a568f0746af803cbe81247f5e
                  entity.getPassengersAndSelf().forEach((entity1) -> {
                      // Paper start
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6a9f976bb 100644
+index 205078188eee43130385a476ad13cfdd03b4fa3c..8cb13f9b0a15ee64df89ba36a1a85f69b39d48b1 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -729,6 +729,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -134,7 +134,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
              this.stopRiding();
          }
  
-@@ -2451,6 +2452,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -2538,6 +2539,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
                  return false;
              } else {
                  if (this.isPassenger()) {
@@ -142,7 +142,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
                      this.stopRiding();
                  }
  
-@@ -2476,7 +2478,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -2563,7 +2565,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
      }
  
      public void ejectPassengers() {
@@ -156,7 +156,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
              ((Entity) this.passengers.get(i)).stopRiding();
          }
  
-@@ -2558,6 +2566,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -2645,6 +2653,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
      // Paper start
      protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
      protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
@@ -165,7 +165,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
          // Paper end
          if (entity.getVehicle() == this) {
              throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
-@@ -2570,6 +2580,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -2657,6 +2667,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
                          (Vehicle) this.getBukkitEntity(),
                          (LivingEntity) entity.getBukkitEntity(), !suppressCancellation // Paper
                  );
@@ -173,7 +173,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
                  // Suppress during worldgen
                  if (this.valid) {
                      Bukkit.getPluginManager().callEvent(event);
-@@ -3071,7 +3082,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -3158,7 +3169,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
  
          return this.removalReason != null ? String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cpos=%s, tl=%d, v=%b, removed=%s]", this.getClass().getSimpleName(), this.getName().getString(), this.id, this.uuid, s, this.getX(), this.getY(), this.getZ(), this.chunkPosition(), this.tickCount, this.valid, this.removalReason) : String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cpos=%s, tl=%d, v=%b]", this.getClass().getSimpleName(), this.getName().getString(), this.id, this.uuid, s, this.getX(), this.getY(), this.getZ(), this.chunkPosition(), this.tickCount, this.valid);
      }
@@ -182,7 +182,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
      public boolean isInvulnerableTo(DamageSource damageSource) {
          return this.isRemoved() || this.invulnerable && damageSource != DamageSource.OUT_OF_WORLD && !damageSource.isCreativePlayer() && !isDisabled; // PaperDragon - add !isDisabled
      }
-@@ -4088,10 +4099,16 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -4180,10 +4191,16 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
          }
  
          if (this.removalReason.shouldDestroy()) {
@@ -201,7 +201,7 @@ index 08a74f4ff92cf111547248ca370856ba3e1c90a1..f34bd787d28706e0059e6a99d65ff9e6
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index cbd893ecbfe1d9583423118d34d655a58097e7e7..bc28cc08d6fd62dc0687f60cda8651b78a0f78f9 100644
+index abcc97ee42aeb1ed9e06dc263959ab4c41397be0..9109357fa7be7abcd41b628c155c3582892b9ba1 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -431,6 +431,7 @@ public abstract class LivingEntity extends Entity {
@@ -212,7 +212,7 @@ index cbd893ecbfe1d9583423118d34d655a58097e7e7..bc28cc08d6fd62dc0687f60cda8651b7
                      this.stopRiding();
                  }
              } else if (this.getAirSupply() < this.getMaxAirSupply()) {
-@@ -4101,6 +4102,7 @@ public abstract class LivingEntity extends Entity {
+@@ -4115,6 +4116,7 @@ public abstract class LivingEntity extends Entity {
  
      public void startSleeping(BlockPos pos) {
          if (this.isPassenger()) {
@@ -221,7 +221,7 @@ index cbd893ecbfe1d9583423118d34d655a58097e7e7..bc28cc08d6fd62dc0687f60cda8651b7
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 01c25c440ce147e5a204ceb68175bb36e0a124d1..e5845c04a5519bfddfba22ad31e2c69d599abee4 100644
+index a21037046ea2bbf666a758e871753fd980a947ba..e6e4373dbd2a37f754bf1b064e03c020b9dfdf31 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -81,6 +81,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
@@ -232,7 +232,7 @@ index 01c25c440ce147e5a204ceb68175bb36e0a124d1..e5845c04a5519bfddfba22ad31e2c69d
  // CraftBukkit end
  
  public abstract class Mob extends LivingEntity {
-@@ -1453,6 +1454,7 @@ public abstract class Mob extends LivingEntity {
+@@ -1455,6 +1456,7 @@ public abstract class Mob extends LivingEntity {
          }
  
          if (this.isPassenger()) {

@@ -138,10 +138,10 @@ index 896a4237f871d46cf39b0721e909c2cc3b5fc728..439d78b6473b39ebb0738b09b9171071
                      CompoundTag owner = itemstack.tag.getCompound("SkullOwner");
                      if (itemstack.tag.contains("SkullOwnerOrig")) {
 diff --git a/src/main/java/net/minecraft/network/chat/HoverEvent.java b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..ec9a03adbd3c8becd1104edff020cf76089da7ad 100644
+index e77b39659174177918d1ec27cfa3c6ac63361714..554143f9bdd8b50bbea9d49e5e34e80875aaf9ca 100644
 --- a/src/main/java/net/minecraft/network/chat/HoverEvent.java
 +++ b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-@@ -247,7 +247,7 @@ public class HoverEvent {
+@@ -246,7 +246,7 @@ public class HoverEvent {
          @Nullable
          private ItemStack itemStack;
  
@@ -151,18 +151,18 @@ index fda8aad4a394cf331f3421ec07ffe0d605c8da4e..ec9a03adbd3c8becd1104edff020cf76
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 8f2f516b1f473ce18a07e9f130b49b795dd6b46e..8162409d0ac92deda5580f13f2824623f3807930 100644
+index 66f808cabcf6a9a6584849b285f1c60133adc7b4..bd5070912f3d54bcbcc7f10e7a6313e67dea728c 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -69,6 +69,7 @@ import net.minecraft.core.Registry;
+@@ -68,6 +68,7 @@ import net.minecraft.core.Registry;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.nbt.NbtOps;
-+import net.minecraft.nbt.StringTag;
++import net.minecraft.nbt.StringTag; // PaperDragon
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.ComponentUtils;
  import net.minecraft.network.chat.HoverEvent;
-@@ -1233,8 +1234,26 @@ public final class ItemStack {
+@@ -1232,8 +1233,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {
