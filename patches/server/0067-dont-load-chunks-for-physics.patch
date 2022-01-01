@@ -5,10 +5,10 @@ Subject: [PATCH] dont load chunks for physics
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 0536f3653456d3d9e13d21ceb1712b37643a4088..077581edbfef31db213ffee5d92adcdcdd48eb4f 100644
+index f00d86818323ce0736f9ff5f24dd69124cc613bb..24687277e8e1a25b44acca6740441fda66f44382 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -795,7 +795,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -796,7 +796,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public void neighborChanged(BlockPos pos, Block sourceBlock, BlockPos neighborPos) {
          if (!this.isClientSide) {
