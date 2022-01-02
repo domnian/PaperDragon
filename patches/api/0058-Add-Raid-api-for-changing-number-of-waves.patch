@@ -5,7 +5,7 @@ Subject: [PATCH] Add Raid api for changing number of waves
 
 
 diff --git a/src/main/java/org/bukkit/Raid.java b/src/main/java/org/bukkit/Raid.java
-index 983a8c20a06d2b509602b27f49c090598b8ecc42..3def37d2ce0b501b81727c877cc388fb76e3ba7c 100644
+index 983a8c20a06d2b509602b27f49c090598b8ecc42..29a0067600bdecdcccdc8f65b21db13d093c032c 100644
 --- a/src/main/java/org/bukkit/Raid.java
 +++ b/src/main/java/org/bukkit/Raid.java
 @@ -85,7 +85,7 @@ public interface Raid {
@@ -13,7 +13,7 @@ index 983a8c20a06d2b509602b27f49c090598b8ecc42..3def37d2ce0b501b81727c877cc388fb
       */
      int getTotalWaves();
 -
-+    void setTotalWaves(int total); // EMC
++    void setTotalWaves(int total); // PaperDragon
      /**
       * Gets the sum of all raider's health.
       *
