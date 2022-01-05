@@ -18,7 +18,7 @@ index 876c7160bf7fa3113dee6527631682d729a94612..dc783c0476c5aa96bc147c556cef6d9c
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 8d10bea6c29cb12485b6a5cbc4b48c4ab09b9d57..fdbf858ebaae8157a4cefaaa3a96c39fce737e20 100644
+index ddcf1964c1590ba60962a6380092dbae98f0b3f4..84ac8d86295114f96342c9f020c0049bb9d9b081 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -46,6 +46,7 @@ public class ItemEntity extends Entity {
@@ -27,10 +27,10 @@ index 8d10bea6c29cb12485b6a5cbc4b48c4ab09b9d57..fdbf858ebaae8157a4cefaaa3a96c39f
      public boolean canDespawn = true; // PaperDragon
 +    public BlockPos droppedPosition; // PaperDragon
      public int pickupDelay;
-     private int health;
+     public int health;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index ab5b9f00123e2ede2931ffc520684e482aac49b4..3c96d96585ef92c285d138cdb87e63a039b6086f 100644
+index ab5b9f00123e2ede2931ffc520684e482aac49b4..9641783c56f29581f4f31fd2612cd6ce5ea42b99 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -21,6 +21,7 @@ import net.minecraft.core.Registry;
@@ -46,7 +46,7 @@ index ab5b9f00123e2ede2931ffc520684e482aac49b4..3c96d96585ef92c285d138cdb87e63a0
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack);
 -        }, stack);
-+        }, stack, pos);
++        }, stack, pos); // PaperDragon
      }
  
      public static void popResourceFromFace(Level world, BlockPos pos, Direction direction, ItemStack stack) {
@@ -55,7 +55,7 @@ index ab5b9f00123e2ede2931ffc520684e482aac49b4..3c96d96585ef92c285d138cdb87e63a0
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack, d3, d4, d5);
 -        }, stack);
-+        }, stack, pos);
++        }, stack, pos); // PaperDragon
      }
  
 -    private static void popResource(Level world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack) {

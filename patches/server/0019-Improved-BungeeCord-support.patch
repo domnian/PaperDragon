@@ -7,7 +7,7 @@ Secure BungeeCord with IP Whitelist for IP/UUID forwarding
 Allow online-mode to be set to true, and skip online-mode for bungee IP's
 
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index a7e7fe4be2784ff34f7f8d0b6c2f82d65de8c145..cded387217952e78e5e143b9c25b53e0d9c4d047 100644
+index 81dde0efc1a06420c0791520b9e40b24dd1f0318..b117297ec1e7d30c418564b436c377e7b1c382ad 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
 @@ -76,6 +76,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
@@ -19,7 +19,7 @@ index a7e7fe4be2784ff34f7f8d0b6c2f82d65de8c145..cded387217952e78e5e143b9c25b53e0
      private Component disconnectedReason;
      private boolean encrypted;
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index 451ca1a1d84227274fd59fc5d46654a441561710..6494cfad1b47daff2fa10347bda442d6060e0b8c 100644
+index 150050fb343ef6119204b7d5220207765a6937bc..46995ec7762c8a83043644aa9fdaa59af16a3a46 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 @@ -92,7 +92,8 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
@@ -41,19 +41,6 @@ index 451ca1a1d84227274fd59fc5d46654a441561710..6494cfad1b47daff2fa10347bda442d6
                          {
                              TranslatableComponent chatmessage = new TranslatableComponent("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
                              this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
-diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 33a29890435d6065a2cc4f8e8bf8209c01d5d114..13bae3f9f9ba5dcf493e395dd15c8ef78f231e49 100644
---- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-+++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -234,7 +234,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
-     public void handleHello(ServerboundHelloPacket packet) {
-         Validate.validState(this.state == ServerLoginPacketListenerImpl.State.HELLO, "Unexpected hello packet", new Object[0]);
-         this.gameProfile = packet.getGameProfile();
--        if (this.server.usesAuthentication() && !this.connection.isMemoryConnection()) {
-+        if (!this.connection.isProxied && this.server.usesAuthentication() && !this.connection.isMemoryConnection()) { // PaperDragon - add !isProxied
-             this.state = ServerLoginPacketListenerImpl.State.KEY;
-             this.connection.send(new ClientboundHelloPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.nonce));
-         } else {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 3b9dfaf9e6a63220754738dc966ee72cb91f80a4..7128bd439fd9c318de12b52b3a01d73cf6539ae5 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java

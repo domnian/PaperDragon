@@ -63,10 +63,10 @@ index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7
 +
 +}
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index b7c45aa5d5f79fd16e59401acfa9c2bed0a5d78c..2470db2a36298b489694991fe66d1bfa19cc1081 100644
+index 53c4e5ca208ee17c7c244e416c537c7b63edf194..c495b9376efa15a87f96a36dfceea3927bba0872 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -2138,4 +2138,14 @@ public final class Bukkit {
+@@ -2181,4 +2181,14 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -82,10 +82,10 @@ index b7c45aa5d5f79fd16e59401acfa9c2bed0a5d78c..2470db2a36298b489694991fe66d1bfa
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index b4e29b960a0ba5d7550c308f46fe8c89dcdf51ac..a8a3a8987e6150fb508c793430c4d50148096a9e 100644
+index 43846c8a146c7ee8613b4d6cbfb09d0b5c79869b..d04df361eb2bba2bfd9e7c2d1ee1246de3112be9 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1860,4 +1860,12 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1895,4 +1895,12 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
      @NotNull
      io.papermc.paper.datapack.DatapackManager getDatapackManager();
      // Paper end

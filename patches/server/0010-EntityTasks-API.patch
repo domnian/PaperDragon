@@ -123,7 +123,7 @@ index 28f605c3daa969c1a54745e552d55ecb874120a9..885314a1e5e0f80e6c645c408c115db1
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4f06df6817ebc124025b68d3a545a5ea6a696a5f..62ce5788062b691d5e5700943c4a947b536e11c8 100644
+index 713db61a83eb81c5f019a23ec31ad8f95c498a69..7ad493ba088e0022b60e2445efa8638f7035e674 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -142,7 +142,7 @@ index 4f06df6817ebc124025b68d3a545a5ea6a696a5f..62ce5788062b691d5e5700943c4a947b
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 733c717d06c896b2c10b7ff132fdf4d8423e960c..e547bb0924d35d0e1361b76b0146a11441a7298f 100644
+index f39ab5394643552c69becfddf78e03691ae703f8..03aac68e6472e6fc2280e299d4058f010ae2be65 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -152,7 +152,7 @@ index 733c717d06c896b2c10b7ff132fdf4d8423e960c..e547bb0924d35d0e1361b76b0146a114
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
-@@ -1015,7 +1016,10 @@ public final class CraftServer implements Server {
+@@ -1036,7 +1037,10 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }
