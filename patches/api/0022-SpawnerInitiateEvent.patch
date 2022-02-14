@@ -6,10 +6,10 @@ Subject: [PATCH] SpawnerInitiateEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..065a8ba4c48d27cd4d87b9442dac7cf8124cabc8
+index 0000000000000000000000000000000000000000..c7036f19e9f35256a1ee6c7a64b01d37a4863d42
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
-@@ -0,0 +1,93 @@
+@@ -0,0 +1,88 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -35,7 +35,6 @@ index 0000000000000000000000000000000000000000..065a8ba4c48d27cd4d87b9442dac7cf8
 +
 +package com.domnian.paperdragon.events;
 +
-+import org.bukkit.NamespacedKey;
 +import org.bukkit.Location;
 +import org.bukkit.World;
 +import org.bukkit.entity.EntityType;
@@ -52,12 +51,12 @@ index 0000000000000000000000000000000000000000..065a8ba4c48d27cd4d87b9442dac7cf8
 +    private final Location loc;
 +    private final World world;
 +    private final HumanEntity entity;
-+    private NamespacedKey mob;
++    private final EntityType type;
 +
-+    public SpawnerInitiateEvent(@NotNull NamespacedKey mob, @NotNull World world, @NotNull Location loc, @NotNull HumanEntity entity) {
++    public SpawnerInitiateEvent(@NotNull EntityType type, @NotNull World world, @NotNull Location loc, @NotNull HumanEntity entity) {
 +        this.world = world;
 +        this.loc = loc;
-+        this.mob = mob;
++        this.type = type;
 +        this.entity = entity;
 +    }
 +
@@ -68,11 +67,7 @@ index 0000000000000000000000000000000000000000..065a8ba4c48d27cd4d87b9442dac7cf8
 +
 +    @Nullable
 +    public EntityType getMobType() {
-+        return EntityType.fromName(mob.getKey());
-+    }
-+
-+    public void setMobType(@NotNull NamespacedKey key) {
-+        this.mob = key;
++        return type;
 +    }
 +
 +    @NotNull

@@ -6,10 +6,10 @@ Subject: [PATCH] MonsterEggSpawn Event
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..895ff6bc15228f4a5986b25ff5890046359bc76f
+index 0000000000000000000000000000000000000000..7cee52fd57dd76ecf285aae936a2ffd9c00c1362
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,68 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.HumanEntity;
@@ -72,6 +72,7 @@ index 0000000000000000000000000000000000000000..895ff6bc15228f4a5986b25ff5890046
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

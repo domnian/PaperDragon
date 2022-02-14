@@ -187,10 +187,10 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75fe10cf12d 100644
+index 91961b831028bb03e29038c15b87f1a41e4a1dda..65ec5aacc444cb2bb34a89f52acfbf6a33a34836 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1,11 +1,13 @@
+@@ -1,9 +1,11 @@
  package org.bukkit.entity;
  
  import java.net.InetSocketAddress;
@@ -198,17 +198,14 @@ index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75f
  import java.util.UUID;
  import com.destroystokyo.paper.ClientOption; // Paper
  import com.destroystokyo.paper.Title; // Paper
- import net.kyori.adventure.text.Component;
- import com.destroystokyo.paper.profile.PlayerProfile; // Paper
 +import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
- import java.util.Date; // Paper
- import org.bukkit.BanEntry; // Paper
- import org.bukkit.BanList; // Paper
-@@ -1329,7 +1331,39 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
-      *     player
+ import net.kyori.adventure.text.Component;
+ import org.bukkit.DyeColor;
+ import org.bukkit.Effect;
+@@ -1379,6 +1381,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
--
+ 
 +    // PaperDragon start
 +    /**
 +     * Checks to see if a fake player has been hidden from this player
@@ -218,6 +215,7 @@ index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75f
 +     *     player
 +     */
 +    boolean canSee(@NotNull FakePlayer fakePlayer);
++
 +    /**
 +     * Hides a fake player from this player
 +     *
@@ -225,6 +223,7 @@ index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75f
 +     * @param fakePlayer FakePlayer to hide
 +     */
 +    void hideFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer);
++
 +    /**
 +     * Allows this player to see a fake player that was previously hidden. If
 +     * another another plugin had hidden the fake player too, then the player will
@@ -234,6 +233,7 @@ index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75f
 +     * @param fakePlayer FakePlayer to show
 +     */
 +    void showFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer);
++
 +    /**
 +     * Gets all fake players hidden with {@link #hideFakePlayer(Plugin, FakePlayer)}.
 +     *
@@ -242,6 +242,7 @@ index 9014d80552d51be1d539fe0221ef6dacf40d86da..d1bbc47751e481771c02fb80546fe75f
 +    @NotNull
 +    Set<FakePlayer> getHiddenFakePlayers();
 +    // PaperDragon end
++
      /**
       * Visually hides an entity from this player.
       *

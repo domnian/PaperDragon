@@ -5,10 +5,10 @@ Subject: [PATCH] Add getLocation() to OfflinePlayer
 
 
 diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
-index 3afd5f5c0208a4ee93b5dbfc2aab2b9d2e8a7544..4bb55781b59be4b83143695849c9c50b6b02d410 100644
+index 23e853bae0e051cd43deb9eb24c54e74a56d8ab0..c623862c9c0bc9a896313f74beb08e96f1d206c5 100644
 --- a/src/main/java/org/bukkit/OfflinePlayer.java
 +++ b/src/main/java/org/bukkit/OfflinePlayer.java
-@@ -434,4 +434,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
+@@ -447,4 +447,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
       *     for the statistic
       */
      public void setStatistic(@NotNull Statistic statistic, @NotNull EntityType entityType, int newValue);

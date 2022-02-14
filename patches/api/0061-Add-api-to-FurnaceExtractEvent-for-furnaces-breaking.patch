@@ -1,20 +1,20 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Wed, 2 Jun 2021 09:15:57 -0500
-Subject: [PATCH] Add api to FuranceExtractEvent for furances breaking
+Subject: [PATCH] Add api to FurnaceExtractEvent for furnaces breaking
 
 Specifically nullable player and extracted item
 Added result item type and amount
 
 diff --git a/src/main/java/org/bukkit/event/inventory/FurnaceExtractEvent.java b/src/main/java/org/bukkit/event/inventory/FurnaceExtractEvent.java
-index 020739697a0b535cad0b15b574f77cdabbdfa3eb..2cc0fa0e2a918226d734d77c24ee55e30f983713 100644
+index 020739697a0b535cad0b15b574f77cdabbdfa3eb..988321cdfdb68326b74272325efb070321560eb9 100644
 --- a/src/main/java/org/bukkit/event/inventory/FurnaceExtractEvent.java
 +++ b/src/main/java/org/bukkit/event/inventory/FurnaceExtractEvent.java
 @@ -5,6 +5,7 @@ import org.bukkit.block.Block;
  import org.bukkit.entity.Player;
  import org.bukkit.event.block.BlockExpEvent;
  import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
++import org.jetbrains.annotations.Nullable; // PaperDragon
  
  /**
   * This event is called when a player takes items out of the furnace

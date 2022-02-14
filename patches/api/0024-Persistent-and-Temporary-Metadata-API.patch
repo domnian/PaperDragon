@@ -3,7 +3,7 @@ From: Aikar <aikar@aikar.co>
 Date: Thu, 4 Jul 2013 21:04:26 -0400
 Subject: [PATCH] Persistent and Temporary Metadata API
 
-Entity, TileEntity, World, Chunk, Block, Inventory API's
+Entity, TileEntity, World, Chunk, Block, Inventory APIs
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 index e58dfc8780b55af7154b1d2054f321a3c867decb..f69eca81eade4b86e51b2dbfbc25ed719df3c1c7 100644
@@ -1640,7 +1640,7 @@ index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 5a4884db36d448c885e49c965ae329a0638dd628..0259f2b81a8ef5f2e24055a7866451570b99e9c6 100644
+index 049c36807d2a970842442c1b7517c06f3f150041..0e62fd42e7796733e1510913f31fd27e7b711d17 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,8 @@ package org.bukkit;
@@ -1666,7 +1666,7 @@ index 5a4884db36d448c885e49c965ae329a0638dd628..0259f2b81a8ef5f2e24055a786645157
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 1f8a51897d9de00f0004ab1de479198390483f7d..f676756dbb900e446f269ec81c9079e19981cf58 100644
+index 959ee46cd440af5a4e5db3f6ee8b163db8e40d86..13f846c65c6d18a84becf5684c66065cf2455210 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1678,7 +1678,7 @@ index 1f8a51897d9de00f0004ab1de479198390483f7d..f676756dbb900e446f269ec81c9079e1
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -42,6 +44,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -43,6 +45,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a world, which may contain entities, chunks and blocks
   */
  public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
@@ -1705,7 +1705,7 @@ index 96cde879922c796f3ac8d14ee99d7b190ff67bd9..d73fb862201dfb0fcea5a5528c6f2f51
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index bafad5764cc3933fcd9602d37bd2e68424cbd575..23c4b5f6aec9abc19b15f896c175c19437dd5e93 100644
+index 8bc6876c82935988436597161fa0ec94c032174b..cf65d590688ae9f51f6f3ec5beaaeda37c2448dd 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1732,7 +1732,7 @@ index bafad5764cc3933fcd9602d37bd2e68424cbd575..23c4b5f6aec9abc19b15f896c175c194
       * Gets the entity's current position
       *
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index fd9e0cd2ed80252ffe76a5df12d32038fad2dfbc..f4d47f6e836003191039840d169f9e08994120a2 100644
+index 072ecb1c23a1224483999db416edd5eda7ffe78d..ecc727f024ca2daa6ba4afe58aaf97102bc98338 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
