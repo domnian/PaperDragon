@@ -113,14 +113,14 @@ index 0000000000000000000000000000000000000000..21bd42ff9d3f744ce9eb06d269d13495
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e0b723f27a73964104cb6fc0a43c85f0bd394e27..21f30a07cda4f6b7127858c661d3e38f7fd2febc 100644
+index 77b7477c88f3317b54e962cbfc0754ba20d5027d..da301577b37eb82119d02ef3843089116f7d5558 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -297,6 +297,7 @@ public final class CraftServer implements Server {
-     private final SysoutCatcher sysoutCatcher = new SysoutCatcher(); // Paper
+@@ -289,6 +289,7 @@ public final class CraftServer implements Server {
+     private final io.papermc.paper.logging.SysoutCatcher sysoutCatcher = new io.papermc.paper.logging.SysoutCatcher(); // Paper
  
      static {
 +        com.domnian.paperdragon.api.DragonAPI api = com.domnian.paperdragon.api.CraftDragonAPI.instance; // PaperDragon - Dragon API - Force load at server start
          ConfigurationSerialization.registerClass(CraftOfflinePlayer.class);
-         CraftItemFactory.instance();
-     }
+         ConfigurationSerialization.registerClass(CraftPlayerProfile.class);
+         ConfigurationSerialization.registerClass(com.destroystokyo.paper.profile.CraftPlayerProfile.class); // Paper

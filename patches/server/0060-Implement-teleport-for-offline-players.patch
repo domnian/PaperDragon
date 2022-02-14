@@ -5,10 +5,10 @@ Subject: [PATCH] Implement teleport() for offline players
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 11c78c347aaf11046af9c1a1d8ed450040c23c5f..27779df9c3f29be76b32cb690f5aced279d2f3d7 100644
+index d481d200ef03e1bc57b8abf5bc1458ffa6ca3638..2ef4e0ef057aaafe69dda8e132aaa906a31c47bf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -570,5 +570,33 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -572,5 +572,33 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
              return false;
          }
      }

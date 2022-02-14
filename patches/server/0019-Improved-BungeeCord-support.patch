@@ -19,7 +19,7 @@ index 81dde0efc1a06420c0791520b9e40b24dd1f0318..b117297ec1e7d30c418564b436c377e7
      private Component disconnectedReason;
      private boolean encrypted;
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index 150050fb343ef6119204b7d5220207765a6937bc..46995ec7762c8a83043644aa9fdaa59af16a3a46 100644
+index 150050fb343ef6119204b7d5220207765a6937bc..df3a09962d3e32aae6c5c51524f4a400dd7747c3 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 @@ -92,7 +92,8 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
@@ -27,12 +27,20 @@ index 150050fb343ef6119204b7d5220207765a6937bc..46995ec7762c8a83043644aa9fdaa59a
                      this.connection.setListener(new ServerLoginPacketListenerImpl(this.server, this.connection));
                  // Paper start - handshake event
 -                boolean proxyLogicEnabled = org.spigotmc.SpigotConfig.bungee;
-+                String ip = ((java.net.InetSocketAddress) this.connection.address).getAddress().getHostAddress(); // PaperDragon
++                String ip = ((java.net.InetSocketAddress) this.connection.getRemoteAddress()).getAddress().getHostAddress(); // PaperDragon
 +                boolean proxyLogicEnabled = org.spigotmc.SpigotConfig.bungee && org.spigotmc.SpigotConfig.bungeeAddresses.contains(ip); // PaperDragon - add bungeeAddresses check
                  boolean handledByEvent = false;
                  // Try and handle the handshake through the event
                  if (com.destroystokyo.paper.event.player.PlayerHandshakeEvent.getHandlerList().getRegisteredListeners().length != 0) { // Hello? Can you hear me?
-@@ -128,7 +129,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+@@ -121,6 +122,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+                     if (!handledByEvent && proxyLogicEnabled) {
+                         // Paper end
+                     // if (org.spigotmc.SpigotConfig.bungee) { // Paper - comment out, we check above!
++                        connection.isProxied = true; // PaperDragon
+                         if ( ( split.length == 3 || split.length == 4 ) && ( ServerHandshakePacketListenerImpl.BYPASS_HOSTCHECK || ServerHandshakePacketListenerImpl.HOST_PATTERN.matcher( split[1] ).matches() ) ) { // Paper
+                             // Paper start - Unix domain socket support
+                             java.net.SocketAddress socketAddress = connection.getRemoteAddress();
+@@ -128,7 +130,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
                              connection.address = new java.net.InetSocketAddress(split[1], socketAddress instanceof java.net.InetSocketAddress ? ((java.net.InetSocketAddress) socketAddress).getPort() : 0);
                              // Paper end
                              connection.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
@@ -41,8 +49,21 @@ index 150050fb343ef6119204b7d5220207765a6937bc..46995ec7762c8a83043644aa9fdaa59a
                          {
                              TranslatableComponent chatmessage = new TranslatableComponent("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
                              this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
+diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+index 368e32bc12a1a09bf7309f299a1a72554947f43b..5272db8e1698e2347f6d4d15dcd506355f6e8ab2 100644
+--- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+@@ -263,7 +263,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
+             }
+         }
+         // Paper end - validate usernames
+-        if (this.server.usesAuthentication() && !this.connection.isMemoryConnection()) {
++        if (!this.connection.isProxied && this.server.usesAuthentication() && !this.connection.isMemoryConnection()) { // PaperDragon - add !isProxied
+             this.state = ServerLoginPacketListenerImpl.State.KEY;
+             this.connection.send(new ClientboundHelloPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.nonce));
+         } else {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3b9dfaf9e6a63220754738dc966ee72cb91f80a4..7128bd439fd9c318de12b52b3a01d73cf6539ae5 100644
+index d509187ca63963fdd7f1a44d89d2aa1a1b1ce3bd..c9bf761bfdc222c3880e43a426e45991c847ee01 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -233,6 +233,7 @@ public class SpigotConfig

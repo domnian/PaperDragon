@@ -5,11 +5,11 @@ Subject: [PATCH] Implement getLocation() for offline players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a9e8507af88d65971b35b0b4bb2d88efa92d99ba..9e8d36ef91bad6af2b98c5f299bdad398920ff27 100644
+index 9f8f90a4abb2874815d29e090df1a8b14f2270ed..dde9b521fa0aed2644a4dc8f952974955234c4dc 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2171,6 +2171,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
-                 nbt.putBoolean("Paper.FromNetherPortal", true);
+@@ -2185,6 +2185,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+                 nbt.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
 +            nbt.putString("Dragon.DisconnectWorld", ((ServerLevel) this.level).serverLevelData.getLevelName()); // PaperDragon start - save disconnect world
@@ -17,25 +17,17 @@ index a9e8507af88d65971b35b0b4bb2d88efa92d99ba..9e8d36ef91bad6af2b98c5f299bdad39
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 88bc0807e8bf66a65422f85f1112336334eb3de2..76ed77f71c2c008a8dc2045ee52f8c5661bce0cd 100644
+index 1f2bc88d4570c6ef00e67a772b745e0b0c98e051..47c9e7c9de620a5c55ca90314f7866c632a24842 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -23,6 +23,7 @@ import org.bukkit.entity.EntityType;
- import org.bukkit.entity.Player;
- import org.bukkit.metadata.MetadataValue;
- import org.bukkit.plugin.Plugin;
-+import org.jetbrains.annotations.NotNull;
- 
- @SerializableAs("Player")
- public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializable {
-@@ -525,4 +526,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -528,4 +528,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
              manager.save();
          }
      }
 +
 +    // PaperDragon start
-+    @NotNull
 +    @Override
++    @org.jetbrains.annotations.NotNull
 +    public Location getLocation() {
 +        if (this.getPlayer() != null) return getPlayer().getLocation();
 +        CompoundTag data = getData();

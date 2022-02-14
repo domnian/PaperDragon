@@ -217,7 +217,7 @@ index 0000000000000000000000000000000000000000..bb70d70afa91c49be9103823e892ade0
 +
 +}
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
-index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..58e15e3f6c5786a59c6129e9d3c7504bd3cb1427 100644
+index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..138524317c3d705ad9d351603dc7687a8d638cbe 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 @@ -1,5 +1,6 @@
@@ -227,16 +227,15 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..58e15e3f6c5786a59c6129e9d3c7504b
  import com.google.common.base.MoreObjects;
  import com.google.common.collect.Lists;
  import com.mojang.authlib.GameProfile;
-@@ -8,6 +9,8 @@ import com.mojang.authlib.properties.PropertyMap;
+@@ -8,6 +9,7 @@ import com.mojang.authlib.properties.PropertyMap;
  import java.util.Collection;
  import java.util.List;
  import javax.annotation.Nullable;
-+
 +import io.papermc.paper.adventure.PaperAdventure; // PaperDragon
  import net.minecraft.network.FriendlyByteBuf;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.protocol.Packet;
-@@ -18,6 +21,22 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
+@@ -18,6 +20,22 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
      private final ClientboundPlayerInfoPacket.Action action;
      private final List<ClientboundPlayerInfoPacket.PlayerUpdate> entries;
  
@@ -247,10 +246,10 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..58e15e3f6c5786a59c6129e9d3c7504b
 +        for (FakePlayer fakePlayer : fakePlayers) {
 +            if (fakePlayer.getUniqueId() != null) {
 +                this.entries.add(new ClientboundPlayerInfoPacket.PlayerUpdate(
-+                    com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
-+                    fakePlayer.getPing(),
-+                    GameType.byId(fakePlayer.getGameMode().getValue()),
-+                    PaperAdventure.asVanilla(fakePlayer.getPlayerListName())));
++                        com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
++                        fakePlayer.getPing(),
++                        GameType.byId(fakePlayer.getGameMode().getValue()),
++                        PaperAdventure.asVanilla(fakePlayer.getPlayerListName())));
 +            }
 +        }
 +    }
@@ -260,7 +259,7 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..58e15e3f6c5786a59c6129e9d3c7504b
          this.action = action;
          this.entries = Lists.newArrayListWithCapacity(players.length);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index fd82545b4c3d771d2d9589c680ccc2dfc28141b1..8bf24148c8f1650781fb0451a25cfa747dd0a8bb 100644
+index ddfc30a4ded9d2295d225185a320bce7becf1061..428371e196e32bb09614b87d3fc9b438f683da71 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1,6 +1,8 @@
@@ -272,7 +271,7 @@ index fd82545b4c3d771d2d9589c680ccc2dfc28141b1..8bf24148c8f1650781fb0451a25cfa74
  import com.google.common.collect.Lists;
  import com.google.common.collect.Maps;
  import com.google.common.collect.Sets;
-@@ -374,6 +376,13 @@ public abstract class PlayerList {
+@@ -378,6 +380,13 @@ public abstract class PlayerList {
          }
          // CraftBukkit end
  
@@ -287,7 +286,7 @@ index fd82545b4c3d771d2d9589c680ccc2dfc28141b1..8bf24148c8f1650781fb0451a25cfa74
          ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, player);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 64e030075945b7226f7e21a0ebf4440fc4e0deaa..a636492bd2ce0c764c1a032fab6a333446a406e3 100644
+index 7efc62e2631b8fa3a471b29b04113f8dfc1d553f..5415d4e4c15d3f04134a3a4651cb417bd614ecfe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1,6 +1,8 @@
@@ -299,7 +298,7 @@ index 64e030075945b7226f7e21a0ebf4440fc4e0deaa..a636492bd2ce0c764c1a032fab6a3334
  import com.google.common.base.Preconditions;
  import com.google.common.collect.ImmutableSet;
  import com.google.common.io.BaseEncoding;
-@@ -1547,6 +1549,75 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1607,6 +1609,81 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          return !this.hiddenEntities.containsKey(entity.getUniqueId());
      }
  
@@ -310,9 +309,12 @@ index 64e030075945b7226f7e21a0ebf4440fc4e0deaa..a636492bd2ce0c764c1a032fab6a3334
 +    public boolean canSee(@NotNull FakePlayer fakePlayer) {
 +        return !hiddenFakePlayers.containsKey(fakePlayer.getUniqueId());
 +    }
-+    
++
 +    @Override
 +    public void hideFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer) {
++        if (getHandle().connection == null) {
++            return;
++        }
 +        UUID fakeUUID = fakePlayer.getUniqueId();
 +        if (fakeUUID != null && fakeUUID.equals(this.getUniqueId())) {
 +            return;
@@ -336,6 +338,9 @@ index 64e030075945b7226f7e21a0ebf4440fc4e0deaa..a636492bd2ce0c764c1a032fab6a3334
 +
 +    @Override
 +    public void showFakePlayer(@NotNull Plugin plugin, @NotNull FakePlayer fakePlayer) {
++        if (getHandle().connection == null) {
++            return;
++        }
 +        UUID fakeUUID = fakePlayer.getUniqueId();
 +        if (fakeUUID != null && fakeUUID.equals(this.getUniqueId())) {
 +            return;

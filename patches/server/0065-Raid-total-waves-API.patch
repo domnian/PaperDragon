@@ -57,10 +57,10 @@ index 7a5bfc724e42100b7582836ab8c30feed1a3d221..b29620edac4e9a7a57fe5d8c75e6b78a
      public float getTotalHealth() {
          return this.handle.getHealthOfLivingRaiders();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index b02b02cba1bc8d54b14f16351b83b70140aa2212..e84399ef2c2a49ed81c9b97a489ec7aab0fb8907 100644
+index 1dc8ad6149f317af81f0f2a4102bb1ad2d864d1c..c31b6f8158f775515f5a2109da6342f519d16a20 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1806,7 +1806,7 @@ public class CraftEventFactory {
+@@ -1837,7 +1837,7 @@ public class CraftEventFactory {
       * Raid events
       */
      public static boolean callRaidTriggerEvent(Raid raid, ServerPlayer player) {
