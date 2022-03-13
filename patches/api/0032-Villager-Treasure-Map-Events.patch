@@ -5,10 +5,10 @@ Subject: [PATCH] Villager Treasure Map Events
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-index 58da48b696ecccf1dd1c859f5b3db32569134a34..6ae7ca0c6e913ccc0d3421b4403a1c356cb65c22 100644
+index 58da48b696ecccf1dd1c859f5b3db32569134a34..5eaaf2c9a027bd23c930f7b06c616566bc8a1840 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-@@ -23,5 +23,18 @@
+@@ -23,5 +23,12 @@
  
  package com.domnian.paperdragon.api;
  
@@ -18,21 +18,15 @@ index 58da48b696ecccf1dd1c859f5b3db32569134a34..6ae7ca0c6e913ccc0d3421b4403a1c35
 +
  public interface DAPI_Misc {
 +
-+    /**
-+     *
-+     * @param mapType
-+     * @param loc
-+     * @return
-+     */
 +    @NotNull
 +    ItemStack createTreasureMap(@NotNull String mapType, int iconType, @NotNull Location loc);
  }
 diff --git a/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java b/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..92658ea8e68def6425b69d802491b9bf5ad5f377
+index 0000000000000000000000000000000000000000..3d5cfbcd1b06d8d2b8e9321e68186b2119d498e0
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java
-@@ -0,0 +1,92 @@
+@@ -0,0 +1,93 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -61,17 +55,18 @@ index 0000000000000000000000000000000000000000..92658ea8e68def6425b69d802491b9bf
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.inventory.ItemStack;
++import org.bukkit.map.MapCursor;
 +import org.jetbrains.annotations.NotNull;
 +import org.jetbrains.annotations.Nullable;
 +
 +public class CreateTreasureMapEvent extends Event {
-+    private final String mapType;
++    private final MapCursor.Type mapType;
 +    private final int iconTypeId;
 +    private int emeraldCost;
 +    private int maxUses;
 +    private ItemStack item;
 +
-+    public CreateTreasureMapEvent(@NotNull ItemStack originalItem, int originalCost, @NotNull String mapType, int iconTypeId) {
++    public CreateTreasureMapEvent(@NotNull ItemStack originalItem, int originalCost, @NotNull MapCursor.Type mapType, int iconTypeId) {
 +        this.item = originalItem;
 +        this.emeraldCost = originalCost;
 +        this.mapType = mapType;
@@ -79,7 +74,7 @@ index 0000000000000000000000000000000000000000..92658ea8e68def6425b69d802491b9bf
 +    }
 +
 +    @NotNull
-+    public String getMapType() {
++    public MapCursor.Type getMapType() {
 +        return mapType;
 +    }
 +

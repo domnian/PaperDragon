@@ -6,7 +6,7 @@ Subject: [PATCH] Persistent and Temporary Metadata API
 Entity, TileEntity, World, Chunk, Block, Inventory APIs
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index e58dfc8780b55af7154b1d2054f321a3c867decb..f69eca81eade4b86e51b2dbfbc25ed719df3c1c7 100644
+index 53442df68bf18bef5ad6312a74d36c31186d0b91..59030a86ab2fa6bd29878ea8061a49e58c30e074 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -23,6 +23,7 @@
@@ -15,9 +15,9 @@ index e58dfc8780b55af7154b1d2054f321a3c867decb..f69eca81eade4b86e51b2dbfbc25ed71
  
 +import com.domnian.paperdragon.api.meta.DAPI_Meta;
  import org.apache.commons.lang.exception.ExceptionUtils;
+ import org.bukkit.Bukkit;
  import org.jetbrains.annotations.NotNull;
- import org.jetbrains.annotations.Nullable;
-@@ -31,6 +32,7 @@ public abstract class DragonAPI {
+@@ -32,6 +33,7 @@ public abstract class DragonAPI {
  
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
@@ -1640,15 +1640,15 @@ index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 049c36807d2a970842442c1b7517c06f3f150041..0e62fd42e7796733e1510913f31fd27e7b711d17 100644
+index 049c36807d2a970842442c1b7517c06f3f150041..6edbf75784e72a1512b169ce6fe616e136450454 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,8 @@ package org.bukkit;
  import java.util.Collection;
  import java.util.function.Predicate;
  
-+import com.domnian.paperdragon.api.meta.PersistentMetaMap;
-+import com.domnian.paperdragon.api.meta.TempMetaMap;
++import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
++import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockState;
  import org.bukkit.block.data.BlockData;
@@ -1666,22 +1666,22 @@ index 049c36807d2a970842442c1b7517c06f3f150041..0e62fd42e7796733e1510913f31fd27e
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 959ee46cd440af5a4e5db3f6ee8b163db8e40d86..13f846c65c6d18a84becf5684c66065cf2455210 100644
+index 8a688583e65cd22e0417f9fd24e51803486d095e..0e540fc9607174e02e03929ab78d3f91ed6a2eeb 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
  package org.bukkit;
  
  import java.io.File;
-+import com.domnian.paperdragon.api.meta.PersistentMetaMap;
-+import com.domnian.paperdragon.api.meta.TempMetaMap;
++import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
++import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -43,6 +45,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -44,6 +46,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a world, which may contain entities, chunks and blocks
   */
- public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
+ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, PersistentDataHolder, net.kyori.adventure.audience.ForwardingAudience, Keyed { // Paper
 +    // PaperDragon start
 +    @NotNull
 +    PersistentMetaMap getPersistentMeta();
@@ -1705,7 +1705,7 @@ index 96cde879922c796f3ac8d14ee99d7b190ff67bd9..d73fb862201dfb0fcea5a5528c6f2f51
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 8bc6876c82935988436597161fa0ec94c032174b..cf65d590688ae9f51f6f3ec5beaaeda37c2448dd 100644
+index 8bc6876c82935988436597161fa0ec94c032174b..7befcde0321da408f2e7a6f152da8f5bb298739d 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1713,8 +1713,8 @@ index 8bc6876c82935988436597161fa0ec94c032174b..cf65d590688ae9f51f6f3ec5beaaeda3
  import java.util.Set;
  import java.util.UUID;
 +
-+import com.domnian.paperdragon.api.meta.PersistentMetaMap;
-+import com.domnian.paperdragon.api.meta.TempMetaMap;
++import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
++import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
  import org.bukkit.Chunk; // Paper
  import org.bukkit.EntityEffect;
  import org.bukkit.Location;

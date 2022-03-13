@@ -5,7 +5,7 @@ Subject: [PATCH] Entity Tasks
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 001b210b3101f2c7c4e0b6ac9c47ca46d6b19181..15c7f1a4bdec6e1fd62c0178541cdf5bc4539172 100644
+index 30316ddecd8351d04d402b748cbd3472203d9a38..91a4ef53fae0622c0f9c64c8b989f1bbe035fbae 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 @@ -23,6 +23,7 @@
@@ -16,9 +16,9 @@ index 001b210b3101f2c7c4e0b6ac9c47ca46d6b19181..15c7f1a4bdec6e1fd62c0178541cdf5b
  import org.bukkit.World;
  import org.bukkit.entity.Entity;
  import org.jetbrains.annotations.NotNull;
-@@ -33,4 +34,68 @@ public interface DAPI_Entity {
-     @NotNull byte[] serializeEntity(@NotNull Entity craftentity);
-     @Nullable Entity deserializeEntity(@NotNull byte[] data, @NotNull World world);
+@@ -35,4 +36,68 @@ public interface DAPI_Entity {
+     @Deprecated(since="1.18.2", forRemoval=true)
+     @Nullable Entity deserializeEntity(byte[] data, @NotNull World world);
  
 +    void cancelTasks(@NotNull Entity entity);
 +

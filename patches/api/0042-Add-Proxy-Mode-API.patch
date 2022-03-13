@@ -4,17 +4,18 @@ Date: Sun, 3 Jul 2016 18:48:29 -0400
 Subject: [PATCH] Add Proxy Mode API
 
 A server can be in one of four modes:
-* Bungeecord
+* Offline Bungeecord
+* Online Bungeecord
 * Offline Velocity
 * Online Velocity
 * None (No Proxy)
 
 diff --git a/src/main/java/com/domnian/paperdragon/ProxyMode.java b/src/main/java/com/domnian/paperdragon/ProxyMode.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7d9c78fc5
+index 0000000000000000000000000000000000000000..843abce6e0da9ff308ddd33dc4d8034fee7d8b7a
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/ProxyMode.java
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,52 @@
 +package com.domnian.paperdragon;
 +
 +public enum ProxyMode {
@@ -25,9 +26,14 @@ index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7
 +    NONE,
 +
 +    /**
-+     * The server is running behind a Bungeecord proxy
++     * The server is running behind a Bungeecord proxy, set to offline (unauthenticated) mode
 +     */
-+    BUNGEECORD,
++    BUNGEECORD_OFFLINE,
++
++    /**
++     * The server is running behind a Bungeecord proxy, set to online (authenticated) mode
++     */
++    BUNGEECORD_ONLINE,
 +
 +    /**
 +     * The server is running behind a Velocity proxy, set to offline (unauthenticated) mode
@@ -50,11 +56,11 @@ index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7
 +    }
 +
 +    public boolean isOnlineMode() {
-+        return this == BUNGEECORD || this == VELOCITY_ONLINE;
++        return this == BUNGEECORD_ONLINE || this == VELOCITY_ONLINE;
 +    }
 +
 +    public boolean isBungee() {
-+        return this == BUNGEECORD;
++        return this == BUNGEECORD_OFFLINE || this == BUNGEECORD_ONLINE;
 +    }
 +
 +    public boolean isVelocity() {
@@ -63,10 +69,10 @@ index 0000000000000000000000000000000000000000..495fd4f73e4548c99c12e477823c02e7
 +
 +}
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 795f8c0aa3929f6de4b4ea4b139bef8b672ab97a..e25c75e188af92c53ec4a75a71f1db5ea9277d0a 100644
+index 944f9b87a11472ac6d7e328acc00bf09f899e648..49d82830b56cfdc19b856f151e05fc63256d6f73 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -2303,4 +2303,14 @@ public final class Bukkit {
+@@ -2312,4 +2312,14 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -82,12 +88,12 @@ index 795f8c0aa3929f6de4b4ea4b139bef8b672ab97a..e25c75e188af92c53ec4a75a71f1db5e
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 18a64139e705da273b96caecb5285fd3c87f6f40..308f3a8cfbff269cede41b9ad6718dba808e522d 100644
+index 1fbb8f4b09effca89a258a07c8c83d26d5902aa5..db7280abbcbfed22dfb846e11054e5136734c4a5 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2003,4 +2003,12 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
-     @NotNull
-     io.papermc.paper.datapack.DatapackManager getDatapackManager();
+@@ -2010,4 +2010,12 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+      */
+     @NotNull org.bukkit.potion.PotionBrewer getPotionBrewer();
      // Paper end
 +
 +    // PaperDragon start

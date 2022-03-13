@@ -8,7 +8,7 @@ lightning if thrown during a thunderstorm.
 This returns if a player caused the lightning strike.
 
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 6f5b6901032eb03606c4566b24459a03baac0c73..cf7cfca73a89e6243ebbf089835a38e084468e9f 100644
+index 6f5b6901032eb03606c4566b24459a03baac0c73..0a4e47c3ffe5e9df416bc3711e8c309e2e78f934 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -1,6 +1,7 @@
@@ -19,7 +19,7 @@ index 6f5b6901032eb03606c4566b24459a03baac0c73..cf7cfca73a89e6243ebbf089835a38e0
  
  /**
   * Represents an instance of a lightning strike. May or may not do damage.
-@@ -85,6 +86,19 @@ public interface LightningStrike extends Entity {
+@@ -85,6 +86,20 @@ public interface LightningStrike extends Entity {
      @org.jetbrains.annotations.Nullable
      Entity getCausingEntity();
  
@@ -30,6 +30,7 @@ index 6f5b6901032eb03606c4566b24459a03baac0c73..cf7cfca73a89e6243ebbf089835a38e0
 +     * @return the player that caused the strike or else null
 +     */
 +    @Nullable
++    @Deprecated
 +    default Player getPlayerCause() {
 +        Entity cause = getCausingEntity();
 +        return cause instanceof Player ? (Player) cause : null;

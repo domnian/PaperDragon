@@ -60,16 +60,16 @@ index 0000000000000000000000000000000000000000..7a19c0f7bab0245ec4835e533c86d572
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 0259f2b81a8ef5f2e24055a7866451570b99e9c6..d6172c607e51c7551e54b4d1fa0ff4ddf7fec020 100644
+index 6edbf75784e72a1512b169ce6fe616e136450454..2d13637877e6cd4b086744a0f6642894c7669bf1 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,7 @@ package org.bukkit;
  import java.util.Collection;
  import java.util.function.Predicate;
  
-+import com.domnian.paperdragon.Identifier;
- import com.domnian.paperdragon.api.meta.PersistentMetaMap;
- import com.domnian.paperdragon.api.meta.TempMetaMap;
++import com.domnian.paperdragon.Identifier; // PaperDragon
+ import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
+ import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
  import org.bukkit.block.Block;
 @@ -22,6 +23,8 @@ public interface Chunk extends PersistentDataHolder {
      TempMetaMap getTempMeta();

@@ -4,7 +4,7 @@ Date: Wed, 27 Apr 2016 02:14:00 -0400
 Subject: [PATCH] Rework Spigot Deprecations
 
 Deprecate Inventory.getContents because md5 likes to make stupid changes
-Undeprecate (get/set)MaxHealth
+Un-deprecate (get/set)MaxHealth
 
 diff --git a/src/main/java/org/bukkit/entity/Damageable.java b/src/main/java/org/bukkit/entity/Damageable.java
 index fc4d3bcd9b16097086fef7975274d825b65adb10..13e8ce4d7a4477988b69269acb893f746c7835d1 100644

@@ -5,11 +5,13 @@ Subject: [PATCH] Entity Serialization
 
 add method to spawn an entity at a location if its not in any world (invalid)
 
+squash entity serialization
+
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 26609a7bd33caf380542d81b7ec23694eefb4312..001b210b3101f2c7c4e0b6ac9c47ca46d6b19181 100644
+index 26609a7bd33caf380542d81b7ec23694eefb4312..30316ddecd8351d04d402b748cbd3472203d9a38 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -23,5 +23,14 @@
+@@ -23,5 +23,16 @@
  
  package com.domnian.paperdragon.api;
  
@@ -20,7 +22,9 @@ index 26609a7bd33caf380542d81b7ec23694eefb4312..001b210b3101f2c7c4e0b6ac9c47ca46
 +
  public interface DAPI_Entity {
 +
-+    @NotNull byte[] serializeEntity(@NotNull Entity craftentity);
-+    @Nullable Entity deserializeEntity(@NotNull byte[] data, @NotNull World world);
++    @Deprecated(since="1.18.2", forRemoval=true)
++    byte[] serializeEntity(@NotNull Entity craftentity);
++    @Deprecated(since="1.18.2", forRemoval=true)
++    @Nullable Entity deserializeEntity(byte[] data, @NotNull World world);
 +
  }

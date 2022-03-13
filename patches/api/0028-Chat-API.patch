@@ -5,7 +5,7 @@ Subject: [PATCH] Chat API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index f69eca81eade4b86e51b2dbfbc25ed719df3c1c7..539000e5ed8a60ff54c0ec6db09dc55bd4788caa 100644
+index 59030a86ab2fa6bd29878ea8061a49e58c30e074..c3f39e8016afe085d5f99edf3f2fb12ac89d6acc 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -23,6 +23,7 @@
@@ -15,8 +15,8 @@ index f69eca81eade4b86e51b2dbfbc25ed719df3c1c7..539000e5ed8a60ff54c0ec6db09dc55b
 +import com.domnian.paperdragon.api.chat.DAPI_Chat;
  import com.domnian.paperdragon.api.meta.DAPI_Meta;
  import org.apache.commons.lang.exception.ExceptionUtils;
- import org.jetbrains.annotations.NotNull;
-@@ -33,6 +34,7 @@ public abstract class DragonAPI {
+ import org.bukkit.Bukkit;
+@@ -34,6 +35,7 @@ public abstract class DragonAPI {
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
      public static DAPI_Meta meta;
