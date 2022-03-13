@@ -78,7 +78,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
              if (this.level != null) LecternBlock.signalPageChange(this.getLevel(), this.getBlockPos(), this.getBlockState()); // CraftBukkit
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index eb0ce87bc8eac723b73c2ee6da41db5da3fab401..49a0e706279bf9abe8d72f285045520224592392 100644
+index e7108dd70f1eb91f38e04ad71e595bc679560f75..33c84736e662e107b94db98f246aa3a5f8490d6c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 @@ -308,6 +308,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
@@ -94,10 +94,10 @@ index eb0ce87bc8eac723b73c2ee6da41db5da3fab401..49a0e706279bf9abe8d72f2850455202
  
          if (iinventory instanceof MenuProvider) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
-index 7a7f3f53aef601f124d474d9890e23d87dd96900..bdb2207aaf0a0fbeae04c5303407ec713452958f 100644
+index 54e61b9b058bee2167461aaaf828ed7a00949c29..0beef7d3a24be5a9bb5688df434b3555640f6927 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
-@@ -158,8 +158,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
+@@ -182,8 +182,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
  
          @Override
          public Container getTileEntity() {

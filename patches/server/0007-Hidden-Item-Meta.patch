@@ -138,7 +138,7 @@ index 896a4237f871d46cf39b0721e909c2cc3b5fc728..439d78b6473b39ebb0738b09b9171071
                      CompoundTag owner = itemstack.tag.getCompound("SkullOwner");
                      if (itemstack.tag.contains("SkullOwnerOrig")) {
 diff --git a/src/main/java/net/minecraft/network/chat/HoverEvent.java b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-index e77b39659174177918d1ec27cfa3c6ac63361714..554143f9bdd8b50bbea9d49e5e34e80875aaf9ca 100644
+index b31ff9d237f593e58b42b453632aa2c2af74f986..d87ebc8e9a311eea0a22c6277c82d690e31b0b63 100644
 --- a/src/main/java/net/minecraft/network/chat/HoverEvent.java
 +++ b/src/main/java/net/minecraft/network/chat/HoverEvent.java
 @@ -246,7 +246,7 @@ public class HoverEvent {
@@ -151,18 +151,18 @@ index e77b39659174177918d1ec27cfa3c6ac63361714..554143f9bdd8b50bbea9d49e5e34e808
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 66f808cabcf6a9a6584849b285f1c60133adc7b4..bd5070912f3d54bcbcc7f10e7a6313e67dea728c 100644
+index dc4639f905fb71435daf29c61f64621a3e2cc533..fbd2dcf354f567f8c14900fe97184361745c64ac 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -68,6 +68,7 @@ import net.minecraft.core.Registry;
+@@ -35,6 +35,7 @@ import net.minecraft.core.Registry;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.nbt.NbtOps;
 +import net.minecraft.nbt.StringTag; // PaperDragon
+ import net.minecraft.nbt.Tag;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.ComponentUtils;
- import net.minecraft.network.chat.HoverEvent;
-@@ -1232,8 +1233,26 @@ public final class ItemStack {
+@@ -1240,8 +1241,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {

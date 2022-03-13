@@ -5,10 +5,10 @@ Subject: [PATCH] Add EntityEffectAddedEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index f71207b57c887385d38962e9e3fd6bdb9f925693..a3563c7757f0c0f21ad01b8bb3e639aad2c44242 100644
+index a8e3ac2186f89161f00efa3e504116e7d46c1ae0..49139f7f74e4ece7c38778f4cfee19967def3cb4 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -128,6 +128,7 @@ import org.bukkit.Location;
+@@ -130,6 +130,7 @@ import org.bukkit.Location;
  import org.bukkit.craftbukkit.attribute.CraftAttributeMap;
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -16,7 +16,7 @@ index f71207b57c887385d38962e9e3fd6bdb9f925693..a3563c7757f0c0f21ad01b8bb3e639aa
  import org.bukkit.entity.Player;
  import org.bukkit.event.entity.ArrowBodyCountChangeEvent;
  import org.bukkit.event.entity.EntityDamageEvent;
-@@ -1102,7 +1103,13 @@ public abstract class LivingEntity extends Entity {
+@@ -1105,7 +1106,13 @@ public abstract class LivingEntity extends Entity {
              return true;
          }
          // CraftBukkit end

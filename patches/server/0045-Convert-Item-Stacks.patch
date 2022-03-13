@@ -5,10 +5,10 @@ Subject: [PATCH] Convert Item Stacks
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 16b2abfde744a349f258b4c1afddcafb4513c6f4..b84fa7a977ba7baef97a846b53c7ed5f6591ec7b 100644
+index 9d75d2392ab279f46f0a7611f32a72100177a304..f24641f9cc65ccc8d30f44a7ff05a767b33055f5 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -228,6 +228,7 @@ public final class ItemStack {
+@@ -234,6 +234,7 @@ public final class ItemStack {
          this.updateEmptyCacheFlag();
      }
  
@@ -17,7 +17,7 @@ index 16b2abfde744a349f258b4c1afddcafb4513c6f4..b84fa7a977ba7baef97a846b53c7ed5f
      public void convertStack(int version) {
          if (0 < version && version < CraftMagicNumbers.INSTANCE.getDataVersion()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index 1c0ecd8bb3156a8e1718e84455dd9af667adaf7a..76764ed98c630093ab860f486ff535030b05dd4a 100644
+index 446dfea89b4fbab55d1379315247172b6cc4730c..faa013d8eab5e087ba22dc491d43b2a9d7e08dae 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 @@ -5,9 +5,11 @@ import org.bukkit.Color;
@@ -60,7 +60,7 @@ index 1c0ecd8bb3156a8e1718e84455dd9af667adaf7a..76764ed98c630093ab860f486ff53503
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index 14da2997b5fff4434b1fe8d5a1b3109dde143740..c79c82ca20073c613daaf904f4cf37f510d018a0 100644
+index 226d9ac01c601fc8954a88bea93a521cdce79eda..ed652205a5938f3ebdd111314897b6a3b41d4372 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 @@ -39,7 +39,12 @@ public final class CraftItemStack extends ItemStack {
@@ -88,9 +88,9 @@ index 14da2997b5fff4434b1fe8d5a1b3109dde143740..c79c82ca20073c613daaf904f4cf37f5
 +        return itemMeta;
 +        // Paper end
      }
- 
-     public static ItemMeta getItemMeta(net.minecraft.world.item.ItemStack item) {
-@@ -543,7 +552,7 @@ public final class CraftItemStack extends ItemStack {
+     // Paper start
+     public static void applyMetaToItem(net.minecraft.world.item.ItemStack itemStack, ItemMeta meta) {
+@@ -551,7 +560,7 @@ public final class CraftItemStack extends ItemStack {
          item.setTag(tag);
  
          ((CraftMetaItem) itemMeta).applyToItem(tag);
@@ -100,7 +100,7 @@ index 14da2997b5fff4434b1fe8d5a1b3109dde143740..c79c82ca20073c613daaf904f4cf37f5
          if (item.getItem() != null && item.getItem().canBeDepleted()) {
              item.setDamageValue(item.getDamageValue());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 52c303d863fcd064fe766f17e3c08ded02d5fce2..ff8930a60876b3a092543d43b2aa67e6e2db8832 100644
+index eb3dfab97f6d3a80d70d4926d73f22e5de45779a..a7413e6d8f8f2d214b85a95129084713f7a5eede 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -317,6 +317,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

@@ -6,10 +6,10 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index b84fa7a977ba7baef97a846b53c7ed5f6591ec7b..0746f2f2af28f2d50e8de8bd2c6c75a76e8ec597 100644
+index f24641f9cc65ccc8d30f44a7ff05a767b33055f5..d6aa7b023f2cfc94cc1cf3cebaf6e81e8bc34269 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -261,6 +261,7 @@ public final class ItemStack {
+@@ -267,6 +267,7 @@ public final class ItemStack {
  
          if (this.getItem().canBeDepleted()) {
              this.setDamageValue(this.getDamageValue());
@@ -17,7 +17,7 @@ index b84fa7a977ba7baef97a846b53c7ed5f6591ec7b..0746f2f2af28f2d50e8de8bd2c6c75a7
          }
  
      }
-@@ -1158,10 +1159,12 @@ public final class ItemStack {
+@@ -1166,10 +1167,12 @@ public final class ItemStack {
      }
  
      public int getBaseRepairCost() {
@@ -31,7 +31,7 @@ index b84fa7a977ba7baef97a846b53c7ed5f6591ec7b..0746f2f2af28f2d50e8de8bd2c6c75a7
          if (repairCost == 0) {
              this.removeTagKey("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index ff8930a60876b3a092543d43b2aa67e6e2db8832..b13b6fd913b729762c5aae4a939e76a0a8afaf05 100644
+index a7413e6d8f8f2d214b85a95129084713f7a5eede..9ab8db381d972ede42be716cbd2cee6f1dadde0c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -395,7 +395,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

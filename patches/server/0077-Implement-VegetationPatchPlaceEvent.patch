@@ -5,10 +5,10 @@ Subject: [PATCH] Implement VegetationPatchPlaceEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
-index 0a89431e524c9cf999acb21f3d1018be01e585de..e3ef1bdad311ff3bb08decab4090d858b3aad9b8 100644
+index 89732a41752eda3c2ccc07e9580ded8266f8d4f0..f0271fd4a58642ab2065f8136efdaae1b9fbc015 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
-@@ -68,6 +68,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
+@@ -67,6 +67,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
                      if (world.isEmptyBlock(mutableBlockPos) && blockState.isFaceSturdy(world, mutableBlockPos2, config.surface.getDirection().getOpposite())) {
                          int l = config.depth.sample(random) + (config.extraBottomBlockChance > 0.0F && random.nextFloat() < config.extraBottomBlockChance ? 1 : 0);
                          BlockPos blockPos = mutableBlockPos2.immutable();
@@ -24,7 +24,7 @@ index 0a89431e524c9cf999acb21f3d1018be01e585de..e3ef1bdad311ff3bb08decab4090d858
                          boolean bl6 = this.placeGround(world, config, replaceable, random, mutableBlockPos2, l);
                          if (bl6) {
                              set.add(blockPos);
-@@ -83,6 +92,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
+@@ -82,6 +91,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
      protected void distributeVegetation(FeaturePlaceContext<VegetationPatchConfiguration> context, WorldGenLevel world, VegetationPatchConfiguration config, Random random, Set<BlockPos> positions, int radiusX, int radiusZ) {
          for(BlockPos blockPos : positions) {
              if (config.vegetationChance > 0.0F && random.nextFloat() < config.vegetationChance) {

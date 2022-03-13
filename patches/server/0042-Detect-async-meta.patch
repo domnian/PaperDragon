@@ -5,10 +5,10 @@ Subject: [PATCH] Detect async meta
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
-index 492bb9544bfb897a9f3eebe576cbc1e367d9e88d..650e691d987b357263216e8e897b054e2a72e126 100644
+index ed729c8cf2c3357ad0e7a72c80d7e7d22d8021c6..cfdfe310f0f4fdf21018b10f7effbb08d822a7bc 100644
 --- a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
-@@ -449,12 +449,14 @@ public final class MetaApiAccessor {
+@@ -461,12 +461,14 @@ public final class MetaApiAccessor {
      @NotNull
      private static PersistentMetaMap getMetaMapFromCompound(@NotNull CompoundTag cmp) {
          PersistentMetaMap map = new PersistentMetaMap();

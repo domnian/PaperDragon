@@ -7,10 +7,10 @@ Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 4dbe06944edbaa2bb375a1c9b57dfca2023cb31e..03664ed35fe6b1425780481b14807c6e0ce16501 100644
+index 31da7c2a6da9a61e99f6fac7df0931a54f929639..0f05fd8175c7f7f528f0640416bb6897d75c74cc 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1335,7 +1335,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1347,7 +1347,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      public void addDuringTeleport(Entity entity) {
          // CraftBukkit start

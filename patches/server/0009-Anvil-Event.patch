@@ -6,10 +6,10 @@ Subject: [PATCH] Anvil Event
 Fire an event for anvil usage, remove cap from server, send level to client
 
 diff --git a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-index 073cec4838b88bf4e7444321a74ab73fff732486..bf2e61365018ae80e8c474345ac70bd775ddfe64 100644
+index af199f8bb4e25b25653aa780fd02573b5a974904..86d1b1661a25e4b8e88b770b5b3f7432c466a4cc 100644
 --- a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
 +++ b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-@@ -277,6 +277,24 @@ public class AnvilMenu extends ItemCombinerMenu {
+@@ -276,6 +276,24 @@ public class AnvilMenu extends ItemCombinerMenu {
              if (this.cost.get() >= this.maximumRepairCost && !this.player.getAbilities().instabuild) { // CraftBukkit
                  itemstack1 = ItemStack.EMPTY;
              }

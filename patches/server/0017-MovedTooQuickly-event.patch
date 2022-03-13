@@ -6,15 +6,16 @@ Subject: [PATCH] MovedTooQuickly event
 also make creative immune to this event
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index d945a22e2bb992f3cbba3c9ed0f660b6a385a1b0..3ba219d39af36237b1130c30d99be3f41ae6f479 100644
+index dea4d455d05945505f9ef33793a61783b521bf11..ffc11992e5b3f1dd94b9413dcbabad7caf5b38ca 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1376,9 +1376,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -1370,9 +1370,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
  
                                  if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && !this.isSingleplayerOwner()) {
                                  // CraftBukkit end
+-                                    ServerGamePacketListenerImpl.LOGGER.warn("{} moved too quickly! {},{},{}", new Object[]{this.player.getName().getString(), d7, d8, d9});
 +                                    if (new com.domnian.paperdragon.events.MovedTooQuicklyEvent(d10, getCraftPlayer()).callEvent()) { // PaperDragon
-                                     ServerGamePacketListenerImpl.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getName().getString(), d7, d8, d9);
++                                    ServerGamePacketListenerImpl.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getName().getString(), d7, d8, d9);
                                      this.teleport(this.player.getX(), this.player.getY(), this.player.getZ(), this.player.getYRot(), this.player.getXRot());
                                      return;
 +                                    } // PaperDragon

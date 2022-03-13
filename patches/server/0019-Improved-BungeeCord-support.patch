@@ -7,10 +7,10 @@ Secure BungeeCord with IP Whitelist for IP/UUID forwarding
 Allow online-mode to be set to true, and skip online-mode for bungee IP's
 
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index 81dde0efc1a06420c0791520b9e40b24dd1f0318..b117297ec1e7d30c418564b436c377e7b1c382ad 100644
+index 9bbf990212ee55a267d0eb1e863618c50fa706da..da2c37b461f060ce9f356afb72bb6c7b55cf00ff 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
-@@ -76,6 +76,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -86,6 +86,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
      public com.mojang.authlib.properties.Property[] spoofedProfile;
      public boolean preparing = true;
      // Spigot End
@@ -19,7 +19,7 @@ index 81dde0efc1a06420c0791520b9e40b24dd1f0318..b117297ec1e7d30c418564b436c377e7
      private Component disconnectedReason;
      private boolean encrypted;
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index 150050fb343ef6119204b7d5220207765a6937bc..df3a09962d3e32aae6c5c51524f4a400dd7747c3 100644
+index e8a79277f3e57bc82d67ada6543c7f8665311bd3..f36500f58d33eacb68a6f17ec479423de67da60f 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 @@ -92,7 +92,8 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
@@ -50,10 +50,10 @@ index 150050fb343ef6119204b7d5220207765a6937bc..df3a09962d3e32aae6c5c51524f4a400
                              TranslatableComponent chatmessage = new TranslatableComponent("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
                              this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 368e32bc12a1a09bf7309f299a1a72554947f43b..5272db8e1698e2347f6d4d15dcd506355f6e8ab2 100644
+index befcb501b4b1b6330bf3cd53e00e30b01efade6f..d1d9e095aa8badbefa035f14aa3ed8d677437662 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -263,7 +263,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
+@@ -260,7 +260,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener
              }
          }
          // Paper end - validate usernames
