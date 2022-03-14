@@ -6,7 +6,7 @@ Subject: [PATCH] Improve Hopper Performance
 Only do an item "suck in" action once per second
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index fdbf858ebaae8157a4cefaaa3a96c39fce737e20..b7ea64d36a55c4f8800442c1ee1521e1d5e4f26f 100644
+index 4d8a3b2054c0dbf4827d4252304ff6c59bb1c338..45c53cde8815df0042e65cefe5953045f74513c6 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -19,11 +19,13 @@ import net.minecraft.world.entity.Entity;
@@ -56,7 +56,7 @@ index fdbf858ebaae8157a4cefaaa3a96c39fce737e20..b7ea64d36a55c4f8800442c1ee1521e1
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index 449d2e7b18608ca36282f1a29e69457fc525307e..dbe1ce0557c04a4754aefb170bfa0cf11c25c643 100644
+index 617ca271b04bbd4cceecedbac5c465e89fbef60b..38b01b208d0b4b3cde20e4d92e24c06a5e6a706f 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -22,6 +22,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
@@ -92,7 +92,7 @@ index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8e
      double getLevelX();
  
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 3e6c058313ee6e541d04d7e672ce94c5e021332a..87350180b4ebe3b9655061389faeb8ec3cc2d609 100644
+index 01700c804083e4859f9a1d391a0898c5c977441e..12b92d90d344f9af7a9997fbb0cfb91c461c035b 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;

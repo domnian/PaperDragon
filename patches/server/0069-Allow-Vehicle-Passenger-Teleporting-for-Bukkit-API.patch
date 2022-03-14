@@ -32,7 +32,7 @@ index 5ea9b29b0ce85348f1448a72d0109e8f0642eaac..bf45befa49e6274ae31391de70fbe267
      public double xo;
      public double yo;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 8057c24f2fce658067cb552164e20681b55bc703..3e3474a43314e3f75a8f9389cde7ca801bf45e81 100644
+index 4538ccc3bd9865424b8238ce4cfdaa68a762d158..c02cf6f840c605d14b74a284d1661971738d07ae 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -5,6 +5,7 @@ import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon

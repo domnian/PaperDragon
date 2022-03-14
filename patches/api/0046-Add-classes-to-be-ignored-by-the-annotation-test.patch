@@ -7,7 +7,7 @@ I'll eventually get time to annotate them all, but some classes
 that are excluded do have issues that were not resolved.
 
 diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
-index dc881ffaa947eac4ba34a9ea0c089eaaf06278c5..42096d137e6fd1bd6ba4246cea317059d42685bf 100644
+index 57cf9fab2501da6f1abd12e14697630ca82b0a6d..3caa2f22faf343c61abeb87aebbd25c0592f3e43 100644
 --- a/src/test/java/org/bukkit/AnnotationTest.java
 +++ b/src/test/java/org/bukkit/AnnotationTest.java
 @@ -5,12 +5,8 @@ import java.io.FileInputStream;

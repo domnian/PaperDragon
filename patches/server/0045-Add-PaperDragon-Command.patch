@@ -5,7 +5,7 @@ Subject: [PATCH] Add PaperDragon Command
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 5f05a7cf4a6ec2fc0c8f29b9b1de78269edbaf4a..86258b285cb8d39961a130618f1a9fed54dac889 100644
+index d4ee176a171b69195fe710ce2714be7825a38fd5..78f22ef4c08495e4b89f5a2eff4bdd3825d10d12 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -50,6 +50,7 @@ public class DragonConfig {

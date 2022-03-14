@@ -5,21 +5,19 @@ Subject: [PATCH] Entity Tasks
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 30316ddecd8351d04d402b748cbd3472203d9a38..91a4ef53fae0622c0f9c64c8b989f1bbe035fbae 100644
+index 26609a7bd33caf380542d81b7ec23694eefb4312..37b783cce0a43fa04e4eb80c453393248d497703 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -23,6 +23,7 @@
+@@ -23,5 +23,75 @@
  
  package com.domnian.paperdragon.api;
  
++import org.bukkit.entity.Entity;
++import org.jetbrains.annotations.NotNull;
 +import com.domnian.paperdragon.api.EntityTask.TaskHandler;
- import org.bukkit.World;
- import org.bukkit.entity.Entity;
- import org.jetbrains.annotations.NotNull;
-@@ -35,4 +36,68 @@ public interface DAPI_Entity {
-     @Deprecated(since="1.18.2", forRemoval=true)
-     @Nullable Entity deserializeEntity(byte[] data, @NotNull World world);
- 
++
+ public interface DAPI_Entity {
++
 +    void cancelTasks(@NotNull Entity entity);
 +
 +    @NotNull
@@ -84,6 +82,7 @@ index 30316ddecd8351d04d402b748cbd3472203d9a38..91a4ef53fae0622c0f9c64c8b989f1bb
 +
 +    @NotNull
 +    <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task);
++
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityTask.java b/src/main/java/com/domnian/paperdragon/api/EntityTask.java
 new file mode 100644

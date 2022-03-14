@@ -5,7 +5,7 @@ Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
-index 86258b285cb8d39961a130618f1a9fed54dac889..c25990d237c3408917a69396efca8fc2aeb36c2c 100644
+index 78f22ef4c08495e4b89f5a2eff4bdd3825d10d12..c033b4f3ef1aad4176686fcfd46a15f9655d7c07 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
 @@ -160,6 +160,10 @@ public class DragonConfig {
@@ -35,7 +35,7 @@ index 71f698d648872341b7fef1326d45fdafd0694c32..f2fe260d8a0ac860b2af742735ade7ac
  
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index 5f55931fa628bd2e5541fc1cf582e71608544555..acc86a040445118bf2fd892b10477671582ac396 100644
+index 3f5da3df0fcc132293f6231a3c6f65ab88906061..6f5b52ca027f2857be97defc8eecb24e2d9b2409 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -307,6 +307,15 @@ public class PlayerAdvancements {

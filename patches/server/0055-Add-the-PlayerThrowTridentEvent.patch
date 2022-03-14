@@ -5,7 +5,7 @@ Subject: [PATCH] Add the PlayerThrowTridentEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/item/TridentItem.java b/src/main/java/net/minecraft/world/item/TridentItem.java
-index 510ed67a7de2b503ab8b01db57ed09ee33b0d825..095c85e1f3254dc140e3d50064a38db568795a3b 100644
+index 998758be827efbcb7693ed36ab1dffc0ef0369bf..5854513c7461d1b2c58ce699608152a315546541 100644
 --- a/src/main/java/net/minecraft/world/item/TridentItem.java
 +++ b/src/main/java/net/minecraft/world/item/TridentItem.java
 @@ -89,6 +89,7 @@ public class TridentItem extends Item implements Vanishable {

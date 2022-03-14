@@ -5,7 +5,7 @@ Subject: [PATCH] Make CraftMetaItem not crash on HideFlags error
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index fcd61bcf69518047fec7d838207e7d36e477f9c7..52c303d863fcd064fe766f17e3c08ded02d5fce2 100644
+index 9ce647730d9f7aa121e13f2ba00037fc18625efd..eb3dfab97f6d3a80d70d4926d73f22e5de45779a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -234,7 +234,14 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

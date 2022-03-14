@@ -5,7 +5,7 @@ Subject: [PATCH] SnowmanThrowSnowballEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java b/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
-index dbc0ebf7e1d7ae7c89bafad19b0d9f209674b2c9..bc98120c7815f38e9e998e8a07e6c0e82494e232 100644
+index 24f66a24d5a4698d141e697db50da5794747be7b..8b1813f0a86810d9c9bd139397eb200f65464a33 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/SnowGolem.java
 @@ -139,10 +139,27 @@ public class SnowGolem extends AbstractGolem implements Shearable, RangedAttackM
