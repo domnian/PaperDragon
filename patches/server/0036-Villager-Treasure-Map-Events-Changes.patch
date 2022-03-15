@@ -44,7 +44,7 @@ index ab3428a68e496af2a453af85d7ecce9ee2423022..9333ca32a5b65482c3f0162c62aa6397
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
-index 52382b5b8149351ecf981d5414a0a50025f181c7..bcf86a24ec5f76419c28fb6a07823e6e43430746 100644
+index 52382b5b8149351ecf981d5414a0a50025f181c7..5d501d3cc6b35e09ac161f93a13f28a99f160b4a 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 @@ -393,6 +393,18 @@ public class VillagerTrades {
@@ -54,8 +54,8 @@ index 52382b5b8149351ecf981d5414a0a50025f181c7..bcf86a24ec5f76419c28fb6a07823e6e
 +                    // PaperDragon start - add event for treasure map creation
 +                    if (com.domnian.paperdragon.events.CreateTreasureMapEvent.getHandlerList().hasListeners()) {
 +                        org.bukkit.inventory.ItemStack craftOriginal = org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemStack);
-+                        net.kyori.adventure.key.Key key = net.kyori.adventure.key.Key.key(this.destination.location().getNamespace(), this.destination.location().getPath());
-+                        com.domnian.paperdragon.events.CreateTreasureMapEvent event = new com.domnian.paperdragon.events.CreateTreasureMapEvent(craftOriginal, this.emeraldCost, key, this.destinationType.ordinal());
++                        org.bukkit.map.MapCursor.Type type = org.bukkit.map.MapCursor.Type.byValue(destinationType.getIcon());
++                        com.domnian.paperdragon.events.CreateTreasureMapEvent event = new com.domnian.paperdragon.events.CreateTreasureMapEvent(craftOriginal, this.emeraldCost, type, this.destinationType.ordinal());
 +                        event.callEvent();
 +                        if (event.getItem() != null && !event.getItem().equals(craftOriginal)) {
 +                            itemStack = org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(event.getItem());
