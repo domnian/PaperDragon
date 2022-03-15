@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Vehicle/Passenger Teleporting for Bukkit API
 If Bukkit teleport is called, teleport the whole set of entities together and maintain the chain.
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e7524a590374c085d58e9fafa5083befe4e1d1bb..1bb49b955068ad014016ef9a0e5d9540da51b300 100644
+index 660d3b28ea69930a2ce243ba1dd36b5a4bd5e333..f91529f267a9717f9d9c3d02d3d3da6e5e581fd6 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -840,7 +840,7 @@ public abstract class PlayerList {
@@ -19,10 +19,10 @@ index e7524a590374c085d58e9fafa5083befe4e1d1bb..1bb49b955068ad014016ef9a0e5d9540
          this.playersByName.remove(entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          entityplayer.getLevel().removePlayerImmediately(entityplayer, Entity.RemovalReason.DISCARDED);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5ea9b29b0ce85348f1448a72d0109e8f0642eaac..bf45befa49e6274ae31391de70fbe267639ebde0 100644
+index b5b396baf1c127074b4d40afc4bb6e8ce0ac6fc4..30e0667e613abf22253e2aa549645415a8798b23 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -233,7 +233,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -234,7 +234,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
      public ImmutableList<Entity> passengers;
      protected int boardingCooldown;
      @Nullable
