@@ -31,7 +31,7 @@ index f24641f9cc65ccc8d30f44a7ff05a767b33055f5..d6aa7b023f2cfc94cc1cf3cebaf6e81e
          if (repairCost == 0) {
              this.removeTagKey("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index a7413e6d8f8f2d214b85a95129084713f7a5eede..9ab8db381d972ede42be716cbd2cee6f1dadde0c 100644
+index 00b743e18ab80ebc92409225944455d99870a1b2..9002ee87ab0b82ab9c4916f930b209b725474aaa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -395,7 +395,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 7 Nov 2017 00:01:04 -0500
+Subject: [PATCH] Don't use snapshots for TileEntity::getOwner
+
+
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/BlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/BlockEntity.java
+index de735a3d74ee9f2c697a7ac987f0118b73f6b09e..3718d34ff7d6410f64132bed7c89f91c56eb0cb2 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/BlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/BlockEntity.java
+@@ -250,7 +250,7 @@ public abstract class BlockEntity {
+     // CraftBukkit start - add method
+     public InventoryHolder getOwner() {
+         // Paper start
+-        return getOwner(true);
++        return getOwner(false); // PaperDragon - don't use snapshots
+     }
+     public InventoryHolder getOwner(boolean useSnapshot) {
+         // Paper end

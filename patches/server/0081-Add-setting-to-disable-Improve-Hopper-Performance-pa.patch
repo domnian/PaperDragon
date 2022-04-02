@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 3 Apr 2022 09:37:54 -0400
+Subject: [PATCH] Add setting to disable 'Improve Hopper Performance' patch
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index 92f1c6fb19dea9c55835bf9ad88fbec14a8f162b..cd212bd7b4ee233fefc905d4f149b9e3d419a512 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -82,6 +82,10 @@ public class DragonWorldConfig {
+     private void portalOverrides() {
+         force2DPortalSearch = getBoolean("force-2d-portal-search", false);
+     }
+-    // TODO Add New Settings!! :D
++
++    public boolean disableImprovedHopperPerformance = false;
++    private void hoppers() {
++        disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
++    }
+ 
+ }
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+index 12b92d90d344f9af7a9997fbb0cfb91c461c035b..253daa65405599dde7e83a8b98e34f621bd55cf8 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+@@ -130,6 +130,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+             return true;
+         }
+ 
++        if (((HopperBlockEntity) hopper).getLevel().dragonConfig.disableImprovedHopperPerformance) return true;
+         final int hopperId = (int) hopper.getLevelX() + (int) hopper.getLevelY() + (int) hopper.getLevelZ();
+         return (hopper.getAndIncrementAttemptCounter() + hopperId) % 20 == 0;
+     }

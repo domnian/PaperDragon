@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand to PaperDragon
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4beb35d1e5b013395f5df101e843f41c2ce174ad..99952c2e86cd9719d1c4be7b397f5dbdf6671e2c 100644
+index 4beb35d1e5b013395f5df101e843f41c2ce174ad..4537d32da82bde95106c4b538285383e23676788 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -18,8 +18,12 @@ repositories {
@@ -50,12 +50,12 @@ index 4beb35d1e5b013395f5df101e843f41c2ce174ad..99952c2e86cd9719d1c4be7b397f5dbd
      block: JavaExec.() -> Unit
  ): TaskProvider<JavaExec> = register<JavaExec>(name) {
 -    group = "paper"
-+    group = "paperweight"
++    group = "paperweight" // PaperDragon
      mainClass.set("org.bukkit.craftbukkit.Main")
      standardInput = System.`in`
      workingDir = rootProject.layout.projectDirectory
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..bafa370c0a3d2d44d876405a127b3c79ee19bc76 100644
+index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..7c1afcd17e3d626b088adbb31697c13ffd4d7e2a 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -593,7 +593,7 @@ public class Metrics {
@@ -63,7 +63,7 @@ index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..bafa370c0a3d2d44d876405a127b3c79
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
 -                Metrics metrics = new Metrics("Paper", serverUUID, logFailedRequests, Bukkit.getLogger());
-+                Metrics metrics = new Metrics("PaperDragon", serverUUID, logFailedRequests, Bukkit.getLogger());
++                Metrics metrics = new Metrics("PaperDragon", serverUUID, logFailedRequests, Bukkit.getLogger()); // PaperDragon
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
@@ -72,7 +72,7 @@ index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..bafa370c0a3d2d44d876405a127b3c79
                  metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
                  metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
 -                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
-+                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
++                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown")); // PaperDragon
  
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
@@ -90,10 +90,10 @@ index e0b1f0671d16ddddcb6725acd25a1d1d69e42701..ffcac6ae25b4dca5a99a7a27b13da6c0
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 39b7c78b032ed6fc29ac765020d5a38858bf2a3a..98ac1a7763f7e999574776dfbee166dde9f35c44 100644
+index c8d56947305c981a3268ce4ae3e975db350ceff2..aaa1271753d25521c25607daf2c9eb6a22d5e09c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1697,7 +1697,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1693,7 +1693,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -103,7 +103,7 @@ index 39b7c78b032ed6fc29ac765020d5a38858bf2a3a..98ac1a7763f7e999574776dfbee166dd
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 55c981f2c8070fc1bd9ecd4f4df140d9d0c68319..15f4c4a71aa73c6fb95c430348b794411f2d66ed 100644
+index 5be9e73dc0314831bbaa6301fc704295dd8ed2bc..cb29bb39f7788e4a2cea041a555b4b960af23321 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
@@ -116,7 +116,7 @@ index 55c981f2c8070fc1bd9ecd4f4df140d9d0c68319..15f4c4a71aa73c6fb95c430348b79441
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 774556a62eb240da42e84db4502e2ed43495be17..50cd5f9cacb4cf5f6c1a28fc7bf17321ef18a868 100644
+index 774556a62eb240da42e84db4502e2ed43495be17..e6c9e0dc175bfb9d7a43d73557263e5e9dcfe040 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -124,12 +124,12 @@ index 774556a62eb240da42e84db4502e2ed43495be17..50cd5f9cacb4cf5f6c1a28fc7bf17321
          String result = "Unknown-Version";
  
 -        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.domnian.paperdragon/paperdragon-api/pom.properties");
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.domnian.paperdragon/paperdragon-api/pom.properties"); // PaperDragon
          Properties properties = new Properties();
  
          if (stream != null) {
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index bee38307494188800886a1622fed229b88dbd8f1..61f51098f49f879e5da4bd4bc02e06f5821f70f0 100644
+index 24fefa521093448e608e217af7b88a6397a4b054..d186ed2f1c8867bb8d23d18163e73a5865a429cb 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -97,7 +97,7 @@ public class WatchdogThread extends Thread

@@ -6,7 +6,7 @@ Subject: [PATCH] PlayerUseItem Event
 This lets us control when an item is consumed and change the item.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
-index 891199d02539fa46454cd0aa7c133637e5dc8235..c586b026f102d994a6e647db05d6fa75f4e87be1 100644
+index 891199d02539fa46454cd0aa7c133637e5dc8235..5473faec189da4187a4388c36f81f66ce630bf1a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -3,6 +3,8 @@ package net.minecraft.server.level;
@@ -14,7 +14,7 @@ index 891199d02539fa46454cd0aa7c133637e5dc8235..c586b026f102d994a6e647db05d6fa75
  import java.util.Objects;
  import javax.annotation.Nullable;
 +
-+import net.minecraft.server.MCUtil;
++import net.minecraft.server.MCUtil; // PaperDragon
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.InteractionResult;
  import net.minecraft.world.InteractionResultHolder;
@@ -104,7 +104,7 @@ index 891199d02539fa46454cd0aa7c133637e5dc8235..c586b026f102d994a6e647db05d6fa75
          BlockState iblockdata = world.getBlockState(blockposition);
          InteractionResult enuminteractionresult = InteractionResult.PASS;
          boolean cancelledBlock = false;
-@@ -602,17 +642,40 @@ public class ServerPlayerGameMode {
+@@ -602,17 +642,41 @@ public class ServerPlayerGameMode {
              }
  
              if (!stack.isEmpty() && enuminteractionresult != InteractionResult.SUCCESS && !this.interactResult) { // add !interactResult SPIGOT-764
@@ -119,6 +119,7 @@ index 891199d02539fa46454cd0aa7c133637e5dc8235..c586b026f102d994a6e647db05d6fa75
 +                if (!eventPlace.callEvent()) {
 +                    return InteractionResult.FAIL;
 +                }
++                int i = stack.getCount(); // Paper - moved from below before temporary items
 +                ItemStack orig = stack;
 +                if (eventPlace.getTempItem() != null) {
 +                    stack = org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(eventPlace.getTempItem());
@@ -131,7 +132,7 @@ index 891199d02539fa46454cd0aa7c133637e5dc8235..c586b026f102d994a6e647db05d6fa75
 -                    int i = stack.getCount();
 -
 -                    enuminteractionresult1 = stack.useOn(itemactioncontext, hand);
-+                int i = stack.getCount();
++                // int i = stack.getCount(); // Paper - move up
 +                InteractionResult enuminteractionresult1 = stack.useOn(itemactioncontext, hand);
 +                if (eventPlace.getTempItem() != null) {
 +                    player.setItemInHand(hand, stack = orig);

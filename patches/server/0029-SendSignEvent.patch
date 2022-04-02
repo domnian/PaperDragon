@@ -55,7 +55,7 @@ index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a90
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index 79ec416ec38d2df376f9a086da5914b1fb168efe..e54f5e36724662c5ecd56d6395d62585f0007975 100644
+index 79ec416ec38d2df376f9a086da5914b1fb168efe..2578601c0d2dfe7fa8f2095371cc9c7be1e4026e 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
@@ -97,11 +97,11 @@ index 79ec416ec38d2df376f9a086da5914b1fb168efe..e54f5e36724662c5ecd56d6395d62585
 +            event.callEvent();
 +            CompoundTag tag = new CompoundTag();
 +            this.saveAdditional(tag, event.lines, event.lines);
-+            // CraftBukkit start - store container // PaperDragon - copied from BlockEntity
++            // PaperDragon start - store container / copied from BlockEntity
 +            if (this.persistentDataContainer != null && !this.persistentDataContainer.isEmpty()) {
 +                tag.put("PublicBukkitValues", this.persistentDataContainer.toTagCompound());
 +            }
-+            // CraftBukkit end
++            // PaperDragon end
 +            return tag;
 +        }
 +        // PaperDragon end

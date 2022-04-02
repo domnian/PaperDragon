@@ -5,18 +5,18 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 98ac1a7763f7e999574776dfbee166dde9f35c44..f9f5d4a164f2f5ee445dc3e582468cb24d31dddd 100644
+index aaa1271753d25521c25607daf2c9eb6a22d5e09c..556cf123725514996bb8e2d9291ffb3cee43e8fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -238,6 +238,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -237,6 +237,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      protected final Proxy proxy;
      private boolean onlineMode;
      private boolean preventProxyConnections;
-+    public String shutdownReason; // PaperDragon
++    public String shutdownReason = "Server Shutting Down"; // PaperDragon
      private boolean pvp;
      private boolean allowFlight;
      @Nullable
-@@ -970,8 +971,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -968,8 +969,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -28,7 +28,7 @@ index 98ac1a7763f7e999574776dfbee166dde9f35c44..f9f5d4a164f2f5ee445dc3e582468cb2
          }
          // CraftBukkit end
          if (this.getConnection() != null) {
-@@ -1037,6 +1039,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1035,6 +1037,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  }
              }
          }

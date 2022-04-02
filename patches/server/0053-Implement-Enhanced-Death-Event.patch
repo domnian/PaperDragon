@@ -5,10 +5,10 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 61b30c7a5657b83bd5c33f7c2938fdf056bc31fa..769f2be7de4a00f10fd07ba9361c3df1b14c8145 100644
+index a169dcfd1513212558ecade607388ed5a95b52c0..3ee12a5e8570e5347b9834754aa7ab725987b710 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -858,7 +858,10 @@ public class ServerPlayer extends Player {
+@@ -860,7 +860,10 @@ public class ServerPlayer extends Player {
  
          String deathmessage = defaultMessage.getString();
          this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel

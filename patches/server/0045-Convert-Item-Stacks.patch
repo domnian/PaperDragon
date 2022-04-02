@@ -17,7 +17,7 @@ index 9d75d2392ab279f46f0a7611f32a72100177a304..f24641f9cc65ccc8d30f44a7ff05a767
      public void convertStack(int version) {
          if (0 < version && version < CraftMagicNumbers.INSTANCE.getDataVersion()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index 446dfea89b4fbab55d1379315247172b6cc4730c..faa013d8eab5e087ba22dc491d43b2a9d7e08dae 100644
+index c4962cae329ba11d4d0dafafc6216bde5d2b0f90..a72ac28fc37777d71abb28fd917ffcf91cf105a2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 @@ -5,9 +5,11 @@ import org.bukkit.Color;
@@ -32,7 +32,7 @@ index 446dfea89b4fbab55d1379315247172b6cc4730c..faa013d8eab5e087ba22dc491d43b2a9
  
  public final class CraftItemFactory implements ItemFactory {
      static final Color DEFAULT_LEATHER_COLOR = Color.fromRGB(0xA06540);
-@@ -358,9 +360,25 @@ public final class CraftItemFactory implements ItemFactory {
+@@ -373,9 +375,25 @@ public final class CraftItemFactory implements ItemFactory {
      }
  
      // Paper start
@@ -100,7 +100,7 @@ index 226d9ac01c601fc8954a88bea93a521cdce79eda..ed652205a5938f3ebdd111314897b6a3
          if (item.getItem() != null && item.getItem().canBeDepleted()) {
              item.setDamageValue(item.getDamageValue());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index eb3dfab97f6d3a80d70d4926d73f22e5de45779a..a7413e6d8f8f2d214b85a95129084713f7a5eede 100644
+index da885a1f9762fd04f4a04cecba6630b9f0582b54..00b743e18ab80ebc92409225944455d99870a1b2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -317,6 +317,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

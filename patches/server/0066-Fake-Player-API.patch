@@ -217,7 +217,7 @@ index 0000000000000000000000000000000000000000..bb70d70afa91c49be9103823e892ade0
 +
 +}
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
-index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..138524317c3d705ad9d351603dc7687a8d638cbe 100644
+index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..58e15e3f6c5786a59c6129e9d3c7504bd3cb1427 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 @@ -1,5 +1,6 @@
@@ -227,15 +227,16 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..138524317c3d705ad9d351603dc7687a
  import com.google.common.base.MoreObjects;
  import com.google.common.collect.Lists;
  import com.mojang.authlib.GameProfile;
-@@ -8,6 +9,7 @@ import com.mojang.authlib.properties.PropertyMap;
+@@ -8,6 +9,8 @@ import com.mojang.authlib.properties.PropertyMap;
  import java.util.Collection;
  import java.util.List;
  import javax.annotation.Nullable;
++
 +import io.papermc.paper.adventure.PaperAdventure; // PaperDragon
  import net.minecraft.network.FriendlyByteBuf;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.protocol.Packet;
-@@ -18,6 +20,22 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
+@@ -18,6 +21,22 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
      private final ClientboundPlayerInfoPacket.Action action;
      private final List<ClientboundPlayerInfoPacket.PlayerUpdate> entries;
  
@@ -246,10 +247,10 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..138524317c3d705ad9d351603dc7687a
 +        for (FakePlayer fakePlayer : fakePlayers) {
 +            if (fakePlayer.getUniqueId() != null) {
 +                this.entries.add(new ClientboundPlayerInfoPacket.PlayerUpdate(
-+                        com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
-+                        fakePlayer.getPing(),
-+                        GameType.byId(fakePlayer.getGameMode().getValue()),
-+                        PaperAdventure.asVanilla(fakePlayer.getPlayerListName())));
++                    com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
++                    fakePlayer.getPing(),
++                    GameType.byId(fakePlayer.getGameMode().getValue()),
++                    PaperAdventure.asVanilla(fakePlayer.getPlayerListName())));
 +            }
 +        }
 +    }
@@ -259,7 +260,7 @@ index 420cc7ab5f7245f31dd5b333eacf4e306fc6e7c1..138524317c3d705ad9d351603dc7687a
          this.action = action;
          this.entries = Lists.newArrayListWithCapacity(players.length);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 33ff81c585e397d25d4c23b90dd91f9aa38dd3c2..e7524a590374c085d58e9fafa5083befe4e1d1bb 100644
+index 5188cdc5945598539673197dec51f475b69b8cad..660d3b28ea69930a2ce243ba1dd36b5a4bd5e333 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1,6 +1,8 @@
