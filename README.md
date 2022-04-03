@@ -7,11 +7,13 @@ It is recommended that you either look into using [Paper][paper] over using Pape
 How To (Plugin Developers)
 ------
 * See our API patches [here](patches/api)
-* Maven Repo (for paperdragon-api):
+
+### &#187; Using Maven
+#### Repository:
 ```
 This will come with time. For now, you just need to build it locally.
 ```
-* Artifact Information:
+#### Artifact:
 ```xml
 <dependency>
     <groupId>com.domnian.paperdragon</groupId>
@@ -21,15 +23,25 @@ This will come with time. For now, you just need to build it locally.
 </dependency>
  ```
 
-**Or alternatively, with Gradle:**
-* Repository:
+### &#187; Using Gradle
+#### Repository:
 ```
 This will come with time. For now, you just need to build it locally.
 ```
-* Artifact:
+#### Artifact (API only):
 ```groovy
 dependencies {
     compileOnly 'com.domnian.paperdragon:paperdragon-api:1.18.2-R0.1-SNAPSHOT'
+}
+```
+#### Paperweight UserDev Plugin (API + Server)
+```kotlin
+dependencies {
+    paperweightDevBundle(
+        group = "com.domnian.paperdragon",
+        version = "1.18.2-R0.1-SNAPSHOT",
+        ext = "zip"
+    )
 }
 ```
 
