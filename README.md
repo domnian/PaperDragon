@@ -16,7 +16,7 @@ This will come with time. For now, you just need to build it locally.
 <dependency>
     <groupId>com.domnian.paperdragon</groupId>
     <artifactId>paperdragon-api</artifactId>
-    <version>1.18-R0.1-SNAPSHOT</version>
+    <version>1.18.2-R0.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
  ```
@@ -29,7 +29,7 @@ This will come with time. For now, you just need to build it locally.
 * Artifact:
 ```groovy
 dependencies {
-    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.18-R0.1-SNAPSHOT'
+    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.18.2-R0.1-SNAPSHOT'
 }
 ```
 
