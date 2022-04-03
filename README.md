@@ -2,7 +2,7 @@ PaperDragon
 ===========
 PaperDragon is a fork of the Paper server software with patches from other forks, namely [EmpireCraft][empirecraft] and [Tuinity][tuinity]. It is not meant for widespread use, and is primarily a side-project. You are free to use PaperDragon for your server, but support will be limited compared to that of Paper.
 
-It is recommended that you either look into using [Paper][paper] or [Tuinity][tuinity] over using PaperDragon.
+It is recommended that you either look into using [Paper][paper] over using PaperDragon.
 
 How To (Plugin Developers)
 ------
