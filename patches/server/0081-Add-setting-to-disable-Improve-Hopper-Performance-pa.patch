@@ -21,14 +21,15 @@ index 92f1c6fb19dea9c55835bf9ad88fbec14a8f162b..cd212bd7b4ee233fefc905d4f149b9e3
  
  }
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 12b92d90d344f9af7a9997fbb0cfb91c461c035b..253daa65405599dde7e83a8b98e34f621bd55cf8 100644
+index 12b92d90d344f9af7a9997fbb0cfb91c461c035b..ff20b2f9105578e1c24cede245f5144919c47505 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -130,6 +130,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
-             return true;
-         }
+@@ -487,7 +487,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+                 }
+                 // Paper end
+             });
+-        } else if (shouldSuckIn(hopper)) { // PaperDragon
++        } else if (shouldSuckIn(hopper) || world.dragonConfig.disableImprovedHopperPerformance) { // PaperDragon
+             Iterator iterator = HopperBlockEntity.getItemsAtAndAbove(world, hopper).iterator();
  
-+        if (((HopperBlockEntity) hopper).getLevel().dragonConfig.disableImprovedHopperPerformance) return true;
-         final int hopperId = (int) hopper.getLevelX() + (int) hopper.getLevelY() + (int) hopper.getLevelZ();
-         return (hopper.getAndIncrementAttemptCounter() + hopperId) % 20 == 0;
-     }
+             ItemEntity entityitem;
