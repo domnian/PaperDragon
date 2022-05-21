@@ -1,0 +1,65 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 20 May 2022 20:37:41 -0400
+Subject: [PATCH] Add settings to change nether portal search logic
+
+> 'nether-portal.use-vanilla-search': Reverts the logic back to using Vanilla's logic
+> 'nether-portal.use-2d-search': Changes the Vanilla logic to ignore the Y value (requires nether-portal.use-vanilla-search to be enabled)
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index b697e2b0b9540b7cb2a9d080478591153638a45b..dcdafb4eddb0660c82708f26a2d5dfa65189a623 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -78,6 +78,13 @@ public class DragonWorldConfig {
+         broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
+     }
+ 
++    public boolean use2DPortalSearch = false;
++    public boolean useVanillaPortalSearch = false;
++    private void portalOverrides() {
++        use2DPortalSearch = getBoolean("nether-portal.use-2d-search", false);
++        useVanillaPortalSearch = getBoolean("nether-portal.use-vanilla-search", true);
++    }
++
+     public boolean disableImprovedHopperPerformance = false;
+     private void hoppers() {
+         disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
+diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+index 8f147cd9798779eb2a72f444bf7fcb6c3cdc4971..bfbe9244a27bf543a11e1a98ef0e3248e824bce9 100644
+--- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
++++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+@@ -53,6 +53,26 @@ public class PortalForcer {
+ 
+         // Paper start - optimise portals
+         Optional<PoiRecord> optional;
++        // PaperDragon start
++        if (level.dragonConfig.useVanillaPortalSearch) {
++            villageplace.ensureLoadedAndValid(this.level, blockposition, i);
++            optional = villageplace.getInSquare(type -> {
++                return type == PoiType.NETHER_PORTAL;
++            }, blockposition, i, PoiManager.Occupancy.ANY).filter(record -> {
++                return worldborder.isWithinBounds(record.getPos());
++            }).sorted(Comparator.comparingDouble((PoiRecord record) -> {
++                if (level.dragonConfig.use2DPortalSearch) {
++                    return record.getPos().atY(0).distSqr(blockposition.atY(0));
++                } else {
++                    return record.getPos().distSqr(blockposition);
++                }
++            }).thenComparingInt(record -> {
++                return record.getPos().getY();
++            })).filter(record -> {
++                return level.getBlockState(record.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS);
++            }).findFirst();
++        } else {
++        // PaperDragon End
+         java.util.List<PoiRecord> records = new java.util.ArrayList<>();
+         io.papermc.paper.util.PoiAccess.findClosestPoiDataRecords(
+             villageplace,
+@@ -86,6 +106,7 @@ public class PortalForcer {
+         // now we're done
+         optional = Optional.ofNullable(lowestYRecord);
+         // Paper end - optimise portals
++        } // PaperDragon
+ 
+         return optional.map((villageplacerecord) -> {
+             BlockPos blockposition1 = villageplacerecord.getPos();
