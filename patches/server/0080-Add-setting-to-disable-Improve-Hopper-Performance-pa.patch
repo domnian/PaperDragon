@@ -5,12 +5,12 @@ Subject: [PATCH] Add setting to disable 'Improve Hopper Performance' patch
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 92f1c6fb19dea9c55835bf9ad88fbec14a8f162b..cd212bd7b4ee233fefc905d4f149b9e3d419a512 100644
+index f2fe260d8a0ac860b2af742735ade7ac70b0457a..b697e2b0b9540b7cb2a9d080478591153638a45b 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-@@ -82,6 +82,10 @@ public class DragonWorldConfig {
-     private void portalOverrides() {
-         force2DPortalSearch = getBoolean("force-2d-portal-search", false);
+@@ -77,6 +77,10 @@ public class DragonWorldConfig {
+     private void advancements() {
+         broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
      }
 -    // TODO Add New Settings!! :D
 +
