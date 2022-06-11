@@ -48,7 +48,7 @@ index 0000000000000000000000000000000000000000..7bd794937475ed7037f489e0144972aa
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/border/WorldBorder.java b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
-index 3063a45e5d124d4405e940daff24877866165d3f..912523a962c5190ab271e281606c07bdf711e5bf 100644
+index 7a12a4da4864306ec6589ca81368e84718825047..1add8e5dbaa666716a34073c09de14ce5accd457 100644
 --- a/src/main/java/net/minecraft/world/level/border/WorldBorder.java
 +++ b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
 @@ -19,7 +19,7 @@ public class WorldBorder {

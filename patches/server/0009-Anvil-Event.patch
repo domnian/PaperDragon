@@ -6,10 +6,10 @@ Subject: [PATCH] Anvil Event
 Fire an event for anvil usage, remove cap from server, send level to client
 
 diff --git a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-index af199f8bb4e25b25653aa780fd02573b5a974904..86d1b1661a25e4b8e88b770b5b3f7432c466a4cc 100644
+index ec89526f1eabef4681fed57b74fc1bef5be4c0c1..eeada15ca7e9d3f51e03bb950676e0fab259e5ee 100644
 --- a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
 +++ b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-@@ -276,6 +276,24 @@ public class AnvilMenu extends ItemCombinerMenu {
+@@ -277,6 +277,24 @@ public class AnvilMenu extends ItemCombinerMenu {
              if (this.cost.get() >= this.maximumRepairCost && !this.player.getAbilities().instabuild) { // CraftBukkit
                  itemstack1 = ItemStack.EMPTY;
              }
@@ -35,7 +35,7 @@ index af199f8bb4e25b25653aa780fd02573b5a974904..86d1b1661a25e4b8e88b770b5b3f7432
              if (!itemstack1.isEmpty()) {
                  int k2 = itemstack1.getBaseRepairCost();
 diff --git a/src/main/java/net/minecraft/world/inventory/DataSlot.java b/src/main/java/net/minecraft/world/inventory/DataSlot.java
-index 6792bde386af8f1a6eae451cebcd0b32e83cd72b..37d1f03fe30e121f2a74b3bbc74247f17a33f3a6 100644
+index ee0a182f451f2842369fa7f039f69bc878224676..99f0397832b952a9a0b31330240d44c184dc8258 100644
 --- a/src/main/java/net/minecraft/world/inventory/DataSlot.java
 +++ b/src/main/java/net/minecraft/world/inventory/DataSlot.java
 @@ -2,6 +2,7 @@ package net.minecraft.world.inventory;
@@ -44,7 +44,7 @@ index 6792bde386af8f1a6eae451cebcd0b32e83cd72b..37d1f03fe30e121f2a74b3bbc74247f1
      private int prevValue;
 +    public boolean forceUpdate = false; // PaperDragon
  
-     public static DataSlot forContainer(ContainerData delegate, int index) {
+     public static DataSlot forContainer(final ContainerData delegate, final int index) {
          return new DataSlot() {
 @@ -52,6 +53,7 @@ public abstract class DataSlot {
      public abstract void set(int value);

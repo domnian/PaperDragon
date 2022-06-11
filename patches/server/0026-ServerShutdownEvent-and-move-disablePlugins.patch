@@ -5,7 +5,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index aaa1271753d25521c25607daf2c9eb6a22d5e09c..556cf123725514996bb8e2d9291ffb3cee43e8fa 100644
+index bf2d3867f32deb2b4fa60d204962ca29a65d5bb0..d4529a7d62045317f1c0b9df309f583e475b91fb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -237,6 +237,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -16,7 +16,7 @@ index aaa1271753d25521c25607daf2c9eb6a22d5e09c..556cf123725514996bb8e2d9291ffb3c
      private boolean pvp;
      private boolean allowFlight;
      @Nullable
-@@ -968,8 +969,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -969,8 +970,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -28,7 +28,7 @@ index aaa1271753d25521c25607daf2c9eb6a22d5e09c..556cf123725514996bb8e2d9291ffb3c
          }
          // CraftBukkit end
          if (this.getConnection() != null) {
-@@ -1035,6 +1037,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1036,6 +1038,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  }
              }
          }

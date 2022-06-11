@@ -5,7 +5,7 @@ Subject: [PATCH] Adds whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 6ed192be514dd3c0be177891e4d9dd897ec1d18f..5188cdc5945598539673197dec51f475b69b8cad 100644
+index 8000efc74086b489267861a6b7d6c41796bb39e8..738a7601ccfcb4d3f5f3b79dd87a4f7f45ff2bfe 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -84,6 +84,7 @@ import net.minecraft.world.level.block.state.BlockState;

@@ -430,10 +430,10 @@ index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f36
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index afe02180e9f0b94f863ae5231a1cfe515da75870..4820e54ed14166a4b33994207f0d2aea1e3fa579 100644
+index 246ef41fdd6dcfbe2bbc3bcad6097731b6e00a7a..12982256769ea675aa6ff3d1b82b40d00f6914eb 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1131,7 +1131,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1132,7 +1132,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
          gameprofilerfiller.incrementCounter("tickNonPassenger");
@@ -442,7 +442,7 @@ index afe02180e9f0b94f863ae5231a1cfe515da75870..4820e54ed14166a4b33994207f0d2aea
              TimingHistory.activatedEntityTicks++;
          entity.tick();
          entity.postTick(); // CraftBukkit
-@@ -2475,6 +2475,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2490,6 +2490,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  entity.setOrigin(entity.getOriginVector().toLocation(getWorld()));
              }
              // Paper end
@@ -451,7 +451,7 @@ index afe02180e9f0b94f863ae5231a1cfe515da75870..4820e54ed14166a4b33994207f0d2aea
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df37198463 100644
+index 62cbdc0e840fd993cc7dfcfda0d2e06c171aac52..4ce574a066aa82a10eb1ca93195a6ef4f17597dc 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -276,6 +276,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -486,9 +486,9 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
      public void baseTick() {
 +        if (isDisabled) { return; } // PaperDragon
          this.level.getProfiler().push("entityBaseTick");
+         if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
          this.feetBlockState = null;
-         if (this.isPassenger() && this.getVehicle().isRemoved()) {
-@@ -944,6 +948,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -945,6 +949,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -496,7 +496,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
          synchronized (this.posLock) {
-@@ -1552,7 +1557,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1553,7 +1558,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean fireImmune() {
@@ -505,7 +505,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
      }
  
      public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-@@ -1751,6 +1756,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1752,6 +1757,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
@@ -513,7 +513,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
          this.setXRot(Mth.clamp(pitch, -90.0F, 90.0F) % 360.0F);
-@@ -1760,6 +1766,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1761,6 +1767,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void absMoveTo(double x, double y, double z) {
@@ -521,7 +521,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          double d3 = Mth.clamp(x, -3.0E7D, 3.0E7D);
          double d4 = Mth.clamp(z, -3.0E7D, 3.0E7D);
  
-@@ -1783,6 +1790,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1784,6 +1791,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void moveTo(double x, double y, double z, float yaw, float pitch) {
@@ -529,7 +529,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          // Paper - cancel entity velocity if teleported
          if (!preserveMotion) {
              this.deltaMovement = Vec3.ZERO;
-@@ -1844,6 +1852,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1845,6 +1853,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public void playerTouch(Player player) {}
  
      public void push(Entity entity) {
@@ -537,7 +537,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          if (!this.isPassengerOfSameVehicle(entity)) {
              if (!entity.noPhysics && !this.noPhysics) {
                  if (this.level.paperConfig.onlyPlayersCollide && !(entity instanceof ServerPlayer || this instanceof ServerPlayer)) return; // Paper
-@@ -1879,6 +1888,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1880,6 +1889,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void push(double deltaX, double deltaY, double deltaZ) {
@@ -545,7 +545,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          this.setDeltaMovement(this.getDeltaMovement().add(deltaX, deltaY, deltaZ));
          this.hasImpulse = true;
      }
-@@ -1888,6 +1898,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1889,6 +1899,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean hurt(DamageSource source, float amount) {
@@ -553,7 +553,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
          if (this.isInvulnerableTo(source)) {
              return false;
          } else {
-@@ -3190,7 +3201,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3186,7 +3197,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean isInvulnerableTo(DamageSource damageSource) {
@@ -563,7 +563,7 @@ index 95262ed06d2f825df103982f693fcd6fc8c5abd2..f5fa2ffa75aa8c1a6754d966f29675df
  
      public boolean isInvulnerable() {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index fdd76d1a1636f30f519c434b41061d826c4a8261..523221d05e0b037a0b2dd3a1eafd9b2cffbae059 100644
+index d6ef140bcc35b10f78f2ec2f10c8a153395fc9df..9c5848c0db86d612ffae75ae2b114459dd423639 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -335,7 +335,7 @@ public abstract class LivingEntity extends Entity {
@@ -614,7 +614,7 @@ index fdd76d1a1636f30f519c434b41061d826c4a8261..523221d05e0b037a0b2dd3a1eafd9b2c
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index b1ae9b0d8b229e2a6797a173cb11ecc0f43e2592..e8c1c4bb1274144950169a94474573287614f643 100644
+index e3227a806d9e19923783122ea94ae19e7dbe71da..a37af0696f8fd6a589b56ef72b4cdf35af25d623 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -127,6 +127,8 @@ public abstract class Mob extends LivingEntity {
@@ -652,10 +652,10 @@ index 150b8554ec017f7a8a1ee6959000f1954eb5e067..52a4c5b04949e051c904b10ec0e22a6e
          } else if (!this.level.canSeeSky(this.mob.blockPosition())) {
              return false;
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index c77fad612ba99663af2ec4418e3c2d68752dc2c8..0c149b792e6b1a8e32203295fac7d1152a8d5ee1 100644
+index a910189177da0c1134c954b3d81b9e9bc4bc1420..54f538db99f8d70496e025fd4651175291909951 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-@@ -27,7 +27,7 @@ public class GoalSelector {
+@@ -26,7 +26,7 @@ public class GoalSelector {
              return false;
          }
      };
@@ -721,10 +721,10 @@ index c9e6c2d0976bde92a94ae912e488ec30f250df55..40edef7002bd74a613bdedc33ea65cee
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Wolf.java b/src/main/java/net/minecraft/world/entity/animal/Wolf.java
-index aaf7096835bab3a42d617553dd83e048e4a83766..25919616c8d5d65b8061ffe2e02f17e2f5cc5a98 100644
+index 249ef89342d2811614507090b79250adf78e33ce..0d12e518bc18f8dd8022abcc3b9f28da997c4aef 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Wolf.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Wolf.java
-@@ -463,6 +463,13 @@ public class Wolf extends TamableAnimal implements NeutralMob {
+@@ -470,6 +470,13 @@ public class Wolf extends TamableAnimal implements NeutralMob {
          this.entityData.set(Wolf.DATA_REMAINING_ANGER_TIME, angerTime);
      }
  
@@ -739,7 +739,7 @@ index aaf7096835bab3a42d617553dd83e048e4a83766..25919616c8d5d65b8061ffe2e02f17e2
      public void startPersistentAngerTimer() {
          this.setRemainingPersistentAngerTime(Wolf.PERSISTENT_ANGER_TIME.sample(this.random));
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index f7d29950644a5cf12da0d31246d9f5fcbcc201bb..4cf329e313bc267c7f20c99faec6b0e2d403d78a 100644
+index 336d753bbd836e2a08207c5e3d41acbe2b72543f..9ff27afd711e4928dcdae9ed89bd3f8b1ed99b3a 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -45,6 +45,7 @@ public class ItemEntity extends Entity {
@@ -750,12 +750,12 @@ index f7d29950644a5cf12da0d31246d9f5fcbcc201bb..4cf329e313bc267c7f20c99faec6b0e2
      public int pickupDelay;
      public int health;
      @Nullable
-@@ -174,7 +175,7 @@ public class ItemEntity extends Entity {
+@@ -175,7 +176,7 @@ public class ItemEntity extends Entity {
                  }
              }
  
--            if (!this.level.isClientSide && this.age >= this.getDespawnRate()) { // Spigot // Paper
-+            if (canDespawn && !this.level.isClientSide && this.age >= this.getDespawnRate()) { // Spigot // Paper // PaperDragon - add canDespawn
+-            if (!this.level.isClientSide && this.age >= this.despawnRate) { // Spigot // Paper
++            if (canDespawn && !this.level.isClientSide && this.age >= this.despawnRate) { // Spigot // Paper // PaperDragon - add canDespawn
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
@@ -940,10 +940,10 @@ index d0f0f380e9b185668580f31b061bdc08f0573a40..fa38b5bba5c06be935a2d71ea9059af7
      // Paper start
      @Override
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 8bd8b85445b2b0b6517590baef33bb4234bb2a38..b7ac489fbe7e60a0c2dfca0c69d4e8ee3e76a3e9 100644
+index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..395c1d87dcd8d18b907f3eda082ed05e3eff57a8 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -365,6 +365,7 @@ public class ActivationRange
+@@ -371,6 +371,7 @@ public class ActivationRange
       */
      public static boolean checkIfActive(Entity entity)
      {

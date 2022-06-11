@@ -7,10 +7,10 @@ Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 4820e54ed14166a4b33994207f0d2aea1e3fa579..c3460aaccc27c55d0f46f5ca8826afac1fc04ba5 100644
+index 12982256769ea675aa6ff3d1b82b40d00f6914eb..fff28596d179b781cb1efade75e45b8e031cc103 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1350,7 +1350,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1351,7 +1351,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          // SPIGOT-6415: Don't call spawn event for entities which travel trough worlds,
          // since it is only an implementation detail, that a new entity is created when
          // they are traveling between worlds.
@@ -20,7 +20,7 @@ index 4820e54ed14166a4b33994207f0d2aea1e3fa579..c3460aaccc27c55d0f46f5ca8826afac
  
      public void addDuringTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index ec3f4813bd2a7755f0aa5d870e19dc43fec76fe9..aa6d95d05685a4df5e862e35c64dca5c0bf30ce6 100644
+index 58be1c60ed169d7bbb20f0823562f97bb7aff3f2..a79436c6303e1bc762af628efd960a60bb831196 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -702,7 +702,7 @@ public class CraftEventFactory {

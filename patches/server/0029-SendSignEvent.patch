@@ -55,7 +55,7 @@ index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a90
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index 79ec416ec38d2df376f9a086da5914b1fb168efe..2578601c0d2dfe7fa8f2095371cc9c7be1e4026e 100644
+index ebd8088234315f1b536d8ea5efa99a5de899a02d..ca5b6f95ad30de4df85605bbca8fcfc1bc0004e2 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
@@ -87,7 +87,7 @@ index 79ec416ec38d2df376f9a086da5914b1fb168efe..2578601c0d2dfe7fa8f2095371cc9c7b
  
              if (!ichatbasecomponent1.equals(ichatbasecomponent)) {
                  nbt.putString(SignBlockEntity.FILTERED_TEXT_FIELD_NAMES[i], Component.Serializer.toJson(ichatbasecomponent1));
-@@ -186,6 +191,20 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -188,6 +193,20 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag getUpdateTag() {

@@ -6,10 +6,10 @@ Subject: [PATCH] Use getType in ItemStack isSimilar method
 overriding classes may have different get type logic
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 59a026d80b0a0a4890becf98efdbe5325b2c622a..cd4643bb3adce1905c95d7c9d11ba5ee115fd032 100644
+index 62841846ec3e14daa46564509671cab146984cc6..7929b63aa99ea0a2f00972263d35f852ea2c0a46 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -290,7 +290,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -294,7 +294,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
          if (stack == this) {
              return true;
          }

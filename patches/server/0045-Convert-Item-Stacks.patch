@@ -5,7 +5,7 @@ Subject: [PATCH] Convert Item Stacks
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 9d75d2392ab279f46f0a7611f32a72100177a304..f24641f9cc65ccc8d30f44a7ff05a767b33055f5 100644
+index c10b77596d84e12d30dfa4b4f1ed121ca94d8f5f..a967e1ecfb3081987d51745fad531b282d6b011a 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -234,6 +234,7 @@ public final class ItemStack {
@@ -17,10 +17,10 @@ index 9d75d2392ab279f46f0a7611f32a72100177a304..f24641f9cc65ccc8d30f44a7ff05a767
      public void convertStack(int version) {
          if (0 < version && version < CraftMagicNumbers.INSTANCE.getDataVersion()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index c4962cae329ba11d4d0dafafc6216bde5d2b0f90..a72ac28fc37777d71abb28fd917ffcf91cf105a2 100644
+index d5daabdcd5b5f50d1ada52b420517a901aa8fa41..0c763b9865b84a83f7ec8e878b187603402aaf01 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-@@ -5,9 +5,11 @@ import org.bukkit.Color;
+@@ -10,9 +10,11 @@ import org.bukkit.Color;
  import org.bukkit.Material;
  import org.bukkit.configuration.serialization.ConfigurationSerialization;
  import org.bukkit.craftbukkit.util.CraftLegacy;
@@ -32,7 +32,7 @@ index c4962cae329ba11d4d0dafafc6216bde5d2b0f90..a72ac28fc37777d71abb28fd917ffcf9
  
  public final class CraftItemFactory implements ItemFactory {
      static final Color DEFAULT_LEATHER_COLOR = Color.fromRGB(0xA06540);
-@@ -373,9 +375,25 @@ public final class CraftItemFactory implements ItemFactory {
+@@ -397,9 +399,25 @@ public final class CraftItemFactory implements ItemFactory {
      }
  
      // Paper start
@@ -102,7 +102,7 @@ index 226d9ac01c601fc8954a88bea93a521cdce79eda..6d1bbfcd9e4f5592862e69e6f3eec694
          if (item.getItem() != null && item.getItem().canBeDepleted()) {
              item.setDamageValue(item.getDamageValue());
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index da885a1f9762fd04f4a04cecba6630b9f0582b54..00b743e18ab80ebc92409225944455d99870a1b2 100644
+index fb28423c3043dd72917e59b11aa246692a01befc..f96329c0e58e7de2b3ac7c5a49449e6ace0f46bb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -317,6 +317,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {

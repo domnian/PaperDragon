@@ -44,7 +44,7 @@ index ab3428a68e496af2a453af85d7ecce9ee2423022..9333ca32a5b65482c3f0162c62aa6397
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
-index 52382b5b8149351ecf981d5414a0a50025f181c7..5d501d3cc6b35e09ac161f93a13f28a99f160b4a 100644
+index d595c82f850bb04657a86748d7e04695f934846f..db298298a6a5a7bf4bd5f2bd99e867d12ab45e43 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 @@ -393,6 +393,18 @@ public class VillagerTrades {

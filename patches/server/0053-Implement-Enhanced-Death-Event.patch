@@ -5,10 +5,10 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index a169dcfd1513212558ecade607388ed5a95b52c0..3ee12a5e8570e5347b9834754aa7ab725987b710 100644
+index 06ad0ce772523bcbbc0351a9852ab267238e6431..a9b372caf9ae197c7781d3ac2c263327f838fdbf 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -860,7 +860,10 @@ public class ServerPlayer extends Player {
+@@ -865,7 +865,10 @@ public class ServerPlayer extends Player {
  
          String deathmessage = defaultMessage.getString();
          this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel
@@ -21,10 +21,10 @@ index a169dcfd1513212558ecade607388ed5a95b52c0..3ee12a5e8570e5347b9834754aa7ab72
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 44ebda0f06fdd3171c50ec7e6139e60c2fd03e35..1dc8ad6149f317af81f0f2a4102bb1ad2d864d1c 100644
+index ae96c48e1fc6138bad35e43698106ae6caba7297..4709aa21b2ed5199438d103a2e7b6827f8482474 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -906,12 +906,13 @@ public class CraftEventFactory {
+@@ -904,12 +904,13 @@ public class CraftEventFactory {
          return event;
      }
  

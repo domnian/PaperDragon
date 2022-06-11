@@ -6,10 +6,10 @@ Subject: [PATCH] Add Method to Save Offline Player Data to File
 WARNING: This is a dangerous operation!
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 47c9e7c9de620a5c55ca90314f7866c632a24842..d481d200ef03e1bc57b8abf5bc1458ffa6ca3638 100644
+index 0b49d9099afe9219134b338d78caf1a08a70c746..a9609d29736ce96c1b83d703f0aaeb4c0bd958e4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -555,5 +555,22 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -565,5 +565,22 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
                  ((net.minecraft.nbt.FloatTag) rot.get(1)).getAsFloat() // Pitch
          );
      }

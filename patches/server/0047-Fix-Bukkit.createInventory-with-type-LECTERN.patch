@@ -5,19 +5,18 @@ Subject: [PATCH] Fix Bukkit.createInventory() with type LECTERN
 
 This fixes an issue with Bukkit which makes it possible to open a Lectern interface, but not be able to interact with it (e.g.: change pages). The following changes had to be made:
 
-nms.TileEntityLectern:
-- Add `virtual` flag, this is used to stop calls that would attempt to update a block which we do not have, as well as used in the following change.
+nms.LecternBlockEntity:
+* Add `virtual` flag, this is used to stop calls that would attempt to update a block which we do not have, as well as used in the following change.
 
-nms.TileEntityLectern$LecternInventory
-- in `a(EntityHuman)`, add `(TileEntityLectern.this.virtual && TileEntityLectern.this.hasBook()) ||` to short-circuit the "can use" logic
-- Add `getLectern()` method for use in the following change.
+nms.LecternBlockEntity$LecternInventory
+* in `stillValid(Player)`, add `LecternBlockEntity.this.virtual || ` to short-circuit the "can use" logic
 
 obc.e.CraftHumanEntity#openInventory(Inventory):
-- Check if the wrapped inventory is a TileEntityLectern.LecternInventory, and get the Lectern from that
+* Check if the wrapped inventory is a LecternBlockEntity.LecternInventory, and get the Lectern from that
 
 obc.i.u.CraftTileInventoryConverter$Lectern:
-- Mark the created lectern as "virtual"
-- Override `getInventory(IInventory)` to return a CraftInventoryLectern.
+* Mark the created lectern as "virtual"
+* Override `getInventory(IInventory)` to return a CraftInventoryLectern.
 
 This patch is licensed under the MIT License.
 License: https://opensource.org/licenses/MIT
@@ -78,7 +77,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
              if (this.level != null) LecternBlock.signalPageChange(this.getLevel(), this.getBlockPos(), this.getBlockState()); // CraftBukkit
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index e7108dd70f1eb91f38e04ad71e595bc679560f75..33c84736e662e107b94db98f246aa3a5f8490d6c 100644
+index 83c5314ed3a3f09162bca47902c4e749fab940a0..cba82c85db5c23dbb62e0970656a545150725278 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 @@ -308,6 +308,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
@@ -94,10 +93,10 @@ index e7108dd70f1eb91f38e04ad71e595bc679560f75..33c84736e662e107b94db98f246aa3a5
  
          if (iinventory instanceof MenuProvider) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
-index 54e61b9b058bee2167461aaaf828ed7a00949c29..0beef7d3a24be5a9bb5688df434b3555640f6927 100644
+index 53421f780ac8bc2a67f64671fcad632fcdb8bede..24a48b13839e7588f11ea4aafe45df75b6b64689 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
-@@ -182,8 +182,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
+@@ -187,8 +187,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
  
          @Override
          public Container getTileEntity() {
@@ -117,4 +116,4 @@ index 54e61b9b058bee2167461aaaf828ed7a00949c29..0beef7d3a24be5a9bb5688df434b3555
 +        // PaperDragon end
      }
  
-     public static class Smoker extends CraftTileInventoryConverter {
+     public static class Smoker extends AbstractFurnaceInventoryConverter { // Paper - Furnace, BlastFurnace, and Smoker are pretty much identical

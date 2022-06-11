@@ -5,7 +5,7 @@ Subject: [PATCH] dont load chunks for physics
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 7be6718f60ab672829f5f8bd2f70171d7d090213..f02f34d937ed7e0e9587edab9618f57e753eefca 100644
+index 6f49e29b55a14d9b67485e6da566a65147fda97f..ebc13da318ee6e2a4d270ad4aaafd5e8ec828e08 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -757,7 +757,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -19,10 +19,10 @@ index 7be6718f60ab672829f5f8bd2f70171d7d090213..f02f34d937ed7e0e9587edab9618f57e
              try {
                  // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 61590f2f04a797235299f1bd6b78a08f5bfe4a33..d8c67ba2136795c6029e4650daff1d976977119a 100644
+index 7f83c9390823b42fc30d04e1d3222e2825eaad50..e434d53391c69fc2f97eb02dee8aafaa8d0347e3 100644
 --- a/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/src/main/java/net/minecraft/world/level/block/state/BlockBehaviour.java
-@@ -967,7 +967,8 @@ public abstract class BlockBehaviour {
+@@ -987,7 +987,8 @@ public abstract class BlockBehaviour {
                  Direction enumdirection = aenumdirection[l];
  
                  blockposition_mutableblockposition.setWithOffset(pos, enumdirection);
