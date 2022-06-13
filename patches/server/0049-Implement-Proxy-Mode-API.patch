@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Proxy Mode API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e86baf6639fda26dd015f32b3520e6429e78cdd4..753386f0c63fc893cd0834fa31fa5eb8f4a5dcd7 100644
+index 8cbbe0d876c985f8ef6ef20765ac69c48098f10c..6209a234f85790a1e65f811adf4d68184616591a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -15,7 +15,7 @@ index e86baf6639fda26dd015f32b3520e6429e78cdd4..753386f0c63fc893cd0834fa31fa5eb8
  import com.domnian.paperdragon.api.EntityTasksHandler; // PaperDragon
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
-@@ -2904,4 +2905,25 @@ public final class CraftServer implements Server {
+@@ -2887,4 +2888,25 @@ public final class CraftServer implements Server {
      }
  
      // Paper end

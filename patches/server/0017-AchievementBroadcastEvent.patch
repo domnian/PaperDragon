@@ -6,7 +6,7 @@ Subject: [PATCH] AchievementBroadcastEvent
 Used to control who sees achievement message
 
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index b16287a47870978706734b928b87f2357e91e3a1..3f5da3df0fcc132293f6231a3c6f65ab88906061 100644
+index de0513b38e5fa0138f1cee6bb633561be12449fc..4e0b6ffe135a3a2eb1322909c6702876f5c12ae3 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -1,5 +1,6 @@
@@ -16,27 +16,26 @@ index b16287a47870978706734b928b87f2357e91e3a1..3f5da3df0fcc132293f6231a3c6f65ab
  import com.google.common.base.Charsets;
  import com.google.common.collect.Lists;
  import com.google.common.collect.Maps;
-@@ -51,6 +52,8 @@ import net.minecraft.server.players.PlayerList;
+@@ -49,6 +50,7 @@ import net.minecraft.server.level.ServerPlayer;
+ import net.minecraft.server.players.PlayerList;
  import net.minecraft.util.datafix.DataFixTypes;
  import net.minecraft.world.level.GameRules;
++import org.bukkit.entity.Player; // PaperDragon
  import org.slf4j.Logger;
-+import org.bukkit.craftbukkit.entity.CraftEntity;
-+import org.bukkit.entity.Player;
  
  public class PlayerAdvancements {
- 
-@@ -300,8 +303,15 @@ public class PlayerAdvancements {
+@@ -299,8 +301,15 @@ public class PlayerAdvancements {
                  advancement.getRewards().grant(this.player);
                  // Paper start - Add Adventure message to PlayerAdvancementDoneEvent
                  if (message != null && this.player.level.getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
--                    this.playerList.broadcastMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM, Util.NIL_UUID);
+-                    this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM);
 +                    // PaperDragon start
-+                    //this.playerList.broadcastMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM, Util.NIL_UUID);
++                    //this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM);
                      // Paper end
 +                    AdvancementBroadcastEvent broadcastEvent = new AdvancementBroadcastEvent(this.player.getBukkitEntity());
 +                    broadcastEvent.callEvent();
 +                    for (Player player : broadcastEvent.getReceivers()) {
-+                        ((CraftEntity) player).getHandle().sendMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), Util.NIL_UUID);
++                        this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM);
 +                    }
 +                    // PaperDragon end
                  }

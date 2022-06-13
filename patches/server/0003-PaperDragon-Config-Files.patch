@@ -259,11 +259,11 @@ index 0000000000000000000000000000000000000000..71f698d648872341b7fef1326d45fdaf
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 257c94f7c1cb00c9a91ab82e311dfd8eca29c538..3963cce869df3d82f1f9dd1fe8e469926d9a3113 100644
+index aea18838a17fc52e1bf8cd84cd185565e6e2246d..4d4cdba4932d4a7247f4ace3a088ee098b105067 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -235,6 +235,10 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         io.papermc.paper.util.ObfHelper.INSTANCE.getClass(); // load mappings for stacktrace deobf and etc.
+@@ -226,6 +226,10 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
          io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
          // Paper end
 +        // PaperDragon start
@@ -274,10 +274,10 @@ index 257c94f7c1cb00c9a91ab82e311dfd8eca29c538..3963cce869df3d82f1f9dd1fe8e46992
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index fee8996f35b38fd79946cdfd677763e0201eb57d..10b10af69b3e185af0a153425af0ac086217db1b 100644
+index d59dea221ba0f1b9c14f403d3c6ea61b2c454316..901e7d5c6131682629f7535c9fa30441fcc3a397 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -165,6 +165,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -176,6 +176,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public final com.destroystokyo.paper.antixray.ChunkPacketBlockController chunkPacketBlockController; // Paper - Anti-Xray
  
      public final co.aikar.timings.WorldTimingsHandler timings; // Paper
@@ -285,44 +285,44 @@ index fee8996f35b38fd79946cdfd677763e0201eb57d..10b10af69b3e185af0a153425af0ac08
      public static BlockPos lastPhysicsProblem; // Spigot
      private org.spigotmc.TickLimiter entityLimiter;
      private org.spigotmc.TickLimiter tileLimiter;
-@@ -264,6 +265,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
-     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
+@@ -275,6 +276,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
-         this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName(), this.spigotConfig); // Paper
+         this.paperConfig = paperWorldConfigCreator.apply(this.spigotConfig); // Paper
 +        this.dragonConfig = new com.domnian.paperdragon.DragonWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName(), this.spigotConfig, this.paperConfig); // PaperDragon
          this.generator = gen;
          this.world = new CraftWorld((ServerLevel) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ff6d3569602bacd2e10fdb4886d9f7981d23dc21..7566afee5287d5380cf921f546fe8174afa578e6 100644
+index 4bd1d2818b0f3c188b7122a509eb62e05fe45ac3..a80c573333e4b9b1946160a76d9dfc4caa2b344b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -956,6 +956,7 @@ public final class CraftServer implements Server {
+@@ -950,6 +950,7 @@ public final class CraftServer implements Server {
  
          org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
-         com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
+         this.console.paperConfigurations.reloadConfigs(this.console);
 +        com.domnian.paperdragon.DragonConfig.init((File) console.options.valueOf("dragon-settings")); // PaperDragon
          for (ServerLevel world : this.console.getAllLevels()) {
              // world.serverLevelData.setDifficulty(config.difficulty); // Paper - per level difficulty
              world.setSpawnSettings(world.serverLevelData.getDifficulty() != Difficulty.PEACEFUL && config.spawnMonsters, config.spawnAnimals); // Paper - per level difficulty (from MinecraftServer#setDifficulty(ServerLevel, Difficulty, boolean))
-@@ -972,6 +973,7 @@ public final class CraftServer implements Server {
+@@ -965,6 +966,7 @@ public final class CraftServer implements Server {
+                 }
              }
              world.spigotConfig.init(); // Spigot
-             world.paperConfig.init(); // Paper
 +            world.dragonConfig.init(); //PaperDragon
          }
  
          Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
-@@ -987,6 +989,7 @@ public final class CraftServer implements Server {
+@@ -980,6 +982,7 @@ public final class CraftServer implements Server {
          this.reloadData();
          org.spigotmc.SpigotConfig.registerCommands(); // Spigot
-         com.destroystokyo.paper.PaperConfig.registerCommands(); // Paper
+         io.papermc.paper.command.PaperCommands.registerCommands(this.console); // Paper
 +        com.domnian.paperdragon.DragonConfig.registerCommands(); // PaperDragon
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
-@@ -2714,6 +2717,13 @@ public final class CraftServer implements Server {
-             return com.destroystokyo.paper.PaperConfig.config;
+@@ -2694,6 +2697,13 @@ public final class CraftServer implements Server {
+             return CraftServer.this.console.paperConfigurations.createLegacyObject(CraftServer.this.console);
          }
  
 +        // PaperDragon - PaperDragon Config Files
@@ -336,7 +336,7 @@ index ff6d3569602bacd2e10fdb4886d9f7981d23dc21..7566afee5287d5380cf921f546fe8174
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index fbe68bd4739d9a0e7d9bc4c3d5ba8ecfd2d13954..c16d371045464783f1421c41bd04d2d8b3b71087 100644
+index 344d93f1d7f25a3f26064469e78dd698af66dc0d..db66ebd26332e4e004ac6cafa7c67cbd01e61d6f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -160,6 +160,14 @@ public class Main {

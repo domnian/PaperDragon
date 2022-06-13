@@ -43,7 +43,7 @@ index 0000000000000000000000000000000000000000..e352eb1ab8b0c31fd192e8dc2b9d4f9f
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index d241b25acc223982109495542fd17e0fbdf53437..01700c804083e4859f9a1d391a0898c5c977441e 100644
+index 8ab1d401ed55d4cce55704317cbffe53ebc9f119..aea148b8af4dfade4fee2565ce6d13e184f9060e 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -5,6 +5,8 @@ import java.util.List;
@@ -51,11 +51,11 @@ index d241b25acc223982109495542fd17e0fbdf53437..01700c804083e4859f9a1d391a0898c5
  import java.util.stream.IntStream;
  import javax.annotation.Nullable;
 +
-+import com.domnian.paperdragon.api.HopperEvents;
++import com.domnian.paperdragon.api.HopperEvents; // PaperDragon
  import net.minecraft.core.BlockPos;
  import net.minecraft.core.Direction;
  import net.minecraft.core.NonNullList;
-@@ -350,6 +352,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -349,6 +351,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          } else {
              Direction enumdirection = ((Direction) iblockdata.getValue(HopperBlock.FACING)).getOpposite();
  
@@ -63,7 +63,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..01700c804083e4859f9a1d391a0898c5
              if (HopperBlockEntity.isFullContainer(iinventory1, enumdirection)) {
                  return false;
              } else {
-@@ -454,8 +457,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -453,8 +456,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              Direction enumdirection = Direction.DOWN;
  
              // Paper start - optimize hoppers and remove streams

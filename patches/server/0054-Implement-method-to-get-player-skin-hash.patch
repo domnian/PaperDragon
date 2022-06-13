@@ -5,7 +5,7 @@ Subject: [PATCH] Implement method to get player skin hash
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 4f99b40ea3c6a1ab2a8dac0c2119074fffde2055..8d9f32f0a4a8c3168ca6f0189373cd4720e50b47 100644
+index 9dc9fa54097892a806d2993fca06a426368de18c..d004ceeda4d6aaf3f77c00434fd83a0fb2ac8cda 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -24,6 +24,9 @@
@@ -16,8 +16,8 @@ index 4f99b40ea3c6a1ab2a8dac0c2119074fffde2055..8d9f32f0a4a8c3168ca6f0189373cd47
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
  import net.minecraft.core.BlockPos;
+ import net.minecraft.network.chat.Component;
  import net.minecraft.nbt.CompoundTag;
- import net.minecraft.nbt.ListTag;
 @@ -37,10 +40,14 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
  import org.bukkit.Location;
  import org.bukkit.craftbukkit.inventory.CraftItemStack;

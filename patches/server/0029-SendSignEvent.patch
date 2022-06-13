@@ -6,16 +6,15 @@ Subject: [PATCH] SendSignEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a9015d0293a
+index 0000000000000000000000000000000000000000..a5362406b0c90f7eb5314c3f40e174b515f6b9d6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,43 @@
 +package com.domnian.paperdragon.api;
 +
 +import com.domnian.paperdragon.events.SendSignEvent;
 +import net.minecraft.core.BlockPos;
 +import net.minecraft.network.chat.Component;
-+import net.minecraft.network.chat.TextComponent;
 +import net.minecraft.world.level.Level;
 +import org.bukkit.block.Block;
 +import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -48,14 +47,14 @@ index 0000000000000000000000000000000000000000..9bddc963c322de74b89b155dcb363a90
 +
 +    public void setLine(int i, @NotNull String line) {
 +        slines[i] = line;
-+        lines[i] = new TextComponent("");
++        lines[i] = Component.literal("");
 +        for (Component comp : CraftChatMessage.fromString(line)) {
 +            lines[i].getSiblings().add(comp);
 +        }
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index ebd8088234315f1b536d8ea5efa99a5de899a02d..ca5b6f95ad30de4df85605bbca8fcfc1bc0004e2 100644
+index 19162c5d0c2c7ed4072283b3ac4127cbaf099505..f97426982eda397728bee28354d061f54f33d387 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
@@ -87,7 +86,7 @@ index ebd8088234315f1b536d8ea5efa99a5de899a02d..ca5b6f95ad30de4df85605bbca8fcfc1
  
              if (!ichatbasecomponent1.equals(ichatbasecomponent)) {
                  nbt.putString(SignBlockEntity.FILTERED_TEXT_FIELD_NAMES[i], Component.Serializer.toJson(ichatbasecomponent1));
-@@ -188,6 +193,20 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -186,6 +191,20 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag getUpdateTag() {

@@ -4,7 +4,7 @@ Date: Mon, 17 Feb 2014 00:05:26 -0500
 Subject: [PATCH] Chat API
 
 Initial for Fanciful Credits to http://forums.bukkit.org/threads/lib-fanciful-pleasant-chat-message-formatting.195148/
-But did a lot of bug fixing and improving upon it, and designing into the Dragon API
+But did a lot of bug fixing and improving upon it, and designing into the Empire API
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java b/src/main/java/com/domnian/paperdragon/api/CraftDragonAPI.java
 index b11af17efbbff6c519183bec47a18ee4842aa6ac..81ceb7f598bc60364267e74f455c7ea58090461b 100644
@@ -28,17 +28,17 @@ index b11af17efbbff6c519183bec47a18ee4842aa6ac..81ceb7f598bc60364267e74f455c7ea5
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..1614ec6bc9c3bc56be447def9549b6d65b622c6c
+index 0000000000000000000000000000000000000000..5682cd06db97140c4e3d5daa1111590dfce46907
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftChatBuilder.java
 @@ -0,0 +1,157 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import net.minecraft.ChatFormatting;
++import net.minecraft.network.chat.Component;
 +import net.minecraft.network.chat.MutableComponent;
 +import net.minecraft.network.chat.Style;
 +import net.minecraft.network.chat.TextColor;
-+import net.minecraft.network.chat.TextComponent;
 +import org.bukkit.ChatColor;
 +import org.jetbrains.annotations.NotNull;
 +
@@ -153,7 +153,7 @@ index 0000000000000000000000000000000000000000..1614ec6bc9c3bc56be447def9549b6d6
 +        MutableComponent component;
 +
 +        ChatPart(@NotNull String text) {
-+            component = new TextComponent(text);
++            component = Component.literal(text);
 +        }
 +
 +        void format(@NotNull ChatFormatting format) {
@@ -191,17 +191,13 @@ index 0000000000000000000000000000000000000000..1614ec6bc9c3bc56be447def9549b6d6
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..81b2dfcc205858d0b16c2ccf82673cd04f261070
+index 0000000000000000000000000000000000000000..bd6d9a1de97dd0db884a04170ec5fedafafa4513
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftDAPI_Chat.java
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,63 @@
 +package com.domnian.paperdragon.api.chat;
 +
-+import net.minecraft.Util;
-+import net.minecraft.network.chat.ChatType;
 +import net.minecraft.network.protocol.Packet;
-+
-+import net.minecraft.network.protocol.game.ClientboundChatPacket;
 +import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 +import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 +import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -244,17 +240,17 @@ index 0000000000000000000000000000000000000000..81b2dfcc205858d0b16c2ccf82673cd0
 +
 +    @Override
 +    public void sendChat(@NotNull Player player, @NotNull FancifulChat message) {
-+        sendChat(Util.NIL_UUID, player, message);
++        sendSystem(player, message);
 +    }
 +
 +    @Override
 +    public void sendChat(@Nullable UUID sender, @NotNull Player player, @NotNull FancifulChat message) {
-+        sendPacket(player, new ClientboundChatPacket(((CraftFancifulChat) message).buildComponent(), ChatType.CHAT, sender));
++        sendSystem(player, message);
 +    }
 +
 +    @Override
 +    public void sendSystem(@NotNull Player player, @NotNull FancifulChat message) {
-+        sendPacket(player, new ClientboundChatPacket(((CraftFancifulChat) message).buildComponent(), ChatType.SYSTEM, Util.NIL_UUID));
++        ((CraftPlayer) player).getHandle().sendSystemMessage(((CraftFancifulChat) message).buildComponent());
 +    }
 +
 +    private static void sendPacket(Player player, Packet<?> packet) {
@@ -264,22 +260,20 @@ index 0000000000000000000000000000000000000000..81b2dfcc205858d0b16c2ccf82673cd0
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..05b36d6d28eb5265d49f6720331d3a74ddc61c75
+index 0000000000000000000000000000000000000000..afa76a5a3a3708a59852d88f99d3fc40ee5e0ce6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/CraftFancifulChat.java
-@@ -0,0 +1,241 @@
+@@ -0,0 +1,239 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import com.domnian.paperdragon.api.HiddenItemMeta;
 +import net.minecraft.nbt.CompoundTag;
-+import net.minecraft.network.chat.BaseComponent;
 +import net.minecraft.network.chat.ClickEvent;
 +import net.minecraft.network.chat.Component;
 +import net.minecraft.network.chat.HoverEvent;
 +import net.minecraft.network.chat.HoverEvent.Action;
 +import net.minecraft.network.chat.HoverEvent.ItemStackInfo;
 +import net.minecraft.network.chat.MutableComponent;
-+import net.minecraft.network.chat.TextComponent;
 +import org.bukkit.craftbukkit.entity.CraftEntity;
 +import org.bukkit.craftbukkit.inventory.CraftItemStack;
 +import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -300,7 +294,7 @@ index 0000000000000000000000000000000000000000..05b36d6d28eb5265d49f6720331d3a74
 + */
 +public class CraftFancifulChat implements FancifulChat {
 +    final List<MessagePart> messageParts = new ArrayList<>();
-+    TextComponent component;
++    MutableComponent component;
 +    boolean isDirty = true;
 +
 +    @Override
@@ -399,12 +393,12 @@ index 0000000000000000000000000000000000000000..05b36d6d28eb5265d49f6720331d3a74
 +    }
 +
 +    @NotNull
-+    protected TextComponent buildComponent() {
++    protected MutableComponent buildComponent() {
 +        if (component != null && !isDirty) {
 +            return component;
 +        }
 +        isDirty = false;
-+        component = new TextComponent("");
++        component = Component.literal("");
 +        for (MessagePart msg : messageParts) {
 +            for (Component cmp : msg.getComponents()) {
 +                component.append(cmp);
@@ -466,11 +460,11 @@ index 0000000000000000000000000000000000000000..05b36d6d28eb5265d49f6720331d3a74
 +        }
 +
 +        public void tooltip(@NotNull String[] lines) {
-+            BaseComponent hover = new TextComponent("");
++            MutableComponent hover = Component.literal("");
 +
 +            for (int i = 0; i < lines.length; i++) {
 +                if (i > 0) {
-+                    hover.append(new TextComponent("\n"));
++                    hover.append(Component.literal("\n"));
 +                }
 +                for (Component component : CraftChatMessage.fromString(lines[i])) {
 +                    hover.append(component);
@@ -510,10 +504,10 @@ index 0000000000000000000000000000000000000000..05b36d6d28eb5265d49f6720331d3a74
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index ad07f4c83c427502ea1a701bff0ede4015a54763..bf4d818451987743b1de20b311ad31cafd71b1b8 100644
+index cab2f3475a5af659d75c85119f27ffa237207eaf..bd9725383d48b47ba5b60151e7d5c85ed70bc049 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3613,7 +3613,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3695,7 +3695,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.getDirection();
      }
  

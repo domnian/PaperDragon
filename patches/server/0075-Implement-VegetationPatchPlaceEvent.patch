@@ -5,7 +5,7 @@ Subject: [PATCH] Implement VegetationPatchPlaceEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
-index 89732a41752eda3c2ccc07e9580ded8266f8d4f0..f0271fd4a58642ab2065f8136efdaae1b9fbc015 100644
+index 283f444839fa893ad7b9b0ac5cc4eb63cf5f4165..2607c386bead077e35eeb1cca7f6c5b8a713a99a 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
 @@ -67,6 +67,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
@@ -25,9 +25,9 @@ index 89732a41752eda3c2ccc07e9580ded8266f8d4f0..f0271fd4a58642ab2065f8136efdaae1
                          if (bl6) {
                              set.add(blockPos);
 @@ -82,6 +91,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
-     protected void distributeVegetation(FeaturePlaceContext<VegetationPatchConfiguration> context, WorldGenLevel world, VegetationPatchConfiguration config, Random random, Set<BlockPos> positions, int radiusX, int radiusZ) {
+     protected void distributeVegetation(FeaturePlaceContext<VegetationPatchConfiguration> context, WorldGenLevel world, VegetationPatchConfiguration config, RandomSource randomSource, Set<BlockPos> positions, int radiusX, int radiusZ) {
          for(BlockPos blockPos : positions) {
-             if (config.vegetationChance > 0.0F && random.nextFloat() < config.vegetationChance) {
+             if (config.vegetationChance > 0.0F && randomSource.nextFloat() < config.vegetationChance) {
 +                // PaperDragon start
 +                if (org.bukkit.Bukkit.isPrimaryThread()) {
 +                    org.bukkit.block.Block origin = net.minecraft.server.MCUtil.toBukkitBlock(context.level().getLevel(), context.origin());
@@ -37,6 +37,6 @@ index 89732a41752eda3c2ccc07e9580ded8266f8d4f0..f0271fd4a58642ab2065f8136efdaae1
 +                    }
 +                }
 +                // PaperDragon end
-                 this.placeVegetation(world, config, context.chunkGenerator(), random, blockPos);
+                 this.placeVegetation(world, config, context.chunkGenerator(), randomSource, blockPos);
              }
          }

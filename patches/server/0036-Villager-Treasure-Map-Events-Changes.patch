@@ -5,7 +5,7 @@ Subject: [PATCH] Villager Treasure Map Events / Changes
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index ab3428a68e496af2a453af85d7ecce9ee2423022..9333ca32a5b65482c3f0162c62aa63979f820eaa 100644
+index ab3428a68e496af2a453af85d7ecce9ee2423022..4104b61ba2ed0d3e8338f5c44d3e8a6964bbdee9 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -23,5 +23,34 @@
@@ -13,7 +13,7 @@ index ab3428a68e496af2a453af85d7ecce9ee2423022..9333ca32a5b65482c3f0162c62aa6397
  package com.domnian.paperdragon.api;
  
 +import net.minecraft.core.BlockPos;
-+import net.minecraft.network.chat.TranslatableComponent;
++import net.minecraft.network.chat.Component;
 +import net.minecraft.server.MCUtil;
 +import net.minecraft.server.level.ServerLevel;
 +import net.minecraft.world.item.ItemStack;
@@ -39,18 +39,18 @@ index ab3428a68e496af2a453af85d7ecce9ee2423022..9333ca32a5b65482c3f0162c62aa6397
 +        MapItem.renderBiomePreviewMap(level, itemstack);
 +
 +        MapItemSavedData.addTargetDecoration(itemstack, pos, "+", values[iconType]);
-+        itemstack.setHoverName(new TranslatableComponent("filled_map." + mapType.toLowerCase()));
++        itemstack.setHoverName(Component.translatable("filled_map." + mapType.toLowerCase()));
 +        return CraftItemStack.asCraftMirror(itemstack);
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
-index d595c82f850bb04657a86748d7e04695f934846f..db298298a6a5a7bf4bd5f2bd99e867d12ab45e43 100644
+index 770a91fcc351a2d1de4762c0fd9bae2b49c363b5..1a6bd74320b4f6d6d4a675ced9710ccc3cf04593 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/VillagerTrades.java
 @@ -393,6 +393,18 @@ public class VillagerTrades {
                      MapItem.renderBiomePreviewMap(serverLevel, itemStack);
                      MapItemSavedData.addTargetDecoration(itemStack, blockPos, "+", this.destinationType);
-                     itemStack.setHoverName(new TranslatableComponent(this.displayName));
+                     itemStack.setHoverName(Component.translatable(this.displayName));
 +                    // PaperDragon start - add event for treasure map creation
 +                    if (com.domnian.paperdragon.events.CreateTreasureMapEvent.getHandlerList().hasListeners()) {
 +                        org.bukkit.inventory.ItemStack craftOriginal = org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemStack);

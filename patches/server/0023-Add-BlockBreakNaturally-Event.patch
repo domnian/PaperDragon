@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index be29f90572e162c0cfb626e04793547a95a2a9f6..61115553c4bf201ef8d6170aff01c7f7ee6e7161 100644
+index 3a77d018ec9a5cd743ac4214d222160750440395..61eb01f14bbe436b213b62d201d8044d76b6c002 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1421,6 +1421,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1441,6 +1441,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          } else {
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -18,7 +18,7 @@ index be29f90572e162c0cfb626e04793547a95a2a9f6..61115553c4bf201ef8d6170aff01c7f7
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 9ff27afd711e4928dcdae9ed89bd3f8b1ed99b3a..f76f11c176894f3aac9369d94d4f79dae97ba0d6 100644
+index 2f34252a2247eefc34bacef7699c25bbe6a17c1d..5db3ca66ebb2e5d28ae61667159bf1ed5737ed60 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -46,6 +46,7 @@ public class ItemEntity extends Entity {
@@ -30,18 +30,18 @@ index 9ff27afd711e4928dcdae9ed89bd3f8b1ed99b3a..f76f11c176894f3aac9369d94d4f79da
      public int health;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index a80f4dc0a642c744223a155232291ace6e007636..71ae4a60f153f41c6b1cee8881034c11c4afa69e 100644
+index 224ce424b9a22548212ac157ec273c6dd80d6cfb..dcc3ae5b0c180b9dd8d4ced72cd930adcc6f73c9 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -23,6 +23,7 @@ import net.minecraft.core.Registry;
+@@ -21,6 +21,7 @@ import net.minecraft.core.NonNullList;
+ import net.minecraft.core.Registry;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.chat.MutableComponent;
- import net.minecraft.network.chat.TranslatableComponent;
 +import net.minecraft.server.MCUtil; // PaperDragon
  import net.minecraft.server.level.ServerLevel;
  import net.minecraft.stats.Stats;
  import net.minecraft.tags.BlockTags;
-@@ -369,7 +370,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -371,7 +372,7 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack);
@@ -50,7 +50,7 @@ index a80f4dc0a642c744223a155232291ace6e007636..71ae4a60f153f41c6b1cee8881034c11
      }
  
      public static void popResourceFromFace(Level world, BlockPos pos, Direction direction, ItemStack stack) {
-@@ -389,18 +390,20 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -391,18 +392,20 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
              return new ItemEntity(world, d0, d1, d2, stack, d3, d4, d5);
@@ -74,7 +74,7 @@ index a80f4dc0a642c744223a155232291ace6e007636..71ae4a60f153f41c6b1cee8881034c11
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index a79436c6303e1bc762af628efd960a60bb831196..2e2088e7604e215fee439a86b0a129c8f2f2fce9 100644
+index 991a2305fde0b6c7bd5be5dcdc3abddd612fed88..bf133309416da1b9302cb93aad8d0b1e6270813a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -406,6 +406,16 @@ public class CraftEventFactory {

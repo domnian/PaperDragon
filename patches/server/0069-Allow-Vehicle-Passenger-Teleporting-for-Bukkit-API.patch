@@ -6,10 +6,10 @@ Subject: [PATCH] Allow Vehicle/Passenger Teleporting for Bukkit API
 If Bukkit teleport is called, teleport the whole set of entities together and maintain the chain.
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 12f84585feb0b60b22c6d984b98170e24b0a41a8..1fb8711222d05a23e4782112125f241b4ea9ad89 100644
+index 1cf6cf12cd5a2fef65bb1f69488d9c60b2311fa7..bc0dca93fdfbd0f0e36c665a032f5b48c56b6f97 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -840,7 +840,7 @@ public abstract class PlayerList {
+@@ -843,7 +843,7 @@ public abstract class PlayerList {
  
      public ServerPlayer respawn(ServerPlayer entityplayer, ServerLevel worldserver, boolean flag, Location location, boolean avoidSuffocation, org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag...respawnFlags) {
          // Paper end
@@ -19,10 +19,10 @@ index 12f84585feb0b60b22c6d984b98170e24b0a41a8..1fb8711222d05a23e4782112125f241b
          this.playersByName.remove(entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          entityplayer.getLevel().removePlayerImmediately(entityplayer, Entity.RemovalReason.DISCARDED);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a9ada8c790e8d2e5ce28423810580f0605be91ab..c1345d492b78e692b9d18db1841f3c376f87cb80 100644
+index 9ed3ae9fa621e9e79eb24b463385ee28f3f59667..31ef46c4385c53b9112ab13623aec20a495d9f8d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -234,7 +234,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -290,7 +290,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public ImmutableList<Entity> passengers;
      protected int boardingCooldown;
      @Nullable
@@ -32,7 +32,7 @@ index a9ada8c790e8d2e5ce28423810580f0605be91ab..c1345d492b78e692b9d18db1841f3c37
      public double xo;
      public double yo;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 4538ccc3bd9865424b8238ce4cfdaa68a762d158..c02cf6f840c605d14b74a284d1661971738d07ae 100644
+index 2b707d43793914d3148d6db337a890a7ae152110..4979151dec776db2f976cf28dcd6b96ce431922f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -5,6 +5,7 @@ import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
@@ -43,7 +43,7 @@ index 4538ccc3bd9865424b8238ce4cfdaa68a762d158..c02cf6f840c605d14b74a284d1661971
  import com.google.common.collect.Lists;
  import java.util.List;
  import java.util.Set;
-@@ -569,23 +570,104 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -580,23 +581,104 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          return this.teleport(location, TeleportCause.PLUGIN);
      }
  
@@ -150,7 +150,7 @@ index 4538ccc3bd9865424b8238ce4cfdaa68a762d158..c02cf6f840c605d14b74a284d1661971
              return true;
          }
  
-@@ -594,6 +676,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -605,6 +687,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          // SPIGOT-619: Force sync head rotation also
          this.entity.setYHeadRot(location.getYaw());
  
@@ -159,10 +159,10 @@ index 4538ccc3bd9865424b8238ce4cfdaa68a762d158..c02cf6f840c605d14b74a284d1661971
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 1623cb72a994252e4eea0b15d41404b292972ab9..08174ea236dec72e4d950abeac7d20636c8226ba 100644
+index ddb172c03b71cfc964870acddd6187e545763a71..fcdb3ce20936bdb26542e85c0dc1d1c21b884f6f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1168,7 +1168,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1165,7 +1165,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          }
  
          // If this player is riding another entity, we must dismount before teleporting.
@@ -171,7 +171,7 @@ index 1623cb72a994252e4eea0b15d41404b292972ab9..08174ea236dec72e4d950abeac7d2063
  
          // SPIGOT-5509: Wakeup, similar to riding
          if (this.isSleeping()) {
-@@ -1188,14 +1188,28 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1185,14 +1185,28 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
              this.getHandle().closeContainer(org.bukkit.event.inventory.InventoryCloseEvent.Reason.TELEPORT); // Paper
          }
  
@@ -180,7 +180,7 @@ index 1623cb72a994252e4eea0b15d41404b292972ab9..08174ea236dec72e4d950abeac7d2063
          if (fromWorld == toWorld) {
              entity.connection.teleport(to);
          } else {
-             server.getHandle().respawn(entity, toWorld, true, to, !toWorld.paperConfig.disableTeleportationSuffocationCheck); // Paper
+             server.getHandle().respawn(entity, toWorld, true, to, !toWorld.paperConfig().environment.disableTeleportationSuffocationCheck); // Paper
          }
 +        this.teleportAndReattachEntities(location); // PaperDragon
          return true;
@@ -193,7 +193,7 @@ index 1623cb72a994252e4eea0b15d41404b292972ab9..08174ea236dec72e4d950abeac7d2063
 +            entity.connection.teleport(location);
 +        } else {
 +            ServerLevel toWorld = ((CraftWorld) location.getWorld()).getHandle();
-+            server.getHandle().respawn(entity, toWorld, true, location, !toWorld.paperConfig.disableTeleportationSuffocationCheck);
++            server.getHandle().respawn(entity, toWorld, true, location, !toWorld.paperConfig().environment.disableTeleportationSuffocationCheck);
 +        }
 +    }
 +    // PaperDragon end

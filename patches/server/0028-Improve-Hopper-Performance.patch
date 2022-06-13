@@ -6,7 +6,7 @@ Subject: [PATCH] Improve Hopper Performance
 Only do an item "suck in" action once per second
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index f76f11c176894f3aac9369d94d4f79dae97ba0d6..fd5e76e7dd5bcdb34320bc988e2705366652f7c1 100644
+index 5db3ca66ebb2e5d28ae61667159bf1ed5737ed60..318da7c4c62567355344fd619f7a2d63998e646f 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -19,11 +19,13 @@ import net.minecraft.world.entity.Entity;
@@ -23,7 +23,7 @@ index f76f11c176894f3aac9369d94d4f79dae97ba0d6..fd5e76e7dd5bcdb34320bc988e270536
  import net.minecraft.world.phys.Vec3;
  // CraftBukkit start
  import net.minecraft.server.MinecraftServer;
-@@ -186,10 +188,23 @@ public class ItemEntity extends Entity {
+@@ -196,10 +198,23 @@ public class ItemEntity extends Entity {
                  // CraftBukkit end
                  this.discard();
              }
@@ -47,7 +47,7 @@ index f76f11c176894f3aac9369d94d4f79dae97ba0d6..fd5e76e7dd5bcdb34320bc988e270536
      // Spigot start - copied from above
      @Override
      public void inactiveTick() {
-@@ -210,6 +225,7 @@ public class ItemEntity extends Entity {
+@@ -220,6 +235,7 @@ public class ItemEntity extends Entity {
              // CraftBukkit end
              this.discard();
          }
@@ -56,7 +56,7 @@ index f76f11c176894f3aac9369d94d4f79dae97ba0d6..fd5e76e7dd5bcdb34320bc988e270536
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index 617ca271b04bbd4cceecedbac5c465e89fbef60b..38b01b208d0b4b3cde20e4d92e24c06a5e6a706f 100644
+index 540c23f6297c34cf8e7bf8312ceaa5fc868f414c..74c8ef685cd61d0174dacaa4cf18222b124fd121 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -22,6 +22,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
@@ -67,7 +67,7 @@ index 617ca271b04bbd4cceecedbac5c465e89fbef60b..38b01b208d0b4b3cde20e4d92e24c06a
  
      public MinecartHopper(EntityType<? extends MinecartHopper> type, Level world) {
          super(type, world);
-@@ -153,4 +154,11 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
+@@ -149,4 +150,11 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
      public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
          return new HopperMenu(syncId, playerInventory, this);
      }
@@ -77,7 +77,7 @@ index 617ca271b04bbd4cceecedbac5c465e89fbef60b..38b01b208d0b4b3cde20e4d92e24c06a
 +    public long getAndIncrementAttemptCounter() {
 +        return tickAttempts++;
 +    }
-+    // PaperDragon stop
++    // PaperDragon end
  }
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/Hopper.java b/src/main/java/net/minecraft/world/level/block/entity/Hopper.java
 index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8ead0dcb9f 100644
@@ -92,18 +92,18 @@ index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8e
      double getLevelX();
  
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 01700c804083e4859f9a1d391a0898c5c977441e..12b92d90d344f9af7a9997fbb0cfb91c461c035b 100644
+index aea148b8af4dfade4fee2565ce6d13e184f9060e..8a202fc23354f022556f1877f4c7b42d454cc360 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;
+@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
+ import net.minecraft.core.NonNullList;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.TranslatableComponent;
 +import net.minecraft.server.MinecraftServer; // PaperDragon
  import net.minecraft.world.CompoundContainer;
  import net.minecraft.world.Container;
  import net.minecraft.world.ContainerHelper;
-@@ -118,6 +119,21 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -117,6 +118,21 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          return ContainerHelper.removeItem(this.getItems(), slot, amount);
      }
  
@@ -125,7 +125,7 @@ index 01700c804083e4859f9a1d391a0898c5c977441e..12b92d90d344f9af7a9997fbb0cfb91c
      @Override
      public void setItem(int slot, ItemStack stack) {
          this.unpackLootTable((Player) null);
-@@ -471,7 +487,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -470,7 +486,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                  }
                  // Paper end
              });
@@ -134,7 +134,7 @@ index 01700c804083e4859f9a1d391a0898c5c977441e..12b92d90d344f9af7a9997fbb0cfb91c
              Iterator iterator = HopperBlockEntity.getItemsAtAndAbove(world, hopper).iterator();
  
              ItemEntity entityitem;
-@@ -486,6 +502,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -485,6 +501,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
              return true;
          }

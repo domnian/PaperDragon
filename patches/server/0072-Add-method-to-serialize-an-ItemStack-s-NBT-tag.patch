@@ -5,10 +5,10 @@ Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 8d9f32f0a4a8c3168ca6f0189373cd4720e50b47..2ad54374842ccf7e882fcf52a949e58e0161ae5f 100644
+index d004ceeda4d6aaf3f77c00434fd83a0fb2ac8cda..34aeefd97a75a40cc57ec021f49a8e58222eb804 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -25,11 +25,9 @@ package com.domnian.paperdragon.api;
+@@ -25,12 +25,10 @@ package com.domnian.paperdragon.api;
  
  import com.destroystokyo.paper.MaterialTags;
  import com.destroystokyo.paper.profile.ProfileProperty;
@@ -16,12 +16,13 @@ index 8d9f32f0a4a8c3168ca6f0189373cd4720e50b47..2ad54374842ccf7e882fcf52a949e58e
 -import com.google.gson.JsonObject;
 +import com.google.gson.*;
  import net.minecraft.core.BlockPos;
++import net.minecraft.nbt.*;
+ import net.minecraft.network.chat.Component;
 -import net.minecraft.nbt.CompoundTag;
 -import net.minecraft.nbt.ListTag;
-+import net.minecraft.nbt.*;
- import net.minecraft.network.chat.TranslatableComponent;
  import net.minecraft.server.MCUtil;
  import net.minecraft.server.level.ServerLevel;
+ import net.minecraft.world.item.ItemStack;
 @@ -130,4 +128,82 @@ public class CraftDAPI_Misc implements DAPI_Misc {
          return skinUrl.substring(38);
      }
@@ -105,14 +106,3 @@ index 8d9f32f0a4a8c3168ca6f0189373cd4720e50b47..2ad54374842ccf7e882fcf52a949e58e
 +    }
 +
  }
-diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
-index 6703b328aa81545d0845a6d4a29f4635c48f60a5..54dfe6cff043602669b060efadcc59b214808feb 100644
---- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
-+++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Server.java
-@@ -32,4 +32,4 @@ public class CraftDAPI_Server implements DAPI_Server {
-         return Set.copyOf(fakePlayerMap.values());
-     }
- 
--}
-+}
-\ No newline at end of file

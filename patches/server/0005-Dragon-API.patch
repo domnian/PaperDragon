@@ -113,10 +113,10 @@ index 0000000000000000000000000000000000000000..21bd42ff9d3f744ce9eb06d269d13495
 +
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7566afee5287d5380cf921f546fe8174afa578e6..441182fbe330cf46d41236c05eda2ebc46a9ac0c 100644
+index a80c573333e4b9b1946160a76d9dfc4caa2b344b..710a745e8906db25b6ff5fbe3259b1f305067502 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -288,6 +288,7 @@ public final class CraftServer implements Server {
+@@ -282,6 +282,7 @@ public final class CraftServer implements Server {
      private final CraftPotionBrewer potionBrewer = new CraftPotionBrewer(); // Paper
  
      static {

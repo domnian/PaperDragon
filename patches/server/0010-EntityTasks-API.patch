@@ -96,7 +96,7 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +    public static class TaskList extends ArrayList<EntityTask<?>> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 98209532ad3e692d7e459640123f78bbd9a65889..246ef41fdd6dcfbe2bbc3bcad6097731b6e00a7a 100644
+index 0dc7a827aeacc7fae53b1f975f45883da7db6a0c..19e344efe3b79689702343e27868c41983965675 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -106,7 +106,7 @@ index 98209532ad3e692d7e459640123f78bbd9a65889..246ef41fdd6dcfbe2bbc3bcad6097731
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1126,6 +1127,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1146,6 +1147,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
@@ -114,7 +114,7 @@ index 98209532ad3e692d7e459640123f78bbd9a65889..246ef41fdd6dcfbe2bbc3bcad6097731
          this.getProfiler().push(() -> {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1164,6 +1166,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1184,6 +1186,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -123,7 +123,7 @@ index 98209532ad3e692d7e459640123f78bbd9a65889..246ef41fdd6dcfbe2bbc3bcad6097731
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3286ebce90c7efc7947dfb17203e293dd987184d..62cbdc0e840fd993cc7dfcfda0d2e06c171aac52 100644
+index 0515a77e16fa9204699e5e3ba70b7e2c74b737b1..37b8756b8bea0a965724477b5601dc78edf0039a 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -133,16 +133,16 @@ index 3286ebce90c7efc7947dfb17203e293dd987184d..62cbdc0e840fd993cc7dfcfda0d2e06c
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
  import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
-@@ -159,6 +160,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -162,6 +163,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // PaperDragon start
      public final PersistentMetaMap metaMap = new PersistentMetaMap();
      public final TempMetaMap tempMeta = new TempMetaMap();
-+    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList(); // PaperDragon
++    public EntityTasksHandler.TaskList entityTasks = new EntityTasksHandler.TaskList();
      // PaperDragon end
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c62664af569dc90ad23292d786c786472b6d75f8..3e2bb4233948ef8084bddfa98a44104ed316f146 100644
+index 443b57f828e1d1994854b3779c77b92a4686b8b6..9b9e4181c4be59e2bc9e9fcce26a55607fd680d5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -152,7 +152,7 @@ index c62664af569dc90ad23292d786c786472b6d75f8..3e2bb4233948ef8084bddfa98a44104e
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
-@@ -1016,7 +1017,10 @@ public final class CraftServer implements Server {
+@@ -1009,7 +1010,10 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }

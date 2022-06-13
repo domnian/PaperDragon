@@ -5,10 +5,10 @@ Subject: [PATCH] Add the BlockHarvestBeehiveEvent
 
 
 diff --git a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-index 4b151444f8d7ed26dc87c9ae55fa8a14a8d84ed7..477bb4aca7049ae7ed1b732013fe5478f26fe8c6 100644
+index 3d2b5f040715a0e4fac0e6786bd11a4d715330ce..fcafaaf024bb6541fcf66fc6c3c0bbf9fab8c656 100644
 --- a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
 +++ b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-@@ -1052,6 +1052,11 @@ public interface DispenseItemBehavior {
+@@ -1062,6 +1062,11 @@ public interface DispenseItemBehavior {
                  if (iblockdata.is(BlockTags.BEEHIVES, (blockbase_blockdata) -> {
                      return blockbase_blockdata.hasProperty(BeehiveBlock.HONEY_LEVEL) && blockbase_blockdata.getBlock() instanceof BeehiveBlock;
                  }) && (Integer) iblockdata.getValue(BeehiveBlock.HONEY_LEVEL) >= 5) {

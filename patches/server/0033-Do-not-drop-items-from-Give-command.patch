@@ -5,10 +5,10 @@ Subject: [PATCH] Do not drop items from Give command
 
 
 diff --git a/src/main/java/net/minecraft/server/commands/GiveCommand.java b/src/main/java/net/minecraft/server/commands/GiveCommand.java
-index a60a84d5df0b05cf35668df8c5f08b811bc42a9f..124b2be011ab1ab548cab9d9a65196ac454c7611 100644
+index 06e3a868e922f1b7a586d0ca28f64a67ae463b68..492392e2bc47318e9eb4a1657b4b8d32fb78a4ff 100644
 --- a/src/main/java/net/minecraft/server/commands/GiveCommand.java
 +++ b/src/main/java/net/minecraft/server/commands/GiveCommand.java
-@@ -57,6 +57,7 @@ public class GiveCommand {
+@@ -58,6 +58,7 @@ public class GiveCommand {
                      boolean flag = entityplayer.getInventory().add(itemstack);
                      ItemEntity entityitem;
  

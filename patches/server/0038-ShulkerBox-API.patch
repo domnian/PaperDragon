@@ -5,20 +5,21 @@ Subject: [PATCH] ShulkerBox API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 9333ca32a5b65482c3f0162c62aa63979f820eaa..4f99b40ea3c6a1ab2a8dac0c2119074fffde2055 100644
+index 4104b61ba2ed0d3e8338f5c44d3e8a6964bbdee9..9dc9fa54097892a806d2993fca06a426368de18c 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -23,7 +23,10 @@
+@@ -23,8 +23,11 @@
  
  package com.domnian.paperdragon.api;
  
 +import com.destroystokyo.paper.MaterialTags;
  import net.minecraft.core.BlockPos;
+ import net.minecraft.network.chat.Component;
 +import net.minecraft.nbt.CompoundTag;
 +import net.minecraft.nbt.ListTag;
- import net.minecraft.network.chat.TranslatableComponent;
  import net.minecraft.server.MCUtil;
  import net.minecraft.server.level.ServerLevel;
+ import net.minecraft.world.item.ItemStack;
 @@ -33,8 +36,12 @@ import net.minecraft.world.level.saveddata.maps.MapDecoration;
  import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
  import org.bukkit.Location;
@@ -33,7 +34,7 @@ index 9333ca32a5b65482c3f0162c62aa63979f820eaa..4f99b40ea3c6a1ab2a8dac0c2119074f
  
      @Override
 @@ -53,4 +60,53 @@ public class CraftDAPI_Misc implements DAPI_Misc {
-         itemstack.setHoverName(new TranslatableComponent("filled_map." + mapType.toLowerCase()));
+         itemstack.setHoverName(Component.translatable("filled_map." + mapType.toLowerCase()));
          return CraftItemStack.asCraftMirror(itemstack);
      }
 +

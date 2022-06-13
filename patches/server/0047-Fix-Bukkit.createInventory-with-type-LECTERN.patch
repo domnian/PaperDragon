@@ -22,10 +22,10 @@ This patch is licensed under the MIT License.
 License: https://opensource.org/licenses/MIT
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
-index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef77cc74d09 100644
+index cbe0749b4ce57a773c2a0f56fcf0eaac33424372..89649673948860e21b85b784a8cadb8883dea08a 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
-@@ -107,7 +107,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -105,7 +105,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
  
          @Override
          public ItemStack removeItem(int slot, int amount) {
@@ -34,7 +34,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
                  ItemStack itemstack = LecternBlockEntity.this.book.split(amount);
  
                  if (LecternBlockEntity.this.book.isEmpty()) {
-@@ -122,7 +122,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -120,7 +120,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
  
          @Override
          public ItemStack removeItemNoUpdate(int slot) {
@@ -43,7 +43,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
                  ItemStack itemstack = LecternBlockEntity.this.book;
  
                  LecternBlockEntity.this.book = ItemStack.EMPTY;
-@@ -157,7 +157,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -155,7 +155,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
  
          @Override
          public boolean stillValid(Player player) {
@@ -52,7 +52,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
          }
  
          @Override
-@@ -190,6 +190,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -188,6 +188,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
      ItemStack book;
      int page;
      private int pageCount;
@@ -60,7 +60,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
  
      public LecternBlockEntity(BlockPos pos, BlockState state) {
          super(BlockEntityType.LECTERN, pos, state);
-@@ -209,6 +210,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -207,6 +208,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
      }
  
      void onBookItemRemove() {
@@ -68,7 +68,7 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
          this.page = 0;
          this.pageCount = 0;
          LecternBlock.resetBookState(this.getLevel(), this.getBlockPos(), this.getBlockState(), false);
-@@ -226,6 +228,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+@@ -224,6 +226,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
  
          if (j != this.page) {
              this.page = j;
@@ -77,10 +77,10 @@ index 5d0eb0dbfa1f6c2a8e49f8e7b7b0089d7e27764d..cc40ee9a2fd4e62c15c8ba51c4f3fef7
              if (this.level != null) LecternBlock.signalPageChange(this.getLevel(), this.getBlockPos(), this.getBlockState()); // CraftBukkit
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index 83c5314ed3a3f09162bca47902c4e749fab940a0..cba82c85db5c23dbb62e0970656a545150725278 100644
+index 6149e74262ca6c4c00686a89c273c59bfaac3e05..30e734f878f163e4a0f780680c6ab3262135d926 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-@@ -308,6 +308,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
+@@ -309,6 +309,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
              if (craft.getInventory() instanceof MenuProvider) {
                  iinventory = (MenuProvider) craft.getInventory();
              }

@@ -5,10 +5,10 @@ Subject: [PATCH] Fire PlayerKickEvent during server shutdown
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 8f76c011be20919b301cc9f698a91e5bc33123ce..5edcfa9d033c002ce1b2ce5cbe172798d2e8c822 100644
+index d8dec9f3330bf3dd1d7364d6c4553f7e118d1b56..c1ea2777b24ed010695c8eef02d8da491e66e943 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -439,11 +439,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -466,11 +466,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
  
          PlayerKickEvent event = new PlayerKickEvent(this.player.getBukkitEntity(), reason, leaveMessage, cause); // Paper - Adventure & kick event reason
  

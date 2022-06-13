@@ -5,10 +5,10 @@ Subject: [PATCH] Implement getLocation() for offline players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index bf4d818451987743b1de20b311ad31cafd71b1b8..a9ada8c790e8d2e5ce28423810580f0605be91ab 100644
+index bd9725383d48b47ba5b60151e7d5c85ed70bc049..9ed3ae9fa621e9e79eb24b463385ee28f3f59667 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2192,6 +2192,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2275,6 +2275,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  nbt.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
@@ -17,10 +17,10 @@ index bf4d818451987743b1de20b311ad31cafd71b1b8..a9ada8c790e8d2e5ce28423810580f06
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-index 50927403d07954f3b930b39046866899a1b289e6..0b49d9099afe9219134b338d78caf1a08a70c746 100644
+index 6d2ba650f53de8a460857f1846401a20b50cc43c..e4749b0aeb8d9ad020b704a1bb2e9ca9085857f7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
-@@ -538,4 +538,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+@@ -549,4 +549,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
              manager.save();
          }
      }

@@ -25,7 +25,7 @@ index b697e2b0b9540b7cb2a9d080478591153638a45b..dcdafb4eddb0660c82708f26a2d5dfa6
      private void hoppers() {
          disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
 diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
-index 8f147cd9798779eb2a72f444bf7fcb6c3cdc4971..bfbe9244a27bf543a11e1a98ef0e3248e824bce9 100644
+index 386a73f32f2504af81107852307dcd393d4d8a11..e07e14f8abdcb8882737a4b02dbf244ab77cdbce 100644
 --- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 +++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 @@ -53,6 +53,26 @@ public class PortalForcer {
@@ -55,7 +55,7 @@ index 8f147cd9798779eb2a72f444bf7fcb6c3cdc4971..bfbe9244a27bf543a11e1a98ef0e3248
          java.util.List<PoiRecord> records = new java.util.ArrayList<>();
          io.papermc.paper.util.PoiAccess.findClosestPoiDataRecords(
              villageplace,
-@@ -86,6 +106,7 @@ public class PortalForcer {
+@@ -84,6 +104,7 @@ public class PortalForcer {
          // now we're done
          optional = Optional.ofNullable(lowestYRecord);
          // Paper end - optimise portals

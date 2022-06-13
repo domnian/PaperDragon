@@ -35,11 +35,11 @@ index 71f698d648872341b7fef1326d45fdafd0694c32..f2fe260d8a0ac860b2af742735ade7ac
  
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index 3f5da3df0fcc132293f6231a3c6f65ab88906061..6f5b52ca027f2857be97defc8eecb24e2d9b2409 100644
+index 4e0b6ffe135a3a2eb1322909c6702876f5c12ae3..a8f5d919f2735315d7c6138debc6443799c2c640 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-@@ -307,6 +307,15 @@ public class PlayerAdvancements {
-                     //this.playerList.broadcastMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM, Util.NIL_UUID);
+@@ -305,6 +305,15 @@ public class PlayerAdvancements {
+                     //this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM);
                      // Paper end
                      AdvancementBroadcastEvent broadcastEvent = new AdvancementBroadcastEvent(this.player.getBukkitEntity());
 +                    if (com.domnian.paperdragon.DragonWorldConfig.broadcastAdvancementsToWorld) {
@@ -53,4 +53,4 @@ index 3f5da3df0fcc132293f6231a3c6f65ab88906061..6f5b52ca027f2857be97defc8eecb24e
 +                    }
                      broadcastEvent.callEvent();
                      for (Player player : broadcastEvent.getReceivers()) {
-                         ((CraftEntity) player).getHandle().sendMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), Util.NIL_UUID);
+                         this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), ChatType.SYSTEM);

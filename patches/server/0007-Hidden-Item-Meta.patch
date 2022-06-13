@@ -15,10 +15,10 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..6be220dffca034452747e5a713f001ae343787ac
+index 0000000000000000000000000000000000000000..d4f95cf4d0e3e3c1cb75950776ce53bea8d14c74
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
-@@ -0,0 +1,98 @@
+@@ -0,0 +1,101 @@
 +package com.domnian.paperdragon.api;
 +
 +import net.minecraft.nbt.CompoundTag;
@@ -95,6 +95,9 @@ index 0000000000000000000000000000000000000000..6be220dffca034452747e5a713f001ae
 +    }
 +
 +    public static CompoundTag restoreItemLore(CompoundTag tag) {
++        if (tag == null) {
++            return null;
++        }
 +        if (tag.contains("display")) {
 +            CompoundTag display = tag.getCompound("display");
 +            if (display.contains("OriginalLore")) {
@@ -118,27 +121,27 @@ index 0000000000000000000000000000000000000000..6be220dffca034452747e5a713f001ae
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/network/FriendlyByteBuf.java b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-index 896a4237f871d46cf39b0721e909c2cc3b5fc728..439d78b6473b39ebb0738b09b9171071328781b5 100644
+index 35377576ed182814051c11f902e02e8e921e84e3..23398ae2f0bb1d5446356bf3824a2f15678159da 100644
 --- a/src/main/java/net/minecraft/network/FriendlyByteBuf.java
 +++ b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-@@ -500,6 +500,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -582,6 +582,7 @@ public class FriendlyByteBuf extends ByteBuf {
+                 // CraftItemStack.setItemMeta(stack, CraftItemStack.getItemMeta(stack)); // Paper - This is no longer with raw NBT being handled in metadata
                  // Spigot end
                  nbttagcompound = stack.getTag();
-                 // Paper start
 +                nbttagcompound = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(nbttagcompound, true); // PaperDragon
-                 if (nbttagcompound != null && nbttagcompound.contains("SkullOwner", 10)) {
-                     CompoundTag owner = nbttagcompound.getCompound("SkullOwner");
-                     if (owner.hasUUID("Id")) {
-@@ -528,6 +529,7 @@ public class FriendlyByteBuf extends ByteBuf {
+             }
+ 
+             this.writeNbt(nbttagcompound);
+@@ -599,6 +600,7 @@ public class FriendlyByteBuf extends ByteBuf {
+             ItemStack itemstack = new ItemStack(item, b0);
+ 
+             itemstack.setTag(this.readNbt());
++            com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
              // CraftBukkit start
-             if (itemstack.getTag() != null) {
-                 // Paper start - Fix skulls of same owner - restore orig ID since we changed it on send to client
-+                com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
-                 if (itemstack.tag.contains("SkullOwnerOrig")) {
-                     CompoundTag owner = itemstack.tag.getCompound("SkullOwner");
-                     if (itemstack.tag.contains("SkullOwnerOrig")) {
+             if (false && itemstack.getTag() != null) { // Paper - This is no longer needed with raw NBT being handled in metadata
+                 CraftItemStack.setItemMeta(itemstack, CraftItemStack.getItemMeta(itemstack));
 diff --git a/src/main/java/net/minecraft/network/chat/HoverEvent.java b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-index b31ff9d237f593e58b42b453632aa2c2af74f986..d87ebc8e9a311eea0a22c6277c82d690e31b0b63 100644
+index 587db9a70f8f930412d34c4a412c19a30faa2a4e..ec27722617d6c8c34a59adf6d4d8892f4aefa39c 100644
 --- a/src/main/java/net/minecraft/network/chat/HoverEvent.java
 +++ b/src/main/java/net/minecraft/network/chat/HoverEvent.java
 @@ -246,7 +246,7 @@ public class HoverEvent {
@@ -151,18 +154,18 @@ index b31ff9d237f593e58b42b453632aa2c2af74f986..d87ebc8e9a311eea0a22c6277c82d690
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 6837c965592d4584cfc958a1008b98791a0fc780..7554c91c20b4e38e56c92214cef1afc1a65e24f4 100644
+index 6b3cfc19c4fd1382ddf534265a1114995a4f6b55..e149491b309ebcec648fb414e38e872cdc0bfaf8 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -35,6 +35,7 @@ import net.minecraft.core.Registry;
+@@ -31,6 +31,7 @@ import net.minecraft.core.Registry;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.nbt.NbtOps;
 +import net.minecraft.nbt.StringTag; // PaperDragon
  import net.minecraft.nbt.Tag;
+ import net.minecraft.network.chat.CommonComponents;
  import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.ComponentUtils;
-@@ -1241,8 +1242,26 @@ public final class ItemStack {
+@@ -1237,8 +1238,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
          if (!this.emptyCacheFlag) {

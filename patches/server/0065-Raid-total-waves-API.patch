@@ -5,13 +5,13 @@ Subject: [PATCH] Raid total waves API
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/raid/Raid.java b/src/main/java/net/minecraft/world/entity/raid/Raid.java
-index f50abfd058e3adf1cf8c0f4468a60bc04e8541e7..784c57d2bbbdfab2c297da0f4b7356bd47a59e81 100644
+index 6a0a1731fd6804eb69d3641213712d31bce085b2..60892c1db2696f7262190a782a7eceb36c21b866 100644
 --- a/src/main/java/net/minecraft/world/entity/raid/Raid.java
 +++ b/src/main/java/net/minecraft/world/entity/raid/Raid.java
 @@ -103,7 +103,8 @@ public class Raid {
      private int postRaidTicks;
      private int raidCooldownTicks;
-     private final Random random;
+     private final RandomSource random;
 -    public final int numGroups;
 +    public int numGroups; // PaperDragon - make non-final
 +    public boolean firstTrigger = false; // PaperDragon
@@ -27,10 +27,10 @@ index f50abfd058e3adf1cf8c0f4468a60bc04e8541e7..784c57d2bbbdfab2c297da0f4b7356bd
  
      public Raid(ServerLevel world, CompoundTag nbt) {
 diff --git a/src/main/java/net/minecraft/world/entity/raid/Raids.java b/src/main/java/net/minecraft/world/entity/raid/Raids.java
-index 17b24f57cc5d63f99eb999cfe3e2362758fe0f4f..679f27bb6757e3335aa6fcb202e116bef5708362 100644
+index fa8fcdfea51a35e4a482d3d7b18159099da62706..2cf495c7b05a381a7eefa6c74023815afbafe57f 100644
 --- a/src/main/java/net/minecraft/world/entity/raid/Raids.java
 +++ b/src/main/java/net/minecraft/world/entity/raid/Raids.java
-@@ -133,6 +133,7 @@ public class Raids extends SavedData {
+@@ -135,6 +135,7 @@ public class Raids extends SavedData {
                          return null;
                      }
  
@@ -57,10 +57,10 @@ index 7a5bfc724e42100b7582836ab8c30feed1a3d221..b29620edac4e9a7a57fe5d8c75e6b78a
      public float getTotalHealth() {
          return this.handle.getHealthOfLivingRaiders();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 4709aa21b2ed5199438d103a2e7b6827f8482474..8ed895d7d5bff1351d905484b5fc2ec4c2842713 100644
+index 13a046a5c2bf4fadb78b06ace949e51240bbc7e3..6a26ca7bb1e31614c2a9a03097f219b58b02c472 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1835,7 +1835,7 @@ public class CraftEventFactory {
+@@ -1837,7 +1837,7 @@ public class CraftEventFactory {
       * Raid events
       */
      public static boolean callRaidTriggerEvent(Raid raid, ServerPlayer player) {

@@ -1,14 +1,14 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 17 Mar 2020 12:25:11 -0500
-Subject: [PATCH] Adds whether a respawn is caused by leaving the end
+Subject: [PATCH] Add whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 8000efc74086b489267861a6b7d6c41796bb39e8..738a7601ccfcb4d3f5f3b79dd87a4f7f45ff2bfe 100644
+index a4e436032a9d5a202a323ef2e092a9ed3d1d87be..24f1578d10872548e9f52766336cd04526dffcdf 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -84,6 +84,7 @@ import net.minecraft.world.level.block.state.BlockState;
+@@ -92,6 +92,7 @@ import net.minecraft.world.level.block.state.BlockState;
  import net.minecraft.world.level.border.BorderChangeListener;
  import net.minecraft.world.level.border.WorldBorder;
  import net.minecraft.world.level.dimension.DimensionType;
@@ -16,7 +16,7 @@ index 8000efc74086b489267861a6b7d6c41796bb39e8..738a7601ccfcb4d3f5f3b79dd87a4f7f
  import net.minecraft.world.level.storage.LevelData;
  import net.minecraft.world.level.storage.LevelResource;
  import net.minecraft.world.level.storage.PlayerDataStorage;
-@@ -921,7 +922,8 @@ public abstract class PlayerList {
+@@ -924,7 +925,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = entityplayer1.getBukkitEntity();
