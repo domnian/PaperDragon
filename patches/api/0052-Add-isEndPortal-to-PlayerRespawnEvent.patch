@@ -5,7 +5,7 @@ Subject: [PATCH] Add isEndPortal to PlayerRespawnEvent
 
 
 diff --git a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
-index a951568def24f809a6a019eefe623974c1867e22..734dd1a86b30dc6557081c6d33f2c939a8a6ebe8 100644
+index 3715584a8289200ffb968e384e359ab574aaec5c..43dd3d434f410e79926c75dcbeb3bbe6d464f655 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
 @@ -17,28 +17,31 @@ public class PlayerRespawnEvent extends PlayerEvent {

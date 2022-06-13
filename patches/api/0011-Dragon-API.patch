@@ -72,7 +72,7 @@ index 0000000000000000000000000000000000000000..58da48b696ecccf1dd1c859f5b3db325
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d326bfd4e1d4f279ea40a42d01a6e552646c7909
+index 0000000000000000000000000000000000000000..35df76d827d08dd8fbbfec0ca9fb092a0a97d32f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 @@ -0,0 +1,31 @@
@@ -101,9 +101,9 @@ index 0000000000000000000000000000000000000000..d326bfd4e1d4f279ea40a42d01a6e552
 +
 +package com.domnian.paperdragon.api;
 +
-+
 +public abstract class DragonAPI {
 +
 +    public static DAPI_Entity entity;
 +    public static DAPI_Misc misc;
++
 +}

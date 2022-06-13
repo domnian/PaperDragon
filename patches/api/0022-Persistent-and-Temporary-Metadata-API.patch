@@ -6,25 +6,22 @@ Subject: [PATCH] Persistent and Temporary Metadata API
 Entity, TileEntity, World, Chunk, Block, Inventory APIs
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index 53442df68bf18bef5ad6312a74d36c31186d0b91..59030a86ab2fa6bd29878ea8061a49e58c30e074 100644
+index 35df76d827d08dd8fbbfec0ca9fb092a0a97d32f..3c28c320f8a599c9b096adbe9d4d00f336e4a438 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -23,6 +23,7 @@
+@@ -23,9 +23,12 @@
  
  package com.domnian.paperdragon.api;
  
 +import com.domnian.paperdragon.api.meta.DAPI_Meta;
- import org.apache.commons.lang.exception.ExceptionUtils;
- import org.bukkit.Bukkit;
- import org.jetbrains.annotations.NotNull;
-@@ -32,6 +33,7 @@ public abstract class DragonAPI {
++
+ public abstract class DragonAPI {
  
      public static DAPI_Entity entity;
      public static DAPI_Misc misc;
 +    public static DAPI_Meta meta;
  
-     @NotNull
-     public static String stack() {
+ }
 diff --git a/src/main/java/com/domnian/paperdragon/api/Vector3i.java b/src/main/java/com/domnian/paperdragon/api/Vector3i.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..117f8e4c1db47ef815366ad74dece81768926b55

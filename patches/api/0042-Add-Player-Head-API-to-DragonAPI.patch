@@ -35,14 +35,13 @@ index 0000000000000000000000000000000000000000..9bc4ee9bda7ec799d4077958d437b691
 +
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index c3f39e8016afe085d5f99edf3f2fb12ac89d6acc..b919c66acb2ba415b07bdb7f8496eeb6b9a0a4ce 100644
+index fee56553d71f9e59aa6d985ed4900e0a78dd8617..a0a041f5b42d80c3f16213eeda569b8b83642e2d 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -36,6 +36,7 @@ public abstract class DragonAPI {
+@@ -32,5 +32,6 @@ public abstract class DragonAPI {
      public static DAPI_Misc misc;
      public static DAPI_Meta meta;
      public static DAPI_Chat chat;
 +    public static DAPI_Heads heads;
  
-     @NotNull
-     public static String stack() {
+ }
