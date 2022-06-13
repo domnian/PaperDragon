@@ -6,10 +6,10 @@ Subject: [PATCH] PaperDragon Version Fetcher
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..ff9d2fb2592ed6c87d23f29cbd56b8062a81512f
+index 0000000000000000000000000000000000000000..06a35ecb418df5c3a0a67bc62c1a3d081a1448f1
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonVersionFetcher.java
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,97 @@
 +package com.domnian.paperdragon;
 +
 +import com.destroystokyo.paper.VersionHistoryManager;
@@ -18,11 +18,13 @@ index 0000000000000000000000000000000000000000..ff9d2fb2592ed6c87d23f29cbd56b806
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
 +import com.google.gson.JsonSyntaxException;
++import io.papermc.paper.util.JarManifests;
 +import net.kyori.adventure.text.Component;
 +import net.kyori.adventure.text.JoinConfiguration;
 +import net.kyori.adventure.text.TextComponent;
 +import net.kyori.adventure.text.format.NamedTextColor;
 +import net.kyori.adventure.text.format.TextDecoration;
++import org.bukkit.Bukkit;
 +import org.checkerframework.checker.nullness.qual.NonNull;
 +import org.checkerframework.checker.nullness.qual.Nullable;
 +import java.io.BufferedReader;
@@ -33,7 +35,14 @@ index 0000000000000000000000000000000000000000..ff9d2fb2592ed6c87d23f29cbd56b806
 +
 +public class DragonVersionFetcher implements VersionFetcher {
 +
-+    private static final String GITHUB_BRANCH_NAME = "master";
++    private static final String GITHUB_BRANCH_NAME = getGitBranch();
++
++    @NonNull
++    private static String getGitBranch() {
++        final var manifest = JarManifests.manifest(Bukkit.getServer().getClass());
++        if (manifest == null || !manifest.getMainAttributes().containsKey("Git-Branch")) return "master";
++        return manifest.getMainAttributes().getValue("Git-Branch");
++    }
 +
 +    @Override
 +    public long getCacheTime() {
@@ -100,7 +109,7 @@ index 0000000000000000000000000000000000000000..ff9d2fb2592ed6c87d23f29cbd56b806
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 88abd2d3a9626501b1800ee754b98c6c29c75fb9..1dc60d4f77b6803db64d5d2e3788a1b0415f3b27 100644
+index 7c1e510a0ad4b69c1fedc3367a8216046efb228e..b750ea73b1194730432885cfa2109ba96708f7e9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -430,7 +430,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
