@@ -5,16 +5,24 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index ed13dbf4003528db03ecc267ecf93b55bfc02543..465545642c86d1ae77328c436bfc75bfa768d70e 100644
+index ed13dbf4003528db03ecc267ecf93b55bfc02543..304e1358affc4dcc7522064a6e626e3f6b2aa271 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -873,7 +873,10 @@ public class ServerPlayer extends Player {
+@@ -37,6 +37,7 @@ import net.minecraft.network.chat.Component;
+ import net.minecraft.network.chat.HoverEvent;
+ import net.minecraft.network.chat.MutableComponent;
+ import net.minecraft.network.chat.PlayerChatMessage;
++import net.minecraft.network.chat.contents.TranslatableContents; // PaperDragon
+ import net.minecraft.network.protocol.Packet;
+ import net.minecraft.network.protocol.game.ClientboundAddPlayerPacket;
+ import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
+@@ -873,7 +874,10 @@ public class ServerPlayer extends Player {
  
          String deathmessage = defaultMessage.getString();
          this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel
 -        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +        // PaperDragon start - Enhanced Player Death Event
-+        String deathKey = (defaultMessage instanceof TranslatableComponent) ? ((TranslatableComponent) defaultMessage).getKey() : "death.attack.generic";
++        String deathKey = (defaultMessage instanceof TranslatableContents) ? ((TranslatableContents) defaultMessage).getKey() : "death.attack.generic";
 +        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory, deathKey); // Paper - Adventure
 +        // PaperDragon end
          // Paper start - cancellable death event

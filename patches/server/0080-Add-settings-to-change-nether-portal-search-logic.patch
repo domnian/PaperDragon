@@ -7,7 +7,7 @@ Subject: [PATCH] Add settings to change nether portal search logic
 > 'nether-portal.use-2d-search': Changes the Vanilla logic to ignore the Y value (requires nether-portal.use-vanilla-search to be enabled)
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index b697e2b0b9540b7cb2a9d080478591153638a45b..dcdafb4eddb0660c82708f26a2d5dfa65189a623 100644
+index 5cf516af8b6275c3c0d89ccc863e48a4b1c95043..eba8cdd2407db2d0979fcd80608434d69fbd4f6a 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -78,6 +78,13 @@ public class DragonWorldConfig {
@@ -25,7 +25,7 @@ index b697e2b0b9540b7cb2a9d080478591153638a45b..dcdafb4eddb0660c82708f26a2d5dfa6
      private void hoppers() {
          disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
 diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
-index 386a73f32f2504af81107852307dcd393d4d8a11..e07e14f8abdcb8882737a4b02dbf244ab77cdbce 100644
+index 386a73f32f2504af81107852307dcd393d4d8a11..995787bf85378ed3b6810877131152291d1b7548 100644
 --- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 +++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 @@ -53,6 +53,26 @@ public class PortalForcer {
@@ -36,7 +36,7 @@ index 386a73f32f2504af81107852307dcd393d4d8a11..e07e14f8abdcb8882737a4b02dbf244a
 +        if (level.dragonConfig.useVanillaPortalSearch) {
 +            villageplace.ensureLoadedAndValid(this.level, blockposition, i);
 +            optional = villageplace.getInSquare(type -> {
-+                return type == PoiType.NETHER_PORTAL;
++                return type.is(PoiTypes.NETHER_PORTAL);
 +            }, blockposition, i, PoiManager.Occupancy.ANY).filter(record -> {
 +                return worldborder.isWithinBounds(record.getPos());
 +            }).sorted(Comparator.comparingDouble((PoiRecord record) -> {

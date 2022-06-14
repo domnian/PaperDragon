@@ -176,13 +176,13 @@ index 0000000000000000000000000000000000000000..d4ee176a171b69195fe710ce2714be78
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..71f698d648872341b7fef1326d45fdafd0694c32
+index 0000000000000000000000000000000000000000..69140c81740ba017888828ba163a4fbc2f7a6fa5
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -0,0 +1,78 @@
 +package com.domnian.paperdragon;
 +
-+import com.destroystokyo.paper.PaperWorldConfig;
++import io.papermc.paper.configuration.WorldConfiguration;
 +import org.bukkit.Bukkit;
 +import org.bukkit.configuration.file.YamlConfiguration;
 +import org.spigotmc.SpigotWorldConfig;
@@ -193,11 +193,11 @@ index 0000000000000000000000000000000000000000..71f698d648872341b7fef1326d45fdaf
 +
 +    private final String worldName;
 +    private final SpigotWorldConfig spigotConfig;
-+    private final PaperWorldConfig paperConfig;
++    private final WorldConfiguration paperConfig;
 +    private final YamlConfiguration config;
 +    private boolean verbose;
 +
-+    public DragonWorldConfig(String worldName, SpigotWorldConfig spigotConfig, PaperWorldConfig paperConfig) {
++    public DragonWorldConfig(String worldName, SpigotWorldConfig spigotConfig, WorldConfiguration paperConfig) {
 +        this.worldName = worldName;
 +        this.spigotConfig = spigotConfig;
 +        this.paperConfig = paperConfig;

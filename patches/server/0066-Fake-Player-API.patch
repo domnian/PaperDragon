@@ -217,7 +217,7 @@ index 0000000000000000000000000000000000000000..bb70d70afa91c49be9103823e892ade0
 +
 +}
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
-index 46ae5d40c26264e6b0ca253afa65b7846e6e5e6d..f4b32a996f8a28706a12df4ecddcb13002b9cd50 100644
+index 46ae5d40c26264e6b0ca253afa65b7846e6e5e6d..aa4e8c1fb5acdda2d649d37e3464e8110c4e5474 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/ClientboundPlayerInfoPacket.java
 @@ -1,11 +1,14 @@
@@ -235,7 +235,7 @@ index 46ae5d40c26264e6b0ca253afa65b7846e6e5e6d..f4b32a996f8a28706a12df4ecddcb130
  import net.minecraft.network.FriendlyByteBuf;
  import net.minecraft.network.chat.Component;
  import net.minecraft.network.protocol.Packet;
-@@ -17,6 +20,22 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
+@@ -17,6 +20,24 @@ public class ClientboundPlayerInfoPacket implements Packet<ClientGamePacketListe
      private final ClientboundPlayerInfoPacket.Action action;
      private final List<ClientboundPlayerInfoPacket.PlayerUpdate> entries;
  
@@ -246,10 +246,12 @@ index 46ae5d40c26264e6b0ca253afa65b7846e6e5e6d..f4b32a996f8a28706a12df4ecddcb130
 +        for (FakePlayer fakePlayer : fakePlayers) {
 +            if (fakePlayer.getUniqueId() != null) {
 +                this.entries.add(new ClientboundPlayerInfoPacket.PlayerUpdate(
-+                    com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
-+                    fakePlayer.getPing(),
-+                    GameType.byId(fakePlayer.getGameMode().getValue()),
-+                    PaperAdventure.asVanilla(fakePlayer.getPlayerListName())));
++                        com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(fakePlayer.getProfile()),
++                        fakePlayer.getPing(),
++                        GameType.byId(fakePlayer.getGameMode().getValue()),
++                        PaperAdventure.asVanilla(fakePlayer.getPlayerListName()),
++                        null
++                ));
 +            }
 +        }
 +    }
@@ -286,7 +288,7 @@ index 24f1578d10872548e9f52766336cd04526dffcdf..1cf6cf12cd5a2fef65bb1f69488d9c60
          ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, player);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d9e521b39be4c03b8cc0ad84e5a39f88ef4a3849..ddb172c03b71cfc964870acddd6187e545763a71 100644
+index 4f072664f67884df694853c51bd66773cf4bf8bc..398e35e6643724dd036191a94aed2baf49b97eec 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1,6 +1,8 @@
