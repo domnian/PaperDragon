@@ -6,7 +6,7 @@ plugins {
     java
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.1.2" apply false
-    id("io.papermc.paperweight.patcher") version "1.3.6"
+    id("io.papermc.paperweight.patcher") version "1.3.7"
 }
 
 val paperRepoUrl = "https://papermc.io/repo/repository/maven-public/";
