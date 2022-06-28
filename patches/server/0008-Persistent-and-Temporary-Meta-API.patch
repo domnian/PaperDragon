@@ -78,10 +78,10 @@ index 0000000000000000000000000000000000000000..b83a26738b5b2f35736b47fdfd358845
 \ No newline at end of file
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2e782dd865bfd5d37ccde9775996236e6cecd7f9
+index 0000000000000000000000000000000000000000..d5632224d030526211b1492ccf78730b1be423ab
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
-@@ -0,0 +1,615 @@
+@@ -0,0 +1,632 @@
 +package com.domnian.paperdragon.api.meta;
 +
 +import ca.spottedleaf.dataconverter.minecraft.MCVersions;
@@ -697,6 +697,23 @@ index 0000000000000000000000000000000000000000..2e782dd865bfd5d37ccde9775996236e
 +
 +        public BlockTempMeta clone() {
 +            return (BlockTempMeta) new BlockTempMeta(this);
++        }
++    }
++
++    public static class BlockPersistentMeta extends HashMap<Vector3i, PersistentMetaMap> {
++        public BlockPersistentMeta() {
++            super(0);
++        }
++
++        BlockPersistentMeta(Map<? extends Vector3i, ? extends PersistentMetaMap> m) {
++            super(m);
++        }
++
++        public BlockPersistentMeta clone() {
++            return new BlockPersistentMeta(this);
++        }
++    }
++}
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.java b/src/main/java/net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.java
 index 8c87020e422acfb6b862d9d77e74114770f1b342..f10f1ae75e8e15117617aadf3eeed9a92234603c 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.java
