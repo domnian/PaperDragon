@@ -43,7 +43,7 @@ index 0000000000000000000000000000000000000000..e352eb1ab8b0c31fd192e8dc2b9d4f9f
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 8ab1d401ed55d4cce55704317cbffe53ebc9f119..aea148b8af4dfade4fee2565ce6d13e184f9060e 100644
+index ccad692aba2ed77259f6814d88f01b91ed9d229b..bca1a7bd8f042dc0ee7e0f39602e8e80a6b76fa1 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -5,6 +5,8 @@ import java.util.List;

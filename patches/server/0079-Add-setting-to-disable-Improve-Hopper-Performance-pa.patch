@@ -5,7 +5,7 @@ Subject: [PATCH] Add setting to disable 'Improve Hopper Performance' patch
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index f2fe260d8a0ac860b2af742735ade7ac70b0457a..b697e2b0b9540b7cb2a9d080478591153638a45b 100644
+index 04de9955ba445d6d3a6ec638b510b1296ccab96a..5cf516af8b6275c3c0d89ccc863e48a4b1c95043 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -77,6 +77,10 @@ public class DragonWorldConfig {
@@ -21,7 +21,7 @@ index f2fe260d8a0ac860b2af742735ade7ac70b0457a..b697e2b0b9540b7cb2a9d08047859115
  
  }
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 8a202fc23354f022556f1877f4c7b42d454cc360..9926853c3c1ef85cf94f9140748825b948bb46ac 100644
+index 11af685e2c06631c612c908f82628c16ba28fef8..c34996781cbb3cadb3673cbc9d6a49fb88baea93 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -486,7 +486,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

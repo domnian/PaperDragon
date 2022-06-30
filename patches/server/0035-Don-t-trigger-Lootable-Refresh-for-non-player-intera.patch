@@ -5,7 +5,7 @@ Subject: [PATCH] Don't trigger Lootable Refresh for non player interaction
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
-index ed3518fe7c841d9e1a9c97626acaa3d765a6d76f..a175992452ce28708441c6eacb5b7869776a31be 100644
+index d559f93a9a09bac414dd5d58afccad42c127f09b..8691c1218ae23becbec8b941d8cdef4135a21ab9 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 @@ -69,6 +69,7 @@ public abstract class RandomizableContainerBlockEntity extends BaseContainerBloc

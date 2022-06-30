@@ -6,7 +6,7 @@ Subject: [PATCH] Improve Hopper Performance
 Only do an item "suck in" action once per second
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 5db3ca66ebb2e5d28ae61667159bf1ed5737ed60..318da7c4c62567355344fd619f7a2d63998e646f 100644
+index 94bc85dfc312111ac13eb266d8342c63d7e3301b..6ea56bb2ed6c1369945b0f4b1e59830f372ce37f 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -19,11 +19,13 @@ import net.minecraft.world.entity.Entity;
@@ -92,7 +92,7 @@ index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8e
      double getLevelX();
  
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index aea148b8af4dfade4fee2565ce6d13e184f9060e..8a202fc23354f022556f1877f4c7b42d454cc360 100644
+index bca1a7bd8f042dc0ee7e0f39602e8e80a6b76fa1..11af685e2c06631c612c908f82628c16ba28fef8 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -12,6 +12,7 @@ import net.minecraft.core.Direction;

@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index ed13dbf4003528db03ecc267ecf93b55bfc02543..304e1358affc4dcc7522064a6e626e3f6b2aa271 100644
+index 25f541983ffcfcbdb2c3d32920e87a78bedd0081..25d8de092cd4c108dad81f60af38fa2be3e44daf 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -37,6 +37,7 @@ import net.minecraft.network.chat.Component;
@@ -29,10 +29,10 @@ index ed13dbf4003528db03ecc267ecf93b55bfc02543..304e1358affc4dcc7522064a6e626e3f
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index e60cf88a1dbf4325483a7ec55acde96e21392146..13a046a5c2bf4fadb78b06ace949e51240bbc7e3 100644
+index fd42b9719f09eebd69867ae4de0234e5f4fe3a4e..aaca0ab18d38c9d492a6be3102076559aab37aa4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -904,12 +904,13 @@ public class CraftEventFactory {
+@@ -905,12 +905,13 @@ public class CraftEventFactory {
          return event;
      }
  

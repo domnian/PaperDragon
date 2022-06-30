@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand to PaperDragon
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index eefbd0a742b5875e0e9826b87c6bd4da66b2d7f7..0a326ea051b255ea4847ff294faba11f7cf88557 100644
+index 2374cc9bab5039d0a0dc11d4b2ec573ab75778a7..9fb16d886a183c9b3d87dd690bb198084f66b9e2 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -9,8 +9,12 @@ plugins {
@@ -36,7 +36,7 @@ index eefbd0a742b5875e0e9826b87c6bd4da66b2d7f7..0a326ea051b255ea4847ff294faba11f
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
-@@ -62,7 +72,7 @@ tasks.jar {
+@@ -64,7 +74,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -45,7 +45,7 @@ index eefbd0a742b5875e0e9826b87c6bd4da66b2d7f7..0a326ea051b255ea4847ff294faba11f
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
-@@ -150,7 +160,7 @@ fun TaskContainer.registerRunTask(
+@@ -163,7 +173,7 @@ fun TaskContainer.registerRunTask(
      name: String,
      block: JavaExec.() -> Unit
  ): TaskProvider<JavaExec> = register<JavaExec>(name) {
@@ -90,7 +90,7 @@ index b0390eedb507d27426d1e1d73bd4ab63aec89ebe..e1b4f614a2ba60ecdae0eadf19fa82f8
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 32dc0cd20a4dd8fc02be1f7ba3d727db826dbe5d..449f7cc919f82885c5c4fa6a267726e09762457f 100644
+index 77cd45f616e2ff38ad6a648b8b865a99e544f3ec..3bcb15959bd86002f7af987c6c2d8563b6abc6cb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -103,10 +103,10 @@ index 32dc0cd20a4dd8fc02be1f7ba3d727db826dbe5d..449f7cc919f82885c5c4fa6a267726e0
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f1e5ccfbcd08a73ac3aba9a1cb7b414faef81f9e..4bd1d2818b0f3c188b7122a509eb62e05fe45ac3 100644
+index 947bf593325cc00d9dc53ab0bf2b1b3ee578aef3..cb7b4a3a5970def6775edc048f6d735787c6236a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -243,7 +243,7 @@ import javax.annotation.Nullable; // Paper
+@@ -245,7 +245,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {

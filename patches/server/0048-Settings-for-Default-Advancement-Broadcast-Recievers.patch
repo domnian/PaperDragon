@@ -20,7 +20,7 @@ index 78f22ef4c08495e4b89f5a2eff4bdd3825d10d12..c033b4f3ef1aad4176686fcfd46a15f9
  
  }
 diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
-index 71f698d648872341b7fef1326d45fdafd0694c32..f2fe260d8a0ac860b2af742735ade7ac70b0457a 100644
+index 69140c81740ba017888828ba163a4fbc2f7a6fa5..04de9955ba445d6d3a6ec638b510b1296ccab96a 100644
 --- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 +++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
 @@ -73,6 +73,10 @@ public class DragonWorldConfig {

@@ -6,7 +6,7 @@ Subject: [PATCH] ConduitNewTargetEvent and remove target for cancelled damage
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
-index b7ec481bb9159bb203ff1688dd7f6b9f9199bccc..ef7d1e0c083613d7b71d86d839887615e1043fff 100644
+index 05eab04e4aec4151018f25b59f92ddbbb4c09f87..65fb192e4187393ce45967e70133fa1cfd6cb37b 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/ConduitBlockEntity.java
 @@ -227,6 +227,14 @@ public class ConduitBlockEntity extends BlockEntity {

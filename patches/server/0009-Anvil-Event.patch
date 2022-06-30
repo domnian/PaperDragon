@@ -6,7 +6,7 @@ Subject: [PATCH] Anvil Event
 Fire an event for anvil usage, remove cap from server, send level to client
 
 diff --git a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-index ec89526f1eabef4681fed57b74fc1bef5be4c0c1..eeada15ca7e9d3f51e03bb950676e0fab259e5ee 100644
+index 506d758efbf16da9467f120321d2359a8832e477..7e911dc82a45ca3749b1a33d46ebeb91341a743e 100644
 --- a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
 +++ b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
 @@ -277,6 +277,24 @@ public class AnvilMenu extends ItemCombinerMenu {

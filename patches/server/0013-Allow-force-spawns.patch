@@ -7,7 +7,7 @@ Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 24b6ff343f03742b872bd3634ba71c86a07c9f7f..aa8a058c8b17b0a110205619006da9b796253584 100644
+index f163b22a42bb173fdf53fed6159f45aec6b78aa2..fa081b44b49691bc15bef7704b1d8593856b3c09 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1371,7 +1371,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -20,7 +20,7 @@ index 24b6ff343f03742b872bd3634ba71c86a07c9f7f..aa8a058c8b17b0a110205619006da9b7
  
      public void addDuringTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 317ce973217693cad0527f87865163139bb12a7c..991a2305fde0b6c7bd5be5dcdc3abddd612fed88 100644
+index 555f5d3bee3d02288f0bab881bf62c9f9c771964..978d7ad142d5b22ede0c993f7b413cdedfe4d6cd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -702,7 +702,7 @@ public class CraftEventFactory {

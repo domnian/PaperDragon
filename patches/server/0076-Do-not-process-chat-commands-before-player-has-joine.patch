@@ -5,10 +5,10 @@ Subject: [PATCH] Do not process chat/commands before player has joined
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index c1ea2777b24ed010695c8eef02d8da491e66e943..de5a7c09cf39947f34cf95025b4fa751efe64d4a 100644
+index c57c6709fbd227f45c0ac74644d0ec3819eb6b82..6d6f83711cbe492913eb87872eadc7b39576e109 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2209,6 +2209,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -2211,6 +2211,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
  
              this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), i));
              return false;

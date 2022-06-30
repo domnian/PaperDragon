@@ -5,7 +5,7 @@ Subject: [PATCH] Remove "Copy of" from Written Books
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 7554c91c20b4e38e56c92214cef1afc1a65e24f4..c10b77596d84e12d30dfa4b4f1ed121ca94d8f5f 100644
+index e149491b309ebcec648fb414e38e872cdc0bfaf8..515fc01a5fde9f1084d156e4077f885b84a49d36 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -260,6 +260,7 @@ public final class ItemStack {

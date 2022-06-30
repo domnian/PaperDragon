@@ -6,7 +6,7 @@ Subject: [PATCH] Don't require flag for sign conversion
 Also reverts part of Paper's old sign conversion patch
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index 6c96c3dde4e1b1b1b6952841edb41006e73737e9..19162c5d0c2c7ed4072283b3ac4127cbaf099505 100644
+index def4fdd2c7e4f925fa128692a744e5d10ae0203a..18097342c275c8830fb66f47bcad8a52ad13531c 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec2;
