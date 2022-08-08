@@ -823,7 +823,7 @@ index f925a8d550ecbf2044a37bfe58b30d6578c5f6af..1fe629b336fbe84a660f61d141b964b0
              ListTag originTag = nbt.getList("Paper.Origin", 6);
              if (!originTag.isEmpty()) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 04531dfdac7373c8351d6cb8f6ff4ee891bc2af9..e183f8c11aa2b8e36611ceb448772a2b36c05a8c 100644
+index 4fd4c977088379cff53fc520c317acb9fe533376..cb524ec1ac72cf3b8065533b7a05d2074e8f4fbd 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -4,6 +4,7 @@ import co.aikar.timings.Timing;
@@ -1061,7 +1061,7 @@ index 777ccb3c1e21c35173f70fd8b6f7da447303e041..bbe51270a9ff9d10037260bbfa5c02cb
          this.enablePlugins(PluginLoadOrder.STARTUP);
          this.enablePlugins(PluginLoadOrder.POSTWORLD);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index a5d8dfc77475845be7c6d37eed04fb19eeef1c0c..76b38e5a78c2629ff2576fc5ac1a380afd6ca294 100644
+index f0b14914438840bd819fa7da8b76f4fcc13704d0..bd35cd0eefdb34bbfc081a647982341c33e2b888 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -1,5 +1,7 @@
@@ -1123,7 +1123,7 @@ index 966ac60daebb7bb211ab8096fc0c5f33db67320a..eb04cc1217c2fa29193159e1bb9e6156
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b80cc0938b2b3928f4450f1314a9fbd7ea9c116b..c8c3282fdf87f36311dad942736376b941e682eb 100644
+index 6549ade8e19807c523e5a1dc68b66585aad438b1..2d853e4c01e2d44464966ce213df4393ff75ea24 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -1,5 +1,7 @@

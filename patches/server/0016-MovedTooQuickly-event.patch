@@ -6,10 +6,10 @@ Subject: [PATCH] MovedTooQuickly event
 also make creative immune to this event
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 6a8ea7c9e7eacfb7990e2b01a6f28b8af1a3f205..77d693851edf1e8c09aabb4aa814426124351ca3 100644
+index dbefefc123e3cb38a95bd321d74c384bc087cfba..16a3f85aee4e6141c5f1210d7ebffd4aac3871ea 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1476,9 +1476,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -1482,9 +1482,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
                                  if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && !this.isSingleplayerOwner()) {
                                  // CraftBukkit end

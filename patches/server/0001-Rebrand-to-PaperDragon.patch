@@ -90,7 +90,7 @@ index b0390eedb507d27426d1e1d73bd4ab63aec89ebe..e1b4f614a2ba60ecdae0eadf19fa82f8
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index e7d1ccffd4b783518a7b200d440f6f12f2ed0c86..25c3af7761c914e987069ad14d89838b54126b40 100644
+index f23be38ef96a81ce3867a3b6fdccf632fe285f31..314e9559763102758aa6fc46a13a3aeb612f2f1c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1655,7 +1655,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

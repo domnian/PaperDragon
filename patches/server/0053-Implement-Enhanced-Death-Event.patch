@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 666ae42cf918d230e0c6863ed97265665f6ec5e2..456db318aa10267f0057832645a66121c099d863 100644
+index 2675e0ea59469aa694b25227fde477d808cacd3c..d6f8b701a969810a00ddbe1603ae9246e9befe70 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -39,6 +39,7 @@ import net.minecraft.network.chat.MessageSignature;

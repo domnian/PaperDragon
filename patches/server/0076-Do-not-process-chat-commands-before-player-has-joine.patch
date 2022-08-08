@@ -5,10 +5,10 @@ Subject: [PATCH] Do not process chat/commands before player has joined
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index d974b02be4fa900978ff0ed8f031aafaf87015a5..030f5f5565f46b981d830d6ca7928e24a34f1b75 100644
+index d2af46df618b3f5f6dceb3a877362f3a75ee326b..38eee557cdd8a7329fe3b99519e61956d2171a0f 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2310,6 +2310,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2348,6 +2348,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          } else if (this.player.isRemoved() || this.player.getChatVisibility() == ChatVisiblity.HIDDEN) { // CraftBukkit - dead men tell no tales
              this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), false));
              return false;

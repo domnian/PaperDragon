@@ -274,7 +274,7 @@ index bdd6560fe85950b0a857a949cb38c044da44ca6b..ec9a698f690b1b41b37c7daa3b0f84a2
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 9467ccaa1d73e1913495a46919aee530e749977d..04531dfdac7373c8351d6cb8f6ff4ee891bc2af9 100644
+index 5a2a1d394852d39ea576624586f7fa736dec807c..4fd4c977088379cff53fc520c317acb9fe533376 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -175,6 +175,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -336,7 +336,7 @@ index 952ef09adf8a157d6560d215af2162b1aac43fcb..afa22eecf6ba04f53c2ecd085bf66e6d
          public void restart() {
              org.spigotmc.RestartCommand.restart();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index c55ae77807e0ec3698f0d0443caaf18928b41017..ab5a532e18bb3ead96e058abb84254139ea37575 100644
+index 5b48047242e20c216b110502935763ea433c55cd..33f0126d5474b4d72276d11d2bdad46d31f820d0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -165,6 +165,14 @@ public class Main {

@@ -926,10 +926,10 @@ index fffaf4108b632ceabac4186d93b34ad0eb069a04..046071182ca7476f7de9b20b97fcd1cb
      @Override
      public boolean isCharging() {
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..395c1d87dcd8d18b907f3eda082ed05e3eff57a8 100644
+index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..0019bd65c6f2eb2f35ab9113b840a07f6304dd8e 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -371,6 +371,7 @@ public class ActivationRange
+@@ -372,6 +372,7 @@ public class ActivationRange
       */
      public static boolean checkIfActive(Entity entity)
      {

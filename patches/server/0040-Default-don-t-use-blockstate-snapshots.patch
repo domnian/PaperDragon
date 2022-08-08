@@ -5,7 +5,7 @@ Subject: [PATCH] Default don't use blockstate snapshots
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index bfe9dc935c87e01fb435d8b46ce413b84ca74856..df782eb6149e58278cc68d4240aeeb96d75d8ecb 100644
+index 0d47460494135d4ec4c95260de033e054c2f0404..dddcaee5bc5ce9ebe80470ba8c1374c7df11ba34 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 @@ -326,7 +326,7 @@ public class CraftBlock implements Block {
