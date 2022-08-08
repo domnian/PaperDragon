@@ -186,7 +186,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c388a71f1b0f58dd479990b77b1abb1ce3cbcfeb..18896be954c06960b0a6dca36e91d91ec728599e 100644
+index 6a81a519519b4ef1a96ceec252918fba3b788f43..3b6e027ce0ff149d30109eca308bdd00fc9b2fad 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1,9 +1,11 @@
@@ -201,7 +201,7 @@ index c388a71f1b0f58dd479990b77b1abb1ce3cbcfeb..18896be954c06960b0a6dca36e91d91e
  import net.kyori.adventure.text.Component;
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
-@@ -1386,6 +1388,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1400,6 +1402,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

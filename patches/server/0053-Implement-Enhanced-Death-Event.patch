@@ -5,18 +5,18 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 25f541983ffcfcbdb2c3d32920e87a78bedd0081..25d8de092cd4c108dad81f60af38fa2be3e44daf 100644
+index 666ae42cf918d230e0c6863ed97265665f6ec5e2..456db318aa10267f0057832645a66121c099d863 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -37,6 +37,7 @@ import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.HoverEvent;
+@@ -39,6 +39,7 @@ import net.minecraft.network.chat.MessageSignature;
  import net.minecraft.network.chat.MutableComponent;
- import net.minecraft.network.chat.PlayerChatMessage;
+ import net.minecraft.network.chat.OutgoingPlayerChatMessage;
+ import net.minecraft.network.chat.SignedMessageHeader;
 +import net.minecraft.network.chat.contents.TranslatableContents; // PaperDragon
  import net.minecraft.network.protocol.Packet;
  import net.minecraft.network.protocol.game.ClientboundAddPlayerPacket;
  import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
-@@ -873,7 +874,10 @@ public class ServerPlayer extends Player {
+@@ -875,7 +876,10 @@ public class ServerPlayer extends Player {
  
          String deathmessage = defaultMessage.getString();
          this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel

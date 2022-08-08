@@ -1663,7 +1663,7 @@ index 049c36807d2a970842442c1b7517c06f3f150041..6edbf75784e72a1512b169ce6fe616e1
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 7ad1cabe05277c1f3238da6e121c35d8a9f0d952..7775e745aacedb7588a5c49fc283f97bf830d024 100644
+index e8c0c853eb52d1473c20231660355f77b1f7e016..8a5477169703bb2074fd8e09ea5fd312fd907e7e 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1675,7 +1675,7 @@ index 7ad1cabe05277c1f3238da6e121c35d8a9f0d952..7775e745aacedb7588a5c49fc283f97b
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -44,6 +46,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -47,6 +49,12 @@ import org.jetbrains.annotations.Nullable;
   * Represents a world, which may contain entities, chunks and blocks
   */
  public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, PersistentDataHolder, Keyed, net.kyori.adventure.audience.ForwardingAudience { // Paper
@@ -1702,7 +1702,7 @@ index 10cbe71917bc32cca61748bcb0aa3395c554dbf8..4616041e23eab8aa88712db02f510cf2
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 8bc6876c82935988436597161fa0ec94c032174b..7befcde0321da408f2e7a6f152da8f5bb298739d 100644
+index 03b35d3ba8ba00c0fa0272450f19355244a014ea..b2fe4329745037f171814928a19c1849ef1f01f3 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;

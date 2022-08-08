@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 73fffbfed9d154d319f57338bc1910bf74c9236c..da401e82c369ce22df68efd5cbbcf3167db9f4bf 100644
+index f3215e30fb8d5d0d033441591b6d38b92d1b1405..e9b7c63815e2cfd38939144611c9804dea0e0621 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1442,6 +1442,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1443,6 +1443,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              if (entity instanceof net.minecraft.world.entity.item.ItemEntity itemEntity && itemEntity.getItem().isEmpty()) return false; // Paper - Prevent empty items from being added
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -18,7 +18,7 @@ index 73fffbfed9d154d319f57338bc1910bf74c9236c..da401e82c369ce22df68efd5cbbcf316
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 76ed18aa2c515b2afe00ae2ac9255e5b4b198d39..94bc85dfc312111ac13eb266d8342c63d7e3301b 100644
+index 50911c916f5476d2b152b4010a5e7f09a4ee8010..68b4248a26dd24577ab3a5e47ba87f13d8c1652f 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -46,6 +46,7 @@ public class ItemEntity extends Entity {
@@ -30,7 +30,7 @@ index 76ed18aa2c515b2afe00ae2ac9255e5b4b198d39..94bc85dfc312111ac13eb266d8342c63
      public int health;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 224ce424b9a22548212ac157ec273c6dd80d6cfb..dcc3ae5b0c180b9dd8d4ced72cd930adcc6f73c9 100644
+index 2e65b44f10aeb44fd524a58e7eb815a566c1ad61..0806696dadd7258ecb266a535ce4b86dfa119183 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -21,6 +21,7 @@ import net.minecraft.core.NonNullList;

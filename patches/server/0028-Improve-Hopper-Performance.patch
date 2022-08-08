@@ -6,7 +6,7 @@ Subject: [PATCH] Improve Hopper Performance
 Only do an item "suck in" action once per second
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 94bc85dfc312111ac13eb266d8342c63d7e3301b..6ea56bb2ed6c1369945b0f4b1e59830f372ce37f 100644
+index 68b4248a26dd24577ab3a5e47ba87f13d8c1652f..7e540f0d27107380e38cd8498886653353e3306e 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -19,11 +19,13 @@ import net.minecraft.world.entity.Entity;
@@ -23,7 +23,7 @@ index 94bc85dfc312111ac13eb266d8342c63d7e3301b..6ea56bb2ed6c1369945b0f4b1e59830f
  import net.minecraft.world.phys.Vec3;
  // CraftBukkit start
  import net.minecraft.server.MinecraftServer;
-@@ -196,10 +198,23 @@ public class ItemEntity extends Entity {
+@@ -199,10 +201,23 @@ public class ItemEntity extends Entity {
                  // CraftBukkit end
                  this.discard();
              }
@@ -47,7 +47,7 @@ index 94bc85dfc312111ac13eb266d8342c63d7e3301b..6ea56bb2ed6c1369945b0f4b1e59830f
      // Spigot start - copied from above
      @Override
      public void inactiveTick() {
-@@ -220,6 +235,7 @@ public class ItemEntity extends Entity {
+@@ -223,6 +238,7 @@ public class ItemEntity extends Entity {
              // CraftBukkit end
              this.discard();
          }

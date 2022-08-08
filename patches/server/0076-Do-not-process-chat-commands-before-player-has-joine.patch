@@ -5,14 +5,14 @@ Subject: [PATCH] Do not process chat/commands before player has joined
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index c57c6709fbd227f45c0ac74644d0ec3819eb6b82..6d6f83711cbe492913eb87872eadc7b39576e109 100644
+index d974b02be4fa900978ff0ed8f031aafaf87015a5..030f5f5565f46b981d830d6ca7928e24a34f1b75 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2211,6 +2211,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
- 
-             this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), i));
+@@ -2310,6 +2310,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+         } else if (this.player.isRemoved() || this.player.getChatVisibility() == ChatVisiblity.HIDDEN) { // CraftBukkit - dead men tell no tales
+             this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), false));
              return false;
 +        } else if (!player.didPlayerJoinEvent) { return false; // PaperDragon - do not handle chat messages before they joined
          } else {
-             this.player.resetLastActionTime();
-             return true;
+             LastSeenMessagesValidator lastseenmessagesvalidator = this.lastSeenMessagesValidator;
+             Set set;

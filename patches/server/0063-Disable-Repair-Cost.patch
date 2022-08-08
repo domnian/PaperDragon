@@ -6,7 +6,7 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index c5211386915458cc85d0cc3a72104aa4449c7fd8..056ad22255edab82f1e7ce6bc350e2e176078665 100644
+index 19f43e8d9122fb74ed25efb147ef33e813cd5bf9..bdb2d8126ef40dbdafff345894b685e9953c5cee 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -267,6 +267,7 @@ public final class ItemStack {

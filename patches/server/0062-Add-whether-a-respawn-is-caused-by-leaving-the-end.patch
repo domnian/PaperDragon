@@ -5,10 +5,10 @@ Subject: [PATCH] Add whether a respawn is caused by leaving the end
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a4e436032a9d5a202a323ef2e092a9ed3d1d87be..24f1578d10872548e9f52766336cd04526dffcdf 100644
+index b292d593e1a37bdfe14de19bbdb0f3c99ccc41e8..57cecdeca32940fd44e5432a4817d657dddf48a8 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -92,6 +92,7 @@ import net.minecraft.world.level.block.state.BlockState;
+@@ -88,6 +88,7 @@ import net.minecraft.world.level.block.state.BlockState;
  import net.minecraft.world.level.border.BorderChangeListener;
  import net.minecraft.world.level.border.WorldBorder;
  import net.minecraft.world.level.dimension.DimensionType;
@@ -16,7 +16,7 @@ index a4e436032a9d5a202a323ef2e092a9ed3d1d87be..24f1578d10872548e9f52766336cd045
  import net.minecraft.world.level.storage.LevelData;
  import net.minecraft.world.level.storage.LevelResource;
  import net.minecraft.world.level.storage.PlayerDataStorage;
-@@ -924,7 +925,8 @@ public abstract class PlayerList {
+@@ -925,7 +926,8 @@ public abstract class PlayerList {
              }
  
              Player respawnPlayer = entityplayer1.getBukkitEntity();

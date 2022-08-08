@@ -5,7 +5,7 @@ Subject: [PATCH] Add EntityEffectAddedEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 0349238ba9040464f9a869caf781c10dc2a53562..2dfd89cdc66b5d557f390b82ead2f8ad43260a28 100644
+index ee51862b8a039d3f8b4225d83c403a0cd855eece..0757ef8b78bd6d49be19cf65f709429dc52e5d5e 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -131,6 +131,7 @@ import org.bukkit.Location;

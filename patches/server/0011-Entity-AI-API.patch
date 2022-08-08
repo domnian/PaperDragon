@@ -5,16 +5,15 @@ Subject: [PATCH] Entity AI API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-index 13e53765916b1c18bd5540663c907ab06cedaa0c..26d89f2c780e9faef0b4182ca972961577942f0f 100644
+index 13e53765916b1c18bd5540663c907ab06cedaa0c..29954fba9f3388e9d2d3c3ac0c8c01709345d8d1 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
-@@ -23,10 +23,45 @@
+@@ -23,10 +23,44 @@
  
  package com.domnian.paperdragon.api;
  
 +import com.destroystokyo.paper.entity.RangedEntity;
 +import com.domnian.paperdragon.api.meta.Meta;
-+import net.minecraft.server.MCUtil;
 +import net.minecraft.server.MinecraftServer;
 +import net.minecraft.world.entity.PathfinderMob;
 +import net.minecraft.world.entity.ai.goal.Goal;
@@ -54,7 +53,7 @@ index 13e53765916b1c18bd5540663c907ab06cedaa0c..26d89f2c780e9faef0b4182ca9729615
  public class CraftDAPI_Entity implements DAPI_Entity {
  
      @NotNull
-@@ -39,4 +74,226 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+@@ -39,4 +73,226 @@ public class CraftDAPI_Entity implements DAPI_Entity {
      public void cancelTasks(@NotNull Entity entity) {
          ((CraftEntity) entity).getHandle().entityTasks.clear();
      }
@@ -218,9 +217,9 @@ index 13e53765916b1c18bd5540663c907ab06cedaa0c..26d89f2c780e9faef0b4182ca9729615
 +    @Override
 +    public void respawnEntity(@NotNull Entity entity) {
 +        CraftEntity craft = (CraftEntity) entity;
++        org.bukkit.Location location = entity.getLocation();
 +        net.minecraft.world.entity.Entity newHandle = craft.getHandle().teleportTo(((CraftWorld) entity.getWorld()).getHandle(),
-+            MCUtil.toBlockPosition(entity.getLocation())
-+        );
++                new net.minecraft.core.PositionImpl(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
 +        if (newHandle != null) {
 +            craft.setHandle(newHandle);
 +        }
@@ -430,10 +429,10 @@ index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f36
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 5e430a02dbef82b37fb1d997a9414508b00ffcf0..f163b22a42bb173fdf53fed6159f45aec6b78aa2 100644
+index c4497e9cf5b20aa3f134aab4a4f29b8d1a648a6a..ed2f9ce1e53fbf4dbe9ccd039666f32f5f313776 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1152,7 +1152,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1153,7 +1153,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
          gameprofilerfiller.incrementCounter("tickNonPassenger");
@@ -442,7 +441,7 @@ index 5e430a02dbef82b37fb1d997a9414508b00ffcf0..f163b22a42bb173fdf53fed6159f45ae
              TimingHistory.activatedEntityTicks++;
          entity.tick();
          entity.postTick(); // CraftBukkit
-@@ -2572,6 +2572,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2564,6 +2564,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  entity.setOrigin(entity.getOriginVector().toLocation(getWorld()));
              }
              // Paper end
@@ -451,10 +450,10 @@ index 5e430a02dbef82b37fb1d997a9414508b00ffcf0..f163b22a42bb173fdf53fed6159f45ae
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f888781e25bb76 100644
+index 0de2868e6afed4f0fb00460d469703c6a7400c42..6d95ab2d99817833dfccb28d3d75a04829fc2d65 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -337,6 +337,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -338,6 +338,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
      protected boolean wasEyeInWater;
      private final Set<TagKey<Fluid>> fluidOnEyes;
@@ -463,7 +462,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
      public int invulnerableTime;
      protected boolean firstTick;
      protected final SynchedEntityData entityData;
-@@ -370,7 +372,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -371,7 +373,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      private final Set<String> tags;
      private final double[] pistonDeltas;
      private long pistonDeltasGameTime;
@@ -472,7 +471,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
      private float eyeHeight;
      public boolean isInPowderSnow;
      public boolean wasInPowderSnow;
-@@ -753,6 +755,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -754,6 +756,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void setPos(double x, double y, double z) {
@@ -480,7 +479,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          this.setPosRaw(x, y, z, true); // Paper - force bounding box update
          // this.setBoundingBox(this.makeBoundingBox()); // Paper - move into setPositionRaw
      }
-@@ -795,6 +798,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -796,6 +799,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // CraftBukkit end
  
      public void baseTick() {
@@ -488,7 +487,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          this.level.getProfiler().push("entityBaseTick");
          if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
          this.feetBlockState = null;
-@@ -1007,6 +1011,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1008,6 +1012,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -496,7 +495,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
          synchronized (this.posLock) {
-@@ -1629,7 +1634,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1625,7 +1630,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean fireImmune() {
@@ -505,7 +504,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
      }
  
      public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-@@ -1840,6 +1845,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1836,6 +1841,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
@@ -513,7 +512,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
          this.setXRot(Mth.clamp(pitch, -90.0F, 90.0F) % 360.0F);
-@@ -1849,6 +1855,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1845,6 +1851,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void absMoveTo(double x, double y, double z) {
@@ -521,7 +520,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          double d3 = Mth.clamp(x, -3.0E7D, 3.0E7D);
          double d4 = Mth.clamp(z, -3.0E7D, 3.0E7D);
  
-@@ -1872,6 +1879,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1868,6 +1875,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void moveTo(double x, double y, double z, float yaw, float pitch) {
@@ -529,7 +528,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          // Paper - cancel entity velocity if teleported
          if (!preserveMotion) {
              this.deltaMovement = Vec3.ZERO;
-@@ -1933,6 +1941,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1929,6 +1937,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public void playerTouch(Player player) {}
  
      public void push(Entity entity) {
@@ -537,7 +536,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          if (!this.isPassengerOfSameVehicle(entity)) {
              if (!entity.noPhysics && !this.noPhysics) {
                  if (this.level.paperConfig().collisions.onlyPlayersCollide && !(entity instanceof ServerPlayer || this instanceof ServerPlayer)) return; // Paper
-@@ -1968,6 +1977,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1964,6 +1973,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void push(double deltaX, double deltaY, double deltaZ) {
@@ -545,7 +544,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          this.setDeltaMovement(this.getDeltaMovement().add(deltaX, deltaY, deltaZ));
          this.hasImpulse = true;
      }
-@@ -1977,6 +1987,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1973,6 +1983,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean hurt(DamageSource source, float amount) {
@@ -553,7 +552,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
          if (this.isInvulnerableTo(source)) {
              return false;
          } else {
-@@ -3273,7 +3284,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3287,7 +3298,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean isInvulnerableTo(DamageSource damageSource) {
@@ -563,7 +562,7 @@ index da7bfccb7aae5311e74f71c8d1f5e8adbc9e0069..e547d23586856e1be695945718f88878
  
      public boolean isInvulnerable() {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 279051442ac6cf288a03a16a35ddbf66d1cd1e90..761ddf24d43c06335b2bfd2ba78335e78df4b56e 100644
+index cff7993bdafd2f69e46c9985c7601a69ae47f452..4839440e914aebbfd5c401726a05f15c86dae0b2 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -337,7 +337,7 @@ public abstract class LivingEntity extends Entity {
@@ -677,7 +676,7 @@ index 268b7457c2a93af6d36c1c5f623c5856f94a7af1..894ae33ba2d9c28b3d8bed85d8cfe046
              return false;
          } else {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
-index 880ab615beee40a4d8542229962a67b47792ce82..cc08df773dbe07c3652c13f31ce74685f9335819 100644
+index 104c7e912842f8a7e746168585e36fe6e3e6dc52..40f339d891b0b5cd7720d87e4120f01680a84c7f 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
 @@ -15,10 +15,10 @@ public class RangedAttackGoal extends Goal {
@@ -739,7 +738,7 @@ index 45c3cec839a7c23903dedf6e3e004305da2adceb..12fd74c2bb64bab2c9d5dcdba0b66660
      public void startPersistentAngerTimer() {
          this.setRemainingPersistentAngerTime(Wolf.PERSISTENT_ANGER_TIME.sample(this.random));
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 08f15739dd7e2ab80718ab8d983b483a46309deb..76ed18aa2c515b2afe00ae2ac9255e5b4b198d39 100644
+index fcc5444a1268931a0fd2df1e6bbbc17cfd5a61e0..50911c916f5476d2b152b4010a5e7f09a4ee8010 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -45,6 +45,7 @@ public class ItemEntity extends Entity {
@@ -750,7 +749,7 @@ index 08f15739dd7e2ab80718ab8d983b483a46309deb..76ed18aa2c515b2afe00ae2ac9255e5b
      public int pickupDelay;
      public int health;
      @Nullable
-@@ -185,7 +186,7 @@ public class ItemEntity extends Entity {
+@@ -188,7 +189,7 @@ public class ItemEntity extends Entity {
                  }
              }
  
@@ -760,7 +759,7 @@ index 08f15739dd7e2ab80718ab8d983b483a46309deb..76ed18aa2c515b2afe00ae2ac9255e5b
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Blaze.java b/src/main/java/net/minecraft/world/entity/monster/Blaze.java
-index 4595b734abb88df7da6dddf7b24c6c5ffcf6556a..5ac120bbbe2506e52c1744726b754a6d8a328831 100644
+index 4595b734abb88df7da6dddf7b24c6c5ffcf6556a..882a84618762494a963c4f633b268148b81b9c6c 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Blaze.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Blaze.java
 @@ -30,6 +30,10 @@ public class Blaze extends Monster {
@@ -779,7 +778,7 @@ index 4595b734abb88df7da6dddf7b24c6c5ffcf6556a..5ac120bbbe2506e52c1744726b754a6d
      }
  
 -    static class BlazeAttackGoal extends Goal {
-+    public static class BlazeAttackGoal extends Goal {
++    public static class BlazeAttackGoal extends Goal { // PaperDragon - make public
          private final Blaze blaze;
          private int attackStep;
          private int attackTime;
@@ -907,20 +906,8 @@ index ac4b6840cca345416a9e5695fc07879cd96f64d2..99ed0de5078c5303f61ba07def4b6e2e
                  this.playSound(SoundEvents.ENDER_EYE_DEATH, 1.0F, 1.0F);
                  this.discard();
                  if (this.surviveAfterDeath) {
-diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEnderSignal.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEnderSignal.java
-index 13c1188639e00cd96e00b179c4e353582bf66e64..7bed17c9e652835c66e7864f75c45d5260c6e1c4 100644
---- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEnderSignal.java
-+++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEnderSignal.java
-@@ -10,6 +10,7 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
- import org.bukkit.entity.EnderSignal;
- import org.bukkit.entity.EntityType;
- import org.bukkit.inventory.ItemStack;
-+import org.jetbrains.annotations.NotNull;
- 
- public class CraftEnderSignal extends CraftEntity implements EnderSignal {
-     public CraftEnderSignal(CraftServer server, EyeOfEnder entity) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
-index d0f0f380e9b185668580f31b061bdc08f0573a40..fa38b5bba5c06be935a2d71ea9059af777a7e9e8 100644
+index fffaf4108b632ceabac4186d93b34ad0eb069a04..046071182ca7476f7de9b20b97fcd1cbdad8150b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
 @@ -24,6 +24,14 @@ public class CraftGhast extends CraftFlying implements Ghast {
@@ -936,8 +923,8 @@ index d0f0f380e9b185668580f31b061bdc08f0573a40..fa38b5bba5c06be935a2d71ea9059af7
 +    }
 +    // PaperDragon end
  
-     // Paper start
      @Override
+     public boolean isCharging() {
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..395c1d87dcd8d18b907f3eda082ed05e3eff57a8 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java

@@ -6,7 +6,7 @@ Subject: [PATCH] PlayerUseItem Event
 This lets us control when an item is consumed and change the item.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
-index 7572f6d03d315ab4639be211c5ffc7682b326362..1a21c23bdcad5ed791c61c2886eff598f8492d68 100644
+index 9378e83a67a70dbb1fb4f05b33f1e553d008e62b..31d8131ca26880a2fc7a6d1557a548c34dc74c99 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -3,6 +3,8 @@ package net.minecraft.server.level;

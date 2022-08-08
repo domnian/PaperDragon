@@ -5,7 +5,7 @@ Subject: [PATCH] Convert Item Stacks
 
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 515fc01a5fde9f1084d156e4077f885b84a49d36..c5211386915458cc85d0cc3a72104aa4449c7fd8 100644
+index d1c53c6fd3746680563e2d965c2fd52e9e9c0312..19f43e8d9122fb74ed25efb147ef33e813cd5bf9 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -234,6 +234,7 @@ public final class ItemStack {

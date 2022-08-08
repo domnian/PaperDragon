@@ -32,10 +32,10 @@ index 0000000000000000000000000000000000000000..8e11aa0faa8083d7624d49e8f372e606
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 7df610afc026d4229901ff541934b0bec33bd018..60f6268ae0f98ca9acc0b1be3409038ed51dc4d0 100644
+index 50a7248467c673aec3a4e058e682ea7ed60640cb..6d76783d3aae8853566cbb94aa60bd0ec3cbaf13 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1254,6 +1254,7 @@ public abstract class Player extends LivingEntity {
+@@ -1255,6 +1255,7 @@ public abstract class Player extends LivingEntity {
      public void attack(Entity target) {
          if (target.isAttackable()) {
              if (!target.skipAttackInteraction(this)) {

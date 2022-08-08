@@ -154,7 +154,7 @@ index 587db9a70f8f930412d34c4a412c19a30faa2a4e..ec27722617d6c8c34a59adf6d4d8892f
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 6b3cfc19c4fd1382ddf534265a1114995a4f6b55..e149491b309ebcec648fb414e38e872cdc0bfaf8 100644
+index c18a0bc94d0210396046f4475e49a739088593f3..a05efe9577e9ebe80333242db1602566f97f6ab6 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -31,6 +31,7 @@ import net.minecraft.core.Registry;
