@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sat, 30 Jul 2022 22:50:38 -0400
+Subject: [PATCH] Add Adventure support to Chat Preview Event
+
+
+diff --git a/src/main/java/org/bukkit/event/player/AsyncPlayerChatPreviewEvent.java b/src/main/java/org/bukkit/event/player/AsyncPlayerChatPreviewEvent.java
+index 9bb17fde6c4e48d248212df2ee0558cdea3c99b7..64203e8797c0dd3674b7d823472504c54d37665f 100644
+--- a/src/main/java/org/bukkit/event/player/AsyncPlayerChatPreviewEvent.java
++++ b/src/main/java/org/bukkit/event/player/AsyncPlayerChatPreviewEvent.java
+@@ -1,10 +1,12 @@
+ package org.bukkit.event.player;
+ 
+ import java.util.Set;
++import net.kyori.adventure.text.Component; // PaperDragon
+ import org.bukkit.Warning;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.HandlerList;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable; // PaperDragon
+ 
+ /**
+  * Used to format chat for chat preview. If this event is used, then the result
+@@ -16,11 +18,22 @@ import org.jetbrains.annotations.NotNull;
+ @Deprecated
+ @Warning(false)
+ public class AsyncPlayerChatPreviewEvent extends AsyncPlayerChatEvent {
++    // PaperDragon start
++    private Component preview;
++    public void preview(@Nullable Component preview) {
++        this.preview = preview;
++    }
++    @Nullable
++    public Component preview() {
++        return this.preview;
++    }
++    // PaperDragon end
+ 
+     private static final HandlerList handlers = new HandlerList();
+ 
+-    public AsyncPlayerChatPreviewEvent(final boolean async, @NotNull final Player who, @NotNull final String message, @NotNull final Set<Player> players) {
++    public AsyncPlayerChatPreviewEvent(final boolean async, @NotNull final Player who, @NotNull final String message, @NotNull final Set<Player> players, @NotNull final Component component) { // PaperDragon - take an Adventure Component for preview
+         super(async, who, message, players);
++        this.preview = component; // PaperDragon
+     }
+ 
+     @NotNull
