@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Proxy Mode API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 160906863eda4e72aea7d8c48d93a8916fb0a0a5..b0f7a331bd70925eeeafb6180fcc6b754f241953 100644
+index f64c4cb72d034e3f90f6835660c49c2cb1be7454..4f88e013022d17198304892de6c52e2f58465412 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -23,7 +23,7 @@ index 160906863eda4e72aea7d8c48d93a8916fb0a0a5..b0f7a331bd70925eeeafb6180fcc6b75
  import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
  import java.awt.image.BufferedImage;
  import java.io.File;
-@@ -238,6 +240,7 @@ import org.bukkit.scheduler.BukkitWorker;
+@@ -240,6 +242,7 @@ import org.bukkit.scoreboard.Criteria;
  import org.bukkit.structure.StructureManager;
  import org.bukkit.util.StringUtil;
  import org.bukkit.util.permissions.DefaultPermissions;
@@ -31,7 +31,7 @@ index 160906863eda4e72aea7d8c48d93a8916fb0a0a5..b0f7a331bd70925eeeafb6180fcc6b75
  import org.yaml.snakeyaml.Yaml;
  import org.yaml.snakeyaml.constructor.SafeConstructor;
  import org.yaml.snakeyaml.error.MarkedYAMLException;
-@@ -2917,4 +2920,26 @@ public final class CraftServer implements Server {
+@@ -2924,4 +2927,26 @@ public final class CraftServer implements Server {
      }
  
      // Paper end

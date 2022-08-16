@@ -1042,7 +1042,7 @@ index 947b0b10fb965f30513fd0df5bc0910fb9cb9a71..40c42238e4d169ee4f6f64de7ad77097
      private final ServerLevel worldServer;
      private final int x;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 777ccb3c1e21c35173f70fd8b6f7da447303e041..bbe51270a9ff9d10037260bbfa5c02cbedd20bc9 100644
+index 9b876e839af85d78b5516e908d268eedfa8f0ea0..d19d4d3a5d0461e9c383cb9e473cc7a751e180c1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -1052,7 +1052,7 @@ index 777ccb3c1e21c35173f70fd8b6f7da447303e041..bbe51270a9ff9d10037260bbfa5c02cb
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
  import com.google.common.base.Preconditions;
-@@ -1017,6 +1018,7 @@ public final class CraftServer implements Server {
+@@ -1019,6 +1020,7 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }
