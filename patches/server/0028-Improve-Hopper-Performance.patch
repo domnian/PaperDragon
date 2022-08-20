@@ -56,7 +56,7 @@ index 68b4248a26dd24577ab3a5e47ba87f13d8c1652f..7e540f0d27107380e38cd84988866533
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index 540c23f6297c34cf8e7bf8312ceaa5fc868f414c..74c8ef685cd61d0174dacaa4cf18222b124fd121 100644
+index 2866385a64b22b7dc82b6122c62bcea6b0908a60..b886a016b14f285aa76d6f8b0c5a1a4928296568 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -22,6 +22,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
@@ -67,10 +67,10 @@ index 540c23f6297c34cf8e7bf8312ceaa5fc868f414c..74c8ef685cd61d0174dacaa4cf18222b
  
      public MinecartHopper(EntityType<? extends MinecartHopper> type, Level world) {
          super(type, world);
-@@ -149,4 +150,11 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
-     public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
-         return new HopperMenu(syncId, playerInventory, this);
+@@ -159,4 +160,12 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
      }
+     // Paper end
+ 
 +    // PaperDragon start
 +    private long tickAttempts = 0;
 +    @Override
@@ -78,6 +78,7 @@ index 540c23f6297c34cf8e7bf8312ceaa5fc868f414c..74c8ef685cd61d0174dacaa4cf18222b
 +        return tickAttempts++;
 +    }
 +    // PaperDragon end
++
  }
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/Hopper.java b/src/main/java/net/minecraft/world/level/block/entity/Hopper.java
 index 6a1405a8630e90db3b5a3c9152259ba6f5f0c784..9716b169c7985507e37f545d3e856c8ead0dcb9f 100644
