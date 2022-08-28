@@ -60,7 +60,7 @@ index 09b6475b77ebc7f43c13861aa2af26e2f6e6a8b5..e21d35c2d17afa5709492d2dfa53f068
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
-index f5363a753e5d24ccda946a9d65132eed28f19172..a7e5fcf13da5531a7204f3e75277b8c8a44393ae 100644
+index f5363a753e5d24ccda946a9d65132eed28f19172..99972248761715f2c36b9e4402e60a63de4e2ce3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
 @@ -39,7 +39,12 @@ public final class CraftItemStack extends ItemStack {
@@ -77,20 +77,22 @@ index f5363a753e5d24ccda946a9d65132eed28f19172..a7e5fcf13da5531a7204f3e75277b8c8
          }
          return stack;
      }
-@@ -272,7 +277,11 @@ public final class CraftItemStack extends ItemStack {
+@@ -272,7 +277,13 @@ public final class CraftItemStack extends ItemStack {
  
      @Override
      public ItemMeta getItemMeta() {
 -        return CraftItemStack.getItemMeta(this.handle);
 +        // Paper start
 +        ItemMeta itemMeta = CraftItemStack.getItemMeta(handle);
-+        ((CraftMetaItem) itemMeta).setVersion(this.getDataVersion());
++        if (itemMeta != null) {
++            ((CraftMetaItem) itemMeta).setVersion(this.getDataVersion());
++        }
 +        return itemMeta;
 +        // Paper end
      }
      // Paper start
      public static void applyMetaToItem(net.minecraft.world.item.ItemStack itemStack, ItemMeta meta) {
-@@ -561,7 +570,7 @@ public final class CraftItemStack extends ItemStack {
+@@ -561,7 +572,7 @@ public final class CraftItemStack extends ItemStack {
          item.setTag(tag);
  
          ((CraftMetaItem) itemMeta).applyToItem(tag);
