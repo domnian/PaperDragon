@@ -5,7 +5,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1254746b8797931cc4c9079979b448c0348ca168..c56766270bf1c44c67a6d7a0e0f2b9eec9e27a88 100644
+index cf5cd42eb9f62c4fcc277a57d3c7dcd99755d9d9..c56dc85d41f79d1299cb263f692d2ca9fdeba4ec 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -230,6 +230,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

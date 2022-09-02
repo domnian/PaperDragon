@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Proxy Mode API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f64c4cb72d034e3f90f6835660c49c2cb1be7454..4f88e013022d17198304892de6c52e2f58465412 100644
+index e575d220197e7e991cf526d562bde866b40a2e75..9ad5b7f58196d4e07ae6b70a032d41b46a629c66 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@

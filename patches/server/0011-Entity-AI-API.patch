@@ -429,10 +429,10 @@ index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f36
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index c4497e9cf5b20aa3f134aab4a4f29b8d1a648a6a..ed2f9ce1e53fbf4dbe9ccd039666f32f5f313776 100644
+index a96aa5e12cbbc0466b590f28a787fd1fc8c88dde..bc495e469f0398d6f191f604a0ed3173142863f9 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1153,7 +1153,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1158,7 +1158,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
          gameprofilerfiller.incrementCounter("tickNonPassenger");
@@ -441,7 +441,7 @@ index c4497e9cf5b20aa3f134aab4a4f29b8d1a648a6a..ed2f9ce1e53fbf4dbe9ccd039666f32f
              TimingHistory.activatedEntityTicks++;
          entity.tick();
          entity.postTick(); // CraftBukkit
-@@ -2564,6 +2564,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2569,6 +2569,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  entity.setOrigin(entity.getOriginVector().toLocation(getWorld()));
              }
              // Paper end

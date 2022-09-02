@@ -50,7 +50,7 @@ index 08b21f5a7a07f44f8044f56991fb6723cd8f3eea..670cdc6d44126e1cd8199c4806b934ba
                              Component chatmessage = Component.literal("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
                              this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 881f6f61015c7f2f28b204467f984dbf8d37d89a..fa5938dc138e9b80401f1b687df5854e595dbf6b 100644
+index 88a849a21d6e39fd70f6e7b554528da1a5a7dd57..1177440225f0653c2ea50a0928dc640ab4e49fb9 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 @@ -297,7 +297,7 @@ public class ServerLoginPacketListenerImpl implements TickablePacketListener, Se

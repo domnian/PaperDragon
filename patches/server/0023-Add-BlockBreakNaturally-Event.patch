@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index f3215e30fb8d5d0d033441591b6d38b92d1b1405..e9b7c63815e2cfd38939144611c9804dea0e0621 100644
+index ab1938c7473a8959ffa2c928c0b5deecf4297dff..96714555496c5747b4946df888d4e9d0a42cf80a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1443,6 +1443,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1448,6 +1448,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              if (entity instanceof net.minecraft.world.entity.item.ItemEntity itemEntity && itemEntity.getItem().isEmpty()) return false; // Paper - Prevent empty items from being added
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {

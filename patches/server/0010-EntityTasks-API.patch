@@ -96,7 +96,7 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +    public static class TaskList extends ArrayList<EntityTask<?>> {}
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 083349794d5ceb50322c5a645dd33fbfcc1c8155..c4497e9cf5b20aa3f134aab4a4f29b8d1a648a6a 100644
+index 96bb0e56f12437037b598cd7baabf369e5994517..a96aa5e12cbbc0466b590f28a787fd1fc8c88dde 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -106,7 +106,7 @@ index 083349794d5ceb50322c5a645dd33fbfcc1c8155..c4497e9cf5b20aa3f134aab4a4f29b8d
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1147,6 +1148,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1152,6 +1153,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
@@ -114,7 +114,7 @@ index 083349794d5ceb50322c5a645dd33fbfcc1c8155..c4497e9cf5b20aa3f134aab4a4f29b8d
          this.getProfiler().push(() -> {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1185,6 +1187,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1190,6 +1192,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -142,7 +142,7 @@ index 1fe629b336fbe84a660f61d141b964b020893ef8..0de2868e6afed4f0fb00460d469703c6
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d19d4d3a5d0461e9c383cb9e473cc7a751e180c1..d33a9b586023a65721ea756be87ee662a4ea8415 100644
+index be1d9b97afb5d77b74cc3cd4a0ea033ae5bdd0fe..d911854e31524c259bce2da930d38e917db36c1b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@

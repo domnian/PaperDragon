@@ -763,7 +763,7 @@ index 76b6437a1d807c7e1b673f8feeed1f171ee9a803..07f4295723929bd6a901e423f2a9151b
              blockEntity.sanitizeSentNbt(compoundTag); // Paper - Sanitize sent data
              return new ClientboundLevelChunkPacketData.BlockEntityInfo(i, blockPos.getY(), blockEntity.getType(), compoundTag.isEmpty() ? null : compoundTag);
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 77c89376495d90d0e7cbf6cd02c9a1c8d9a4340b..c3c75c4742ac42184455cfd13f2f4881ee1b4a72 100644
+index c2c01988bf3b6fbb0a7a4716373c2ff0cffce27d..25bcb71a498d55d15431b1a0b0d10d2afbcd4b78 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1,6 +1,7 @@
@@ -774,7 +774,7 @@ index 77c89376495d90d0e7cbf6cd02c9a1c8d9a4340b..c3c75c4742ac42184455cfd13f2f4881
  import com.google.common.collect.ImmutableList;
  import com.google.common.collect.ImmutableList.Builder;
  import com.google.common.collect.Iterables;
-@@ -1371,6 +1372,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1363,6 +1364,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
                      chunk = new LevelChunk(this.level, protochunk, (chunk1) -> {
                          ChunkMap.postLoadProtoChunk(this.level, protochunk.getEntities());
                      });
@@ -1042,7 +1042,7 @@ index 947b0b10fb965f30513fd0df5bc0910fb9cb9a71..40c42238e4d169ee4f6f64de7ad77097
      private final ServerLevel worldServer;
      private final int x;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9b876e839af85d78b5516e908d268eedfa8f0ea0..d19d4d3a5d0461e9c383cb9e473cc7a751e180c1 100644
+index 89de24be715a57660fac6ebed068808d96b9aae1..be1d9b97afb5d77b74cc3cd4a0ea033ae5bdd0fe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -1061,7 +1061,7 @@ index 9b876e839af85d78b5516e908d268eedfa8f0ea0..d19d4d3a5d0461e9c383cb9e473cc7a7
          this.enablePlugins(PluginLoadOrder.STARTUP);
          this.enablePlugins(PluginLoadOrder.POSTWORLD);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f0b14914438840bd819fa7da8b76f4fcc13704d0..bd35cd0eefdb34bbfc081a647982341c33e2b888 100644
+index 1b6ae90acffa06502902e11473b65c8431616b05..2c915a8daa60be303389008881dd825be1e2b7b1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -1,5 +1,7 @@
@@ -1123,7 +1123,7 @@ index 966ac60daebb7bb211ab8096fc0c5f33db67320a..eb04cc1217c2fa29193159e1bb9e6156
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 6549ade8e19807c523e5a1dc68b66585aad438b1..2d853e4c01e2d44464966ce213df4393ff75ea24 100644
+index 492fd9b72cc68d43d3a021f768a87296ff601ac9..c925c4ee793fc77916f87ce1087c7c2c7762bdac 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -1,5 +1,7 @@

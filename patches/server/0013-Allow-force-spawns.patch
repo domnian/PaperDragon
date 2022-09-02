@@ -7,10 +7,10 @@ Pass spawn reason force to not allow plugins to block
 Force some cases where plugins should not be allowed to block it.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index ed2f9ce1e53fbf4dbe9ccd039666f32f5f313776..6df787f33d948bc86667b85169f6eb32050715b5 100644
+index bc495e469f0398d6f191f604a0ed3173142863f9..8740b6e85d59bd29ed011c03884da68b4fa5c9b7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1372,7 +1372,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1377,7 +1377,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          // SPIGOT-6415: Don't call spawn event for entities which travel trough worlds,
          // since it is only an implementation detail, that a new entity is created when
          // they are traveling between worlds.
