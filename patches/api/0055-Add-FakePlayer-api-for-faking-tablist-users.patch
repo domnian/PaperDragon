@@ -186,13 +186,13 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 6a81a519519b4ef1a96ceec252918fba3b788f43..3b6e027ce0ff149d30109eca308bdd00fc9b2fad 100644
+index 0e3433d939b9ec7bd38ffcc52e31cc905c569c6a..71addc51041aebdb9a90b121c572708cd15796b8 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1,9 +1,11 @@
- package org.bukkit.entity;
+@@ -2,9 +2,11 @@ package org.bukkit.entity;
  
  import java.net.InetSocketAddress;
+ import java.util.Collection;
 +import java.util.Set; // PaperDragon
  import java.util.UUID;
  import com.destroystokyo.paper.ClientOption; // Paper
@@ -201,7 +201,7 @@ index 6a81a519519b4ef1a96ceec252918fba3b788f43..3b6e027ce0ff149d30109eca308bdd00
  import net.kyori.adventure.text.Component;
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
-@@ -1400,6 +1402,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1436,6 +1438,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

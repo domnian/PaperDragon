@@ -77,10 +77,10 @@ index cbe0749b4ce57a773c2a0f56fcf0eaac33424372..89649673948860e21b85b784a8cadb88
              if (this.level != null) LecternBlock.signalPageChange(this.getLevel(), this.getBlockPos(), this.getBlockState()); // CraftBukkit
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-index c0a7b7bb9757de55424188629087d2ec82479e3c..847f9d5fc7f64172e5ae5b36fb341575a40773bb 100644
+index e779dcc4982ff51e4d450265fd61bc26e8e74d3a..d6de72d82d69264298bca7ee792f120d6fc8aa1f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
-@@ -318,6 +318,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
+@@ -321,6 +321,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
              if (craft.getInventory() instanceof MenuProvider) {
                  iinventory = (MenuProvider) craft.getInventory();
              }

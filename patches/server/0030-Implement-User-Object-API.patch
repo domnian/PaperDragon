@@ -5,10 +5,10 @@ Subject: [PATCH] Implement User Object API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 41258fcfa0505500665c2f185b9ef6d050213355..f9f789a0b6d1d01ac8813b8e09909108d4f40677 100644
+index 7005146e178d2e6358f3cd6a1a97ba12f410e16d..3f1875fba3c118bb954bf98255555f5da9cfe526 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2887,4 +2887,17 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2937,4 +2937,17 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          return this.spigot;
      }
      // Spigot end

@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand to PaperDragon
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 2374cc9bab5039d0a0dc11d4b2ec573ab75778a7..ea965919de2603979fcddd21215e6549d380a7de 100644
+index 44e0f265432487fe5c3c00c5245041298ade16a0..959c65e879098c7f5621b05d983bf890db63f2ca 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -9,8 +9,12 @@ plugins {
@@ -77,7 +77,7 @@ index 7b1843e16745ca8db2244e17490d291401f22679..af49c34ac78e9d7176b421acb17f8257
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
-index b0390eedb507d27426d1e1d73bd4ab63aec89ebe..e1b4f614a2ba60ecdae0eadf19fa82f8565565f5 100644
+index c5d5648f4ca603ef2b1df723b58f9caf4dd3c722..e85ed0fb43eff15f4c5b4407cfa32cdc10bf1055 100644
 --- a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
 +++ b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
 @@ -17,7 +17,7 @@ public final class PaperConsole extends SimpleTerminalConsole {
@@ -90,10 +90,10 @@ index b0390eedb507d27426d1e1d73bd4ab63aec89ebe..e1b4f614a2ba60ecdae0eadf19fa82f8
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d2161a3c3b9a2b2d463ac778656c95167c10a49d..cf5cd42eb9f62c4fcc277a57d3c7dcd99755d9d9 100644
+index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..50da51903d1e5ff5cf6ed3b0c1cdb1ef3278a9c3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1673,7 +1673,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -103,7 +103,7 @@ index d2161a3c3b9a2b2d463ac778656c95167c10a49d..cf5cd42eb9f62c4fcc277a57d3c7dcd9
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b443aba38258f501f8f00be6b055f07b709277c4..c13b7cb95f64597706558d79f422dba64dbe2e09 100644
+index 111f8276f26350a5c62a7b8577b4598978b5355d..91103f60b56b097026fda2993bcc58452151dc2b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
@@ -129,10 +129,10 @@ index 774556a62eb240da42e84db4502e2ed43495be17..e6c9e0dc175bfb9d7a43d73557263e5e
  
          if (stream != null) {
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index d568fc92d03c313a782796cc720a1ebb1a5ad8be..c42d37c0483f8e1313090c9bb7dcf81a01adfce3 100644
+index e9fa7faaa4451e36b3908cbcbbe0baf213abde96..04ae2fe1c7109b0b6879e38a3a439facf26ab6e9 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -96,7 +96,7 @@ public class WatchdogThread extends Thread
+@@ -96,7 +96,7 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
  
      private WatchdogThread(long timeoutTime, boolean restart)
      {
@@ -141,7 +141,7 @@ index d568fc92d03c313a782796cc720a1ebb1a5ad8be..c42d37c0483f8e1313090c9bb7dcf81a
          this.timeoutTime = timeoutTime;
          this.restart = restart;
          earlyWarningEvery = Math.min(io.papermc.paper.configuration.GlobalConfiguration.get().watchdog.earlyWarningEvery, timeoutTime); // Paper
-@@ -155,14 +155,14 @@ public class WatchdogThread extends Thread
+@@ -155,14 +155,14 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
                  if (isLongTimeout) {
                  // Paper end
                  log.log( Level.SEVERE, "------------------------------" );
@@ -159,7 +159,7 @@ index d568fc92d03c313a782796cc720a1ebb1a5ad8be..c42d37c0483f8e1313090c9bb7dcf81a
                  //
                  if ( net.minecraft.world.level.Level.lastPhysicsProblem != null )
                  {
-@@ -185,12 +185,12 @@ public class WatchdogThread extends Thread
+@@ -185,12 +185,12 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
                  // Paper end
                  } else
                  {
@@ -171,10 +171,10 @@ index d568fc92d03c313a782796cc720a1ebb1a5ad8be..c42d37c0483f8e1313090c9bb7dcf81a
                  log.log( Level.SEVERE, "------------------------------" );
 -                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):" ); // Paper
 +                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to PaperDragon!):" ); // Paper // PaperDragon
-                 com.destroystokyo.paper.io.chunk.ChunkTaskManager.dumpAllChunkLoadInfo(); // Paper
+                 io.papermc.paper.chunk.system.scheduling.ChunkTaskScheduler.dumpAllChunkLoadInfo(isLongTimeout); // Paper // Paper - rewrite chunk system
                  this.dumpTickingInfo(); // Paper - log detailed tick information
-                 WatchdogThread.dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( server.serverThread.getId(), Integer.MAX_VALUE ), log );
-@@ -206,7 +206,7 @@ public class WatchdogThread extends Thread
+                 WatchdogThread.dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
+@@ -206,7 +206,7 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
                      WatchdogThread.dumpThread( thread, log );
                  }
                  } else {

@@ -1637,7 +1637,7 @@ index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 049c36807d2a970842442c1b7517c06f3f150041..6edbf75784e72a1512b169ce6fe616e136450454 100644
+index e1e1bc868019f715370490719ef887e0eee3ddec..f0e0c12c4d0f9eb345c39bb33d794e5f67a73975 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,8 @@ package org.bukkit;
@@ -1663,7 +1663,7 @@ index 049c36807d2a970842442c1b7517c06f3f150041..6edbf75784e72a1512b169ce6fe616e1
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index e8c0c853eb52d1473c20231660355f77b1f7e016..8a5477169703bb2074fd8e09ea5fd312fd907e7e 100644
+index 9e71e519cda72a1e2a01474f238b97015ec5115e..eaf93384b36040b83d28fc62b02fe3149e8006ca 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1689,7 +1689,7 @@ index e8c0c853eb52d1473c20231660355f77b1f7e016..8a5477169703bb2074fd8e09ea5fd312
      // Paper start
      /**
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 10cbe71917bc32cca61748bcb0aa3395c554dbf8..4616041e23eab8aa88712db02f510cf2e861b20b 100644
+index 5be829058c41283a5d3d14776617c98c4cdaaf8e..0b8765f9c5f735b3457237dab4b04e8febcf3dd4 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
 @@ -225,7 +225,7 @@ public interface BlockState extends Metadatable {
@@ -1702,7 +1702,7 @@ index 10cbe71917bc32cca61748bcb0aa3395c554dbf8..4616041e23eab8aa88712db02f510cf2
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 03b35d3ba8ba00c0fa0272450f19355244a014ea..b2fe4329745037f171814928a19c1849ef1f01f3 100644
+index 6dd81f07ef4d6993187987d3352a01771ffb715e..346e1ff632f3f0226fd228013f2a5cab3d1b8da6 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1715,7 +1715,7 @@ index 03b35d3ba8ba00c0fa0272450f19355244a014ea..b2fe4329745037f171814928a19c1849
  import org.bukkit.Chunk; // Paper
  import org.bukkit.EntityEffect;
  import org.bukkit.Location;
-@@ -28,6 +31,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -29,6 +32,12 @@ import org.jetbrains.annotations.Nullable;
   */
  public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity>, net.kyori.adventure.sound.Sound.Emitter { // Paper
  
@@ -1729,7 +1729,7 @@ index 03b35d3ba8ba00c0fa0272450f19355244a014ea..b2fe4329745037f171814928a19c1849
       * Gets the entity's current position
       *
 diff --git a/src/main/java/org/bukkit/inventory/Inventory.java b/src/main/java/org/bukkit/inventory/Inventory.java
-index 072ecb1c23a1224483999db416edd5eda7ffe78d..ecc727f024ca2daa6ba4afe58aaf97102bc98338 100644
+index ffe9e186b2c155a60045ef39313096ca0161b7d8..e465ab1707b39963934e55c9bbc943912149f808 100644
 --- a/src/main/java/org/bukkit/inventory/Inventory.java
 +++ b/src/main/java/org/bukkit/inventory/Inventory.java
 @@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;

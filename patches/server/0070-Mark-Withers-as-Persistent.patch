@@ -6,10 +6,10 @@ Subject: [PATCH] Mark Withers as Persistent
 We don't want them despawning due to player range
 
 diff --git a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-index 4fb40aa91e0961f1974c74c88fa68359e4ad6b16..c5c6dcab519c67909ced78f838146a6b2988756e 100644
+index a6d30f3213d30ba925926437ed4535319061213d..6a4c5d5bea7132dbcfc7ae6a529a373d75c281ae 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-@@ -595,6 +595,7 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
+@@ -594,6 +594,7 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
          return this.getHealth() <= this.getMaxHealth() / 2.0F;
      }
  

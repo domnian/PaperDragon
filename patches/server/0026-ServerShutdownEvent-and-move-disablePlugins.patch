@@ -5,7 +5,7 @@ Subject: [PATCH] ServerShutdownEvent and move disablePlugins
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cf5cd42eb9f62c4fcc277a57d3c7dcd99755d9d9..c56dc85d41f79d1299cb263f692d2ca9fdeba4ec 100644
+index 50da51903d1e5ff5cf6ed3b0c1cdb1ef3278a9c3..8f5860de3ff4eae163ae8936531b853ddedf91a9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -230,6 +230,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -16,7 +16,7 @@ index cf5cd42eb9f62c4fcc277a57d3c7dcd99755d9d9..c56dc85d41f79d1299cb263f692d2ca9
      private boolean pvp;
      private boolean allowFlight;
      @Nullable
-@@ -930,8 +931,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -940,8 +941,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          MinecraftTimings.stopServer(); // Paper
          // CraftBukkit start
          if (this.server != null) {
@@ -28,10 +28,10 @@ index cf5cd42eb9f62c4fcc277a57d3c7dcd99755d9d9..c56dc85d41f79d1299cb263f692d2ca9
          }
          // CraftBukkit end
          if (this.getConnection() != null) {
-@@ -997,6 +999,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
-                 }
-             }
+@@ -969,6 +971,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
+ 
+         this.saveAllChunks(false, true, false, true); // Paper - rewrite chunk system - move closing into here
 +        if (server != null) { this.server.disablePlugins(); this.server.waitForAsyncTasksShutdown(); } // PaperDragon
  
          this.isSaving = false;

@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Proxy Mode API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e575d220197e7e991cf526d562bde866b40a2e75..9ad5b7f58196d4e07ae6b70a032d41b46a629c66 100644
+index 5c2bfb43d1ab2cce409b7129268aa621f868d5ea..dc48ebc6562289bcfebb108c1d51bd8530daf6e2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -31,7 +31,7 @@ index e575d220197e7e991cf526d562bde866b40a2e75..9ad5b7f58196d4e07ae6b70a032d41b4
  import org.yaml.snakeyaml.Yaml;
  import org.yaml.snakeyaml.constructor.SafeConstructor;
  import org.yaml.snakeyaml.error.MarkedYAMLException;
-@@ -2924,4 +2927,26 @@ public final class CraftServer implements Server {
+@@ -2929,4 +2932,26 @@ public final class CraftServer implements Server {
      }
  
      // Paper end

@@ -261,7 +261,7 @@ index 46ae5d40c26264e6b0ca253afa65b7846e6e5e6d..aa4e8c1fb5acdda2d649d37e3464e811
          this.action = action;
          this.entries = Lists.newArrayListWithCapacity(players.length);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 28ea454c9eed7609e90cc1b8df4f6b2544970bf0..19b6480efac8ab083e629b5ededfa643cd83a5d0 100644
+index ed6fdf4fb31d818fb9912fb79b1b035f5f627175..9759e234ac1055d36255569b4cab29d24b1bf92b 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1,6 +1,8 @@
@@ -288,7 +288,7 @@ index 28ea454c9eed7609e90cc1b8df4f6b2544970bf0..19b6480efac8ab083e629b5ededfa643
          ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, player);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d6be091a874f07b5d39631dfac1b1c776fadbe67..d761058ca4c98c207d91d2a4f394ec06913cf1c3 100644
+index dbd6f3e787ae574e7a2f194a5252804e90372627..6f199030bc6e463923b9733f927824051e4e9449 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1,6 +1,8 @@
@@ -300,7 +300,7 @@ index d6be091a874f07b5d39631dfac1b1c776fadbe67..d761058ca4c98c207d91d2a4f394ec06
  import com.google.common.base.Preconditions;
  import com.google.common.collect.ImmutableSet;
  import com.google.common.io.BaseEncoding;
-@@ -1836,6 +1838,81 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1886,6 +1888,81 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          return !this.hiddenEntities.containsKey(entity.getUniqueId());
      }
  

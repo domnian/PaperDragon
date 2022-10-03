@@ -33,10 +33,10 @@ index d5c6381045b5c9a54b37c18c3a0c3f38374a402a..13e53765916b1c18bd5540663c907ab0
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java b/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9c85a4c9d
+index 0000000000000000000000000000000000000000..49affc0a86cb082b7dae39b5ef710407680e669e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,57 @@
 +package com.domnian.paperdragon.api;
 +
 +import net.minecraft.server.MinecraftServer;
@@ -76,8 +76,7 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +
 +    public static void reload() {
 +        for (ServerLevel level : MinecraftServer.getServer().getAllLevels()) {
-+            clearTasks(level.getChunkSource().chunkMap.updatingChunks.getVisibleMap().values());
-+            clearTasks(level.getChunkSource().chunkMap.updatingChunks.getUpdatingMap().values());
++            clearTasks(level.chunkTaskScheduler.chunkHolderManager.getOldChunkHolders());
 +        }
 +    }
 +
@@ -87,7 +86,7 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +            if (chunk == null) {
 +                continue;
 +            }
-+            for (Entity entity : chunk.entities) {
++            for (Entity entity : chunk.getChunkHolder().getEntityChunk().getEntityList()) {
 +                entity.entityTasks.clear();
 +            }
 +        }
@@ -95,8 +94,21 @@ index 0000000000000000000000000000000000000000..92aaa9ae584ba2f99c5cf924a3e6b0a9
 +
 +    public static class TaskList extends ArrayList<EntityTask<?>> {}
 +}
+diff --git a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
+index f597d65d56964297eeeed6c7e77703764178fee0..e3905293ebfbbc993f82aea8ce3aab4407fc5a87 100644
+--- a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
++++ b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
+@@ -35,7 +35,7 @@ public final class ChunkEntitySlices {
+     protected final EntityCollectionBySection allEntities;
+     protected final EntityCollectionBySection hardCollidingEntities;
+     protected final Reference2ObjectOpenHashMap<Class<? extends Entity>, EntityCollectionBySection> entitiesByClass;
+-    protected final EntityList entities = new EntityList();
++    protected final EntityList entities = new EntityList(); public EntityList getEntityList() { return entities; } // PaperDragon
+ 
+     public ChunkHolder.FullChunkStatus status;
+ 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 96bb0e56f12437037b598cd7baabf369e5994517..a96aa5e12cbbc0466b590f28a787fd1fc8c88dde 100644
+index b396e9b35f315db37ba070ad4baeec1f098d0cb8..664721c8581df1d81e051f9da3775d5c95883d75 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -106,7 +118,7 @@ index 96bb0e56f12437037b598cd7baabf369e5994517..a96aa5e12cbbc0466b590f28a787fd1f
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1152,6 +1153,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1181,6 +1182,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
@@ -114,7 +126,7 @@ index 96bb0e56f12437037b598cd7baabf369e5994517..a96aa5e12cbbc0466b590f28a787fd1f
          this.getProfiler().push(() -> {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1190,6 +1192,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1219,6 +1221,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -123,7 +135,7 @@ index 96bb0e56f12437037b598cd7baabf369e5994517..a96aa5e12cbbc0466b590f28a787fd1f
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 1fe629b336fbe84a660f61d141b964b020893ef8..0de2868e6afed4f0fb00460d469703c6a7400c42 100644
+index 9dc32939f61b4bce1395db57404d45e3745eefca..a1ea62bfa8253c4844b1feb91f7f9d19a46131e5 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -142,7 +154,7 @@ index 1fe629b336fbe84a660f61d141b964b020893ef8..0de2868e6afed4f0fb00460d469703c6
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index be1d9b97afb5d77b74cc3cd4a0ea033ae5bdd0fe..d911854e31524c259bce2da930d38e917db36c1b 100644
+index 9f9213b66c2e3f7a48c37c75137829660a1ec1f5..39a1c07f309654ca58722c3b0445941b19bce3fa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -152,7 +164,7 @@ index be1d9b97afb5d77b74cc3cd4a0ea033ae5bdd0fe..d911854e31524c259bce2da930d38e91
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
-@@ -1020,7 +1021,10 @@ public final class CraftServer implements Server {
+@@ -1025,7 +1026,10 @@ public final class CraftServer implements Server {
              ));
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }

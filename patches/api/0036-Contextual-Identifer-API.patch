@@ -60,7 +60,7 @@ index 0000000000000000000000000000000000000000..7a19c0f7bab0245ec4835e533c86d572
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 6edbf75784e72a1512b169ce6fe616e136450454..2d13637877e6cd4b086744a0f6642894c7669bf1 100644
+index f0e0c12c4d0f9eb345c39bb33d794e5f67a73975..25a83d79c1d13037e5678aca1b4469f735980cf6 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -3,6 +3,7 @@ package org.bukkit;
