@@ -1,0 +1,75 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 2 Oct 2022 00:30:38 -0400
+Subject: [PATCH] Add Allay Change Item Event
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/AllayChangeItemEvent.java b/src/main/java/com/domnian/paperdragon/events/AllayChangeItemEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..338a03398683b3a4cabe163b4d96dfea1371cc60
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/AllayChangeItemEvent.java
+@@ -0,0 +1,63 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.entity.Allay;
++import org.bukkit.entity.Player;
++import org.bukkit.event.HandlerList;
++import org.bukkit.event.entity.EntityEvent;
++import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++public class AllayChangeItemEvent extends EntityEvent {
++
++    private static final HandlerList handlers = new HandlerList();
++
++    private boolean cancelled = false;
++
++    private final Player player;
++
++    private ItemStack item;
++
++    private Action action;
++
++    public AllayChangeItemEvent(@NotNull Allay allay, @Nullable Player player, @NotNull Action action, @NotNull ItemStack item) {
++        super(allay);
++        this.player = player;
++        this.item = item;
++        this.action = action;
++    }
++
++    @Nullable
++    public Player getPlayer() {
++        return player;
++    }
++
++    @NotNull
++    public ItemStack getItem() {
++        return item;
++    }
++
++    public void setItem(@NotNull ItemStack item) {
++        this.item = item;
++    }
++
++    public Action getAction() {
++        return action;
++    }
++
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++
++    public enum Action {
++        GIVE,
++        TAKE
++    }
++
++}
