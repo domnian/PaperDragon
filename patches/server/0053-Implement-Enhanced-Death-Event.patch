@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Enhanced Death Event
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 3a4542bfbf7826894af6f98be1cc59f3472bde35..8cde20d9973a8b964e2f0b5b823813cef3b45aab 100644
+index 3a4542bfbf7826894af6f98be1cc59f3472bde35..0de0e2392ef9131c1e516956da72ef2f21f172d4 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -39,6 +39,7 @@ import net.minecraft.network.chat.MessageSignature;
@@ -22,7 +22,7 @@ index 3a4542bfbf7826894af6f98be1cc59f3472bde35..8cde20d9973a8b964e2f0b5b823813ce
          this.keepLevel = keepInventory; // SPIGOT-2222: pre-set keepLevel
 -        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory); // Paper - Adventure
 +        // PaperDragon start - Enhanced Player Death Event
-+        String deathKey = (defaultMessage instanceof TranslatableContents) ? ((TranslatableContents) defaultMessage).getKey() : "death.attack.generic";
++        String deathKey = (defaultMessage.getContents() instanceof TranslatableContents) ? ((TranslatableContents) defaultMessage.getContents()).getKey() : "death.attack.generic";
 +        org.bukkit.event.entity.PlayerDeathEvent event = CraftEventFactory.callPlayerDeathEvent(this, loot, PaperAdventure.asAdventure(defaultMessage), defaultMessage.getString(), keepInventory, deathKey); // Paper - Adventure
 +        // PaperDragon end
          // Paper start - cancellable death event
