@@ -56,12 +56,12 @@ index 68b4248a26dd24577ab3a5e47ba87f13d8c1652f..7e540f0d27107380e38cd84988866533
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
-index 2866385a64b22b7dc82b6122c62bcea6b0908a60..b886a016b14f285aa76d6f8b0c5a1a4928296568 100644
+index 70f1916185b79bbb9f033f4ef8119d7b17a13ef8..f2f67bbcddb0b85a3f8bfc41b283510bf4fe21b7 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/MinecartHopper.java
 @@ -22,6 +22,7 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper
      private boolean enabled = true;
-     private int cooldownTime = -1;
+     public int cooldownTime = -1;
      private final BlockPos lastPosition = BlockPos.ZERO;
 +    public int pickupImmunity = 0; // PaperDragon
  

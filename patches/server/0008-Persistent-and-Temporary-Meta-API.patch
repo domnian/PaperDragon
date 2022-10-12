@@ -782,7 +782,7 @@ index 76b6437a1d807c7e1b673f8feeed1f171ee9a803..07f4295723929bd6a901e423f2a9151b
              blockEntity.sanitizeSentNbt(compoundTag); // Paper - Sanitize sent data
              return new ClientboundLevelChunkPacketData.BlockEntityInfo(i, blockPos.getY(), blockEntity.getType(), compoundTag.isEmpty() ? null : compoundTag);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 008bd65d838819431a0823c6ac5925774bd155a1..9dc32939f61b4bce1395db57404d45e3745eefca 100644
+index a1421689445b9df3f25889845c21cf37a439afe2..d9e3bfc327807ce838bd677ac9fe7f85bd1bf40a 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,8 @@
@@ -794,7 +794,7 @@ index 008bd65d838819431a0823c6ac5925774bd155a1..9dc32939f61b4bce1395db57404d45e3
  import com.google.common.collect.ImmutableList;
  import com.google.common.collect.ImmutableList.Builder;
  import com.google.common.collect.Iterables;
-@@ -157,6 +160,10 @@ import org.bukkit.plugin.PluginManager;
+@@ -156,6 +159,10 @@ import org.bukkit.plugin.PluginManager;
  
  public abstract class Entity implements Nameable, EntityAccess, CommandSource {
  
@@ -805,7 +805,7 @@ index 008bd65d838819431a0823c6ac5925774bd155a1..9dc32939f61b4bce1395db57404d45e3
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
      public boolean preserveMotion = true; // Paper - keep initial motion on first setPositionRotation
-@@ -2140,6 +2147,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2139,6 +2146,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
  
              // CraftBukkit start - Checking for NaN pitch/yaw and resetting to zero
              // TODO: make sure this is the best way to address this.
@@ -813,7 +813,7 @@ index 008bd65d838819431a0823c6ac5925774bd155a1..9dc32939f61b4bce1395db57404d45e3
              if (Float.isNaN(this.yRot)) {
                  this.yRot = 0;
              }
-@@ -2396,6 +2404,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2395,6 +2403,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
              }
              // CraftBukkit end
  
@@ -1122,7 +1122,7 @@ index a8ab1d3ee81664193be39d2735d6495136e0e310..8e1776b33b5f76c21f8efbfae0de8d90
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index d4ea7d19ae16a8ccafcfe5300bb380b28fd42b75..229fa86686522a524b96085d448119d5adf35a5d 100644
+index 9368ec01e498f913bc5b7b3e77fe87659090d9b5..f17de9f0c145ee65224f3a09aa1e7652f3a820d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -1,5 +1,7 @@
@@ -1152,10 +1152,10 @@ index d4ea7d19ae16a8ccafcfe5300bb380b28fd42b75..229fa86686522a524b96085d448119d5
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 03d389f3458cd77166a0319fa38c7207e8714e6f..555f5d3bee3d02288f0bab881bf62c9f9c771964 100644
+index 03b3f29bde2bf6cb4e7b08a775bcc380a9404543..58a5013344b62c2dc959084278df4e22ac46d08b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1532,6 +1532,11 @@ public class CraftEventFactory {
+@@ -1533,6 +1533,11 @@ public class CraftEventFactory {
          InventoryCloseEvent event = new InventoryCloseEvent(human.containerMenu.getBukkitView(), reason); // Paper
          human.level.getCraftServer().getPluginManager().callEvent(event);
          human.containerMenu.transferTo(human.inventoryMenu, human.getBukkitEntity());

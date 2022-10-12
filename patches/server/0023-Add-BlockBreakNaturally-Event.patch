@@ -6,7 +6,7 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index a90939e4e3e55718662572e0e0ec0328880a4fc9..4bb19412a2457390c9acc2dbcf9add08d00a9a5c 100644
+index 61caa7c1c9d5c4d46ae6b8bb6945cc74d663849a..2670ad7b75020da1e4886140938d6b5a7f59784d 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1473,6 +1473,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -74,10 +74,10 @@ index 2e65b44f10aeb44fd524a58e7eb815a566c1ad61..0806696dadd7258ecb266a535ce4b86d
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 978d7ad142d5b22ede0c993f7b413cdedfe4d6cd..3377393e502c94e0875af6fc2237cc093125ec2b 100644
+index 83825eb7961162f244b4b518ea4a727d1c96b850..4df35ac57e993a18309c3d643622636f7ec38c7b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -406,6 +406,16 @@ public class CraftEventFactory {
+@@ -409,6 +409,16 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {

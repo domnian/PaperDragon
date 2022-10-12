@@ -108,7 +108,7 @@ index f597d65d56964297eeeed6c7e77703764178fee0..e3905293ebfbbc993f82aea8ce3aab44
      public ChunkHolder.FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index b396e9b35f315db37ba070ad4baeec1f098d0cb8..664721c8581df1d81e051f9da3775d5c95883d75 100644
+index f1a27e0ea0569438032ff6c5a777a35be4e501ef..2b8675d83924a40bef774102a44b79d9f13fcd72 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -135,7 +135,7 @@ index b396e9b35f315db37ba070ad4baeec1f098d0cb8..664721c8581df1d81e051f9da3775d5c
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 9dc32939f61b4bce1395db57404d45e3745eefca..a1ea62bfa8253c4844b1feb91f7f9d19a46131e5 100644
+index d9e3bfc327807ce838bd677ac9fe7f85bd1bf40a..a5668902b8658b91b4f49939f200aa23bf04c919 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -145,7 +145,7 @@ index 9dc32939f61b4bce1395db57404d45e3745eefca..a1ea62bfa8253c4844b1feb91f7f9d19
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
  import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
-@@ -163,6 +164,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -162,6 +163,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // PaperDragon start
      public final PersistentMetaMap metaMap = new PersistentMetaMap();
      public final TempMetaMap tempMeta = new TempMetaMap();

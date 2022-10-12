@@ -27,7 +27,7 @@ index 6a0a1731fd6804eb69d3641213712d31bce085b2..60892c1db2696f7262190a782a7eceb3
  
      public Raid(ServerLevel world, CompoundTag nbt) {
 diff --git a/src/main/java/net/minecraft/world/entity/raid/Raids.java b/src/main/java/net/minecraft/world/entity/raid/Raids.java
-index fa8fcdfea51a35e4a482d3d7b18159099da62706..2cf495c7b05a381a7eefa6c74023815afbafe57f 100644
+index feb89eb69994bdd1d2f95d2b9992e69251b2bee7..e2899d213d0cbc23bfe48035d3359fbe3d89dbeb 100644
 --- a/src/main/java/net/minecraft/world/entity/raid/Raids.java
 +++ b/src/main/java/net/minecraft/world/entity/raid/Raids.java
 @@ -135,6 +135,7 @@ public class Raids extends SavedData {
@@ -57,10 +57,10 @@ index 7a5bfc724e42100b7582836ab8c30feed1a3d221..b29620edac4e9a7a57fe5d8c75e6b78a
      public float getTotalHealth() {
          return this.handle.getHealthOfLivingRaiders();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index aaca0ab18d38c9d492a6be3102076559aab37aa4..7a8b376c49a61db195255764e2a1b1fae7fec31a 100644
+index 8bb1a57772a212f5ed414b108810dba4ceed378d..811610a7fbad294f85af9a626833d45ff5713604 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1838,7 +1838,7 @@ public class CraftEventFactory {
+@@ -1839,7 +1839,7 @@ public class CraftEventFactory {
       * Raid events
       */
      public static boolean callRaidTriggerEvent(Raid raid, ServerPlayer player) {
