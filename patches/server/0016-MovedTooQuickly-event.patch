@@ -6,7 +6,7 @@ Subject: [PATCH] MovedTooQuickly event
 also make creative immune to this event
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 325def3149693f64b2b21e0e655b5b3e888fd9a0..a84d5dc22222f8a9dc5392e2dd3f679f4aa7ecbf 100644
+index 63c9040ed2349eec500ba6e9090440347c514a3b..a73755c6160bbd6f07537e5bfc0b4c0980c88880 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -1479,9 +1479,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic

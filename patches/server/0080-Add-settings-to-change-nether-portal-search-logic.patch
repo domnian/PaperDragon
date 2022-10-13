@@ -25,7 +25,7 @@ index 5cf516af8b6275c3c0d89ccc863e48a4b1c95043..eba8cdd2407db2d0979fcd80608434d6
      private void hoppers() {
          disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
 diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
-index 386a73f32f2504af81107852307dcd393d4d8a11..995787bf85378ed3b6810877131152291d1b7548 100644
+index b7cb9fbb15c83cd4225a241e44132279d9308f96..6e86fa5e6d47e2f992a8796bb523116efea233da 100644
 --- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 +++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
 @@ -53,6 +53,26 @@ public class PortalForcer {

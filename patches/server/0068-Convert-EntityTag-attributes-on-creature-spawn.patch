@@ -5,7 +5,7 @@ Subject: [PATCH] Convert EntityTag attributes on creature spawn
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 9a99a4aa3144176a65e2a521deeb3e2bab2aca6f..e62b56a1bb2e9ff6178b18b718833a6a108c258c 100644
+index 5c3d8afbcc8232269ca4c2cfad9f7b6a6bcdaf4e..f9665a4db0066e8e088931d9bf81d5f42e2cdf5a 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -378,6 +378,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {

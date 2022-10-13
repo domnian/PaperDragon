@@ -1689,7 +1689,7 @@ index 9e71e519cda72a1e2a01474f238b97015ec5115e..eaf93384b36040b83d28fc62b02fe314
      // Paper start
      /**
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
-index 5be829058c41283a5d3d14776617c98c4cdaaf8e..0b8765f9c5f735b3457237dab4b04e8febcf3dd4 100644
+index 37ca7b6b0fcee8bec12026ec3715dcc47400cc11..b6d92ca8ab08b555ae99841abf3a133aa96537d6 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
 +++ b/src/main/java/org/bukkit/block/BlockState.java
 @@ -225,7 +225,7 @@ public interface BlockState extends Metadatable {
@@ -1702,7 +1702,7 @@ index 5be829058c41283a5d3d14776617c98c4cdaaf8e..0b8765f9c5f735b3457237dab4b04e8f
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 6dd81f07ef4d6993187987d3352a01771ffb715e..346e1ff632f3f0226fd228013f2a5cab3d1b8da6 100644
+index 33a6b7a27dc91552799c07a7aad9b3df31ad13f7..7214f46f4d152a9fa5ce47bfb8d2c9fa040924d8 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;

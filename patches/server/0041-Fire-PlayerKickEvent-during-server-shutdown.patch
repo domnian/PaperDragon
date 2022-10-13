@@ -5,7 +5,7 @@ Subject: [PATCH] Fire PlayerKickEvent during server shutdown
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a84d5dc22222f8a9dc5392e2dd3f679f4aa7ecbf..8d2ccb37a197a9222f5bbd36ae93b21b3a844a9f 100644
+index a73755c6160bbd6f07537e5bfc0b4c0980c88880..ee6cf9d52a242692ca4acbcd913ed6597560f6e5 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -514,11 +514,11 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic

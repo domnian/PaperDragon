@@ -288,7 +288,7 @@ index ed6fdf4fb31d818fb9912fb79b1b035f5f627175..9759e234ac1055d36255569b4cab29d2
          ClientboundPlayerInfoPacket packet = new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, player);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index dbd6f3e787ae574e7a2f194a5252804e90372627..6f199030bc6e463923b9733f927824051e4e9449 100644
+index 0d4fe741dc301d77db40c12b61f767b2204c7dcb..b9b8e41e190dbe891321b18f9103da7a71873f38 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1,6 +1,8 @@

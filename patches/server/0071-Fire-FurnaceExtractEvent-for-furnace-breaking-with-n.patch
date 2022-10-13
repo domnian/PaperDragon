@@ -7,7 +7,7 @@ Subject: [PATCH] Fire FurnaceExtractEvent for furnace breaking with null
 temp
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index 4977f3fad3bfc12fd4c5f9fbe8beea2895247c57..481312156924201f394a4a6092d9609158262c2b 100644
+index c6aeda6497cb59673b469588142f5f15a338389d..0ddd81ba51dd08c37470f48dfbca96838b3f8a80 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 @@ -638,14 +638,14 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
