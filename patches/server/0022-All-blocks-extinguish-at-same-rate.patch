@@ -7,7 +7,7 @@ Previously "Flammable" blocks would burn for ages, this makes them burn out the 
 This is so that blocks that have ignite/burn events cancelled will actually burn out.
 
 diff --git a/src/main/java/net/minecraft/world/level/block/FireBlock.java b/src/main/java/net/minecraft/world/level/block/FireBlock.java
-index e34b8cff424ad58eee65a65fa510fa9908dbdf39..4857bb935f0be49e37e2d22cdbff389f75907707 100644
+index 2a0ab0568e93d610d75bf32d19eee56688bbaf97..574bda6d4b66a55bd7548a36e67618a4b27f03ad 100644
 --- a/src/main/java/net/minecraft/world/level/block/FireBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/FireBlock.java
 @@ -195,7 +195,7 @@ public class FireBlock extends BaseFireBlock {

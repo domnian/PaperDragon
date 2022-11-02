@@ -429,10 +429,10 @@ index 0000000000000000000000000000000000000000..79fdc8a2ed1cda124f5ac31633a56f36
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 2b8675d83924a40bef774102a44b79d9f13fcd72..8bc506078699b44319be057aea91afb270fe114f 100644
+index 68f7776c3e2df2aa7ac3346836e2d0e5096d6497..b05478e1c50d857e40bdc78b64bc48b234acc391 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1187,7 +1187,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1189,7 +1189,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
          gameprofilerfiller.incrementCounter("tickNonPassenger");
@@ -441,7 +441,7 @@ index 2b8675d83924a40bef774102a44b79d9f13fcd72..8bc506078699b44319be057aea91afb2
              TimingHistory.activatedEntityTicks++;
          entity.tick();
          entity.postTick(); // CraftBukkit
-@@ -2588,6 +2588,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2590,6 +2590,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  entity.setOrigin(entity.getOriginVector().toLocation(getWorld()));
              }
              // Paper end
@@ -450,7 +450,7 @@ index 2b8675d83924a40bef774102a44b79d9f13fcd72..8bc506078699b44319be057aea91afb2
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a5668902b8658b91b4f49939f200aa23bf04c919..4e5c0bf7fc1e0aaf45c39f57fe70de1700cb8e14 100644
+index 8e7f719f005c0e69056871ab32a95e25719624aa..5d12a60f8ebedfe177e0c5dedec6d7cb289c8418 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -337,6 +337,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -552,7 +552,7 @@ index a5668902b8658b91b4f49939f200aa23bf04c919..4e5c0bf7fc1e0aaf45c39f57fe70de17
          if (this.isInvulnerableTo(source)) {
              return false;
          } else {
-@@ -3301,7 +3312,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3305,7 +3316,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean isInvulnerableTo(DamageSource damageSource) {

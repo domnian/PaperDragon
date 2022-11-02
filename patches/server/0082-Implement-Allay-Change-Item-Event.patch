@@ -5,7 +5,7 @@ Subject: [PATCH] Implement Allay Change Item Event
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
-index 2d87b740e84435ef9bd3eee3d3e2af9f707a0826..abf6df94c1d453c907d4dba3663e9eaf39d73ad7 100644
+index 1dcd0c494681b7665b6b86dbe20375afd8d2fad8..008de38c05a6de084f0b37ba24f16d4b6ab92ee4 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
 @@ -68,6 +68,7 @@ import net.minecraft.world.level.gameevent.PositionSource;

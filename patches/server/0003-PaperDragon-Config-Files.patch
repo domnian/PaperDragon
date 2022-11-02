@@ -259,7 +259,7 @@ index 0000000000000000000000000000000000000000..69140c81740ba017888828ba163a4fbc
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 2932d2bb797a49e904cebec4285d24d69b429cd9..94d677159229f5d12cd43c2847f3248fc50941f1 100644
+index ff3eced0e20c39b825586897ee2fed01dd471d88..d4fef223add74850b9f5880915a5f23492eb510d 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -226,6 +226,10 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -274,7 +274,7 @@ index 2932d2bb797a49e904cebec4285d24d69b429cd9..94d677159229f5d12cd43c2847f3248f
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index d89471935b2b5888cb5d1f6829ae479003451fda..c8c9fedd740ccfdbc873848bb2e1b7ba66cd524b 100644
+index 596fb8ee21ba8450db13a11890d241ef3974d81d..0c46234ac6e2e33f458b9c7467cb626e043e3e43 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -175,6 +175,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -294,7 +294,7 @@ index d89471935b2b5888cb5d1f6829ae479003451fda..c8c9fedd740ccfdbc873848bb2e1b7ba
          this.world = new CraftWorld((ServerLevel) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 91103f60b56b097026fda2993bcc58452151dc2b..62af7da3f2be5d9adff9faa22ce80a616f44f399 100644
+index cd6795f86f195ea45bb0b98e0bfc69bdeaa58eda..3356160ea43fc6e1a895869d9d6402bf6c345c70 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -966,6 +966,7 @@ public final class CraftServer implements Server {

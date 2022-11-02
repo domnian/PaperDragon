@@ -6,10 +6,10 @@ Subject: [PATCH] Add BlockBreakNaturally Event
 To give reliable control over all blocks dropping to world to restore custom item meta
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 61caa7c1c9d5c4d46ae6b8bb6945cc74d663849a..2670ad7b75020da1e4886140938d6b5a7f59784d 100644
+index 52ee75e8d7471b8c1ce8435819972c0e5382203a..1b288a5affb34ceda2033d2a580d4ffaa136c36a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1473,6 +1473,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1475,6 +1475,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              if (entity instanceof net.minecraft.world.entity.item.ItemEntity itemEntity && itemEntity.getItem().isEmpty()) return false; // Paper - Prevent empty items from being added
              // Paper start - capture all item additions to the world
              if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
@@ -30,17 +30,17 @@ index 50911c916f5476d2b152b4010a5e7f09a4ee8010..68b4248a26dd24577ab3a5e47ba87f13
      public int health;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 2e65b44f10aeb44fd524a58e7eb815a566c1ad61..0806696dadd7258ecb266a535ce4b86dfa119183 100644
+index 2e65b44f10aeb44fd524a58e7eb815a566c1ad61..dade6e0da4c465e130967d8a83272bb4b9470b82 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -21,6 +21,7 @@ import net.minecraft.core.NonNullList;
- import net.minecraft.core.Registry;
- import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.MutableComponent;
-+import net.minecraft.server.MCUtil; // PaperDragon
- import net.minecraft.server.level.ServerLevel;
- import net.minecraft.stats.Stats;
- import net.minecraft.tags.BlockTags;
+@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
+ import com.google.common.cache.LoadingCache;
+ import com.google.common.collect.ImmutableMap;
+ import com.mojang.logging.LogUtils;
++import io.papermc.paper.util.MCUtil;
+ import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
+ import java.util.Iterator;
+ import java.util.List;
 @@ -371,7 +372,7 @@ public class Block extends BlockBehaviour implements ItemLike {
  
          Block.popResource(world, () -> {
@@ -74,7 +74,7 @@ index 2e65b44f10aeb44fd524a58e7eb815a566c1ad61..0806696dadd7258ecb266a535ce4b86d
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 83825eb7961162f244b4b518ea4a727d1c96b850..4df35ac57e993a18309c3d643622636f7ec38c7b 100644
+index 83825eb7961162f244b4b518ea4a727d1c96b850..81820de1e46bcb91c54f836b78fabf5c545c4f7f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -409,6 +409,16 @@ public class CraftEventFactory {
@@ -85,7 +85,7 @@ index 83825eb7961162f244b4b518ea4a727d1c96b850..4df35ac57e993a18309c3d643622636f
 +            com.google.common.collect.Multimap<org.bukkit.Location, org.bukkit.entity.Item> drops = com.google.common.collect.ArrayListMultimap.create();
 +            for (Item item : list) {
 +                ItemEntity entityItem = (ItemEntity) ((CraftEntity) item).getHandle();
-+                drops.put(net.minecraft.server.MCUtil.toLocation(entityItem.level, entityItem.droppedPosition), (org.bukkit.entity.Item) entityItem.getBukkitEntity());
++                drops.put(io.papermc.paper.util.MCUtil.toLocation(entityItem.level, entityItem.droppedPosition), (org.bukkit.entity.Item) entityItem.getBukkitEntity());
 +            }
 +            for (org.bukkit.Location location : drops.keySet()) {
 +                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(location, drops.get(location)).callEvent();

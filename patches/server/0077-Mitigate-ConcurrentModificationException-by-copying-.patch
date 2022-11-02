@@ -6,7 +6,7 @@ Subject: [PATCH] Mitigate ConcurrentModificationException by copying
 
 
 diff --git a/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java b/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
-index e738f058af577150445ac4ef7a0bcbf98e3ba52e..a5a00e20165bbaffb042c8d921abca809b3bac40 100644
+index 8d2143dc2a4a20c585e84cfd3c218d8b5a95e165..e799de11774c282822366d8a36f82d82d3afaf94 100644
 --- a/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
 +++ b/src/main/java/net/minecraft/world/level/entity/PersistentEntitySectionManager.java
 @@ -197,23 +197,23 @@ public class PersistentEntitySectionManager<T extends EntityAccess> implements A

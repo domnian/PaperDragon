@@ -186,7 +186,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 0e3433d939b9ec7bd38ffcc52e31cc905c569c6a..71addc51041aebdb9a90b121c572708cd15796b8 100644
+index 9da394173cab91b73178c522c3277f92cabbe365..3cb874358eda33b05647df2493bb7b589de56097 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -2,9 +2,11 @@ package org.bukkit.entity;

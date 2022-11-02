@@ -5,21 +5,19 @@ Subject: [PATCH] ShulkerBox API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 4104b61ba2ed0d3e8338f5c44d3e8a6964bbdee9..9dc9fa54097892a806d2993fca06a426368de18c 100644
+index 14518330dbc856987c721b56dc00a5cc279b3c7f..2356e953c555151a70c4c4f09e83a07509fe48ac 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -23,8 +23,11 @@
- 
- package com.domnian.paperdragon.api;
- 
-+import com.destroystokyo.paper.MaterialTags;
+@@ -26,6 +26,9 @@ package com.domnian.paperdragon.api;
+ import io.papermc.paper.util.MCUtil;
  import net.minecraft.core.BlockPos;
  import net.minecraft.network.chat.Component;
++import com.destroystokyo.paper.MaterialTags;
 +import net.minecraft.nbt.CompoundTag;
 +import net.minecraft.nbt.ListTag;
- import net.minecraft.server.MCUtil;
  import net.minecraft.server.level.ServerLevel;
  import net.minecraft.world.item.ItemStack;
+ import net.minecraft.world.item.MapItem;
 @@ -33,8 +36,12 @@ import net.minecraft.world.level.saveddata.maps.MapDecoration;
  import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
  import org.bukkit.Location;

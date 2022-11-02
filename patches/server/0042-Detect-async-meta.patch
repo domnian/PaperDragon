@@ -5,7 +5,7 @@ Subject: [PATCH] Detect async meta
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
-index 0f57005e1603097d450c74a60ef2241f31f058dd..c1e2e3c3b455aaca64de569461f7d40f7862f24c 100644
+index 3274118ec25fd9f591faa2dbf48e8512802ab609..549404d54d761e616a11414c1a49c096201f8ec8 100644
 --- a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 @@ -461,12 +461,14 @@ public final class MetaApiAccessor {

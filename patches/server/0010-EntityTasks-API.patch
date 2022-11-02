@@ -108,7 +108,7 @@ index f597d65d56964297eeeed6c7e77703764178fee0..e3905293ebfbbc993f82aea8ce3aab44
      public ChunkHolder.FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index f1a27e0ea0569438032ff6c5a777a35be4e501ef..2b8675d83924a40bef774102a44b79d9f13fcd72 100644
+index 8b3e703ebb497b9166bd211b4247a78891b61aeb..68f7776c3e2df2aa7ac3346836e2d0e5096d6497 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -118,7 +118,7 @@ index f1a27e0ea0569438032ff6c5a777a35be4e501ef..2b8675d83924a40bef774102a44b79d9
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1181,6 +1182,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1183,6 +1184,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
@@ -126,7 +126,7 @@ index f1a27e0ea0569438032ff6c5a777a35be4e501ef..2b8675d83924a40bef774102a44b79d9
          this.getProfiler().push(() -> {
              return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1219,6 +1221,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1221,6 +1223,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -135,7 +135,7 @@ index f1a27e0ea0569438032ff6c5a777a35be4e501ef..2b8675d83924a40bef774102a44b79d9
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index d9e3bfc327807ce838bd677ac9fe7f85bd1bf40a..a5668902b8658b91b4f49939f200aa23bf04c919 100644
+index 19e266364d9922d312d74e505261fc49994ee5e9..8e7f719f005c0e69056871ab32a95e25719624aa 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -154,7 +154,7 @@ index d9e3bfc327807ce838bd677ac9fe7f85bd1bf40a..a5668902b8658b91b4f49939f200aa23
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9f9213b66c2e3f7a48c37c75137829660a1ec1f5..39a1c07f309654ca58722c3b0445941b19bce3fa 100644
+index 588f2688737c313ec55eb4567fe168f2139133d3..b8b5c9ee2eda6d0102581b15e32b2c4dac82c61a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@

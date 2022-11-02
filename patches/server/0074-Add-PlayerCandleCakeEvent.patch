@@ -5,14 +5,14 @@ Subject: [PATCH] Add PlayerCandleCakeEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/CakeBlock.java b/src/main/java/net/minecraft/world/level/block/CakeBlock.java
-index cf5926b768139478f3ec7a75f665baf3def22797..6cfa5a387e9fa42e48b72c4038a518692ff39136 100644
+index cf5926b768139478f3ec7a75f665baf3def22797..ef63943f5ab47c5fc9aa0aed2f5af74c14c46e2a 100644
 --- a/src/main/java/net/minecraft/world/level/block/CakeBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/CakeBlock.java
 @@ -55,6 +55,7 @@ public class CakeBlock extends Block {
              Block block = Block.byItem(item);
  
              if (block instanceof CandleBlock) {
-+                new com.domnian.paperdragon.events.PlayerCandleCakeEvent((org.bukkit.entity.Player) player.getBukkitEntity(), net.minecraft.server.MCUtil.toLocation(world, pos), itemstack.getBukkitStack()).callEvent(); // PaperDragon
++                new com.domnian.paperdragon.events.PlayerCandleCakeEvent((org.bukkit.entity.Player) player.getBukkitEntity(), io.papermc.paper.util.MCUtil.toLocation(world, pos), itemstack.getBukkitStack()).callEvent(); // PaperDragon
                  if (!player.isCreative()) {
                      itemstack.shrink(1);
                  }

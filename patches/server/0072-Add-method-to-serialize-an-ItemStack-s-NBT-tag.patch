@@ -5,11 +5,11 @@ Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index d004ceeda4d6aaf3f77c00434fd83a0fb2ac8cda..34aeefd97a75a40cc57ec021f49a8e58222eb804 100644
+index 59cc58ea3efb6941ee51006bea9b3cc9f309ed2c..c38b88ef39f1f539e462effde8931e90480552ee 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -25,12 +25,10 @@ package com.domnian.paperdragon.api;
- 
+@@ -26,9 +26,9 @@ package com.domnian.paperdragon.api;
+ import io.papermc.paper.util.MCUtil;
  import com.destroystokyo.paper.MaterialTags;
  import com.destroystokyo.paper.profile.ProfileProperty;
 -import com.google.gson.Gson;
@@ -18,12 +18,9 @@ index d004ceeda4d6aaf3f77c00434fd83a0fb2ac8cda..34aeefd97a75a40cc57ec021f49a8e58
  import net.minecraft.core.BlockPos;
 +import net.minecraft.nbt.*;
  import net.minecraft.network.chat.Component;
--import net.minecraft.nbt.CompoundTag;
--import net.minecraft.nbt.ListTag;
- import net.minecraft.server.MCUtil;
- import net.minecraft.server.level.ServerLevel;
- import net.minecraft.world.item.ItemStack;
-@@ -130,4 +128,82 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+ import net.minecraft.nbt.CompoundTag;
+ import net.minecraft.nbt.ListTag;
+@@ -130,4 +130,82 @@ public class CraftDAPI_Misc implements DAPI_Misc {
          return skinUrl.substring(38);
      }
  

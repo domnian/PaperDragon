@@ -5,19 +5,23 @@ Subject: [PATCH] Implement method to get player skin hash
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index 9dc9fa54097892a806d2993fca06a426368de18c..d004ceeda4d6aaf3f77c00434fd83a0fb2ac8cda 100644
+index 2356e953c555151a70c4c4f09e83a07509fe48ac..59cc58ea3efb6941ee51006bea9b3cc9f309ed2c 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-@@ -24,6 +24,9 @@
+@@ -24,9 +24,12 @@
  package com.domnian.paperdragon.api;
  
- import com.destroystokyo.paper.MaterialTags;
+ import io.papermc.paper.util.MCUtil;
++import com.destroystokyo.paper.MaterialTags;
 +import com.destroystokyo.paper.profile.ProfileProperty;
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
  import net.minecraft.core.BlockPos;
  import net.minecraft.network.chat.Component;
+-import com.destroystokyo.paper.MaterialTags;
  import net.minecraft.nbt.CompoundTag;
+ import net.minecraft.nbt.ListTag;
+ import net.minecraft.server.level.ServerLevel;
 @@ -37,10 +40,14 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
  import org.bukkit.Location;
  import org.bukkit.craftbukkit.inventory.CraftItemStack;

@@ -5,16 +5,16 @@ Subject: [PATCH] Villager Treasure Map Events / Changes
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
-index ab3428a68e496af2a453af85d7ecce9ee2423022..4104b61ba2ed0d3e8338f5c44d3e8a6964bbdee9 100644
+index ab3428a68e496af2a453af85d7ecce9ee2423022..14518330dbc856987c721b56dc00a5cc279b3c7f 100644
 --- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
 @@ -23,5 +23,34 @@
  
  package com.domnian.paperdragon.api;
  
++import io.papermc.paper.util.MCUtil;
 +import net.minecraft.core.BlockPos;
 +import net.minecraft.network.chat.Component;
-+import net.minecraft.server.MCUtil;
 +import net.minecraft.server.level.ServerLevel;
 +import net.minecraft.world.item.ItemStack;
 +import net.minecraft.world.item.MapItem;

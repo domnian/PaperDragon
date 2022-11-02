@@ -5,15 +5,15 @@ Subject: [PATCH] Add the BlockHarvestBeehiveEvent
 
 
 diff --git a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-index 3d2b5f040715a0e4fac0e6786bd11a4d715330ce..fcafaaf024bb6541fcf66fc6c3c0bbf9fab8c656 100644
+index 9d601bf258a6d209a889afa7ba7f839c01f83cd8..c75cefd418fbb7e38386b24b8d1945ffd033ac16 100644
 --- a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
 +++ b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
-@@ -1062,6 +1062,11 @@ public interface DispenseItemBehavior {
+@@ -1063,6 +1063,11 @@ public interface DispenseItemBehavior {
                  if (iblockdata.is(BlockTags.BEEHIVES, (blockbase_blockdata) -> {
                      return blockbase_blockdata.hasProperty(BeehiveBlock.HONEY_LEVEL) && blockbase_blockdata.getBlock() instanceof BeehiveBlock;
                  }) && (Integer) iblockdata.getValue(BeehiveBlock.HONEY_LEVEL) >= 5) {
 +                    // PaperDragon start
-+                    if (!(new com.domnian.paperdragon.events.BlockHarvestBeehiveEvent(bukkitBlock, net.minecraft.server.MCUtil.toBukkitBlock(worldserver, blockposition), craftItem).callEvent())) {
++                    if (!(new com.domnian.paperdragon.events.BlockHarvestBeehiveEvent(bukkitBlock, io.papermc.paper.util.MCUtil.toBukkitBlock(worldserver, blockposition), craftItem).callEvent())) {
 +                        return stack;
 +                    }
 +                    // PaperDragon end

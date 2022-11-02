@@ -5,7 +5,7 @@ Subject: [PATCH] Implement VegetationPatchPlaceEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
-index 283f444839fa893ad7b9b0ac5cc4eb63cf5f4165..2607c386bead077e35eeb1cca7f6c5b8a713a99a 100644
+index 283f444839fa893ad7b9b0ac5cc4eb63cf5f4165..907d9a22bbde2e5493b41df0788af418c8c74801 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/VegetationPatchFeature.java
 @@ -67,6 +67,15 @@ public class VegetationPatchFeature extends Feature<VegetationPatchConfiguration
@@ -14,8 +14,8 @@ index 283f444839fa893ad7b9b0ac5cc4eb63cf5f4165..2607c386bead077e35eeb1cca7f6c5b8
                          BlockPos blockPos = mutableBlockPos2.immutable();
 +                        // PaperDragon start
 +                        if (org.bukkit.Bukkit.isPrimaryThread()) {
-+                            org.bukkit.block.Block origin = net.minecraft.server.MCUtil.toBukkitBlock(world.getLevel(), pos);
-+                            org.bukkit.block.Block place = net.minecraft.server.MCUtil.toBukkitBlock(world.getLevel(), blockPos);
++                            org.bukkit.block.Block origin = io.papermc.paper.util.MCUtil.toBukkitBlock(world.getLevel(), pos);
++                            org.bukkit.block.Block place = io.papermc.paper.util.MCUtil.toBukkitBlock(world.getLevel(), blockPos);
 +                            if (!(new com.domnian.paperdragon.events.VegetationPatchPlaceEvent(place, origin).callEvent())) {
 +                                continue;
 +                            }
@@ -30,8 +30,8 @@ index 283f444839fa893ad7b9b0ac5cc4eb63cf5f4165..2607c386bead077e35eeb1cca7f6c5b8
              if (config.vegetationChance > 0.0F && randomSource.nextFloat() < config.vegetationChance) {
 +                // PaperDragon start
 +                if (org.bukkit.Bukkit.isPrimaryThread()) {
-+                    org.bukkit.block.Block origin = net.minecraft.server.MCUtil.toBukkitBlock(context.level().getLevel(), context.origin());
-+                    org.bukkit.block.Block place = net.minecraft.server.MCUtil.toBukkitBlock(context.level().getLevel(), blockPos);
++                    org.bukkit.block.Block origin = io.papermc.paper.util.MCUtil.toBukkitBlock(context.level().getLevel(), context.origin());
++                    org.bukkit.block.Block place = io.papermc.paper.util.MCUtil.toBukkitBlock(context.level().getLevel(), blockPos);
 +                    if (!(new com.domnian.paperdragon.events.VegetationPatchPlaceEvent(place, origin).callEvent())) {
 +                        continue;
 +                    }

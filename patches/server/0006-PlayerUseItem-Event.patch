@@ -6,7 +6,7 @@ Subject: [PATCH] PlayerUseItem Event
 This lets us control when an item is consumed and change the item.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
-index 0a5f8d990cce5df339fd9b2b0fcb291a20ddad41..0c899b988943c4f7e1671555b87f34868c176982 100644
+index 0a5f8d990cce5df339fd9b2b0fcb291a20ddad41..480677c3c8a561679a8753556c593b0716c52490 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -3,6 +3,8 @@ package net.minecraft.server.level;
@@ -14,7 +14,7 @@ index 0a5f8d990cce5df339fd9b2b0fcb291a20ddad41..0c899b988943c4f7e1671555b87f3486
  import java.util.Objects;
  import javax.annotation.Nullable;
 +
-+import net.minecraft.server.MCUtil;
++import io.papermc.paper.util.MCUtil; // PaperDragon
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.InteractionResult;
  import net.minecraft.world.InteractionResultHolder;

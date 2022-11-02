@@ -5,10 +5,10 @@ Subject: [PATCH] Rebrand to PaperDragon
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 44e0f265432487fe5c3c00c5245041298ade16a0..959c65e879098c7f5621b05d983bf890db63f2ca 100644
+index b0e4f11e8af4b909a56bb5576d05ef0537fb25f7..f605f064f88d5e9ddebe1baa5544987181b10438 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -9,8 +9,12 @@ plugins {
+@@ -7,8 +7,12 @@ plugins {
  }
  
  dependencies {
@@ -23,7 +23,7 @@ index 44e0f265432487fe5c3c00c5245041298ade16a0..959c65e879098c7f5621b05d983bf890
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -44,6 +48,12 @@ dependencies {
+@@ -42,6 +46,12 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.7.3")
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
  
@@ -36,7 +36,7 @@ index 44e0f265432487fe5c3c00c5245041298ade16a0..959c65e879098c7f5621b05d983bf890
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
-@@ -64,7 +74,7 @@ tasks.jar {
+@@ -62,7 +72,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -45,7 +45,7 @@ index 44e0f265432487fe5c3c00c5245041298ade16a0..959c65e879098c7f5621b05d983bf890
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
-@@ -163,7 +173,7 @@ fun TaskContainer.registerRunTask(
+@@ -134,7 +144,7 @@ fun TaskContainer.registerRunTask(
      name: String,
      block: JavaExec.() -> Unit
  ): TaskProvider<JavaExec> = register<JavaExec>(name) {
@@ -90,7 +90,7 @@ index c5d5648f4ca603ef2b1df723b58f9caf4dd3c722..e85ed0fb43eff15f4c5b4407cfa32cdc
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..50da51903d1e5ff5cf6ed3b0c1cdb1ef3278a9c3 100644
+index 6dc6c3bccb4ba34268a87b0754c87eb1e0df4135..dc3d420e03d681927e8cddcfa3333432c11e2c2d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -103,7 +103,7 @@ index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..50da51903d1e5ff5cf6ed3b0c1cdb1ef
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 111f8276f26350a5c62a7b8577b4598978b5355d..91103f60b56b097026fda2993bcc58452151dc2b 100644
+index 4212568bf8de6988c71f43d3e2152fa0fe51d0d7..cd6795f86f195ea45bb0b98e0bfc69bdeaa58eda 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper

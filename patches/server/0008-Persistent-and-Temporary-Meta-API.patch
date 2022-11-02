@@ -27,14 +27,14 @@ index 21bd42ff9d3f744ce9eb06d269d13495011a7be3..b11af17efbbff6c519183bec47a18ee4
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b83a26738b5b2f35736b47fdfd3588450f16cc70
+index 0000000000000000000000000000000000000000..a8b4af50629e45769d37e321b505ce2aa27de88e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/CraftDAPI_Meta.java
 @@ -0,0 +1,44 @@
 +package com.domnian.paperdragon.api.meta;
 +
 +import com.domnian.paperdragon.api.Vector3i;
-+import net.minecraft.server.MCUtil;
++import io.papermc.paper.util.MCUtil;
 +import net.minecraft.world.level.block.entity.BlockEntity;
 +import org.bukkit.Chunk;
 +import org.bukkit.block.Block;
@@ -78,7 +78,7 @@ index 0000000000000000000000000000000000000000..b83a26738b5b2f35736b47fdfd358845
 \ No newline at end of file
 diff --git a/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0f57005e1603097d450c74a60ef2241f31f058dd
+index 0000000000000000000000000000000000000000..3274118ec25fd9f591faa2dbf48e8512802ab609
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/meta/MetaApiAccessor.java
 @@ -0,0 +1,631 @@
@@ -86,6 +86,7 @@ index 0000000000000000000000000000000000000000..0f57005e1603097d450c74a60ef2241f
 +
 +import ca.spottedleaf.dataconverter.minecraft.MCVersions;
 +import com.mojang.serialization.Dynamic;
++import io.papermc.paper.util.MCUtil;
 +import net.minecraft.SharedConstants;
 +import net.minecraft.core.BlockPos;
 +import net.minecraft.nbt.CompoundTag;
@@ -98,7 +99,6 @@ index 0000000000000000000000000000000000000000..0f57005e1603097d450c74a60ef2241f
 +import net.minecraft.nbt.NumericTag;
 +import net.minecraft.nbt.StringTag;
 +import net.minecraft.nbt.Tag;
-+import net.minecraft.server.MCUtil;
 +import net.minecraft.server.MinecraftServer;
 +import net.minecraft.server.level.ChunkHolder;
 +import net.minecraft.server.level.ServerLevel;
@@ -782,7 +782,7 @@ index 76b6437a1d807c7e1b673f8feeed1f171ee9a803..07f4295723929bd6a901e423f2a9151b
              blockEntity.sanitizeSentNbt(compoundTag); // Paper - Sanitize sent data
              return new ClientboundLevelChunkPacketData.BlockEntityInfo(i, blockPos.getY(), blockEntity.getType(), compoundTag.isEmpty() ? null : compoundTag);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a1421689445b9df3f25889845c21cf37a439afe2..d9e3bfc327807ce838bd677ac9fe7f85bd1bf40a 100644
+index 6fa47becd0f83ac4273ef3a10c314aa27b08184b..19e266364d9922d312d74e505261fc49994ee5e9 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,8 @@
@@ -822,7 +822,7 @@ index a1421689445b9df3f25889845c21cf37a439afe2..d9e3bfc327807ce838bd677ac9fe7f85
              ListTag originTag = nbt.getList("Paper.Origin", 6);
              if (!originTag.isEmpty()) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index c8c9fedd740ccfdbc873848bb2e1b7ba66cd524b..eebb9e49f4a1efe4e318c9c5fc58d181031c29f1 100644
+index 0c46234ac6e2e33f458b9c7467cb626e043e3e43..fe464ee0157d3f15c1616780e940ff7e81fdddca 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -4,6 +4,7 @@ import co.aikar.timings.Timing;
@@ -880,7 +880,7 @@ index b96d57b0bcf21508f8e03e96b7553eb486fdf212..61911ed1309bd7c6ce32b2b2a2e6bab5
          nbt.putInt("y", this.worldPosition.getY());
          nbt.putInt("z", this.worldPosition.getZ());
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 05499ae9fc331471db6e763a2adb46b5da8522d3..af4e90c8459bd232dd9c291c4f5430be8c3ba67a 100644
+index 7350b73f4af4ae347532dc579ab151447c298e09..8164a575288ebcf95018610e9858188f487b833e 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -1,5 +1,8 @@
@@ -1041,7 +1041,7 @@ index 75c6b0aa2cb4ae8637460006ff24d7f6028396be..2eea871ca19b1abf9ea8a83529dc8984
      private final ServerLevel worldServer;
      private final int x;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 383793ec3b670fed9d6d35c3121c5ee3239c6f47..9f9213b66c2e3f7a48c37c75137829660a1ec1f5 100644
+index 34621a9b3572fb70305a5405fd21378c21392f0b..588f2688737c313ec55eb4567fe168f2139133d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -1060,7 +1060,7 @@ index 383793ec3b670fed9d6d35c3121c5ee3239c6f47..9f9213b66c2e3f7a48c37c7513782966
          this.enablePlugins(PluginLoadOrder.STARTUP);
          this.enablePlugins(PluginLoadOrder.POSTWORLD);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 72ed25022d5ea1074304be3c72b23882b8f0f88a..eb805c29a2b3721f1e6f36ff25afb91a978116e3 100644
+index 55d83a9a691d11c9408d2c3260c3e77dfb51b97e..8d6f46a50796fe1936a263c78fc69dcb012e0769 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -1,5 +1,7 @@

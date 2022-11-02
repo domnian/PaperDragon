@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Vehicle/Passenger Teleporting for Bukkit API
 If Bukkit teleport is called, teleport the whole set of entities together and maintain the chain.
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 9759e234ac1055d36255569b4cab29d24b1bf92b..28cfee75dc3a7b8621482fb2688537b86f9b9def 100644
+index 5b983395b95b442d66509aef4fc2f133cb58c235..d48bf822848b27876693435a3181c4ef04ab8c04 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -850,7 +850,7 @@ public abstract class PlayerList {
@@ -19,7 +19,7 @@ index 9759e234ac1055d36255569b4cab29d24b1bf92b..28cfee75dc3a7b8621482fb2688537b8
          this.playersByName.remove(entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          entityplayer.getLevel().removePlayerImmediately(entityplayer, Entity.RemovalReason.DISCARDED);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 956daae52c1266d5da4854e502e0bcf717e2d3c2..0889b4c546553d7b66db44285974f633ce9121bf 100644
+index e03129d71768a6db4c298b7f9bc951f0bfe31e39..a57a392289901515ca8c811d1317b6d0a8da27e2 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -295,7 +295,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -168,10 +168,10 @@ index f17de9f0c145ee65224f3a09aa1e7652f3a820d3..7c391305e32bba3eab1ad00dd92f7a1d
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b9b8e41e190dbe891321b18f9103da7a71873f38..3a09708439d3b662940970b347f8df62650fd3e4 100644
+index 3cf8c8de1f446260f7bc3673bd4f9c1739572af0..d6a8f6c028145849d5b3b45c338d9d9693cf71ab 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1280,12 +1280,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1284,12 +1284,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          Preconditions.checkArgument(location.getWorld() != null, "location.world");
          // Paper start - Teleport passenger API
          // Don't allow teleporting between worlds while keeping passengers
@@ -186,7 +186,7 @@ index b9b8e41e190dbe891321b18f9103da7a71873f38..3a09708439d3b662940970b347f8df62
              return false;
          }
          // Paper end
-@@ -1339,14 +1339,28 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1343,14 +1343,28 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
              this.getHandle().closeContainer(org.bukkit.event.inventory.InventoryCloseEvent.Reason.TELEPORT); // Paper
          }
  
