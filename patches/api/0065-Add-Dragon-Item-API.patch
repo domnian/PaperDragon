@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 27 Nov 2022 00:43:05 -0500
+Subject: [PATCH] Add Dragon Item API
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..08532026985de50728d7a865417f1a1dba6df2d4
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java
+@@ -0,0 +1,18 @@
++package com.domnian.paperdragon.api;
++
++import org.bukkit.inventory.ItemStack;
++import org.jetbrains.annotations.NotNull;
++
++import java.io.IOException;
++
++public interface DAPI_Item {
++
++    public default byte[] getItemTag(@NotNull ItemStack item) throws IOException {
++        return getItemTag(item, false);
++    }
++
++    public byte[] getItemTag(@NotNull ItemStack item, boolean compressed) throws IOException;
++
++    public ItemStack setItemTag(@NotNull ItemStack item, byte[] tag) throws IOException;
++
++}
+diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+index 13f125e62eef636e56c905b4102fc4d5ce4b2b22..09066ff93bfabb65f98589d10904f5ab02c54d8d 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
++++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
+@@ -34,5 +34,6 @@ public abstract class DragonAPI {
+     public static DAPI_Chat chat;
+     public static DAPI_Heads heads;
+     public static DAPI_Server server;
++    public static DAPI_Item item;
+ 
+ }
