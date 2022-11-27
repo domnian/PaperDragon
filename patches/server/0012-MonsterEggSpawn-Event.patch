@@ -6,7 +6,7 @@ Subject: [PATCH] MonsterEggSpawn Event
 Get the itemstack used to spawn an entity
 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 12cf4d3dfbd2c4f4a1815f5e26e59ae8667f7b47..be09f93a7ed54451ebdf6dbf787bd91f0394178b 100644
+index 72516335570d7137a62ec8667a6e8f06f024692f..d60c4d3699a943f990e8f26b7f4f2db6c2ca0524 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -151,6 +151,7 @@ import net.minecraft.world.phys.AABB;

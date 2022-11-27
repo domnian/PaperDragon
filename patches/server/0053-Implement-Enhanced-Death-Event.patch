@@ -29,7 +29,7 @@ index d9e6f24e701b10badf81bc5727c90a7ae185b124..fb88252a78e01facf176701e731f74eb
          if (event.isCancelled()) {
              // make compatible with plugins that might have already set the health in an event listener
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 966d85e35ed0e9e4966bfc7dfd7b051c04f401cf..8bb1a57772a212f5ed414b108810dba4ceed378d 100644
+index 574e95601550e0558dc86cd48b598fac07c89a3f..4bcd8926a1a5063306b48d1a080bf223a07a7574 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -906,12 +906,13 @@ public class CraftEventFactory {
