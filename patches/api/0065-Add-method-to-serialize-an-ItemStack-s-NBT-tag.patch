@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 27 Jun 2021 11:44:05 -0400
+Subject: [PATCH] Add method to serialize an ItemStack's NBT tag
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java
+index 08532026985de50728d7a865417f1a1dba6df2d4..3e10a0d6af006e0d88339e5b05616fc895ceaa28 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Item.java
+@@ -15,4 +15,7 @@ public interface DAPI_Item {
+ 
+     public ItemStack setItemTag(@NotNull ItemStack item, byte[] tag) throws IOException;
+ 
++    @NotNull
++    public String getSerializedItemTag(@NotNull org.bukkit.inventory.ItemStack stack);
++
+ }
