@@ -5,7 +5,7 @@ Subject: [PATCH] Add teleport() to OfflinePlayer
 
 
 diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
-index 08861bb33bb25d1a1755c38d98ce2ed26cad26f5..3e0081b8861b8fd635153c71ace072d47cf8b600 100644
+index 5827faf0b12e600e810f60b8851db3e2e66cb370..0d0ca91393b70b70940c25ca16ccc5be267cf7cc 100644
 --- a/src/main/java/org/bukkit/OfflinePlayer.java
 +++ b/src/main/java/org/bukkit/OfflinePlayer.java
 @@ -459,5 +459,6 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio

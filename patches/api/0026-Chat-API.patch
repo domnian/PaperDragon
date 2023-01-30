@@ -25,15 +25,16 @@ index 3c28c320f8a599c9b096adbe9d4d00f336e4a438..fee56553d71f9e59aa6d985ed4900e0a
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java b/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d03c7c968f7ca88642c83106ad999e5d408af95b
+index 0000000000000000000000000000000000000000..3e2aa6b872758962bedcb351b42126a069a29cd6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/ChatBuilder.java
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,31 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import org.bukkit.ChatColor;
 +import org.jetbrains.annotations.NotNull;
 +
++@Deprecated
 +public interface ChatBuilder {
 +    @NotNull
 +    ChatBuilder color(@NotNull ChatColor color);
@@ -61,10 +62,10 @@ index 0000000000000000000000000000000000000000..d03c7c968f7ca88642c83106ad999e5d
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..01cec8d0b8f28c3e517e0e879c59e63d13196432
+index 0000000000000000000000000000000000000000..5d275ab09a3c52e5bb2710374c5dee68a98e9bd7
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/DAPI_Chat.java
-@@ -0,0 +1,60 @@
+@@ -0,0 +1,61 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *  
@@ -96,6 +97,7 @@ index 0000000000000000000000000000000000000000..01cec8d0b8f28c3e517e0e879c59e63d
 +
 +import java.util.UUID;
 +
++@Deprecated
 +public interface DAPI_Chat {
 +
 +    @NotNull
@@ -127,16 +129,17 @@ index 0000000000000000000000000000000000000000..01cec8d0b8f28c3e517e0e879c59e63d
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java b/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..1dd10709769ec117b8eeb345fa5f433b8b341e08
+index 0000000000000000000000000000000000000000..1f777e190746d1b7425cd80acac6c770e5ba30b3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/chat/FancifulChat.java
-@@ -0,0 +1,49 @@
+@@ -0,0 +1,50 @@
 +package com.domnian.paperdragon.api.chat;
 +
 +import org.bukkit.entity.Entity;
 +import org.bukkit.inventory.ItemStack;
 +import org.jetbrains.annotations.NotNull;
 +
++@Deprecated
 +public interface FancifulChat {
 +    @NotNull
 +    FancifulChat then(@NotNull String text);

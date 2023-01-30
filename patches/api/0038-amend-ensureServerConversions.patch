@@ -35,7 +35,7 @@ index 40edff7c93b6bf75de81102326667135b9344666..3609ac117de4762cae2c14c3b1d3ef77
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 8b2fbb78410f8b829b898d09bc9d350da586106c..2f8d3d68fc256d0dc138dc647848fd0d4b6cdb01 100644
+index 6736a3925bd5d4d42237e890e83318d94f7310d2..0e545d13a9eb4bb2130bfdcc9fe70ff3a6d3b113 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor

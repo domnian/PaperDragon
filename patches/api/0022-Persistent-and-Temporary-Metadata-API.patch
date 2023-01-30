@@ -1663,7 +1663,7 @@ index e1e1bc868019f715370490719ef887e0eee3ddec..f0e0c12c4d0f9eb345c39bb33d794e5f
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 9e71e519cda72a1e2a01474f238b97015ec5115e..eaf93384b36040b83d28fc62b02fe3149e8006ca 100644
+index 9e71e519cda72a1e2a01474f238b97015ec5115e..41d6f9127cf9f4a2798202366c26eb1545bf38e2 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1675,19 +1675,20 @@ index 9e71e519cda72a1e2a01474f238b97015ec5115e..eaf93384b36040b83d28fc62b02fe314
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -47,6 +49,12 @@ import org.jetbrains.annotations.Nullable;
-  * Represents a world, which may contain entities, chunks and blocks
-  */
- public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient, Metadatable, PersistentDataHolder, Keyed, net.kyori.adventure.audience.ForwardingAudience { // Paper
+@@ -74,7 +76,12 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+      */
+     int getPlayerCount();
+     // Paper end
+-
 +    // PaperDragon start
 +    @NotNull
 +    PersistentMetaMap getPersistentMeta();
 +    @NotNull
 +    TempMetaMap getTempMeta();
 +    // PaperDragon end
- 
-     // Paper start
      /**
+      * Gets the {@link Block} at the given coordinates
+      *
 diff --git a/src/main/java/org/bukkit/block/BlockState.java b/src/main/java/org/bukkit/block/BlockState.java
 index 37ca7b6b0fcee8bec12026ec3715dcc47400cc11..b6d92ca8ab08b555ae99841abf3a133aa96537d6 100644
 --- a/src/main/java/org/bukkit/block/BlockState.java
@@ -1702,7 +1703,7 @@ index 37ca7b6b0fcee8bec12026ec3715dcc47400cc11..b6d92ca8ab08b555ae99841abf3a133a
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 33a6b7a27dc91552799c07a7aad9b3df31ad13f7..7214f46f4d152a9fa5ce47bfb8d2c9fa040924d8 100644
+index cdbc7329cf5f67d66e31eb31e83b9e7997040f72..805edd6bc677b98c040f905f27f4030205b594f2 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;

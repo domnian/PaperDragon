@@ -5,10 +5,10 @@ Subject: [PATCH] Add HandlerList#hasListeners() utility method
 
 
 diff --git a/src/main/java/org/bukkit/event/HandlerList.java b/src/main/java/org/bukkit/event/HandlerList.java
-index ed78cca71f83b296d082d0af147ca8d622c7606a..a94637008fda3f4cd426eaf72aa4b0f02a904e1d 100644
+index 2292bd460ce2be113beb4ba6b4eb19350060f01c..ea991b0c5a39f5fcccf80de37c26f6a5117efb9f 100644
 --- a/src/main/java/org/bukkit/event/HandlerList.java
 +++ b/src/main/java/org/bukkit/event/HandlerList.java
-@@ -197,6 +197,17 @@ public class HandlerList {
+@@ -210,6 +210,17 @@ public class HandlerList {
          return handlers;
      }
  

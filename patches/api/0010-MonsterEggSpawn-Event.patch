@@ -6,34 +6,42 @@ Subject: [PATCH] MonsterEggSpawn Event
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7cee52fd57dd76ecf285aae936a2ffd9c00c1362
+index 0000000000000000000000000000000000000000..a5f9794068a1041f5895db6afc2216adda661535
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MonsterEggSpawnEvent.java
-@@ -0,0 +1,68 @@
+@@ -0,0 +1,82 @@
 +package com.domnian.paperdragon.events;
 +
++
++import org.bukkit.Location;
++import org.bukkit.entity.Entity;
 +import org.bukkit.entity.HumanEntity;
-+import org.bukkit.entity.LivingEntity;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
++import org.bukkit.event.entity.CreatureSpawnEvent;
 +import org.bukkit.inventory.ItemStack;
 +import org.jetbrains.annotations.NotNull;
 +import org.jetbrains.annotations.Nullable;
++
++import java.util.function.Consumer;
 +
 +public class MonsterEggSpawnEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
 +    private boolean canceled;
 +
 +    private final Player player;
-+    private LivingEntity entity;
++    private final Location spawnLocation;
 +    private final ItemStack item;
++    private final CreatureSpawnEvent.SpawnReason spawnReason;
++    private Consumer<Entity> afterSpawn = null;
 +
-+    public MonsterEggSpawnEvent(@Nullable HumanEntity player, @NotNull LivingEntity entity, @NotNull ItemStack item) {
++    public MonsterEggSpawnEvent(@Nullable HumanEntity player, @NotNull Location spawnLocation, @NotNull ItemStack item, @NotNull CreatureSpawnEvent.SpawnReason spawnReason) {
 +        this.player = (Player) player;
-+        this.entity = entity;
++        this.spawnLocation = spawnLocation;
 +        this.item = item;
++        this.spawnReason = spawnReason;
 +    }
 +
 +    @Nullable
@@ -42,16 +50,22 @@ index 0000000000000000000000000000000000000000..7cee52fd57dd76ecf285aae936a2ffd9
 +    }
 +
 +    @NotNull
-+    public LivingEntity getEntity() {
-+        return entity;
++    public Location getSpawnLocation() {
++        return spawnLocation;
 +    }
 +
-+    public void setEntity(@Nullable LivingEntity entity) {
-+        if (entity == null) {
-+            canceled = true;
-+            return;
-+        }
-+        this.entity = entity;
++    @NotNull
++    public CreatureSpawnEvent.SpawnReason getSpawnReason() {
++        return spawnReason;
++    }
++
++    @Nullable
++    public Consumer<Entity> getAfterSpawn() {
++        return afterSpawn;
++    }
++
++    public void setAfterSpawn(@Nullable Consumer<Entity> afterSpawn) {
++        this.afterSpawn = afterSpawn;
 +    }
 +
 +    @NotNull

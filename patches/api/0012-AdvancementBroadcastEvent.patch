@@ -6,10 +6,10 @@ Subject: [PATCH] AdvancementBroadcastEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7be426d711bc706f26bed664c1d738f55aeb0997
+index 0000000000000000000000000000000000000000..8ea8001a21a90bdfa5bf86277c43c07e0bf8af29
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,77 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -36,16 +36,23 @@ index 0000000000000000000000000000000000000000..7be426d711bc706f26bed664c1d738f5
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.Player;
++import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.jetbrains.annotations.NotNull;
 +
-+import java.util.ArrayList;
-+import java.util.List;
++import java.util.HashSet;
++import java.util.Set;
 +
-+public class AdvancementBroadcastEvent extends Event {
++public class AdvancementBroadcastEvent extends Event implements Cancellable {
 +    final Player player;
-+    List<Player> receivers = new ArrayList<>();
++    final Set<Player> receivers;
++    private boolean cancelled;
++
++    public AdvancementBroadcastEvent(@NotNull Player player, @NotNull Set<Player> receivers) {
++        this.player = player;
++        this.receivers = new HashSet<>(receivers);
++    }
 +
 +    @NotNull
 +    public Player getPlayer() {
@@ -53,18 +60,22 @@ index 0000000000000000000000000000000000000000..7be426d711bc706f26bed664c1d738f5
 +    }
 +
 +    @NotNull
-+    public List<Player> getReceivers() {
++    public Set<Player> getReceivers() {
 +        return receivers;
 +    }
 +
-+    public void setReceivers(@NotNull List<Player> receivers) {
-+        this.receivers = receivers;
++    @Override
++    public boolean isCancelled() {
++        return cancelled;
++    }
++
++    @Override
++    public void setCancelled(boolean cancel) {
++        this.cancelled = cancel;
 +    }
 +
 +    @NotNull
 +    private static final HandlerList handlers = new HandlerList();
-+
-+    public AdvancementBroadcastEvent(@NotNull Player player) {this.player = player;}
 +
 +    @NotNull
 +    public HandlerList getHandlers() {

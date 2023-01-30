@@ -8,17 +8,10 @@ not just add new blocks - this is a patch to cancel that action
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/VegetationPatchPlaceEvent.java b/src/main/java/com/domnian/paperdragon/events/VegetationPatchPlaceEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..dbc1fb5367d58a3c0a3f3f2d1cfe9d261869d060
+index 0000000000000000000000000000000000000000..ca46ffe6decb4c1d7e06899e82b1a255482c749f
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/VegetationPatchPlaceEvent.java
-@@ -0,0 +1,51 @@
-+/*
-+ * Copyright (c) 2021. Starlis LLC / dba Empire Minecraft
-+ *
-+ * This source code is proprietary software and must not be redistributed without Starlis LLC's approval
-+ *
-+ */
-+
+@@ -0,0 +1,44 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.block.Block;

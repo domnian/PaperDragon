@@ -5,18 +5,18 @@ Subject: [PATCH] Add method to get player skin hash
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-index 8bcc116d53d720d4c7c9a3c427a95ac5c28dd74a..fe23d1ae53230dd326f5ca5a80b8a84716401785 100644
+index 4600c91e958e349622ae740385bae39f5cca02c4..e1a1066f0d4aa59cdcc32feb2ddc76113a31c707 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-@@ -24,6 +24,7 @@
- package com.domnian.paperdragon.api;
+@@ -25,6 +25,7 @@ package com.domnian.paperdragon.api;
  
  import org.bukkit.Location;
+ import org.bukkit.StructureType;
 +import org.bukkit.entity.Player;
  import org.bukkit.inventory.ItemStack;
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
-@@ -50,4 +51,11 @@ public interface DAPI_Misc {
+@@ -51,4 +52,11 @@ public interface DAPI_Misc {
      @Nullable
      List<ItemStack> getShulkerInventory(@NotNull ItemStack shulker);
  

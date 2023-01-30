@@ -6,10 +6,10 @@ Subject: [PATCH] Hopper Events
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..834126a3d7411f594594455f6dad922c2856109f
+index 0000000000000000000000000000000000000000..932a34989b20e83b5b6fa53fce2711288a0f95c0
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
-@@ -0,0 +1,72 @@
+@@ -0,0 +1,70 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -33,10 +33,8 @@ index 0000000000000000000000000000000000000000..834126a3d7411f594594455f6dad922c
 + *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 + */
 +
-+package com.domnian.paperdragon.events;
++package com.domnian.paperdragon.customevents;
 +
-+import org.bukkit.Location;
-+import org.bukkit.World;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
@@ -45,18 +43,13 @@ index 0000000000000000000000000000000000000000..834126a3d7411f594594455f6dad922c
 +
 +public class HopperDrainEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
-+    private final Inventory inventory;
++    private final Inventory hopper;
++    private final Inventory source;
 +    private boolean canceled;
-+    private final Location loc;
 +
-+    public HopperDrainEvent(@NotNull World world, @NotNull Inventory inventory, double x, double y, double z) {
-+        this.inventory = inventory;
-+        loc = new Location(world, x, y, z);
-+    }
-+
-+    @NotNull
-+    public Location getHopperLocation() {
-+        return this.loc;
++    public HopperDrainEvent(@NotNull Inventory hopper, @NotNull Inventory source) {
++        this.hopper = hopper;
++        this.source = source;
 +    }
 +
 +    public boolean isCancelled() {
@@ -78,16 +71,21 @@ index 0000000000000000000000000000000000000000..834126a3d7411f594594455f6dad922c
 +    }
 +
 +    @NotNull
-+    public Inventory getInventory() {
-+        return inventory;
++    public Inventory getHopperInventory() {
++        return hopper;
++    }
++
++    @NotNull
++    public Inventory getSourceInventory() {
++        return source;
 +    }
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..be6f531f72cdc24332674b81eced7afaed68a5d4
+index 0000000000000000000000000000000000000000..57fb04eb35e00e3645df4894e045515378866826
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,70 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -113,8 +111,6 @@ index 0000000000000000000000000000000000000000..be6f531f72cdc24332674b81eced7afa
 +
 +package com.domnian.paperdragon.events;
 +
-+import org.bukkit.Location;
-+import org.bukkit.World;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
@@ -123,22 +119,13 @@ index 0000000000000000000000000000000000000000..be6f531f72cdc24332674b81eced7afa
 +
 +public class HopperFillEvent extends Event implements Cancellable {
 +    private static final HandlerList handlers = new HandlerList();
-+    private final Inventory inventory;
++    private final Inventory hopper;
++    private final Inventory target;
 +    private boolean canceled;
-+    private final Location loc;
-+    private final Location target;
-+    public HopperFillEvent(@NotNull World world, @NotNull Inventory inventory, double x, double y, double z, double tx, double ty, double tz) {
-+        this.inventory = inventory;
-+        loc = new Location(world, x, y, z);
-+        target = new Location(world, x, y, z);
-+    }
-+    @NotNull
-+    public Location getHopperLocation() {
-+        return this.loc;
-+    }
-+    @NotNull
-+    public Location getTarget() {
-+        return this.target;
++
++    public HopperFillEvent(@NotNull Inventory hopper, @NotNull Inventory target) {
++        this.hopper = hopper;
++        this.target = target;
 +    }
 +
 +    public boolean isCancelled() {
@@ -160,7 +147,12 @@ index 0000000000000000000000000000000000000000..be6f531f72cdc24332674b81eced7afa
 +    }
 +
 +    @NotNull
-+    public Inventory getInventory() {
-+        return inventory;
++    public Inventory getHopperInventory() {
++        return hopper;
++    }
++
++    @NotNull
++    public Inventory getTargetInventory() {
++        return target;
 +    }
 +}

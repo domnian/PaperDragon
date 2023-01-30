@@ -43,7 +43,7 @@ index a0a041f5b42d80c3f16213eeda569b8b83642e2d..13f125e62eef636e56c905b4102fc4d5
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FakePlayer.java b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..dd5706571687691f44117b6d7b7a40f985f102a8
+index 0000000000000000000000000000000000000000..27d15c9bceea3c355d7584fd90fd509ed39d67a6
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
 @@ -0,0 +1,48 @@
@@ -70,7 +70,7 @@ index 0000000000000000000000000000000000000000..dd5706571687691f44117b6d7b7a40f9
 +    @NotNull
 +    GameMode getGameMode();
 +
-+    @Nullable
++    @NotNull
 +    UUID getUniqueId();
 +
 +    void join();
@@ -186,10 +186,10 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9da394173cab91b73178c522c3277f92cabbe365..3cb874358eda33b05647df2493bb7b589de56097 100644
+index f61ad3872ee03b5a392fc94aeb63e487ad6fe204..bf11a15e1f92d5632cad2f21fb3fbd84b1c4e93d 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -2,9 +2,11 @@ package org.bukkit.entity;
+@@ -2,10 +2,12 @@ package org.bukkit.entity;
  
  import java.net.InetSocketAddress;
  import java.util.Collection;
@@ -197,11 +197,12 @@ index 9da394173cab91b73178c522c3277f92cabbe365..3cb874358eda33b05647df2493bb7b58
  import java.util.UUID;
  import com.destroystokyo.paper.ClientOption; // Paper
  import com.destroystokyo.paper.Title; // Paper
-+import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
  import net.kyori.adventure.text.Component;
++import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
-@@ -1436,6 +1438,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+ import org.bukkit.GameMode;
+@@ -1479,6 +1481,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  
@@ -225,7 +226,7 @@ index 9da394173cab91b73178c522c3277f92cabbe365..3cb874358eda33b05647df2493bb7b58
 +
 +    /**
 +     * Allows this player to see a fake player that was previously hidden. If
-+     * another another plugin had hidden the fake player too, then the player will
++     * another plugin had hidden the fake player too, then the player will
 +     * remain hidden until the other plugin calls this method too.
 +     *
 +     * @param plugin Plugin that wants to show the fake player
