@@ -6,10 +6,10 @@ Subject: [PATCH] AdvancementBroadcastEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..8ea8001a21a90bdfa5bf86277c43c07e0bf8af29
+index 0000000000000000000000000000000000000000..1ccdf7dee15f15ea8673881c8cd832aaefd58ef8
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/AdvancementBroadcastEvent.java
-@@ -0,0 +1,77 @@
+@@ -0,0 +1,78 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -86,4 +86,5 @@ index 0000000000000000000000000000000000000000..8ea8001a21a90bdfa5bf86277c43c07e
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}

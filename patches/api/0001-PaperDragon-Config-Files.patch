@@ -5,10 +5,10 @@ Subject: [PATCH] PaperDragon Config Files
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 2204336d8800311b65e894739ab1b27273e7c6f2..d72703fa5bfee68ed16b52f342abae6781523117 100644
+index 8621dba7f10ab822b5b99ce0d05da58823605cb6..334ea52133f20bce5cea531e350b24aa4be9a640 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1971,6 +1971,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1968,6 +1968,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          }
          // Paper end
  

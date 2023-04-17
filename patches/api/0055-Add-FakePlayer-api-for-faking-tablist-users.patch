@@ -5,13 +5,13 @@ Subject: [PATCH] Add FakePlayer api for faking tablist users
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..1b44a3f93d3accf859284af1956e3004c5460cb4
---- /dev/null
+index 685472a6ea2389cab47202674b929858eb3c4d12..17847fbdf259989f0070942b19576327bdde2ed0 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-@@ -0,0 +1,20 @@
-+package com.domnian.paperdragon.api;
-+
+@@ -23,6 +23,22 @@
+ 
+ package com.domnian.paperdragon.api;
+ 
 +import com.destroystokyo.paper.profile.PlayerProfile;
 +import net.kyori.adventure.text.Component;
 +import org.bukkit.GameMode;
@@ -21,32 +21,22 @@ index 0000000000000000000000000000000000000000..1b44a3f93d3accf859284af1956e3004
 +import java.util.Set;
 +import java.util.UUID;
 +
-+public interface DAPI_Server {
-+
+ public interface DAPI_Server {
+ 
 +    @Nullable
 +    FakePlayer getFakePlayer(@NotNull UUID uuid);
 +    @NotNull
 +    FakePlayer createFakePlayer(@NotNull PlayerProfile profile, int ping, @NotNull GameMode gameMode, @NotNull Component playerListName) throws IllegalArgumentException;
 +    @NotNull
 +    Set<FakePlayer> getJoinedFakePlayers();
-+}
-diff --git a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-index a0a041f5b42d80c3f16213eeda569b8b83642e2d..13f125e62eef636e56c905b4102fc4d5ce4b2b22 100644
---- a/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-+++ b/src/main/java/com/domnian/paperdragon/api/DragonAPI.java
-@@ -33,5 +33,6 @@ public abstract class DragonAPI {
-     public static DAPI_Meta meta;
-     public static DAPI_Chat chat;
-     public static DAPI_Heads heads;
-+    public static DAPI_Server server;
- 
++
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/FakePlayer.java b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..27d15c9bceea3c355d7584fd90fd509ed39d67a6
+index 0000000000000000000000000000000000000000..d3e1c8f7c0a4bce0757e33fc254c2e6e42d58a6e
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/FakePlayer.java
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,49 @@
 +package com.domnian.paperdragon.api;
 +
 +import com.destroystokyo.paper.profile.PlayerProfile;
@@ -94,6 +84,7 @@ index 0000000000000000000000000000000000000000..27d15c9bceea3c355d7584fd90fd509e
 +    void update();
 +
 +    boolean isJoined();
++
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java
 new file mode 100644
@@ -186,23 +177,19 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index f61ad3872ee03b5a392fc94aeb63e487ad6fe204..bf11a15e1f92d5632cad2f21fb3fbd84b1c4e93d 100644
+index 3e2b218cd11f79dfc07a115fbfa100d9ceb9786f..e90b1676bfb774ef3c9cb61cfd2a98f75d583a9f 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -2,10 +2,12 @@ package org.bukkit.entity;
- 
+@@ -3,6 +3,8 @@ package org.bukkit.entity;
  import java.net.InetSocketAddress;
  import java.util.Collection;
+ import java.util.Map;
 +import java.util.Set; // PaperDragon
- import java.util.UUID;
- import com.destroystokyo.paper.ClientOption; // Paper
- import com.destroystokyo.paper.Title; // Paper
- import net.kyori.adventure.text.Component;
 +import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
  import org.bukkit.GameMode;
-@@ -1479,6 +1481,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1588,6 +1590,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

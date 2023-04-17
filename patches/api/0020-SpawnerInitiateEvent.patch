@@ -6,10 +6,10 @@ Subject: [PATCH] SpawnerInitiateEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..65b114ef228b0e75a29d3e0bdc65bcbd5f2c1c83
+index 0000000000000000000000000000000000000000..b6ccf46ac6c7df4df63a5f90b9df5cb446c425f3
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SpawnerInitiateEvent.java
-@@ -0,0 +1,90 @@
+@@ -0,0 +1,91 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -99,4 +99,5 @@ index 0000000000000000000000000000000000000000..65b114ef228b0e75a29d3e0bdc65bcbd
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}

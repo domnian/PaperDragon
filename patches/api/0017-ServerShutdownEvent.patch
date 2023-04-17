@@ -6,10 +6,10 @@ Subject: [PATCH] ServerShutdownEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..11c93e1e986d5796d9db36fcd91cbfab651eaf85
+index 0000000000000000000000000000000000000000..a00085ec6bd70b6a0572c9ef312536a228e83623
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ServerShutdownEvent.java
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,36 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.Bukkit;
@@ -44,4 +44,5 @@ index 0000000000000000000000000000000000000000..11c93e1e986d5796d9db36fcd91cbfab
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}

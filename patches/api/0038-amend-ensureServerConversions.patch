@@ -6,16 +6,16 @@ Subject: [PATCH] amend ensureServerConversions
 pending paper merge, store data version on stacks
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemFactory.java b/src/main/java/org/bukkit/inventory/ItemFactory.java
-index 40edff7c93b6bf75de81102326667135b9344666..3609ac117de4762cae2c14c3b1d3ef772bf500fd 100644
+index c066d877b5eec3578439c2de1ab9568381ccf7c5..c5c7b7241c19b10acc1e550b1a7faae333486efb 100644
 --- a/src/main/java/org/bukkit/inventory/ItemFactory.java
 +++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
-@@ -210,13 +210,18 @@ public interface ItemFactory {
+@@ -210,13 +210,20 @@ public interface ItemFactory {
      String getI18NDisplayName(@Nullable ItemStack item);
  
      /**
 -     * Minecraft updates are converting simple item stacks into more complex NBT oriented Item Stacks.
 -     *
--     * Use this method to to ensure any desired data conversions are processed.
+-     * Use this method to ensure any desired data conversions are processed.
 -     * The input itemstack will not be the same as the returned itemstack.
 +     * Ensure that this stack is represented by an Internal Item Stack
 +     * @param item The stack to ensure is internal
@@ -25,20 +25,21 @@ index 40edff7c93b6bf75de81102326667135b9344666..3609ac117de4762cae2c14c3b1d3ef77
 +    @Deprecated
 +    @NotNull
 +    ItemStack _asServerItemStack(@NotNull ItemStack item);
++
 +    /**
 +     * Runs all Minecraft Data Fixer updates on this ItemStack that are needed.
       *
--     * @param item The item to process conversions on
+      * @param item The item to process conversions on
 -     * @return A potentially Data Converted ItemStack
-+     * @return A new stack with up to date data
++     * @return A new stack with Data Converted ItemStack
       */
      @NotNull
      ItemStack ensureServerConversions(@NotNull ItemStack item);
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 6736a3925bd5d4d42237e890e83318d94f7310d2..0e545d13a9eb4bb2130bfdcc9fe70ff3a6d3b113 100644
+index e255c73f0107806b5f69719f2d0fb72113e27576..defc4adc9512933a9cdc7c8cf6a4d20b96bfb48f 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -30,6 +30,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -31,6 +31,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
      private int amount = 0;
      private MaterialData data = null;
      private ItemMeta meta;
@@ -70,7 +71,7 @@ index 6736a3925bd5d4d42237e890e83318d94f7310d2..0e545d13a9eb4bb2130bfdcc9fe70ff3
  
      @Utility
      protected ItemStack() {}
-@@ -529,7 +554,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -532,7 +557,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
      public Map<String, Object> serialize() {
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
@@ -79,7 +80,7 @@ index 6736a3925bd5d4d42237e890e83318d94f7310d2..0e545d13a9eb4bb2130bfdcc9fe70ff3
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
-@@ -581,6 +606,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -584,6 +609,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
          }
  
          ItemStack result = new ItemStack(type, amount, damage);
@@ -87,18 +88,14 @@ index 6736a3925bd5d4d42237e890e83318d94f7310d2..0e545d13a9eb4bb2130bfdcc9fe70ff3
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -750,12 +776,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
-     }
- 
-     /**
--     * Minecraft updates are converting simple item stacks into more complex NBT oriented Item Stacks.
--     *
--     * Use this method to to ensure any desired data conversions are processed.
--     * The input itemstack will not be the same as the returned itemstack.
+@@ -764,8 +790,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
+      *
+      * Use this method to ensure any desired data conversions are processed.
+      * The input itemstack will not be the same as the returned itemstack.
 +     * Runs all Minecraft Data Fixer updates on this ItemStack that are needed.
       *
 -     * @return A potentially Data Converted ItemStack
-+     * @return A new stack with up to date data
++     * @return A new stack with Data Converted ItemStack
       */
      @NotNull
      public ItemStack ensureServerConversions() {

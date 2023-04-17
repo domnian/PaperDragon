@@ -6,10 +6,10 @@ Subject: [PATCH] BlockBreakNaturallyEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..906fe462ff34e5c8e57a8df7b20864f4101e20fb
+index 0000000000000000000000000000000000000000..2f57907421e86527be451cc62962fd0a52189d44
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/BlockBreakNaturallyEvent.java
-@@ -0,0 +1,40 @@
+@@ -0,0 +1,41 @@
 +package com.domnian.paperdragon.events;
 +
 +import org.bukkit.Location;
@@ -49,4 +49,5 @@ index 0000000000000000000000000000000000000000..906fe462ff34e5c8e57a8df7b20864f4
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}

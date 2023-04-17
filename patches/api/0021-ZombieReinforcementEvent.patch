@@ -6,10 +6,10 @@ Subject: [PATCH] ZombieReinforcementEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/ZombieReinforcementEvent.java b/src/main/java/com/domnian/paperdragon/events/ZombieReinforcementEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..5d8b44ea9af8b757dffeb84de43503b24d3dbda3
+index 0000000000000000000000000000000000000000..6d8f0138ccbf641a27b8b5449603e621de14b621
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/ZombieReinforcementEvent.java
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,56 @@
 +package com.domnian.paperdragon.customevents;
 +
 +import org.bukkit.entity.Entity;
@@ -64,4 +64,5 @@ index 0000000000000000000000000000000000000000..5d8b44ea9af8b757dffeb84de43503b2
 +    public void setCancelled(boolean cancel) {
 +        cancelled = cancel;
 +    }
++
 +}

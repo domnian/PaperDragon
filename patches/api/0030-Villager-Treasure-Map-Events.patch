@@ -5,10 +5,10 @@ Subject: [PATCH] Villager Treasure Map Events
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-index 58da48b696ecccf1dd1c859f5b3db32569134a34..c5c6455b468c48490c523a28225b90b70814ed04 100644
+index 9f94ed4471222cb0a883e38022aa31bb783aa6bf..5a4f633046bc0645a9864819919270d74a9aebcc 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-@@ -23,5 +23,13 @@
+@@ -23,6 +23,14 @@
  
  package com.domnian.paperdragon.api;
  
@@ -18,9 +18,10 @@ index 58da48b696ecccf1dd1c859f5b3db32569134a34..c5c6455b468c48490c523a28225b90b7
 +import org.jetbrains.annotations.NotNull;
 +
  public interface DAPI_Misc {
-+
+ 
 +    @NotNull
 +    ItemStack createTreasureMap(@NotNull StructureType type, @NotNull Location loc);
++
  }
 diff --git a/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java b/src/main/java/com/domnian/paperdragon/events/CreateTreasureMapEvent.java
 new file mode 100644

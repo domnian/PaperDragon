@@ -6,10 +6,10 @@ Subject: [PATCH] SendSignEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..090b117fe328ccd7a0e79cd093781178e8b2d49b
+index 0000000000000000000000000000000000000000..0e4a730090ff0e813551976fbba970f85ff94f78
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,53 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -61,4 +61,5 @@ index 0000000000000000000000000000000000000000..090b117fe328ccd7a0e79cd093781178
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}

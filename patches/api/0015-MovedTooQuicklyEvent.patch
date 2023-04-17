@@ -6,11 +6,11 @@ Subject: [PATCH] MovedTooQuicklyEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..40ef38a5c6e203b393945469430d0b3d03d7d1cd
+index 0000000000000000000000000000000000000000..cf42b5574c6c709de4ca4546a4fa572c936e4550
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
-@@ -0,0 +1,49 @@
-+package com.domnian.paperdragon.events;
+@@ -0,0 +1,50 @@
++package com.domnian.paperdragon.customevents;
 +
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Cancellable;
@@ -58,4 +58,5 @@ index 0000000000000000000000000000000000000000..40ef38a5c6e203b393945469430d0b3d
 +    public void setCancelled(boolean cancel) {
 +        cancelled = cancel;
 +    }
++
 +}

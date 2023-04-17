@@ -80,3 +80,33 @@ index 0000000000000000000000000000000000000000..2953bca8d4a655732d42fd519242e227
 +    }
 +
 +}
+diff --git a/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java b/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
+index 4c141f3d8f668cdf9c75865a8e3ecbd012d9e521..e0a469aa38acc03baede099600eebd334cc95731 100644
+--- a/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
++++ b/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
+@@ -17,7 +17,7 @@ public class PlayerFlowerPotManipulateEvent extends PlayerEvent implements Cance
+     @NotNull
+     private final Block flowerpot;
+     @NotNull
+-    private final ItemStack item;
++    private ItemStack item; // PaperDragon
+     private final boolean placing;
+ 
+     private boolean cancel = false;
+@@ -59,6 +59,16 @@ public class PlayerFlowerPotManipulateEvent extends PlayerEvent implements Cance
+     public ItemStack getItem() {
+         return item;
+     }
++    // PaperDragon start
++    /**
++     * Sets a different item to be taken from the flower pot
++     *
++     * @param item the ItemStack to be given when removed from the flowerpot
++     */
++    public void setRemovedItem(@NotNull ItemStack item) {
++        this.item = item;
++    }
++    // PaperDragon end
+ 
+     /**
+      * Gets if the item is being placed into the flowerpot.

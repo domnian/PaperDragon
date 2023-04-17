@@ -11,10 +11,10 @@ For example, lore can be used to identify a custom item, but then if a player re
 This new boolean allows you to verify if the item is the same ignoring the name field by temporarily nulling it during the check.
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index bcc8387d087acfd273a2a5b746a18455f225c7aa..6736a3925bd5d4d42237e890e83318d94f7310d2 100644
+index 9c671af6a3aceb7403f0d45c8e556b42572626c6..e255c73f0107806b5f69719f2d0fb72113e27576 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -14,6 +14,7 @@ import org.bukkit.enchantments.Enchantment;
+@@ -15,6 +15,7 @@ import org.bukkit.enchantments.Enchantment;
  import org.bukkit.inventory.meta.Damageable;
  import org.bukkit.inventory.meta.ItemMeta;
  import org.bukkit.material.MaterialData;
@@ -22,7 +22,7 @@ index bcc8387d087acfd273a2a5b746a18455f225c7aa..6736a3925bd5d4d42237e890e83318d9
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
  
-@@ -285,8 +286,39 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -286,8 +287,41 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
       * @param stack the item stack to compare to
       * @return true if the two stacks are equal, ignoring the amount
       */
@@ -43,6 +43,7 @@ index bcc8387d087acfd273a2a5b746a18455f225c7aa..6736a3925bd5d4d42237e890e83318d9
 +     */
 +    @Utility
 +    @Contract("null,_ -> false")
++    @Deprecated
 +    public boolean isSimilar(@Nullable ItemStack stack, boolean skipDur) {
 +        return isSimilar(stack, skipDur, false);
 +    }
@@ -58,11 +59,12 @@ index bcc8387d087acfd273a2a5b746a18455f225c7aa..6736a3925bd5d4d42237e890e83318d9
 +     */
 +    @Utility
 +    @Contract("null,_,_ -> false")
++    @Deprecated
 +    public boolean isSimilar(@Nullable ItemStack stack, boolean skipDur, boolean skipCheckingName) {
          if (stack == null) {
              return false;
          }
-@@ -294,7 +326,43 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, net.kyor
+@@ -295,7 +329,43 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
              return true;
          }
          Material comparisonType = (this.getType().isLegacy()) ? Bukkit.getUnsafe().fromLegacy(this.getData(), true) : this.getType(); // This may be called from legacy item stacks, try to get the right material // Paper - use getType() instead of type field

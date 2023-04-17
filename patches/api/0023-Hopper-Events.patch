@@ -6,10 +6,10 @@ Subject: [PATCH] Hopper Events
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..932a34989b20e83b5b6fa53fce2711288a0f95c0
+index 0000000000000000000000000000000000000000..0fec3c8aa080f1155d32e93d8b39d633ad20393c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
-@@ -0,0 +1,70 @@
+@@ -0,0 +1,71 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -79,13 +79,14 @@ index 0000000000000000000000000000000000000000..932a34989b20e83b5b6fa53fce271128
 +    public Inventory getSourceInventory() {
 +        return source;
 +    }
++
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..57fb04eb35e00e3645df4894e045515378866826
+index 0000000000000000000000000000000000000000..e042d5ae42a80a3e233b66422e9d41a0197bc071
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperFillEvent.java
-@@ -0,0 +1,70 @@
+@@ -0,0 +1,71 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -155,4 +156,5 @@ index 0000000000000000000000000000000000000000..57fb04eb35e00e3645df4894e0455153
 +    public Inventory getTargetInventory() {
 +        return target;
 +    }
++
 +}

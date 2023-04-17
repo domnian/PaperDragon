@@ -5,10 +5,10 @@ Subject: [PATCH] ShulkerBox API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-index c5c6455b468c48490c523a28225b90b70814ed04..4600c91e958e349622ae740385bae39f5cca02c4 100644
+index 5a4f633046bc0645a9864819919270d74a9aebcc..4600c91e958e349622ae740385bae39f5cca02c4 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Misc.java
-@@ -27,9 +27,28 @@ import org.bukkit.Location;
+@@ -27,10 +27,28 @@ import org.bukkit.Location;
  import org.bukkit.StructureType;
  import org.bukkit.inventory.ItemStack;
  import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ index c5c6455b468c48490c523a28225b90b70814ed04..4600c91e958e349622ae740385bae39f
  
      @NotNull
      ItemStack createTreasureMap(@NotNull StructureType type, @NotNull Location loc);
-+
+ 
 +    /**
 +     * Returns if this is a shulker box with items in it.
 +     * @param shulker

@@ -5,10 +5,10 @@ Subject: [PATCH] Entity Tasks
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 26609a7bd33caf380542d81b7ec23694eefb4312..8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d 100644
+index 9653122d1b5dd9561edcefc3fbd2e02e8fbcc631..8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -23,5 +23,75 @@
+@@ -23,6 +23,75 @@
  
  package com.domnian.paperdragon.api;
  
@@ -17,7 +17,7 @@ index 26609a7bd33caf380542d81b7ec23694eefb4312..8b6b3b3c067b86c44aa0c061b61d79d3
 +import org.jetbrains.annotations.NotNull;
 +
  public interface DAPI_Entity {
-+
+ 
 +    void cancelTasks(@NotNull Entity entity);
 +
 +    @NotNull
