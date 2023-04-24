@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 29 Jan 2023 19:56:36 -0500
+Subject: [PATCH] Disable Reloading
+
+Reloading is disabled by default, but can be re-enabled by setting 'enable-reloading'
+to true in dragon.yml, or by setting the 'com.domnian.paperdragon.reloading.emable'
+system property (using '-D' JVM flag) to true
+
+diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+index 3ec32b46264cfff857b50129b5e0fa5584943ec6..4beba4ddedf413fcd3fd412e2caa18cfc0a1aa08 100644
+--- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+@@ -3,6 +3,8 @@ package org.bukkit.command.defaults;
+ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.List;
++
++import net.kyori.adventure.text.format.NamedTextColor;
+ import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.command.Command;
+@@ -22,6 +24,15 @@ public class ReloadCommand extends BukkitCommand {
+     public boolean execute(@NotNull CommandSender sender, @NotNull String currentAlias, @NotNull String[] args) { // Paper
+         if (!testPermission(sender)) return true;
+ 
++        // PaperDragon start
++        boolean dragonYmlSetting = Bukkit.getServer().spigot().getDragonConfig().getBoolean("enable-reloading");
++        boolean systemProperty = Boolean.getBoolean("com.domnian.paperdragon.reloading.enable");
++        if (!dragonYmlSetting && !systemProperty) {
++            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text("Reloading is currently disabled. If you believe this is an error, please check that 'enable-reloading' is true in dragon.yml", NamedTextColor.RED));
++            return true;
++        }
++        // PaperDragon end
++
+         // Paper start - Reload permissions.yml & require confirm
+         boolean confirmed = System.getProperty("LetMeReload") != null;
+         if (args.length == 1) {
