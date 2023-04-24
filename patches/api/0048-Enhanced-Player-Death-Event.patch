@@ -5,7 +5,7 @@ Subject: [PATCH] Enhanced Player Death Event
 
 
 diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-index d5eeb37d331e205826aa6199bd481cb0db40d721..cb58a8dcb7472c480a02711ff334dde52d8404af 100644
+index c7138d79a572a525c70b51b7c79d2c5dfb18f25c..ffae02576947b789186d6dde2345a4146fe21710 100644
 --- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 @@ -19,6 +19,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {

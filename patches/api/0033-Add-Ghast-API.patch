@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 1 Apr 2023 11:48:20 -0500
+Subject: [PATCH] Add Ghast API
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+index d0c7aa01879c34c5568330dcbfb18d26d89ff05a..6c2384a1b6e0f66bbad8893139b2fc0d191267aa 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+@@ -203,9 +203,13 @@ public interface DAPI_Entity {
+     }
+ 
+     @Deprecated
+-    int getFireballCooldown(@NotNull Ghast ghast);
++    default int getFireballCooldown(@NotNull Ghast ghast) {
++        return ghast.getFireballCooldown();
++    }
+ 
+     @Deprecated
+-    void setFireballCooldown(@NotNull Ghast ghast, int cooldown);
++    default void setFireballCooldown(@NotNull Ghast ghast, int cooldown) {
++        ghast.setFireballCooldown(cooldown);
++    }
+ 
+-}
++}
+\ No newline at end of file
+diff --git a/src/main/java/org/bukkit/entity/Ghast.java b/src/main/java/org/bukkit/entity/Ghast.java
+index 9c618a27d590f186f29c5d9094fc565efd40ca49..5803a5e0b7d1ecdee41846f325e7fb6ef82c1581 100644
+--- a/src/main/java/org/bukkit/entity/Ghast.java
++++ b/src/main/java/org/bukkit/entity/Ghast.java
+@@ -35,4 +35,9 @@ public interface Ghast extends Flying, Enemy {
+      */
+     void setExplosionPower(int explosionPower);
+     // Paper end
++    // PaperDragon start
++    int getFireballCooldown();
++
++    void setFireballCooldown(int cooldown);
++    // PaperDragon end
+ }

@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 1 Apr 2023 11:32:44 -0500
+Subject: [PATCH] Add Wolf setAlwaysAngry API
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+index fae7a41286a42e3791127be5b0acbb06666fd1bb..0828635cd443d06ffdea4354b1a285946c0f8fe3 100644
+--- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
+@@ -153,7 +153,9 @@ public interface DAPI_Entity {
+     }
+ 
+     @Deprecated
+-    void setAlwaysAngry(@NotNull Wolf wolf, boolean alwaysAngry);
++    default void setAlwaysAngry(@NotNull Wolf wolf, boolean alwaysAngry) {
++        wolf.setAlwaysAngry(alwaysAngry);
++    }
+ 
+     @Deprecated
+     void setEnderSignalExactTarget(@NotNull EnderSignal enderSignal, boolean exact);
+diff --git a/src/main/java/org/bukkit/entity/Wolf.java b/src/main/java/org/bukkit/entity/Wolf.java
+index 84db38388bf7a58e66d6cd29620b4fe64b0a897e..4c2ee4a7818bb07b62c4f5859911d9a2dabde6d0 100644
+--- a/src/main/java/org/bukkit/entity/Wolf.java
++++ b/src/main/java/org/bukkit/entity/Wolf.java
+@@ -69,4 +69,6 @@ public interface Wolf extends Tameable, Sittable, io.papermc.paper.entity.Collar
+      * @param interested Whether the wolf is interested
+      */
+     public void setInterested(boolean interested);
++
++    void setAlwaysAngry(boolean alwaysAngry); // PaperDragon
+ }

@@ -5,7 +5,7 @@ Subject: [PATCH] Entity AI API
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d..5cc578fecf5f19240b08973cfcb67c88ec847313 100644
+index 8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d..6b0226d4afd02a77cb8380d26d21392bcbf0c809 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
 @@ -23,9 +23,21 @@
@@ -30,7 +30,7 @@ index 8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d..5cc578fecf5f19240b08973cfcb67c88
  
  public interface DAPI_Entity {
  
-@@ -94,4 +106,69 @@ public interface DAPI_Entity {
+@@ -94,4 +106,82 @@ public interface DAPI_Entity {
      @NotNull
      <T extends Entity> EntityTask<T> scheduleTask(@NotNull T entity, int interval, @NotNull EntityTask<T> task);
  
@@ -52,6 +52,7 @@ index 8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d..5cc578fecf5f19240b08973cfcb67c88
 +
 +    void makeAggressive(@NotNull Creature creature, float range);
 +
++    @Deprecated
 +    void makeAggressiveDuringDay(@NotNull Spider spider, boolean attack);
 +
 +    boolean isAggressive(@NotNull Creature creature);
@@ -69,34 +70,46 @@ index 8b6b3b3c067b86c44aa0c061b61d79d35ab57b3d..5cc578fecf5f19240b08973cfcb67c88
 +
 +    void setTargetRange(@NotNull Mob mob, @Nullable Double range);
 +
++    @Deprecated
 +    void setRangedAttackDistance(@NotNull RangedEntity ranged, float range);
 +
++    @Deprecated
 +    void setRangedAttackSpeed(@NotNull RangedEntity ranged, @Nullable Integer min, @Nullable Integer max);
 +
++    @Deprecated
 +    void setAlwaysAngry(@NotNull Wolf wolf, boolean alwaysAngry);
 +
-+    void respawnEntity(@NotNull org.bukkit.entity.Entity entity);
-+
++    @Deprecated
 +    void setEnderSignalExactTarget(@NotNull EnderSignal enderSignal, boolean exact);
 +
++    @Deprecated
 +    void setEnderSignalLife(@NotNull EnderSignal enderSignal, int lifeTime);
 +
++    @Deprecated
 +    int getEnderSignalLife(@NotNull EnderSignal enderSignal);
 +
++    @Deprecated
 +    void setEnderSignalSpeed(@NotNull EnderSignal enderSignal, double speed);
 +
++    @Deprecated
 +    double getEnderSignalSpeed(@NotNull EnderSignal enderSignal);
 +
++    @Deprecated
 +    void setFireballs(@NotNull Blaze blaze, int num);
 +
++    @Deprecated
 +    int getNumFireballs(@NotNull Blaze blaze);
 +
++    @Deprecated
 +    int getTimeBetweenFireballs(@NotNull Blaze blaze);
 +
++    @Deprecated
 +    void setTimeBetweenFireballs(@NotNull Blaze blaze, int timeBetweenFireballs);
 +
++    @Deprecated
 +    int getFireballCooldown(@NotNull Ghast ghast);
 +
++    @Deprecated
 +    void setFireballCooldown(@NotNull Ghast ghast, int cooldown);
 +
  }
