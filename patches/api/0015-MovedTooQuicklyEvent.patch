@@ -10,7 +10,7 @@ index 0000000000000000000000000000000000000000..cf42b5574c6c709de4ca4546a4fa572c
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/MovedTooQuicklyEvent.java
 @@ -0,0 +1,50 @@
-+package com.domnian.paperdragon.customevents;
++package com.domnian.paperdragon.events;
 +
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.Cancellable;

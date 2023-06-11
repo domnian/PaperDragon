@@ -177,7 +177,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 3e2b218cd11f79dfc07a115fbfa100d9ceb9786f..e90b1676bfb774ef3c9cb61cfd2a98f75d583a9f 100644
+index da0d71937f19cfc41e697de80af8fe3d4355940f..cc70587057a11d67eb2d452a065663cb5e3cd3ab 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -3,6 +3,8 @@ package org.bukkit.entity;
@@ -189,7 +189,7 @@ index 3e2b218cd11f79dfc07a115fbfa100d9ceb9786f..e90b1676bfb774ef3c9cb61cfd2a98f7
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
  import org.bukkit.GameMode;
-@@ -1588,6 +1590,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1639,6 +1641,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

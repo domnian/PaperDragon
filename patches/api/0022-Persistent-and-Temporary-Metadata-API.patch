@@ -1638,7 +1638,7 @@ index 0000000000000000000000000000000000000000..017bae6fb2241dcee658bbd9ada6bee1
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 2f6142b6bfaa3b523478eccd6ad13ce922e81da9..52817b49ad1511d760b8bb095b1c84438e0e6e6d 100644
+index 4418c41f75e9a190dd77abdd6048b0a4fb2a57ed..5f05d0d3f0d2ea4bc472b8802d3809bda1393e4b 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -1,6 +1,9 @@
@@ -1665,7 +1665,7 @@ index 2f6142b6bfaa3b523478eccd6ad13ce922e81da9..52817b49ad1511d760b8bb095b1c8443
      /**
       * Gets the X-coordinate of this chunk
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 0b8776355f724927ada826735d5e73f3fb6897d5..8f1019441e01cb0d3b1441ded0e7a66a86af028b 100644
+index 72f1576b8ce5b55b50f053f346ce42c52db4b568..473bec5d79f8e3c552f8687b43da6f946ef1ea35 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1,6 +1,8 @@
@@ -1677,7 +1677,7 @@ index 0b8776355f724927ada826735d5e73f3fb6897d5..8f1019441e01cb0d3b1441ded0e7a66a
  import org.bukkit.generator.ChunkGenerator;
  
  import java.util.ArrayList;
-@@ -74,7 +76,12 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -75,7 +77,12 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
       */
      int getPlayerCount();
      // Paper end
@@ -1705,7 +1705,7 @@ index 37ca7b6b0fcee8bec12026ec3715dcc47400cc11..b6d92ca8ab08b555ae99841abf3a133a
      /**
       * Checks if this block state is collidable.
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 8c58018b155c52a7b2a139f784abceb6aa00a268..3eefa07189f2917a8f602edc5fe34388da43d5d1 100644
+index a2a423d4e4c2702ba5967223cab0432dd7d04732..f44d6d0f12bb67b321b4566c60cf1eccc244913b 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -3,6 +3,9 @@ package org.bukkit.entity;
@@ -1718,7 +1718,7 @@ index 8c58018b155c52a7b2a139f784abceb6aa00a268..3eefa07189f2917a8f602edc5fe34388
  import org.bukkit.Chunk; // Paper
  import org.bukkit.EntityEffect;
  import org.bukkit.Location;
-@@ -29,6 +32,12 @@ import org.jetbrains.annotations.Nullable;
+@@ -30,6 +33,12 @@ import org.jetbrains.annotations.Nullable;
   */
  public interface Entity extends Metadatable, CommandSender, Nameable, PersistentDataHolder, net.kyori.adventure.text.event.HoverEventSource<net.kyori.adventure.text.event.HoverEvent.ShowEntity>, net.kyori.adventure.sound.Sound.Emitter { // Paper
  

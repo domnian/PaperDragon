@@ -6,7 +6,7 @@ Subject: [PATCH] Hopper Events
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0fec3c8aa080f1155d32e93d8b39d633ad20393c
+index 0000000000000000000000000000000000000000..028488e11462b953becdd24d2dbb70ca5a545f63
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/HopperDrainEvent.java
 @@ -0,0 +1,71 @@
@@ -33,7 +33,7 @@ index 0000000000000000000000000000000000000000..0fec3c8aa080f1155d32e93d8b39d633
 + *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 + */
 +
-+package com.domnian.paperdragon.customevents;
++package com.domnian.paperdragon.events;
 +
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.Event;

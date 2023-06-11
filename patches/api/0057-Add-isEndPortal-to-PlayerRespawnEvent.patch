@@ -5,46 +5,10 @@ Subject: [PATCH] Add isEndPortal to PlayerRespawnEvent
 
 
 diff --git a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
-index 3715584a8289200ffb968e384e359ab574aaec5c..43dd3d434f410e79926c75dcbeb3bbe6d464f655 100644
+index b45f265ec7819b06a9a8361e8c1e43fd88b3138b..704512654e12da44c8c108d116c79eb4883a485c 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerRespawnEvent.java
-@@ -17,28 +17,31 @@ public class PlayerRespawnEvent extends PlayerEvent {
-     private Location respawnLocation;
-     private final boolean isBedSpawn;
-     private final boolean isAnchorSpawn;
-+    private final boolean isEndPortal; // PaperDragon - add isEndPortal
-     private final java.util.Set<RespawnFlag> respawnFlags; // Paper
- 
-     @Deprecated
-     public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn) {
--        this(respawnPlayer, respawnLocation, isBedSpawn, false);
-+        this(respawnPlayer, respawnLocation, isBedSpawn, false, false); // PaperDragon - add isEndPortal
-     }
- 
-     @Deprecated // Paper
--    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn) {
-+    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn, final boolean isEndPortal) { // PaperDragon - add isEndPortal
-         // Paper start
--        this(respawnPlayer, respawnLocation, isBedSpawn, isAnchorSpawn, com.google.common.collect.ImmutableSet.builder());
-+        this(respawnPlayer, respawnLocation, isBedSpawn, isAnchorSpawn, isEndPortal, com.google.common.collect.ImmutableSet.builder()); // PaperDragon - add isEndPortal
-     }
- 
--    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn, @NotNull final com.google.common.collect.ImmutableSet.Builder<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag> respawnFlags) {
-+    public PlayerRespawnEvent(@NotNull final Player respawnPlayer, @NotNull final Location respawnLocation, final boolean isBedSpawn, final boolean isAnchorSpawn, final boolean isEndPortal, @NotNull final com.google.common.collect.ImmutableSet.Builder<org.bukkit.event.player.PlayerRespawnEvent.RespawnFlag> respawnFlags) { // PaperDragon - add isEndPortal
-         // Paper end
-         super(respawnPlayer);
-         this.respawnLocation = respawnLocation;
-         this.isBedSpawn = isBedSpawn;
-+        this.isEndPortal = isEndPortal; // PaperDragon - add isEndPortal
-         this.isAnchorSpawn = isAnchorSpawn;
-         // Paper start
-         if (this.isBedSpawn) { respawnFlags.add(RespawnFlag.BED_SPAWN); }
-         if (this.isAnchorSpawn) { respawnFlags.add(RespawnFlag.ANCHOR_SPAWN); }
-+        if (this.isEndPortal) { respawnFlags.add(RespawnFlag.END_PORTAL); }
-         this.respawnFlags = respawnFlags.build();
-         // Paper end
-     }
-@@ -83,6 +86,17 @@ public class PlayerRespawnEvent extends PlayerEvent {
+@@ -90,6 +90,20 @@ public class PlayerRespawnEvent extends PlayerEvent {
          return isAnchorSpawn;
      }
  
@@ -52,13 +16,16 @@ index 3715584a8289200ffb968e384e359ab574aaec5c..43dd3d434f410e79926c75dcbeb3bbe6
 +    /**
 +     * Gets whether the respawn is caused by entering an end portal leaving the end.
 +     *
++     * @deprecated
++     * @see PlayerRespawnEvent#getRespawnReason()
 +     * @return true if the respawn is caused by an end portal
 +     */
++    @Deprecated
 +    public boolean isEndPortal() {
-+        return this.isEndPortal;
++        throw new UnsupportedOperationException("No longer supported");
 +    }
 +    // PaperDragon end
 +
-     @NotNull
-     @Override
-     public HandlerList getHandlers() {
+     /**
+      * Gets the reason this respawn event was called.
+      *

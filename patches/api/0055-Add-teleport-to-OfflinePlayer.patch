@@ -5,10 +5,10 @@ Subject: [PATCH] Add teleport() to OfflinePlayer
 
 
 diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
-index 5827faf0b12e600e810f60b8851db3e2e66cb370..0d0ca91393b70b70940c25ca16ccc5be267cf7cc 100644
+index 19d3d17711cbe73e7c49aef210f0b1a272be65f4..45dc7e441d961518216bdcc5a0b5764f72202f12 100644
 --- a/src/main/java/org/bukkit/OfflinePlayer.java
 +++ b/src/main/java/org/bukkit/OfflinePlayer.java
-@@ -459,5 +459,6 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
+@@ -464,5 +464,6 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
      // PaperDragon start
      @NotNull
      public Location getLocation();
