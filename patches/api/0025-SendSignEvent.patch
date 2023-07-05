@@ -6,10 +6,10 @@ Subject: [PATCH] SendSignEvent
 
 diff --git a/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0e4a730090ff0e813551976fbba970f85ff94f78
+index 0000000000000000000000000000000000000000..6e3380595923c89ff28cfe76cd6e83854208401b
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/SendSignEvent.java
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,103 @@
 +/*
 + * Copyright (c) 2016 Starlis LLC / Daniel Ennis (Aikar) - MIT License
 + *
@@ -35,7 +35,9 @@ index 0000000000000000000000000000000000000000..0e4a730090ff0e813551976fbba970f8
 +
 +package com.domnian.paperdragon.events;
 +
++import net.kyori.adventure.text.Component;
 +import org.bukkit.block.Block;
++import org.bukkit.block.sign.Side;
 +import org.bukkit.event.Event;
 +import org.bukkit.event.HandlerList;
 +import org.jetbrains.annotations.NotNull;
@@ -46,9 +48,57 @@ index 0000000000000000000000000000000000000000..0e4a730090ff0e813551976fbba970f8
 +    public abstract Block getBlock();
 +
 +    @NotNull
-+    public abstract String[] getLines();
++    @Deprecated
++    public String[] getLines() {
++        String[] output = new String[8];
++        System.arraycopy(getFrontLines(), 0, output, 0, 4);
++        System.arraycopy(getBackLines(), 0, output, 4, 4);
++        return output;
++    }
 +
-+    public abstract void setLine(int i, @NotNull String line);
++    @NotNull
++    @Deprecated
++    public Component[] lines() {
++        Component[] output = new Component[8];
++        System.arraycopy(frontLines(), 0, output, 0, 4);
++        System.arraycopy(backLines(), 0, output, 4, 4);
++        return output;
++    }
++
++    @NotNull
++    @Deprecated
++    public abstract String[] getFrontLines();
++
++    @NotNull
++    public abstract Component[] frontLines();
++
++    @NotNull
++    @Deprecated
++    public abstract String[] getBackLines();
++
++    @NotNull
++    public abstract Component[] backLines();
++
++    @Deprecated
++    public void setLine(int i, @NotNull String line) {
++        setLine(i, Side.FRONT, line);
++    }
++
++    @Deprecated
++    public abstract void setLine(int i, @NotNull Side side, @NotNull String line);
++
++    @Deprecated
++    public abstract void setLine(int i, @NotNull Side side, @NotNull Component line);
++
++    @Deprecated
++    public abstract void setFrontLine(int i, @NotNull String line);
++
++    public abstract void frontLine(int i, @NotNull Component line);
++
++    @Deprecated
++    public abstract void setBackLine(int i, @NotNull String line);
++
++    public abstract void backLine(int i, @NotNull Component line);
 +
 +    private static final HandlerList handlers = new HandlerList();
 +
