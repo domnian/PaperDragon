@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 27 May 2023 16:03:16 -0500
+Subject: [PATCH] Implement PortalFrameCreateBlockEvent
+
+
+diff --git a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+index 450775d3cde1a504e786a66e6a3ab1602e7af124..14654b7b827dd3488b06b2e4eab5850f829235a6 100644
+--- a/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
++++ b/src/main/java/net/minecraft/world/level/portal/PortalForcer.java
+@@ -277,6 +277,11 @@ public class PortalForcer {
+                 if (k >= 0 && !this.canPortalReplaceBlock(temp)) {
+                     return false;
+                 }
++                // PaperDragon start
++                if (!(new com.domnian.paperdragon.events.PortalFrameCreateBlockEvent(org.bukkit.craftbukkit.block.CraftBlock.at(this.level, temp))).callEvent()) {
++                    return false;
++                }
++                // PaperDragon end
+             }
+         }
+ 
