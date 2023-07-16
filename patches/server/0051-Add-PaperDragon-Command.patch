@@ -1,0 +1,56 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 19 Jun 2017 00:28:41 -0400
+Subject: [PATCH] Add PaperDragon Command
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+index d5df72adf087ce18d50e2fc229d9869e93d62f21..22a406c57e4587e3c4cb56baa4b875565172b452 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+@@ -50,6 +50,7 @@ public class DragonConfig {
+         config.options().copyDefaults(true);
+ 
+         commands = new HashMap<>();
++        commands.put("paperdragon", new PaperDragonCommand("paperdragon"));
+ 
+         version = getInt("config-version", 1);
+         set("config-version", 1);
+diff --git a/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..c92bc17f973f4e004e8ae1424c83c1b1069ae0d7
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/PaperDragonCommand.java
+@@ -0,0 +1,32 @@
++package com.domnian.paperdragon;
++
++import org.bukkit.ChatColor;
++import org.bukkit.command.Command;
++import org.bukkit.command.CommandSender;
++
++public class PaperDragonCommand extends Command {
++
++    public PaperDragonCommand(String name) {
++        super(name);
++        this.description = "PaperDragon-Related Commands";
++        this.usageMessage = "/paperdragon [metrics|stats]";
++        this.setPermission("bukkit.command.paperdragon");
++    }
++
++    @Override
++    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
++        if (!testPermission(sender)) return true;
++
++        if (args.length != 1) {
++            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
++            return false;
++        }
++
++        switch (args[0]) {
++            case "metrics", "stats" -> sender.sendMessage(ChatColor.GREEN + "PaperDragon Metrics: " + ChatColor.AQUA + ChatColor.UNDERLINE + "https://bstats.org/plugin/server-implementation/PaperDragon");
++            default -> sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
++        }
++
++        return true;
++    }
++}

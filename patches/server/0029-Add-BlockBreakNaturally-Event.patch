@@ -1,0 +1,105 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 18 Dec 2014 22:48:46 -0500
+Subject: [PATCH] Add BlockBreakNaturally Event
+
+To give reliable control over all blocks dropping to world to restore custom item meta
+
+diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
+index a37434722c6fe6b64be5250674d0e239d345e53a..6478d0c4680cfd9d03392d89922330ae376f1cb9 100644
+--- a/src/main/java/net/minecraft/server/level/ServerLevel.java
++++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
+@@ -1654,6 +1654,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+             if (entity instanceof net.minecraft.world.entity.item.ItemEntity itemEntity && itemEntity.getItem().isEmpty()) return false; // Paper - Prevent empty items from being added
+             // Paper start - capture all item additions to the world
+             if (captureDrops != null && entity instanceof net.minecraft.world.entity.item.ItemEntity) {
++                ((net.minecraft.world.entity.item.ItemEntity) entity).droppedPosition = new BlockPos(entity.getBlockX(), entity.getBlockY(), entity.getBlockZ()); // PaperDragon
+                 captureDrops.add((net.minecraft.world.entity.item.ItemEntity) entity);
+                 return true;
+             }
+diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
+index 16e59438b6d76ec71e2aa423c91c4a96be4ec892..b739099766a4aef3082deb9c5fc0a1a9ee758098 100644
+--- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
++++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
+@@ -45,6 +45,7 @@ public class ItemEntity extends Entity implements TraceableEntity {
+     private static final int INFINITE_LIFETIME = -32768;
+     public int age;
+     public boolean canDespawn = true; // PaperDragon
++    public BlockPos droppedPosition; // PaperDragon
+     public int pickupDelay;
+     public int health;
+     @Nullable
+diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
+index 9522e646529f3d849471931b4b3c0d133e7fcfc5..397250116c214c7ddc92741ee6a94eda1b394d44 100644
+--- a/src/main/java/net/minecraft/world/level/block/Block.java
++++ b/src/main/java/net/minecraft/world/level/block/Block.java
+@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
+ import com.google.common.cache.LoadingCache;
+ import com.google.common.collect.ImmutableMap;
+ import com.mojang.logging.LogUtils;
++import io.papermc.paper.util.MCUtil; // PaperDragon
+ import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
+ import java.util.Iterator;
+ import java.util.List;
+@@ -355,7 +356,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+ 
+         Block.popResource(world, () -> {
+             return new ItemEntity(world, d1, d2, d3, stack);
+-        }, stack);
++        }, stack, pos); // PaperDragon
+     }
+ 
+     public static void popResourceFromFace(Level world, BlockPos pos, Direction direction, ItemStack stack) {
+@@ -373,18 +374,20 @@ public class Block extends BlockBehaviour implements ItemLike {
+ 
+         Block.popResource(world, () -> {
+             return new ItemEntity(world, d2, d3, d4, stack, d5, d6, d7);
+-        }, stack);
++        }, stack, pos); // PaperDragon
+     }
+ 
+-    private static void popResource(Level world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack) {
++    private static void popResource(Level world, Supplier<ItemEntity> itemEntitySupplier, ItemStack stack, BlockPos blockPos) { // PaperDragon - add blockPos
+         if (!world.isClientSide && !stack.isEmpty() && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+             ItemEntity entityitem = (ItemEntity) itemEntitySupplier.get();
+ 
+             entityitem.setDefaultPickUpDelay();
+             // CraftBukkit start
+             if (world.captureDrops != null) {
++                entityitem.droppedPosition = blockPos.immutable(); // PaperDragon
+                 world.captureDrops.add(entityitem);
+             } else {
++                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(MCUtil.toLocation(world, blockPos), (org.bukkit.entity.Item) entityitem.getBukkitEntity()).callEvent(); // PaperDragon
+                 world.addFreshEntity(entityitem);
+             }
+             // CraftBukkit end
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index d458b3036e493c03923a776466d8ff4530ee0d5b..04a00f44830da43ade3012aa04ac067ca9034908 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -13,6 +13,8 @@ import java.util.Map;
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ import javax.annotation.Nullable;
++
++import io.papermc.paper.util.MCUtil; // PaperDragon
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Direction;
+ import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
+@@ -428,6 +430,16 @@ public class CraftEventFactory {
+         Bukkit.getPluginManager().callEvent(event);
+ 
+         if (!event.isCancelled()) {
++            // PaperDragon start
++            com.google.common.collect.Multimap<org.bukkit.Location, org.bukkit.entity.Item> drops = com.google.common.collect.ArrayListMultimap.create();
++            for (Item item : list) {
++                ItemEntity entityItem = (ItemEntity) ((CraftEntity) item).getHandle();
++                drops.put(MCUtil.toLocation(entityItem.level(), entityItem.droppedPosition), (org.bukkit.entity.Item) entityItem.getBukkitEntity());
++            }
++            for (org.bukkit.Location location : drops.keySet()) {
++                new com.domnian.paperdragon.events.BlockBreakNaturallyEvent(location, drops.get(location)).callEvent();
++            }
++            // PaperDragon end
+             // Paper start
+             for (Item bukkit : list) {
+                 if (!bukkit.isValid()) {

@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Mon, 27 Jan 2020 00:54:51 -0500
+Subject: [PATCH] Add Method to Save Offline Player Data to File
+
+WARNING: This is a dangerous operation!
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+index d25bc41645a9e7afca190038b844f3bcf2a95557..03d81a5183cd09f26c7223115e401ebe49a9cce5 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -576,5 +576,22 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+                 ((net.minecraft.nbt.FloatTag) rot.get(1)).getAsFloat() // Pitch
+         );
+     }
++
++    /** @deprecated Internal use only - <strong>THIS IS A DANGEROUS OPERATION</strong> */
++    @Deprecated
++    private boolean saveData(CompoundTag data) {
++        if (isOnline()) throw new UnsupportedOperationException("Dangerous Operation - Trying to save data of player while online!");
++        try {
++            File file = new File(storage.getPlayerDir(), getUniqueId() + ".dat.tmp");
++            File dataFile = getDataFile();
++
++            net.minecraft.nbt.NbtIo.writeCompressed(data, new java.io.FileOutputStream(file));
++            if (dataFile.exists()) dataFile.delete();
++            return file.renameTo(dataFile);
++        } catch (Exception exception) {
++            exception.printStackTrace();
++            return false;
++        }
++    }
+     // PaperDragon end
+ }

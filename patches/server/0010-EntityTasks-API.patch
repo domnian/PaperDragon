@@ -33,7 +33,7 @@ index d5c6381045b5c9a54b37c18c3a0c3f38374a402a..13e53765916b1c18bd5540663c907ab0
  }
 diff --git a/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java b/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..49affc0a86cb082b7dae39b5ef710407680e669e
+index 0000000000000000000000000000000000000000..e759d993725f4fb06fe366744d47bd134627441d
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/EntityTasksHandler.java
 @@ -0,0 +1,57 @@
@@ -80,7 +80,7 @@ index 0000000000000000000000000000000000000000..49affc0a86cb082b7dae39b5ef710407
 +        }
 +    }
 +
-+    private static void clearTasks(Collection<ChunkHolder> chunkHolders) {
++    public static void clearTasks(Collection<ChunkHolder> chunkHolders) {
 +        for (ChunkHolder chunkHolder : chunkHolders) {
 +            LevelChunk chunk = chunkHolder.getTickingChunk();
 +            if (chunk == null) {
@@ -95,20 +95,20 @@ index 0000000000000000000000000000000000000000..49affc0a86cb082b7dae39b5ef710407
 +    public static class TaskList extends ArrayList<EntityTask<?>> {}
 +}
 diff --git a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-index f597d65d56964297eeeed6c7e77703764178fee0..e3905293ebfbbc993f82aea8ce3aab4407fc5a87 100644
+index ce449b7b6f615f2c8240e4207f06d4e54ae0083e..7d7ecbe5d3332755eccefb0c467beddb61b24e7d 100644
 --- a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 +++ b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-@@ -35,7 +35,7 @@ public final class ChunkEntitySlices {
+@@ -36,7 +36,7 @@ public final class ChunkEntitySlices {
      protected final EntityCollectionBySection allEntities;
      protected final EntityCollectionBySection hardCollidingEntities;
      protected final Reference2ObjectOpenHashMap<Class<? extends Entity>, EntityCollectionBySection> entitiesByClass;
 -    protected final EntityList entities = new EntityList();
 +    protected final EntityList entities = new EntityList(); public EntityList getEntityList() { return entities; } // PaperDragon
  
-     public ChunkHolder.FullChunkStatus status;
+     public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 8b3e703ebb497b9166bd211b4247a78891b61aeb..68f7776c3e2df2aa7ac3346836e2d0e5096d6497 100644
+index 18aac3da3c88f33b1a71a5920a8daa27e9723913..3bc696fa6eb93453cd9515edf4d5ea3ca1db47c1 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1,5 +1,6 @@
@@ -118,15 +118,15 @@ index 8b3e703ebb497b9166bd211b4247a78891b61aeb..68f7776c3e2df2aa7ac3346836e2d0e5
  import com.google.common.annotations.VisibleForTesting;
  import co.aikar.timings.TimingHistory; // Paper
  import com.google.common.collect.Lists;
-@@ -1183,6 +1184,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1343,6 +1344,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          ProfilerFiller gameprofilerfiller = this.getProfiler();
  
          ++entity.tickCount;
 +        EntityTasksHandler.tickHandler(entity); // PaperDragon
          this.getProfiler().push(() -> {
-             return Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
+             return BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString();
          });
-@@ -1221,6 +1223,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1381,6 +1383,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  // Paper end
                  passenger.setOldPosAndRot();
                  ++passenger.tickCount;
@@ -135,7 +135,7 @@ index 8b3e703ebb497b9166bd211b4247a78891b61aeb..68f7776c3e2df2aa7ac3346836e2d0e5
  
                  gameprofilerfiller.push(() -> {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 19e266364d9922d312d74e505261fc49994ee5e9..8e7f719f005c0e69056871ab32a95e25719624aa 100644
+index 401431a505400fc0dec3d17fdfa779e788e81716..74b095ef3dfabf357314d987176b460724276cf2 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -1,5 +1,6 @@
@@ -145,7 +145,7 @@ index 19e266364d9922d312d74e505261fc49994ee5e9..8e7f719f005c0e69056871ab32a95e25
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
  import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
-@@ -162,6 +163,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -163,6 +164,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // PaperDragon start
      public final PersistentMetaMap metaMap = new PersistentMetaMap();
      public final TempMetaMap tempMeta = new TempMetaMap();
@@ -154,7 +154,7 @@ index 19e266364d9922d312d74e505261fc49994ee5e9..8e7f719f005c0e69056871ab32a95e25
      // CraftBukkit start
      private static final int CURRENT_LEVEL = 2;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 588f2688737c313ec55eb4567fe168f2139133d3..b8b5c9ee2eda6d0102581b15e32b2c4dac82c61a 100644
+index a79172a41c0922d793b530adb4121afd54ba536b..0e03d6d1789da2d76c40ca8224ed9c8c896a63b4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1,5 +1,6 @@
@@ -164,10 +164,10 @@ index 588f2688737c313ec55eb4567fe168f2139133d3..b8b5c9ee2eda6d0102581b15e32b2c4d
  import com.domnian.paperdragon.api.meta.MetaApiAccessor; // PaperDragon
  import com.google.common.base.Charsets;
  import com.google.common.base.Function;
-@@ -1025,7 +1026,10 @@ public final class CraftServer implements Server {
-             ));
+@@ -1039,7 +1040,10 @@ public final class CraftServer implements Server {
              if (console.isDebugging()) io.papermc.paper.util.TraceUtil.dumpTraceForThread(worker.getThread(), "still running"); // Paper
          }
+         io.papermc.paper.plugin.PluginInitializerManager.reload(this.console); // Paper
 -        MetaApiAccessor.reload(); // PaperDragon
 +        // PaperDragon start
 +        MetaApiAccessor.reload();

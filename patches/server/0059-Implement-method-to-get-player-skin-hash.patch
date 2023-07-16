@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 12 Jul 2019 03:48:22 -0400
+Subject: [PATCH] Implement method to get player skin hash
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+index 1a5bfb951e33d4ff57a44875feef957c5cb2d597..16079a3b4291a16a32c60267520959cef58b7dcb 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Misc.java
+@@ -24,6 +24,9 @@
+ package com.domnian.paperdragon.api;
+ 
+ import io.papermc.paper.util.MCUtil;
++import com.destroystokyo.paper.profile.ProfileProperty;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.network.chat.Component;
+ import com.destroystokyo.paper.MaterialTags;
+@@ -38,10 +41,14 @@ import org.bukkit.Location;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ import org.bukkit.StructureType;
+ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
++import org.bukkit.entity.Player;
+ import org.jetbrains.annotations.NotNull;
+ 
++import java.util.Optional;
+ import java.util.ArrayList;
++import java.util.Base64;
+ import java.util.List;
++import java.util.Set;
+ 
+ public class CraftDAPI_Misc implements DAPI_Misc {
+ 
+@@ -112,4 +119,18 @@ public class CraftDAPI_Misc implements DAPI_Misc {
+         }
+         return null;
+     }
++
++    @Override
++    public String getSkinHash(@NotNull Player player) {
++        if (!player.getPlayerProfile().hasTextures()) return null;
++        Set<ProfileProperty> properties = player.getPlayerProfile().getProperties();
++        properties.removeIf(p -> !p.getName().equalsIgnoreCase("textures"));
++        Optional<ProfileProperty> opt = properties.stream().findFirst();
++        if (opt.isEmpty()) return null;
++        String encoded = opt.get().getValue();
++        JsonObject decoded = new Gson().fromJson(new String(Base64.getDecoder().decode(encoded)), JsonObject.class);
++        String skinUrl = decoded.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
++        return skinUrl.substring(38);
++    }
++
+ }

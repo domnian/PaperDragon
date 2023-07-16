@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 1 Apr 2023 12:16:13 -0500
+Subject: [PATCH] Ghast API
+
+
+diff --git a/src/main/java/net/minecraft/world/entity/monster/Ghast.java b/src/main/java/net/minecraft/world/entity/monster/Ghast.java
+index 592b0dae251800552a0771ec46b4b8532b63075d..2b598439eee30487e5a39b1f8fe63f3b2c8a4e71 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/Ghast.java
++++ b/src/main/java/net/minecraft/world/entity/monster/Ghast.java
+@@ -37,6 +37,7 @@ public class Ghast extends FlyingMob implements Enemy {
+ 
+     private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
+     private int explosionPower = 1;
++    public int fireballCooldown = 40; // PaperDragon
+ 
+     public Ghast(EntityType<? extends Ghast> type, Level world) {
+         super(type, world);
+@@ -347,7 +348,7 @@ public class Ghast extends FlyingMob implements Enemy {
+                         entitylargefireball.bukkitYield = entitylargefireball.explosionPower = this.ghast.getExplosionPower();
+                         entitylargefireball.setPos(this.ghast.getX() + vec3d.x * 4.0D, this.ghast.getY(0.5D) + 0.5D, entitylargefireball.getZ() + vec3d.z * 4.0D);
+                         world.addFreshEntity(entitylargefireball);
+-                        this.chargeTime = -40;
++                        this.chargeTime = -ghast.fireballCooldown; // PaperDragon
+                     }
+                 } else if (this.chargeTime > 0) {
+                     --this.chargeTime;
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
+index 814cded47a04c25391575af036f53dc409121813..ef7e96386cbd30c42f2ea70ff96d675dc6453587 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftGhast.java
+@@ -47,4 +47,16 @@ public class CraftGhast extends CraftFlying implements Ghast, CraftEnemy {
+         this.getHandle().setExplosionPower(explosionPower);
+     }
+     // Paper end
++
++    // PaperDragon start
++    @Override
++    public int getFireballCooldown() {
++        return getHandle().fireballCooldown;
++    }
++    @Override
++    public void setFireballCooldown(int cooldown) {
++        getHandle().fireballCooldown = cooldown;
++    }
++    // PaperDragon end
++
+ }

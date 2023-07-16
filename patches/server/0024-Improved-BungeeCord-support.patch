@@ -1,0 +1,84 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 9 Dec 2013 23:21:21 -0500
+Subject: [PATCH] Improved BungeeCord support
+
+Secure BungeeCord with IP Whitelist for IP/UUID forwarding
+Allow online-mode to be set to true, and skip online-mode for bungee IP's
+
+diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
+index c45c1d519aba414557bf1a4c9260f928bd8d9b14..5b25ba1d09d68beb6e10f000b2ccef8175088846 100644
+--- a/src/main/java/net/minecraft/network/Connection.java
++++ b/src/main/java/net/minecraft/network/Connection.java
+@@ -81,6 +81,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+     public com.mojang.authlib.properties.Property[] spoofedProfile;
+     public boolean preparing = true;
+     // Spigot End
++    public boolean isProxied = false; // PaperDragon
+     private PacketListener packetListener;
+     private Component disconnectedReason;
+     private boolean encrypted;
+diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
+index 63cf71940f6480c593a43bd39900c50676367404..81ccbe7996e874e784ff80f745112b23a7488196 100644
+--- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
+@@ -93,7 +93,8 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+                 } else {
+                     this.connection.setListener(new ServerLoginPacketListenerImpl(this.server, this.connection));
+                 // Paper start - handshake event
+-                boolean proxyLogicEnabled = org.spigotmc.SpigotConfig.bungee;
++                String ip = ((java.net.InetSocketAddress) this.connection.getRemoteAddress()).getAddress().getHostAddress(); // PaperDragon
++                boolean proxyLogicEnabled = org.spigotmc.SpigotConfig.bungee && org.spigotmc.SpigotConfig.bungeeAddresses.contains(ip); // PaperDragon - add bungeeAddresses check
+                 boolean handledByEvent = false;
+                 // Try and handle the handshake through the event
+                 if (com.destroystokyo.paper.event.player.PlayerHandshakeEvent.getHandlerList().getRegisteredListeners().length != 0) { // Hello? Can you hear me?
+@@ -122,6 +123,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+                     if (!handledByEvent && proxyLogicEnabled) {
+                         // Paper end
+                     // if (org.spigotmc.SpigotConfig.bungee) { // Paper - comment out, we check above!
++                        connection.isProxied = true; // PaperDragon
+                         if ( ( split.length == 3 || split.length == 4 ) && ( ServerHandshakePacketListenerImpl.BYPASS_HOSTCHECK || ServerHandshakePacketListenerImpl.HOST_PATTERN.matcher( split[1] ).matches() ) ) { // Paper
+                             // Paper start - Unix domain socket support
+                             java.net.SocketAddress socketAddress = connection.getRemoteAddress();
+@@ -129,7 +131,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+                             connection.address = new java.net.InetSocketAddress(split[1], socketAddress instanceof java.net.InetSocketAddress ? ((java.net.InetSocketAddress) socketAddress).getPort() : 0);
+                             // Paper end
+                             connection.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
+-                        } else
++                        } else if (false) // PaperDragon
+                         {
+                             Component chatmessage = Component.literal("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
+                             this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
+diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+index 2ff578e4a953ffcf5176815ba8e3f06f73499989..8700e0ea15f9003ed12ff75567caf637c5ef293c 100644
+--- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+@@ -253,7 +253,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+             this.state = ServerLoginPacketListenerImpl.State.READY_TO_ACCEPT;
+         } else {
+             this.gameProfile = new GameProfile((UUID) null, packet.name());
+-            if (this.server.usesAuthentication() && !this.connection.isMemoryConnection()) {
++            if (!this.connection.isProxied && this.server.usesAuthentication() && !this.connection.isMemoryConnection()) { // PaperDragon - add !isProxied
+                 this.state = ServerLoginPacketListenerImpl.State.KEY;
+                 this.connection.send(new ClientboundHelloPacket("", this.server.getKeyPair().getPublic().getEncoded(), this.challenge));
+             } else {
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 612c3169c3463d702b85975e1db79ae6e47d60d0..de3678f5ac827271b42caa322013e9461b433462 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -233,6 +233,7 @@ public class SpigotConfig
+     }
+ 
+     public static boolean bungee;
++    public static List<String> bungeeAddresses = java.util.Collections.singletonList("127.0.0.1"); // PaperDragon
+     private static void bungee() {
+         if ( SpigotConfig.version < 4 )
+         {
+@@ -240,6 +241,7 @@ public class SpigotConfig
+             System.out.println( "Oudated config, disabling BungeeCord support!" );
+         }
+         SpigotConfig.bungee = SpigotConfig.getBoolean( "settings.bungeecord", false );
++        bungeeAddresses = getList("settings.bungeecord-addresses", bungeeAddresses); // PaperDragon
+     }
+ 
+     private static void nettyThreads()

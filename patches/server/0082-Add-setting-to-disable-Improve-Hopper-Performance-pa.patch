@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 3 Apr 2022 09:37:54 -0400
+Subject: [PATCH] Add setting to disable 'Improve Hopper Performance' patch
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index e71e20f1d16ee411fa6334ca0528f9021a860b1e..5cf516af8b6275c3c0d89ccc863e48a4b1c95043 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -78,4 +78,9 @@ public class DragonWorldConfig {
+         broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
+     }
+ 
++    public boolean disableImprovedHopperPerformance = false;
++    private void hoppers() {
++        disableImprovedHopperPerformance = getBoolean("disable-improved-hopper-performance", false);
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+index 8476cb38e5506679fbf940c2ac6e864198cbdba8..a6907e63cf06ebe52a0fc25571a282e26c4b2d3e 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+@@ -493,7 +493,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+                 }
+                 // Paper end
+             });
+-        } else if (shouldSuckIn(hopper)) { // PaperDragon
++        } else if (shouldSuckIn(hopper) || world.dragonConfig.disableImprovedHopperPerformance) { // PaperDragon
+             Iterator iterator = HopperBlockEntity.getItemsAtAndAbove(world, hopper).iterator();
+ 
+             ItemEntity entityitem;

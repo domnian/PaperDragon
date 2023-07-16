@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 12 Jan 2020 19:50:51 -0500
+Subject: [PATCH] Implement getLocation() for offline players
+
+
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index a61f6e2a18278f5fce9ef9d9c2c2525258fb5d5f..d70e87b3b9cde89f0ed9ac27d9795807a2b99555 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -2448,6 +2448,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+                 nbt.putBoolean("Paper.FreezeLock", true);
+             }
+             // Paper end
++            nbt.putString("Dragon.DisconnectWorld", ((ServerLevel) this.level).serverLevelData.getLevelName()); // PaperDragon start - save disconnect world
+             return nbt;
+         } catch (Throwable throwable) {
+             CrashReport crashreport = CrashReport.forThrowable(throwable, "Saving entity NBT");
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+index 714afc98b5150907b45a00060be4e41582333204..d25bc41645a9e7afca190038b844f3bcf2a95557 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -549,4 +549,32 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
+             manager.save();
+         }
+     }
++
++    // PaperDragon start
++    @Override
++    @org.jetbrains.annotations.NotNull
++    public Location getLocation() {
++        if (this.getPlayer() != null) return getPlayer().getLocation();
++        CompoundTag data = getData();
++        net.minecraft.nbt.ListTag pos = data.getList("Pos", 6); // 6 = NBTTagDouble
++        net.minecraft.nbt.ListTag rot = data.getList("Rotation", 5); // 5 = NBTTagFloat
++
++        UUID worldUUID = new UUID(data.getLong("WorldUUIDMost"), data.getLong("WorldUUIDLeast"));
++        org.bukkit.World world = org.bukkit.Bukkit.getWorld(worldUUID);
++        if (world == null) {
++            if (data.contains("Dragon.DisconnectWorld", 8)) {
++                world = Bukkit.getWorld(data.getString("Dragon.DisconnectWorld"));
++            } else {
++                world = Bukkit.getWorld(server.getHandle().getServer().getWorldData().getLevelName());
++            }
++        }
++
++        return new Location(
++                world, // World
++                pos.getDouble(0), pos.getDouble(1), pos.getDouble(2), // X, Y, Z
++                ((net.minecraft.nbt.FloatTag) rot.get(0)).getAsFloat(), // Yaw
++                ((net.minecraft.nbt.FloatTag) rot.get(1)).getAsFloat() // Pitch
++        );
++    }
++    // PaperDragon end
+ }

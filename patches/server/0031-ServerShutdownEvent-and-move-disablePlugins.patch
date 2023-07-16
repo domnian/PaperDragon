@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 8 May 2015 19:56:21 -0400
+Subject: [PATCH] ServerShutdownEvent and move disablePlugins
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 9134c242586ba23a25f9d63a48d68a2c3c2f9062..0ec5abf531aff90798a0622e805bd2e3c48d697a 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -246,6 +246,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+     protected final Proxy proxy;
+     private boolean onlineMode;
+     private boolean preventProxyConnections;
++    public String shutdownReason = "Server Shutting Down"; // PaperDragon
+     private boolean pvp;
+     private boolean allowFlight;
+     @Nullable
+@@ -942,8 +943,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+         MinecraftTimings.stopServer(); // Paper
+         // CraftBukkit start
+         if (this.server != null) {
+-            this.server.disablePlugins();
+-            this.server.waitForAsyncTasksShutdown(); // Paper
++            //this.server.disablePlugins(); // PaperDragon - Moved below after everything has unloaded so plugins can get events
++            //this.server.waitForAsyncTasksShutdown(); // Paper // PaperDragon - moved down
++            new com.domnian.paperdragon.events.ServerShutdownEvent(shutdownReason).callEvent(); // PaperDragon
+         }
+         // CraftBukkit end
+         if (this.getConnection() != null) {
+@@ -972,6 +974,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+         this.saveAllChunks(false, true, false, true); // Paper - rewrite chunk system - move closing into here
+ 
++        if (this.server != null) { this.server.disablePlugins(); this.server.waitForAsyncTasksShutdown(); } // PaperDragon
+         this.isSaving = false;
+         this.resources.close();
+ 

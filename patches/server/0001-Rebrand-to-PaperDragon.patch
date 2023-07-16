@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand to PaperDragon
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index b0e4f11e8af4b909a56bb5576d05ef0537fb25f7..f605f064f88d5e9ddebe1baa5544987181b10438 100644
+index e7a03ea1dab56e7725f718da0b44c736018ac995..1d3db48efa36bf98406518677e0a856006730e80 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,8 +7,12 @@ plugins {
@@ -24,8 +24,8 @@ index b0e4f11e8af4b909a56bb5576d05ef0537fb25f7..f605f064f88d5e9ddebe1baa55449871
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
 @@ -42,6 +46,12 @@ dependencies {
-     runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.7.3")
-     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.10")
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.9.10")
  
 +    // PaperDragon - start
 +    runtimeOnly("com.zaxxer:HikariCP:5.0.1")
@@ -55,7 +55,7 @@ index b0e4f11e8af4b909a56bb5576d05ef0537fb25f7..f605f064f88d5e9ddebe1baa55449871
      standardInput = System.`in`
      workingDir = rootProject.layout.projectDirectory
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 7b1843e16745ca8db2244e17490d291401f22679..af49c34ac78e9d7176b421acb17f8257b5372414 100644
+index 4b002e8b75d117b726b0de274a76d3596fce015b..0672cf9f6a71414e4420ed8652695a01ab697e49 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -593,7 +593,7 @@ public class Metrics {
@@ -67,12 +67,17 @@ index 7b1843e16745ca8db2244e17490d291401f22679..af49c34ac78e9d7176b421acb17f8257
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
-@@ -603,7 +603,7 @@ public class Metrics {
- 
-                 metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
-                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
--                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
-+                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown")); // PaperDragon
+@@ -607,11 +607,11 @@ public class Metrics {
+                 final String implVersion = org.bukkit.craftbukkit.Main.class.getPackage().getImplementationVersion();
+                 if (implVersion != null) {
+                     final String buildOrHash = implVersion.substring(implVersion.lastIndexOf('-') + 1);
+-                    paperVersion = "git-Paper-%s-%s".formatted(Bukkit.getServer().getMinecraftVersion(), buildOrHash);
++                    paperVersion = "git-PaperDragon-%s-%s".formatted(Bukkit.getServer().getMinecraftVersion(), buildOrHash); // PaperDragon
+                 } else {
+                     paperVersion = "unknown";
+                 }
+-                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> paperVersion));
++                metrics.addCustomChart(new Metrics.SimplePie("paperdragon_version", () -> paperVersion)); // PaperDragon
  
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
@@ -90,10 +95,10 @@ index c5d5648f4ca603ef2b1df723b58f9caf4dd3c722..e85ed0fb43eff15f4c5b4407cfa32cdc
                  .completer(new ConsoleCommandCompleter(this.server))
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6dc6c3bccb4ba34268a87b0754c87eb1e0df4135..dc3d420e03d681927e8cddcfa3333432c11e2c2d 100644
+index fb82bb52f219e7683fe1d3c0fb3acbe2251de8d4..9134c242586ba23a25f9d63a48d68a2c3c2f9062 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1681,7 +1681,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -103,10 +108,10 @@ index 6dc6c3bccb4ba34268a87b0754c87eb1e0df4135..dc3d420e03d681927e8cddcfa3333432
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4212568bf8de6988c71f43d3e2152fa0fe51d0d7..cd6795f86f195ea45bb0b98e0bfc69bdeaa58eda 100644
+index ffa27c9c02dc4d12411fc089de3af8e8e12ba06e..0ee330e0e7423ab5f377c0fd0eac68968162561d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
+@@ -262,7 +262,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -129,7 +134,7 @@ index 774556a62eb240da42e84db4502e2ed43495be17..e6c9e0dc175bfb9d7a43d73557263e5e
  
          if (stream != null) {
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index e9fa7faaa4451e36b3908cbcbbe0baf213abde96..04ae2fe1c7109b0b6879e38a3a439facf26ab6e9 100644
+index 98fba0288be9ed2cb18ffba5cf81148157dd4fcf..026a4dbea6800a6d1f0770a94b40b8549a5cc920 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -96,7 +96,7 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa

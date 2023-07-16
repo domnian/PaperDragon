@@ -1,0 +1,96 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 1 Apr 2023 12:14:27 -0500
+Subject: [PATCH] RangedEntity API
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/entity/CraftRangedEntity.java b/src/main/java/com/destroystokyo/paper/entity/CraftRangedEntity.java
+index d7a8eb1b8f24ed2741ae9dae62d3f6146f273e1d..56244ae79fb30256afc1be33cb654b4b52c60fc8 100644
+--- a/src/main/java/com/destroystokyo/paper/entity/CraftRangedEntity.java
++++ b/src/main/java/com/destroystokyo/paper/entity/CraftRangedEntity.java
+@@ -1,6 +1,11 @@
+ package com.destroystokyo.paper.entity;
+ 
++import com.domnian.paperdragon.api.DragonAPI; // PaperDragon
++import com.domnian.paperdragon.api.EntityAIApi; // PaperDragon
+ import net.minecraft.world.entity.Mob;
++import net.minecraft.world.entity.ai.goal.Goal; // PaperDragon
++import net.minecraft.world.entity.ai.goal.RangedAttackGoal; // PaperDragon
++import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal; // PaperDragon
+ import net.minecraft.world.entity.monster.RangedAttackMob;
+ import org.bukkit.craftbukkit.entity.CraftLivingEntity;
+ import org.bukkit.entity.LivingEntity;
+@@ -17,4 +22,41 @@ public interface CraftRangedEntity<T extends Mob & RangedAttackMob> extends Rang
+     default void setChargingAttack(boolean raiseHands) {
+         getHandle().setAggressive(raiseHands);
+     }
++    // PaperDragon start
++    @Override
++    default void setRangedAttackDistance(float range) {
++        DragonAPI.entity.setTargetRange(this, (double) range);
++        net.minecraft.world.entity.Mob entity = getHandle();
++        EntityAIApi.getGoalSets(entity).forEach(set -> set.forEach(o -> {
++            Goal goal = o.getGoal();
++            if (goal instanceof RangedAttackGoal) {
++                ((RangedAttackGoal) goal).setAttackRadius(range);
++            } else if (goal instanceof RangedBowAttackGoal) {
++                ((RangedBowAttackGoal<?>) goal).setAttackRadius(range);
++            }
++        }));
++    }
++
++    @Override
++    default void setRangedAttackSpeed(Integer min, Integer max) {
++        if (min == null && max == null) {
++            return;
++        }
++        net.minecraft.world.entity.Mob entity = getHandle();
++        EntityAIApi.getGoalSets(entity).forEach(set -> set.forEach(o -> {
++            Goal goal = o.getGoal();
++            if (goal instanceof RangedAttackGoal) {
++                if (min != null) {
++                    ((RangedAttackGoal) goal).setMinInterval(min);
++                }
++                if (max != null) {
++                    ((RangedAttackGoal) goal).setMaxInterval(max);
++                }
++            } else if (goal instanceof RangedBowAttackGoal) {
++                int speed = min != null && max != null ? Math.min(min, max) : (min != null ? min : max);
++                ((RangedBowAttackGoal<?>) goal).setMinAttackInterval(speed);
++            }
++        }));
++    }
++    // PaperDragon end
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
+index 104c7e912842f8a7e746168585e36fe6e3e6dc52..4f1b9bbd37224c9446c027ece7d9d942bbc56811 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
++++ b/src/main/java/net/minecraft/world/entity/ai/goal/RangedAttackGoal.java
+@@ -15,10 +15,10 @@ public class RangedAttackGoal extends Goal {
+     private int attackTime = -1;
+     private final double speedModifier;
+     private int seeTime;
+-    private final int attackIntervalMin;
+-    private final int attackIntervalMax;
+-    private final float attackRadius;
+-    private final float attackRadiusSqr;
++    private int attackIntervalMin; public void setMinInterval(int time) { this.attackIntervalMin = time; } // PaperDragon - make non-final
++    private int attackIntervalMax; public void setMaxInterval(int time) { this.attackIntervalMax = time; } // PaperDragon - make non-final
++    private float attackRadius; public void setAttackRadius(float radius) { this.attackRadius = radius; this.attackRadiusSqr = radius * radius; } // PaperDragon - make non-final
++    private float attackRadiusSqr; // PaperDragon - make non-final
+ 
+     public RangedAttackGoal(RangedAttackMob mob, double mobSpeed, int intervalTicks, float maxShootRange) {
+         this(mob, mobSpeed, intervalTicks, intervalTicks, maxShootRange);
+diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
+index 87fb10096fc9dade33c663234b1cecc34d3d77bb..19629b2e0040955953550b983cd44ac891018c59 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
++++ b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
+@@ -14,7 +14,7 @@ public class RangedBowAttackGoal<T extends Monster & RangedAttackMob> extends Go
+     private final T mob;
+     private final double speedModifier;
+     private int attackIntervalMin;
+-    private final float attackRadiusSqr;
++    private float attackRadiusSqr; public void setAttackRadius(float radius) { this.attackRadiusSqr = radius * radius; } // PaperDragon - make non-final
+     private int attackTime = -1;
+     private int seeTime;
+     private boolean strafingClockwise;

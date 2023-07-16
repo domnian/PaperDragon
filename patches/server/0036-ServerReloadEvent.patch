@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 25 Jun 2015 21:00:09 -0400
+Subject: [PATCH] ServerReloadEvent
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 0e03d6d1789da2d76c40ca8224ed9c8c896a63b4..5575c8990684c7b1a3db7cba0100125f7d9675f9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -951,6 +951,7 @@ public final class CraftServer implements Server {
+     @Override
+     public void reload() {
+         org.spigotmc.WatchdogThread.hasStarted = false; // Paper - Disable watchdog early timeout on reload
++        new com.domnian.paperdragon.events.ServerReloadEvent().callEvent(); // PaperDragon
+         this.reloadCount++;
+         this.configuration = YamlConfiguration.loadConfiguration(this.getConfigFile());
+         this.commandsConfiguration = YamlConfiguration.loadConfiguration(this.getCommandsConfigFile());

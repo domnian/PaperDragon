@@ -1,0 +1,186 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 8 Jun 2015 23:55:20 -0400
+Subject: [PATCH] SendSignEvent
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..7a6c17802f339db28671a704fff2d687fe9e5247
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/SendSignEventImpl.java
+@@ -0,0 +1,113 @@
++package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.events.SendSignEvent;
++import io.papermc.paper.adventure.PaperAdventure;
++import net.kyori.adventure.text.Component;
++import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
++import net.minecraft.core.BlockPos;
++import net.minecraft.world.level.Level;
++import net.minecraft.world.level.block.entity.SignText;
++import org.bukkit.block.Block;
++import org.bukkit.block.sign.Side;
++import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.jetbrains.annotations.NotNull;
++
++public class SendSignEventImpl extends SendSignEvent {
++
++    public SignText vanillaFrontLines, vanillaBackLines;
++    private final Component @NotNull[] frontLines, backLines;
++    private final String[] sFrontLines, sBackLines;
++    private final Block block;
++
++    public SendSignEventImpl(Level level, BlockPos position, SignText frontLines, SignText backLines) {
++        this.block = level.getWorld().getBlockAt(position.getX(), position.getY(), position.getZ());
++
++        this.vanillaFrontLines = frontLines;
++        this.frontLines = new net.kyori.adventure.text.Component[SignText.LINES];
++        this.sFrontLines = new String[SignText.LINES];
++        for (int i = 0; i < SignText.LINES; i++) {
++            this.frontLines[i] = PaperAdventure.asAdventure(frontLines.getMessage(i, false));
++            sFrontLines[i] = CraftChatMessage.fromComponent(frontLines.getMessage(i, false));
++        }
++
++        this.vanillaBackLines = backLines;
++        this.backLines = new net.kyori.adventure.text.Component[SignText.LINES];
++        this.sBackLines = new String[SignText.LINES];
++        for (int i = 0; i < SignText.LINES; i++) {
++            this.backLines[i] = PaperAdventure.asAdventure(backLines.getMessage(i, false));
++            sBackLines[i] = CraftChatMessage.fromComponent(backLines.getMessage(i, false));
++        }
++    }
++
++    @NotNull
++    public Block getBlock() {
++        return block;
++    }
++
++    @NotNull
++    @Deprecated
++    public String[] getFrontLines() {
++        return sFrontLines;
++    }
++
++    @Override
++    public Component @NotNull[] frontLines() {
++        return this.frontLines;
++    }
++
++    @NotNull
++    @Deprecated
++    public String[] getBackLines() {
++        return sBackLines;
++    }
++
++    @Override
++    public Component @NotNull[] backLines() {
++        return this.backLines;
++    }
++
++    @Deprecated
++    public void setLine(int i, @NotNull Side side, @NotNull String line) {
++        if (side == Side.FRONT) {
++            setFrontLine(i, line);
++        } else if (side == Side.BACK) {
++            setBackLine(i, line);
++        }
++    }
++
++    @Deprecated
++    public void setLine(int i, @NotNull Side side, @NotNull Component line) {
++        if (side == Side.FRONT) {
++            frontLine(i, line);
++        } else if (side == Side.BACK) {
++            backLine(i, line);
++        }
++    }
++
++    @Deprecated
++    public void setFrontLine(int index, @NotNull String line) {
++        sFrontLines[index] = line;
++        frontLines[index] = LegacyComponentSerializer.legacyAmpersand().deserialize(line);
++        vanillaFrontLines = vanillaFrontLines.setMessage(index, PaperAdventure.asVanilla(frontLines[index]));
++    }
++
++    public void frontLine(int index, @NotNull Component line) {
++        sFrontLines[index] = LegacyComponentSerializer.legacyAmpersand().serialize(line);
++        frontLines[index] = line;
++        vanillaFrontLines = vanillaFrontLines.setMessage(index, PaperAdventure.asVanilla(line));
++    }
++
++    @Deprecated
++    public void setBackLine(int index, @NotNull String line) {
++        sBackLines[index] = line;
++        backLines[index] = LegacyComponentSerializer.legacyAmpersand().deserialize(line);
++        vanillaBackLines = vanillaBackLines.setMessage(index, PaperAdventure.asVanilla(backLines[index]));
++    }
++
++    public void backLine(int index, @NotNull Component line) {
++        sBackLines[index] = LegacyComponentSerializer.legacyAmpersand().serialize(line);
++        backLines[index] = line;
++        vanillaBackLines = vanillaBackLines.setMessage(index, PaperAdventure.asVanilla(line));
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
+index ba6f0ba00cd2635bcd19889dca0349b363b079fe..fe1b2725b3fcc68a305a9defd98919247e19b785 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.world.level.block.entity;
+ 
++import com.domnian.paperdragon.api.SendSignEventImpl; // PaperDragon
+ import com.mojang.brigadier.exceptions.CommandSyntaxException;
+ import com.mojang.logging.LogUtils;
+ import com.mojang.serialization.DataResult;
+@@ -24,6 +25,7 @@ import net.minecraft.server.level.ServerPlayer;
+ import net.minecraft.server.network.FilteredText;
+ import net.minecraft.util.Mth;
+ import net.minecraft.world.entity.Entity;
++import net.minecraft.world.item.DyeColor;
+ import net.minecraft.world.level.Level;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.SignBlock;
+@@ -106,15 +108,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+ 
+     @Override
+     protected void saveAdditional(CompoundTag nbt) {
+-        super.saveAdditional(nbt);
+-        DataResult<Tag> dataresult = SignText.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, this.frontText); // CraftBukkit - decompile error
++        // PaperDragon start
++        saveAdditional(nbt, this.frontText, this.backText);
++    }
++    protected void saveAdditional(CompoundTag nbt, SignText frontText, SignText backText) {
++        // PaperDragon end
++        DataResult<Tag> dataresult = SignText.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, frontText); // CraftBukkit - decompile error // PaperDragon
+         Logger logger = SignBlockEntity.LOGGER;
+ 
+         Objects.requireNonNull(logger);
+         dataresult.resultOrPartial(logger::error).ifPresent((nbtbase) -> {
+             nbt.put("front_text", nbtbase);
+         });
+-        dataresult = SignText.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, this.backText);
++        dataresult = SignText.DIRECT_CODEC.encodeStart(NbtOps.INSTANCE, backText); // PaperDragon
+         logger = SignBlockEntity.LOGGER;
+         Objects.requireNonNull(logger);
+         dataresult.resultOrPartial(logger::error).ifPresent((nbtbase) -> {
+@@ -347,6 +353,18 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+ 
+     @Override
+     public CompoundTag getUpdateTag() {
++        // PaperDragon start
++        if (this.level != null) {
++            SendSignEventImpl event = new SendSignEventImpl(this.level, this.getBlockPos(), this.frontText, this.backText);
++            event.callEvent();
++            CompoundTag tag = new CompoundTag();
++            this.saveAdditional(tag, event.vanillaFrontLines, event.vanillaBackLines);
++            if (!this.persistentDataContainer.isEmpty()) {
++                tag.put("PublicBukkitValues", this.persistentDataContainer.toTagCompound());
++            }
++            return tag;
++        }
++        // PaperDragon end
+         return this.saveWithoutMetadata();
+     }
+ 

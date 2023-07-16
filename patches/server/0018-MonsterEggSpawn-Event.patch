@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 20 Jul 2013 22:40:56 -0400
+Subject: [PATCH] MonsterEggSpawn Event
+
+Get the itemstack used to spawn an entity
+
+diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
+index 9afc81ccb237c3655d64cdbe8a0db9a4d7791043..4eeebc1df36c799475f17d011947fd2e965aec42 100644
+--- a/src/main/java/net/minecraft/world/entity/EntityType.java
++++ b/src/main/java/net/minecraft/world/entity/EntityType.java
+@@ -347,12 +347,27 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+ 
+     @Nullable
+     public T spawn(ServerLevel world, @Nullable ItemStack stack, @Nullable Player player, BlockPos pos, MobSpawnType spawnReason, boolean alignPosition, boolean invertY) {
++        // PaperDragon start - add new event
++        Consumer<T> consumer = null;
++        final com.domnian.paperdragon.events.MonsterEggSpawnEvent event = new com.domnian.paperdragon.events.MonsterEggSpawnEvent(player != null ? player.getBukkitEntity() : null, io.papermc.paper.util.MCUtil.toLocation(world, pos), org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(stack), spawnReason == MobSpawnType.DISPENSER ? org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DISPENSE_EGG : org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
++        if (!event.callEvent()) {
++            return null;
++        }
++        if (event.getAfterSpawn() != null) {
++            consumer = (entity) -> event.getAfterSpawn().accept(entity.getBukkitEntity());
++        }
+         // CraftBukkit start
+-        return this.spawn(world, stack, player, pos, spawnReason, alignPosition, invertY, spawnReason == MobSpawnType.DISPENSER ? org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DISPENSE_EGG : org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG); // Paper - use correct spawn reason for dispenser spawn eggs
++        return this.spawn(world, stack, player, pos, spawnReason, alignPosition, invertY, spawnReason == MobSpawnType.DISPENSER ? org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DISPENSE_EGG : org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG, consumer); // Paper - use correct spawn reason for dispenser spawn eggs
++        // PaperDragon end
+     }
+ 
+     @Nullable
+     public T spawn(ServerLevel worldserver, @Nullable ItemStack itemstack, @Nullable Player entityhuman, BlockPos blockposition, MobSpawnType enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {
++        return this.spawn(worldserver, itemstack, entityhuman, blockposition, enummobspawn, flag, flag1, spawnReason, null);
++    }
++    @Nullable
++    public T spawn(ServerLevel worldserver, @Nullable ItemStack itemstack, @Nullable Player entityhuman, BlockPos blockposition, MobSpawnType enummobspawn, boolean flag, boolean flag1, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason, @Nullable Consumer<T> afterConsumer) {
++        // PaperDragon end
+         // CraftBukkit end
+         CompoundTag nbttagcompound;
+         Consumer<T> consumer; // CraftBukkit - decompile error
+@@ -365,6 +380,11 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+             };
+             nbttagcompound = null;
+         }
++        // PaperDragon start
++        if (afterConsumer != null) {
++            consumer = consumer.andThen(afterConsumer);
++        }
++        // PaperDragon end
+ 
+         return this.spawn(worldserver, nbttagcompound, consumer, blockposition, enummobspawn, flag, flag1, spawnReason); // CraftBukkit
+     }

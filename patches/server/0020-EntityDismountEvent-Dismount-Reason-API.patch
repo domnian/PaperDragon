@@ -1,0 +1,298 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 7 Aug 2013 19:52:14 -0400
+Subject: [PATCH] EntityDismountEvent Dismount Reason API
+
+
+diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
+index abd79dc7136c2ef22cd8125a0f9b2be05fb9aa2b..a37434722c6fe6b64be5250674d0e239d345e53a 100644
+--- a/src/main/java/net/minecraft/server/level/ServerLevel.java
++++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
+@@ -178,6 +178,7 @@ import org.bukkit.event.world.GenericGameEvent;
+ import org.bukkit.event.world.TimeSkipEvent;
+ // CraftBukkit end
+ import it.unimi.dsi.fastutil.ints.IntArrayList; // Paper
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ 
+ public class ServerLevel extends Level implements WorldGenLevel {
+ 
+@@ -865,6 +866,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+                                 if (!entity1.isRemoved() && entity1.hasPassenger(entity)) {
+                                     return;
+                                 }
++                                if (entity1.isRemoved()) { entity.dismountReason =  EntityDismountEvent.DismountReason.DEAD_VEHICLE; } // PaperDragon
+ 
+                                 entity.stopRiding();
+                             }
+@@ -1413,6 +1415,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+             } finally { timer.stopTiming(); }// Paper - EAR2 timings
+             }
+         } else {
++            if (passenger.isRemoved()) { passenger.dismountReason = EntityDismountEvent.DismountReason.DEAD; } // PaperDragon
+             passenger.stopRiding();
+         }
+     }
+diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+index 5fad40fa88f697108e42461c41012d5964ed7d75..e2af54c4a76a8aab1a4daca53300d84023efa524 100644
+--- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
++++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+@@ -185,6 +185,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
+ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+ import org.bukkit.event.player.PlayerToggleSneakEvent;
+ import org.bukkit.inventory.MainHand;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public class ServerPlayer extends Player {
+@@ -1750,10 +1751,11 @@ public class ServerPlayer extends Player {
+ 
+     public void disconnect() {
+         this.disconnected = true;
+-        this.ejectPassengers();
++        this.ejectPassengers(EntityDismountEvent.DismountReason.DISCONNECT); // PaperDragon
+ 
+         // Paper start - Workaround an issue where the vehicle doesn't track the passenger disconnection dismount.
+         if (this.isPassenger() && this.getVehicle() instanceof ServerPlayer) {
++            this.dismountReason = EntityDismountEvent.DismountReason.DISCONNECT; // PaperDragon
+             this.stopRiding();
+         }
+         // Paper end
+@@ -1888,6 +1890,7 @@ public class ServerPlayer extends Player {
+         ChunkPos chunkcoordintpair = new ChunkPos(BlockPos.containing(d0, d1, d2));
+ 
+         worldserver.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkcoordintpair, 1, this.getId());
++        this.dismountReason = EntityDismountEvent.DismountReason.TELEPORT; // PaperDragon
+         this.stopRiding();
+         if (this.isSleeping()) {
+             this.stopSleepInBed(true, true);
+@@ -1946,6 +1949,7 @@ public class ServerPlayer extends Player {
+             this.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.CHANGE_GAME_MODE, (float) gameMode.getId()));
+             if (gameMode == GameType.SPECTATOR) {
+                 this.removeEntitiesOnShoulder();
++                this.dismountReason = EntityDismountEvent.DismountReason.SPECTATE; // PaperDragon
+                 this.stopRiding();
+             } else {
+                 this.setCamera(this);
+@@ -2199,6 +2203,7 @@ public class ServerPlayer extends Player {
+     public void teleportTo(ServerLevel worldserver, double d0, double d1, double d2, float f, float f1, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause cause) {
+         // CraftBukkit end
+         this.setCamera(this);
++        this.dismountReason = EntityDismountEvent.DismountReason.TELEPORT; // PaperDragon
+         this.stopRiding();
+         /* CraftBukkit start - replace with bukkit handling for multi-world
+         if (worldserver == this.level()) {
+diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
+index 683b5d78f9e3dc34e40c54683f64be32317797ac..4b6bc277a2efbf9dc15c472e7b482d572604d5e9 100644
+--- a/src/main/java/net/minecraft/server/players/PlayerList.java
++++ b/src/main/java/net/minecraft/server/players/PlayerList.java
+@@ -128,6 +128,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
+ import org.bukkit.event.player.PlayerRespawnEvent;
+ import org.bukkit.event.player.PlayerRespawnEvent.RespawnReason;
+ import org.bukkit.event.player.PlayerSpawnChangeEvent;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public abstract class PlayerList {
+@@ -626,6 +627,7 @@ public abstract class PlayerList {
+ 
+             if (entity.hasExactlyOnePlayerPassenger()) {
+                 PlayerList.LOGGER.debug("Removing player mount");
++                entityplayer.dismountReason = EntityDismountEvent.DismountReason.DISCONNECT; // PaperDragon
+                 entityplayer.stopRiding();
+                 entity.getPassengersAndSelf().forEach((entity1) -> {
+                     // Paper start
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index ca054b70747be64337e0520321e609f067dfb521..3963fa12ac1a269f99157f6a3028929b6b1b522a 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -157,6 +157,7 @@ import org.bukkit.event.entity.EntityPortalEvent;
+ import org.bukkit.event.entity.EntityPoseChangeEvent;
+ import org.bukkit.event.player.PlayerTeleportEvent;
+ import org.bukkit.plugin.PluginManager;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -814,6 +815,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+         if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
+         this.feetBlockState = null;
+         if (this.isPassenger() && this.getVehicle().isRemoved()) {
++            this.dismountReason = EntityDismountEvent.DismountReason.DEAD_VEHICLE; // PaperDragon
+             this.stopRiding();
+         }
+ 
+@@ -2826,6 +2828,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+                 return false;
+             } else {
+                 if (this.isPassenger()) {
++                    this.dismountReason = EntityDismountEvent.DismountReason.TRANSFER; // PaperDragon
+                     this.stopRiding();
+                 }
+ 
+@@ -2851,7 +2854,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+     }
+ 
+     public void ejectPassengers() {
++        ejectPassengers(EntityDismountEvent.DismountReason.UNKNOWN);
++    }
++    public void ejectPassengers(EntityDismountEvent.DismountReason reason) {
+         for (int i = this.passengers.size() - 1; i >= 0; --i) {
++            this.passengers.get(i).dismountReason = reason; // PaperDragon
+             ((Entity) this.passengers.get(i)).stopRiding();
+         }
+ 
+@@ -2940,6 +2947,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+     // Paper start
+     protected boolean removePassenger(Entity entity) { return removePassenger(entity, false);}
+     protected boolean removePassenger(Entity entity, boolean suppressCancellation) { // CraftBukkit
++        EntityDismountEvent.DismountReason dismountReason = entity.dismountReason; // PaperDragon
++        entity.dismountReason = EntityDismountEvent.DismountReason.UNKNOWN; // PaperDragon
+         // Paper end
+         if (entity.getVehicle() == this) {
+             throw new IllegalStateException("Use x.stopRiding(y), not y.removePassenger(x)");
+@@ -2964,7 +2973,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+             }
+             // CraftBukkit end
+             // Spigot start
+-            org.spigotmc.event.entity.EntityDismountEvent event = new org.spigotmc.event.entity.EntityDismountEvent(entity.getBukkitEntity(), this.getBukkitEntity(), !suppressCancellation); // Paper
++            org.spigotmc.event.entity.EntityDismountEvent event = new org.spigotmc.event.entity.EntityDismountEvent(entity.getBukkitEntity(), this.getBukkitEntity(), !suppressCancellation, dismountReason); // Paper
+             // Suppress during worldgen
+             if (this.valid) {
+                 Bukkit.getPluginManager().callEvent(event);
+@@ -3496,6 +3505,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+         return this.removalReason != null ? String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cpos=%s, tl=%d, v=%b, removed=%s]", this.getClass().getSimpleName(), this.getName().getString(), this.id, this.uuid, s, this.getX(), this.getY(), this.getZ(), this.chunkPosition(), this.tickCount, this.valid, this.removalReason) : String.format(Locale.ROOT, "%s['%s'/%d, uuid='%s', l='%s', x=%.2f, y=%.2f, z=%.2f, cpos=%s, tl=%d, v=%b]", this.getClass().getSimpleName(), this.getName().getString(), this.id, this.uuid, s, this.getX(), this.getY(), this.getZ(), this.chunkPosition(), this.tickCount, this.valid);
+     }
+ 
++    public EntityDismountEvent.DismountReason dismountReason = EntityDismountEvent.DismountReason.UNKNOWN; // PaperDragon
+     public boolean isInvulnerableTo(DamageSource damageSource) {
+         return this.isRemoved() || this.invulnerable && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !damageSource.isCreativePlayer() && !isDisabled || damageSource.is(DamageTypeTags.IS_FIRE) && this.fireImmune() || damageSource.is(DamageTypeTags.IS_FALL) && this.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE); // PaperDragon - add !isDisabled
+     }
+@@ -4695,10 +4705,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+         }
+ 
+         if (this.removalReason.shouldDestroy()) {
++            this.dismountReason = EntityDismountEvent.DismountReason.DEAD; // PaperDragon
+             this.stopRiding();
+         }
+ 
+-        if (reason != RemovalReason.UNLOADED_TO_CHUNK) this.getPassengers().forEach(Entity::stopRiding); // Paper - chunk system - don't adjust passenger state when unloading, it's just not safe (and messes with our logic in entity chunk unload)
++        // PaperDragon start
++        if (reason != RemovalReason.UNLOADED_TO_CHUNK) { // Paper - chunk system - don't adjust passenger state when unloading, it's just not safe (and messes with our logic in entity chunk unload)
++            this.getPassengers().forEach(entity -> {
++                entity.dismountReason = EntityDismountEvent.DismountReason.DEAD_VEHICLE; // PaperDragon - Add this
++                entity.stopRiding();
++            });
++        }
++        // PaperDragon end
+         this.levelCallback.onRemove(reason);
+     }
+ 
+diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+index d3839d0ade96696afd3a4ada58a14c0fe42cacdb..73579220cbc14e01ace567dbcc4e16d7b443cab9 100644
+--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+@@ -144,6 +144,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
+ // CraftBukkit end
+ 
+ import co.aikar.timings.MinecraftTimings; // Paper
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ 
+ public abstract class LivingEntity extends Entity implements Attackable {
+ 
+@@ -452,6 +453,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+                 }
+ 
+                 if (!this.level().isClientSide && this.isPassenger() && this.getVehicle() != null && this.getVehicle().dismountsUnderwater()) {
++                    this.dismountReason = EntityDismountEvent.DismountReason.WATER; // PaperDragon
+                     this.stopRiding();
+                 }
+             } else if (this.getAirSupply() < this.getMaxAirSupply()) {
+@@ -4237,6 +4239,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+ 
+     public void startSleeping(BlockPos pos) {
+         if (this.isPassenger()) {
++            if (this instanceof net.minecraft.world.entity.player.Player) this.dismountReason = EntityDismountEvent.DismountReason.PLAYER; // PaperDragon
+             this.stopRiding();
+         }
+ 
+diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
+index 9f6c00309124b1739d6a5df863b4bbe0ad10916b..4286abadb3f23c4e788986a99a25db5afad6fb1c 100644
+--- a/src/main/java/net/minecraft/world/entity/Mob.java
++++ b/src/main/java/net/minecraft/world/entity/Mob.java
+@@ -83,6 +83,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
+ import org.bukkit.event.entity.EntityTransformEvent;
+ import org.bukkit.event.entity.EntityUnleashEvent;
+ import org.bukkit.event.entity.EntityUnleashEvent.UnleashReason;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1533,6 +1534,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+         }
+ 
+         if (this.isPassenger()) {
++            this.dismountReason = EntityDismountEvent.DismountReason.LEASH; // PaperDragon
+             this.stopRiding();
+         }
+ 
+diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
+index 58152160d609d0e9d105153aeb166a56a7955603..65457c036ba9431560fc8a3a5ad9eeee7751a77d 100644
+--- a/src/main/java/net/minecraft/world/entity/player/Player.java
++++ b/src/main/java/net/minecraft/world/entity/player/Player.java
+@@ -126,6 +126,7 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;
+ import org.bukkit.event.entity.EntityExhaustionEvent;
+ import org.bukkit.event.player.PlayerDropItemEvent;
+ import org.bukkit.event.player.PlayerVelocityEvent;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public abstract class Player extends LivingEntity {
+@@ -519,6 +520,7 @@ public abstract class Player extends LivingEntity {
+     @Override
+     public void rideTick() {
+         if (!this.level().isClientSide && this.wantsToStopRiding() && this.isPassenger()) {
++            this.dismountReason = EntityDismountEvent.DismountReason.PLAYER; // PaperDragon
+             this.stopRiding();
+             // CraftBukkit start - SPIGOT-7316: no longer passenger, dismount and return
+             if (!this.isPassenger()) {
+diff --git a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecart.java b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecart.java
+index 9948a28dae4edba877c13ef0156be5ff58df3fa2..f095b5b2ab586112c886048f255b53821662a35f 100644
+--- a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecart.java
++++ b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecart.java
+@@ -54,6 +54,7 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
+ import org.bukkit.event.vehicle.VehicleDestroyEvent;
+ import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
+ import org.bukkit.util.Vector;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ // CraftBukkit end
+ 
+ public abstract class AbstractMinecart extends Entity {
+@@ -274,7 +275,7 @@ public abstract class AbstractMinecart extends Entity {
+                         return true;
+                     }
+                     // CraftBukkit end
+-                    this.ejectPassengers();
++                    this.ejectPassengers(EntityDismountEvent.DismountReason.DEAD_VEHICLE);
+                     if (flag && !this.hasCustomName()) {
+                         this.discard();
+                     } else {
+diff --git a/src/main/java/net/minecraft/world/item/ChorusFruitItem.java b/src/main/java/net/minecraft/world/item/ChorusFruitItem.java
+index d38161d6266c2460666434d5f0930ecf16096977..60a6d19cd7b5a2691da1a3111694c0d7d46ba6f1 100644
+--- a/src/main/java/net/minecraft/world/item/ChorusFruitItem.java
++++ b/src/main/java/net/minecraft/world/item/ChorusFruitItem.java
+@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
+ import net.minecraft.world.level.Level;
+ import net.minecraft.world.level.gameevent.GameEvent;
+ import net.minecraft.world.phys.Vec3;
++import org.spigotmc.event.entity.EntityDismountEvent; // PaperDragon
+ 
+ public class ChorusFruitItem extends Item {
+ 
+@@ -34,6 +35,7 @@ public class ChorusFruitItem extends Item {
+                 double d5 = user.getZ() + (user.getRandom().nextDouble() - 0.5D) * 16.0D;
+ 
+                 if (user.isPassenger()) {
++                    user.dismountReason = EntityDismountEvent.DismountReason.TELEPORT; // PaperDragon
+                     user.stopRiding();
+                 }
+ 

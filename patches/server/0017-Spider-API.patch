@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Sun, 18 Jun 2023 13:26:35 -0400
+Subject: [PATCH] Spider API
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+index e4ae07734b034ffe317649ea779fce2874b60300..7f131265ead5e1c3785ccfdad15f9921181e0674 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Entity.java
+@@ -113,6 +113,11 @@ public class CraftDAPI_Entity implements DAPI_Entity {
+         EntityAIApi.getGoalSets(handle).forEach(set -> set.removeIf(o -> EntityAIApi.isHostileGoal(o.getGoal())));
+     }
+ 
++    @Override
++    public void makeAggressiveDuringDay(@NotNull Spider spider, boolean attack) {
++        ((CraftSpider) spider).getHandle().attackDuringDay = attack;
++    }
++
+     @Override
+     public void addGoalByName(@NotNull Mob mob, @NotNull String goalName, boolean isTargetGoal, int tickRate, @NotNull Class<?>[] argClasses, @NotNull Object... args) {
+         net.minecraft.world.entity.Mob handle = (net.minecraft.world.entity.Mob) ((CraftEntity) mob).getHandle();
+diff --git a/src/main/java/net/minecraft/world/entity/monster/Spider.java b/src/main/java/net/minecraft/world/entity/monster/Spider.java
+index 05432184077752b1d0cb764a5e39ed875748b2d6..26d6e3dee2b31ddd639bad8d01092a5cb1321f5c 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/Spider.java
++++ b/src/main/java/net/minecraft/world/entity/monster/Spider.java
+@@ -192,6 +192,7 @@ public class Spider extends Monster {
+         return 0.65F;
+     }
+ 
++    public boolean attackDuringDay = false; // PaperDragon
+     private static class SpiderAttackGoal extends MeleeAttackGoal {
+ 
+         public SpiderAttackGoal(Spider spider) {
+@@ -206,6 +207,7 @@ public class Spider extends Monster {
+         @Override
+         public boolean canContinueToUse() {
+             float f = this.mob.getLightLevelDependentMagicValue();
++            if (((Spider) this.mob).attackDuringDay) { f = 0.0F; } // PaperDragon
+ 
+             if (f >= 0.5F && this.mob.getRandom().nextInt(100) == 0) {
+                 this.mob.setTarget((LivingEntity) null);
+@@ -230,6 +232,7 @@ public class Spider extends Monster {
+         @Override
+         public boolean canUse() {
+             float f = this.mob.getLightLevelDependentMagicValue();
++            if (((Spider) this.mob).attackDuringDay) { f = 0.0F; } // PaperDragon
+ 
+             return f >= 0.5F ? false : super.canUse();
+         }

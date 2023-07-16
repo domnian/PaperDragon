@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Mon, 9 Sep 2013 19:41:07 -0400
+Subject: [PATCH] Better hopper events
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/HopperEvents.java b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..0c12297872a5160d3085cb7e015426ad6540cebc
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/api/HopperEvents.java
+@@ -0,0 +1,22 @@
++package com.domnian.paperdragon.api;
++
++import com.domnian.paperdragon.events.HopperDrainEvent;
++import com.domnian.paperdragon.events.HopperFillEvent;
++import org.bukkit.Bukkit;
++import org.bukkit.inventory.Inventory;
++
++public final class HopperEvents {
++
++    public static boolean drain(Inventory hopper, Inventory source) {
++        HopperDrainEvent event = new HopperDrainEvent(hopper, source);
++        Bukkit.getPluginManager().callEvent(event);
++        return event.isCancelled();
++    }
++
++    public static boolean fill(Inventory hopper, Inventory target)  {
++        HopperFillEvent event = new HopperFillEvent(hopper, target);
++        Bukkit.getPluginManager().callEvent(event);
++        return event.isCancelled();
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+index a8a26a0a37a08b6bbeb5a1fde417d6f448d3c79f..15ce59e97c5ad06a0aa426abdd4c01f40b69f179 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+@@ -398,6 +398,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+ 
+             if (HopperBlockEntity.isFullContainer(iinventory1, enumdirection)) {
+                 return false;
++            } else if (com.domnian.paperdragon.api.HopperEvents.fill(hopper.getOwner(false).getInventory(), getInventory(iinventory1))) { return false; // PaperDragon
+             } else {
+                 // Paper start - replace logic; MAKE SURE TO CHECK FOR DIFFS ON UPDATES
+                 return hopperPush(world, iinventory1, enumdirection, hopper);
+@@ -466,7 +467,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+ 
+             // Paper start - optimize hoppers and remove streams
+             skipPullModeEventFire = skipHopperEvents;
+-            return !HopperBlockEntity.isEmptyContainer(iinventory, enumdirection) && anyMatch(iinventory, enumdirection, (item, i) -> {
++            return !HopperBlockEntity.isEmptyContainer(iinventory, enumdirection) && !com.domnian.paperdragon.api.HopperEvents.drain(new CraftInventory(hopper), getInventory(iinventory)) && anyMatch(iinventory, enumdirection, (item, i) -> { // PaperDragon - add && !HopperEvents.drain()
+                 // Logic copied from below to avoid extra getItem calls
+                 if (!item.isEmpty() && canTakeItemFromContainer(hopper, iinventory, item, i, enumdirection)) {
+                     return hopperPull(world, hopper, iinventory, item, i);

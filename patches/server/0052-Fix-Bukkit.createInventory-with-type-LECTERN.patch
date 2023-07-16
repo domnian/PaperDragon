@@ -1,0 +1,119 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 16 Aug 2019 22:18:35 -0400
+Subject: [PATCH] Fix Bukkit.createInventory() with type LECTERN
+
+This fixes an issue with Bukkit which makes it possible to open a Lectern interface, but not be able to interact with it (e.g.: change pages). The following changes had to be made:
+
+nms.LecternBlockEntity:
+* Add `virtual` flag, this is used to stop calls that would attempt to update a block which we do not have, as well as used in the following change.
+
+nms.LecternBlockEntity$LecternInventory
+* in `stillValid(Player)`, add `LecternBlockEntity.this.virtual || ` to short-circuit the "can use" logic
+
+obc.e.CraftHumanEntity#openInventory(Inventory):
+* Check if the wrapped inventory is a LecternBlockEntity.LecternInventory, and get the Lectern from that
+
+obc.i.u.CraftTileInventoryConverter$Lectern:
+* Mark the created lectern as "virtual"
+* Override `getInventory(IInventory)` to return a CraftInventoryLectern.
+
+This patch is licensed under the MIT License.
+License: https://opensource.org/licenses/MIT
+
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
+index b0901efbaed533bade4b0eb130875aef3c6cd420..c49374410cfb9d8d13f9ca6d3c252ddeb4055378 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/LecternBlockEntity.java
+@@ -107,7 +107,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+ 
+         @Override
+         public ItemStack removeItem(int slot, int amount) {
+-            if (slot == 0) {
++            if (slot == 0 && !LecternBlockEntity.this.virtual) { // PaperDragon
+                 ItemStack itemstack = LecternBlockEntity.this.book.split(amount);
+ 
+                 if (LecternBlockEntity.this.book.isEmpty()) {
+@@ -122,7 +122,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+ 
+         @Override
+         public ItemStack removeItemNoUpdate(int slot) {
+-            if (slot == 0) {
++            if (slot == 0 && !LecternBlockEntity.this.virtual) { // PaperDragon
+                 ItemStack itemstack = LecternBlockEntity.this.book;
+ 
+                 LecternBlockEntity.this.book = ItemStack.EMPTY;
+@@ -157,7 +157,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+ 
+         @Override
+         public boolean stillValid(Player player) {
+-            return Container.stillValidBlockEntity(LecternBlockEntity.this, player) && LecternBlockEntity.this.hasBook();
++            return LecternBlockEntity.this.virtual || (Container.stillValidBlockEntity(LecternBlockEntity.this, player) && LecternBlockEntity.this.hasBook()); // PaperDragon
+         }
+ 
+         @Override
+@@ -190,6 +190,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+     ItemStack book;
+     int page;
+     private int pageCount;
++    public boolean virtual = false; // PaperDragon
+ 
+     public LecternBlockEntity(BlockPos pos, BlockState state) {
+         super(BlockEntityType.LECTERN, pos, state);
+@@ -209,6 +210,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+     }
+ 
+     void onBookItemRemove() {
++        if (this.virtual) return; // PaperDragon
+         this.page = 0;
+         this.pageCount = 0;
+         LecternBlock.resetBookState((Entity) null, this.getLevel(), this.getBlockPos(), this.getBlockState(), false);
+@@ -226,6 +228,7 @@ public class LecternBlockEntity extends BlockEntity implements Clearable, MenuPr
+ 
+         if (j != this.page) {
+             this.page = j;
++            if (this.virtual) return; // PaperDragon
+             this.setChanged();
+             if (this.level != null) LecternBlock.signalPageChange(this.getLevel(), this.getBlockPos(), this.getBlockState()); // CraftBukkit
+         }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
+index cba6ead3f937f2b3d59c15a864e07e5cb2f2330c..7c9c0da19896e18f05b739559a6cd5ec049c0551 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
+@@ -329,6 +329,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
+             if (craft.getInventory() instanceof MenuProvider) {
+                 iinventory = (MenuProvider) craft.getInventory();
+             }
++            // PaperDragon start
++            if (craft.getInventory() instanceof net.minecraft.world.level.block.entity.LecternBlockEntity.LecternInventory) {
++                iinventory = ((net.minecraft.world.level.block.entity.LecternBlockEntity.LecternInventory)craft.getInventory()).getLectern();
++            }
++            // PaperDragon end
+         }
+ 
+         if (iinventory instanceof MenuProvider) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
+index 53421f780ac8bc2a67f64671fcad632fcdb8bede..24a48b13839e7588f11ea4aafe45df75b6b64689 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/util/CraftTileInventoryConverter.java
+@@ -187,8 +187,19 @@ public abstract class CraftTileInventoryConverter implements CraftInventoryCreat
+ 
+         @Override
+         public Container getTileEntity() {
+-            return new LecternBlockEntity(BlockPos.ZERO, Blocks.LECTERN.defaultBlockState()).bookAccess;
++            // PaperDragon start
++            LecternBlockEntity lectern = new LecternBlockEntity(BlockPos.ZERO, Blocks.LECTERN.defaultBlockState());
++            lectern.virtual = true;
++            return lectern.bookAccess;
++            // PaperDragon end
+         }
++
++        // PaperDragon start
++        @Override
++        public Inventory getInventory(Container tileEntity) {
++            return new org.bukkit.craftbukkit.inventory.CraftInventoryLectern(tileEntity);
++        }
++        // PaperDragon end
+     }
+ 
+     public static class Smoker extends AbstractFurnaceInventoryConverter { // Paper - Furnace, BlastFurnace, and Smoker are pretty much identical

@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Mon, 5 Jul 2021 22:01:39 -0500
+Subject: [PATCH] Implement DispenserWaxBlockEvent
+
+
+diff --git a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
+index 80af7096d807d14428676bf44a3289517acd8faf..b3e03fc54426c8f74ee6dfacfdb1d5d80f2327b8 100644
+--- a/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
++++ b/src/main/java/net/minecraft/core/dispenser/DispenseItemBehavior.java
+@@ -1132,6 +1132,13 @@ public interface DispenseItemBehavior {
+                 Optional<BlockState> optional = HoneycombItem.getWaxed(iblockdata);
+ 
+                 if (optional.isPresent()) {
++                    // PaperDragon start
++                    org.bukkit.block.Block block = worldserver.getWorld().getBlockAt(pointer.getPos().getX(), pointer.getPos().getY(), pointer.getPos().getZ());
++                    CraftItemStack craftItem = CraftItemStack.asCraftMirror(stack);
++                    if (!(new com.domnian.paperdragon.events.DispenserWaxBlockEvent(io.papermc.paper.util.MCUtil.toBukkitBlock(worldserver, blockposition), block, craftItem).callEvent())) {
++                        return stack;
++                    }
++                    // PaperDragon end
+                     worldserver.setBlockAndUpdate(blockposition, (BlockState) optional.get());
+                     worldserver.levelEvent(3003, blockposition, 0);
+                     stack.shrink(1);

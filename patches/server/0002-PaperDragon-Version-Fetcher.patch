@@ -109,10 +109,10 @@ index 0000000000000000000000000000000000000000..06a35ecb418df5c3a0a67bc62c1a3d08
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1628913b1e9b91e68dcd942a38da4aed95b12d4a..61ca2db8ff221795916c58a4ad64da380e10b7bc 100644
+index b059bb46b649cbf82debdb8d58fe4ba77d040276..ea9b287360484a3f1273976e174d0ce704f807e3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -430,7 +430,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -472,7 +472,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

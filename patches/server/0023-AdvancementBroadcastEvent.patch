@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Fri, 6 Dec 2013 20:54:23 -0500
+Subject: [PATCH] AdvancementBroadcastEvent
+
+Used to control who sees advancement messages
+
+diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
+index acc49f66bf34e2507d0ee6fec0a56b11bfc68f46..92270f3d802df3b94393fa3190ebf7243c8ea9b3 100644
+--- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
++++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.server;
+ 
++import com.domnian.paperdragon.events.AdvancementBroadcastEvent; // PaperDragon
+ import com.google.gson.Gson;
+ import com.google.gson.GsonBuilder;
+ import com.google.gson.JsonElement;
+@@ -24,6 +25,7 @@ import java.util.LinkedHashMap;
+ import java.util.Map;
+ import java.util.Map.Entry;
+ import java.util.Set;
++import java.util.stream.Collectors; // PaperDragon
+ import javax.annotation.Nullable;
+ import net.minecraft.FileUtil;
+ import net.minecraft.SharedConstants;
+@@ -43,6 +45,7 @@ import net.minecraft.server.level.ServerPlayer;
+ import net.minecraft.server.players.PlayerList;
+ import net.minecraft.util.datafix.DataFixTypes;
+ import net.minecraft.world.level.GameRules;
++import org.bukkit.entity.Player; // PaperDragon
+ import org.slf4j.Logger;
+ 
+ public class PlayerAdvancements {
+@@ -248,8 +251,20 @@ public class PlayerAdvancements {
+                 // Paper end
+                 advancement.getRewards().grant(this.player);
+                 // Paper start - Add Adventure message to PlayerAdvancementDoneEvent
+-                if (message != null && this.player.level().getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
+-                    this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), false);
++                // PaperDragon start
++                if (message != null) {// && this.player.level.getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
++                    AdvancementBroadcastEvent broadcastEvent = new AdvancementBroadcastEvent(this.player.getBukkitEntity(), this.playerList.players.stream().map(ServerPlayer::getBukkitEntity).collect(Collectors.toSet()));
++                    if (!this.player.level().getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
++                        broadcastEvent.setCancelled(true);
++                    }
++                    broadcastEvent.callEvent();
++                    //this.playerList.broadcastSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message), false);
++                    if (!broadcastEvent.isCancelled()) {
++                        for (Player player : broadcastEvent.getReceivers()) {
++                            player.sendMessage(message);
++                        }
++                    }
++                    // PaperDragon end
+                     // Paper end
+                 }
+             }

@@ -15,10 +15,10 @@ Must be set before META
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d4f95cf4d0e3e3c1cb75950776ce53bea8d14c74
+index 0000000000000000000000000000000000000000..e9f0b905e9cf7187d56e17114499bc9c7000749d
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/api/HiddenItemMeta.java
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,100 @@
 +package com.domnian.paperdragon.api;
 +
 +import net.minecraft.nbt.CompoundTag;
@@ -27,8 +27,6 @@ index 0000000000000000000000000000000000000000..d4f95cf4d0e3e3c1cb75950776ce53be
 +import net.minecraft.network.chat.Component;
 +
 +public final class HiddenItemMeta {
-+    private HiddenItemMeta() {
-+    }
 +
 +    public static CompoundTag filterItemLore(CompoundTag nbttagcompound, boolean storeOriginal) {
 +        if (nbttagcompound != null && nbttagcompound.contains("display")) {
@@ -119,12 +117,13 @@ index 0000000000000000000000000000000000000000..d4f95cf4d0e3e3c1cb75950776ce53be
 +        }
 +        return tag;
 +    }
++
 +}
 diff --git a/src/main/java/net/minecraft/network/FriendlyByteBuf.java b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-index 35377576ed182814051c11f902e02e8e921e84e3..23398ae2f0bb1d5446356bf3824a2f15678159da 100644
+index 9938bb90bef84cf784f9a1ceb02a1a45aa8b48a1..89db225b63daa49a9a0ff4e83c1795c03ceadb28 100644
 --- a/src/main/java/net/minecraft/network/FriendlyByteBuf.java
 +++ b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
-@@ -582,6 +582,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -691,6 +691,7 @@ public class FriendlyByteBuf extends ByteBuf {
                  // CraftItemStack.setItemMeta(stack, CraftItemStack.getItemMeta(stack)); // Paper - This is no longer with raw NBT being handled in metadata
                  // Spigot end
                  nbttagcompound = stack.getTag();
@@ -132,16 +131,16 @@ index 35377576ed182814051c11f902e02e8e921e84e3..23398ae2f0bb1d5446356bf3824a2f15
              }
  
              this.writeNbt(nbttagcompound);
-@@ -599,6 +600,7 @@ public class FriendlyByteBuf extends ByteBuf {
+@@ -708,6 +709,7 @@ public class FriendlyByteBuf extends ByteBuf {
              ItemStack itemstack = new ItemStack(item, b0);
  
              itemstack.setTag(this.readNbt());
-+            com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.tag); // PaperDragon - get around creative menu having ultimate control of the NBT...
++            com.domnian.paperdragon.api.HiddenItemMeta.restoreItemLore(itemstack.getTag()); // PaperDragon - get around creative menu having ultimate control of the NBT...
              // CraftBukkit start
              if (false && itemstack.getTag() != null) { // Paper - This is no longer needed with raw NBT being handled in metadata
                  CraftItemStack.setItemMeta(itemstack, CraftItemStack.getItemMeta(itemstack));
 diff --git a/src/main/java/net/minecraft/network/chat/HoverEvent.java b/src/main/java/net/minecraft/network/chat/HoverEvent.java
-index 587db9a70f8f930412d34c4a412c19a30faa2a4e..ec27722617d6c8c34a59adf6d4d8892f4aefa39c 100644
+index 3ad05bbab726c59e7b67d9614af4b208d4520cb3..8dd910100e89ba51357d1df1b05d6f38d3bc0bbb 100644
 --- a/src/main/java/net/minecraft/network/chat/HoverEvent.java
 +++ b/src/main/java/net/minecraft/network/chat/HoverEvent.java
 @@ -246,7 +246,7 @@ public class HoverEvent {
@@ -154,10 +153,10 @@ index 587db9a70f8f930412d34c4a412c19a30faa2a4e..ec27722617d6c8c34a59adf6d4d8892f
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index c18a0bc94d0210396046f4475e49a739088593f3..a05efe9577e9ebe80333242db1602566f97f6ab6 100644
+index adb7220be617d6d9f2cdd7fbe4fa2dd24cc7d142..998d1d71e808f5145b7d928295512cdecc79c286 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -31,6 +31,7 @@ import net.minecraft.core.Registry;
+@@ -34,6 +34,7 @@ import net.minecraft.core.registries.Registries;
  import net.minecraft.nbt.CompoundTag;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.nbt.NbtOps;
@@ -165,10 +164,10 @@ index c18a0bc94d0210396046f4475e49a739088593f3..a05efe9577e9ebe80333242db1602566
  import net.minecraft.nbt.Tag;
  import net.minecraft.network.chat.CommonComponents;
  import net.minecraft.network.chat.Component;
-@@ -1237,8 +1238,26 @@ public final class ItemStack {
+@@ -1286,8 +1287,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
-         if (!this.emptyCacheFlag) {
+         if (!this.isEmpty()) {
 +            // PaperDragon start
 +            CompoundTag nbttagcompound = this.save(new CompoundTag());
 +            if (nbttagcompound.contains("tag")) {
@@ -192,4 +191,18 @@ index c18a0bc94d0210396046f4475e49a739088593f3..a05efe9577e9ebe80333242db1602566
 +                return chatmodifier.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackInfo(this.getItem(), this.getCount(), nbttagcompound))); // PaperDragon - use different constructor
              });
          }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
+index b88a29623c280fcf2e3dd6d16646c23ca809efe1..3245cdb05de33a892691278dc8930ca9e1f1a94c 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
+@@ -461,7 +461,8 @@ public final class CraftItemFactory implements ItemFactory {
+ 
+     @Override
+     public net.kyori.adventure.text.event.HoverEvent<net.kyori.adventure.text.event.HoverEvent.ShowItem> asHoverEvent(final ItemStack item, final java.util.function.UnaryOperator<net.kyori.adventure.text.event.HoverEvent.ShowItem> op) {
+-        final net.minecraft.nbt.CompoundTag tag = CraftItemStack.asNMSCopy(item).getTag();
++        net.minecraft.nbt.CompoundTag tag = CraftItemStack.asNMSCopy(item).getTag(); // PaperDragon - remove final
++        tag = com.domnian.paperdragon.api.HiddenItemMeta.filterItemLore(tag, false); // PaperDragon
+         return net.kyori.adventure.text.event.HoverEvent.showItem(op.apply(net.kyori.adventure.text.event.HoverEvent.ShowItem.of(item.getType().getKey(), item.getAmount(), io.papermc.paper.adventure.PaperAdventure.asBinaryTagHolder(tag))));
+     }
  

@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Tue, 29 Apr 2014 20:27:43 -0400
+Subject: [PATCH] All blocks extinguish at same rate
+
+Previously "Flammable" blocks would burn for ages, this makes them burn out the same as non flammable.
+This is so that blocks that have ignite/burn events cancelled will actually burn out.
+
+diff --git a/src/main/java/net/minecraft/world/level/block/FireBlock.java b/src/main/java/net/minecraft/world/level/block/FireBlock.java
+index 4002e0fffb60556e7af1aeff71b4be244f02b0f5..7e153b481d143566eb4cc9383632e0a4d6086e9d 100644
+--- a/src/main/java/net/minecraft/world/level/block/FireBlock.java
++++ b/src/main/java/net/minecraft/world/level/block/FireBlock.java
+@@ -196,7 +196,7 @@ public class FireBlock extends BaseFireBlock {
+                         return;
+                     }
+ 
+-                    if (i == 15 && random.nextInt(4) == 0 && !this.canBurn(world.getBlockState(pos.below()))) {
++                    if (i == 15 && random.nextInt(4) == 0/* && !this.canBurn(world.getBlockState(pos.below()))*/) { // PaperDragon
+                         fireExtinguished(world, pos); // CraftBukkit
+                         return;
+                     }

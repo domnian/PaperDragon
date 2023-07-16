@@ -6,27 +6,37 @@ Subject: [PATCH] Anvil Event
 Fire an event for anvil usage, remove cap from server, send level to client
 
 diff --git a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-index 506d758efbf16da9467f120321d2359a8832e477..7e911dc82a45ca3749b1a33d46ebeb91341a743e 100644
+index e0c3a4ba27e21c3692e601acd0af60873bcbb84c..4d02565f20db7795e93dbf99d79ec4f7f7d75e9d 100644
 --- a/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
 +++ b/src/main/java/net/minecraft/world/inventory/AnvilMenu.java
-@@ -277,6 +277,24 @@ public class AnvilMenu extends ItemCombinerMenu {
+@@ -1,5 +1,6 @@
+ package net.minecraft.world.inventory;
+ 
++import com.domnian.paperdragon.events.AnvilEvent; // PaperDragon
+ import com.mojang.logging.LogUtils;
+ import java.util.Iterator;
+ import java.util.Map;
+@@ -17,6 +18,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
+ import net.minecraft.world.item.enchantment.EnchantmentHelper;
+ import net.minecraft.world.level.block.AnvilBlock;
+ import net.minecraft.world.level.block.state.BlockState;
++import org.bukkit.Bukkit; // PaperDragon
++import org.bukkit.craftbukkit.inventory.CraftItemStack; // PaperDragon
+ import org.slf4j.Logger;
+ 
+ // CraftBukkit start
+@@ -296,6 +299,18 @@ public class AnvilMenu extends ItemCombinerMenu {
              if (this.cost.get() >= this.maximumRepairCost && !this.player.getAbilities().instabuild) { // CraftBukkit
                  itemstack1 = ItemStack.EMPTY;
              }
 +            // PaperDragon start
 +            final int origCost = this.cost.get();
-+            com.domnian.paperdragon.events.AnvilEvent event = new com.domnian.paperdragon.events.AnvilEvent(
-+                    (org.bukkit.entity.Player) player.getBukkitEntity(),
-+                    org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemstack),
-+                    org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemstack2),
-+                    org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemstack1),
-+                    this.cost.get()
-+            );
-+            org.bukkit.Bukkit.getPluginManager().callEvent(event);
++            AnvilEvent event = new AnvilEvent((org.bukkit.entity.Player) player.getBukkitEntity(), CraftItemStack.asBukkitCopy(itemstack), CraftItemStack.asBukkitCopy(itemstack2), CraftItemStack.asBukkitCopy(itemstack1), this.cost.get());
++            Bukkit.getPluginManager().callEvent(event);
 +            if (event.isCancelled()) {
 +                itemstack1 = ItemStack.EMPTY;
 +            } else {
-+                itemstack1 = org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(event.getResult());
++                itemstack1 = CraftItemStack.asNMSCopy(event.getResult());
 +                this.cost.set(event.getCost());
 +                this.cost.forceUpdate = origCost != event.getCost();
 +            }

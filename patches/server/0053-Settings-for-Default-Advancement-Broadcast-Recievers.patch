@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 15 Jun 2017 17:42:33 -0400
+Subject: [PATCH] Settings for Default Advancement Broadcast Recievers
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonConfig.java b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+index 22a406c57e4587e3c4cb56baa4b875565172b452..916ae3e8340eb9df1168351031462b3dc786367c 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonConfig.java
+@@ -160,4 +160,9 @@ public class DragonConfig {
+         return config.getString(path, config.getString(path));
+     }
+ 
++    public static boolean broadcastAdvancementsToServer = false;
++    private static void advancements() {
++        broadcastAdvancementsToServer = getBoolean("settings.broadcast-advancements-to-server", false);
++    }
++
+ }
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+index df4f1639ff257d5a6e0bfb97bec4a1718356269a..e71e20f1d16ee411fa6334ca0528f9021a860b1e 100644
+--- a/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldConfig.java
+@@ -73,4 +73,9 @@ public class DragonWorldConfig {
+         return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
+     }
+ 
++    public static boolean broadcastAdvancementsToWorld = false;
++    private void advancements() {
++        broadcastAdvancementsToWorld = getBoolean("world-settings.broadcast-advancements-to-world", false);
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
+index 92270f3d802df3b94393fa3190ebf7243c8ea9b3..976b756a83ca1bae78a9d79eb8568d6a9aef414d 100644
+--- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
++++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
+@@ -254,6 +254,15 @@ public class PlayerAdvancements {
+                 // PaperDragon start
+                 if (message != null) {// && this.player.level.getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
+                     AdvancementBroadcastEvent broadcastEvent = new AdvancementBroadcastEvent(this.player.getBukkitEntity(), this.playerList.players.stream().map(ServerPlayer::getBukkitEntity).collect(Collectors.toSet()));
++                    if (com.domnian.paperdragon.DragonWorldConfig.broadcastAdvancementsToWorld) {
++                        java.util.List<net.minecraft.server.level.ServerPlayer> humans = (java.util.List<net.minecraft.server.level.ServerPlayer>) this.player.level().players();
++                        java.util.HashSet<org.bukkit.entity.Player> players = new java.util.HashSet<>();
++                        humans.forEach(human -> players.add(human.getBukkitEntity()));
++                        broadcastEvent.setReceivers(players);
++                    }
++                    if (com.domnian.paperdragon.DragonConfig.broadcastAdvancementsToServer) {
++                        broadcastEvent.setReceivers(new java.util.HashSet<>(org.bukkit.Bukkit.getOnlinePlayers()));
++                    }
+                     if (!this.player.level().getGameRules().getBoolean(GameRules.RULE_ANNOUNCE_ADVANCEMENTS)) {
+                         broadcastEvent.setCancelled(true);
+                     }

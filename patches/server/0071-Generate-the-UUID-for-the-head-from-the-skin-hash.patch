@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Fri, 19 Feb 2021 03:57:17 -0500
+Subject: [PATCH] Generate the UUID for the head from the skin hash
+
+This will always result in the same UUID for a given hash
+
+diff --git a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
+index 2ef2dc5a22c8e99e82c0096b2777fe3d3ce890f6..4244899a73c0d5b5d00a444d26a7feddcd4a93db 100644
+--- a/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
++++ b/src/main/java/com/domnian/paperdragon/api/CraftDAPI_Heads.java
+@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
+ import net.minecraft.nbt.ListTag;
+ import net.minecraft.world.item.ItemStack;
+ import net.minecraft.world.item.Items;
++import org.apache.commons.lang.StringUtils;
+ import org.bukkit.ChatColor;
+ import org.bukkit.Material;
+ import org.bukkit.inventory.meta.SkullMeta;
+@@ -19,6 +20,7 @@ import org.bukkit.inventory.meta.SkullMeta;
+ import java.lang.reflect.Method;
+ import java.nio.charset.StandardCharsets;
+ import java.util.Base64;
++import java.math.BigInteger;
+ import java.util.UUID;
+ 
+ public class CraftDAPI_Heads implements DAPI_Heads {
+@@ -66,7 +68,7 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+                     props = new CompoundTag(),
+                     textData = new CompoundTag();
+             ListTag textures = new ListTag();
+-            owner.putUUID("Id", UUID.randomUUID());
++            owner.putUUID("Id", skinHashToUUID(hash));
+             textData.putString("Value", getTextureData(url));
+             textures.add(0, textData);
+             props.put("textures", textures);
+@@ -77,6 +79,16 @@ public class CraftDAPI_Heads implements DAPI_Heads {
+         }
+     }
+ 
++    private static UUID skinHashToUUID(String hash) {
++        hash = StringUtils.leftPad(hash, 64, '0');
++        long high = new BigInteger(hash.substring(0, 16), 16).longValue();
++        long low = new BigInteger(hash.substring(48), 16).longValue();
++        return new UUID(
++                (high & 0xFFFFFFFFFFFF0FFFL) | 0x0000000000004000L, // Set version to 4
++                (low  & 0x3FFFFFFFFFFFFFFFL) | 0x8000000000000000L // Set to IETF variant
++        );
++    }
++
+     private static String getTextureData(String url) {
+         String texture = "{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}";
+         return new String(Base64.getEncoder().encode(texture.getBytes(StandardCharsets.UTF_8)));

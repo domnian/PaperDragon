@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: willies952002 <admin@domnian.com>
+Date: Thu, 19 Dec 2019 03:24:02 -0500
+Subject: [PATCH] Implement WorldBorderUpdateEvent
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..7bd794937475ed7037f489e0144972aa07917f8c
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/DragonWorldBorderListener.java
+@@ -0,0 +1,37 @@
++package com.domnian.paperdragon;
++
++import com.domnian.paperdragon.events.WorldBorderUpdateEvent;
++import net.minecraft.world.level.border.BorderChangeListener;
++import net.minecraft.world.level.border.WorldBorder;
++
++public class DragonWorldBorderListener implements BorderChangeListener {
++
++    public void onBorderSizeSet(WorldBorder border, double size) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.SIZE).callEvent();
++    }
++
++    public void onBorderSizeLerping(WorldBorder border, double fromSize, double toSize, long time) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.SIZE_TRANSITION).callEvent();
++    }
++
++    public void onBorderCenterSet(WorldBorder border, double centerX, double centerZ) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.CENTER).callEvent();
++    }
++
++    public void onBorderSetWarningTime(WorldBorder border, int warningTime) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.WARNING_TIME).callEvent();
++    }
++
++    public void onBorderSetWarningBlocks(WorldBorder border, int warningBlockDistance) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.WARNING_DISTANCE).callEvent();
++    }
++
++    public void onBorderSetDamagePerBlock(WorldBorder border, double damagePerBlock) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.DAMAGE_AMOUNT).callEvent();
++    }
++
++    public void onBorderSetDamageSafeZOne(WorldBorder border, double safeZoneRadius) {
++        new WorldBorderUpdateEvent(border.world.getWorld(), WorldBorderUpdateEvent.Type.DAMAGE_BUFFER).callEvent();
++    }
++
++}
+diff --git a/src/main/java/net/minecraft/world/level/border/WorldBorder.java b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
+index 204f008dc36212e696fba781fede88044b2f735a..ae0048affab5d33e0107c4ac2558c099e38a1fa9 100644
+--- a/src/main/java/net/minecraft/world/level/border/WorldBorder.java
++++ b/src/main/java/net/minecraft/world/level/border/WorldBorder.java
+@@ -19,7 +19,7 @@ public class WorldBorder {
+ 
+     public static final double MAX_SIZE = 5.9999968E7D;
+     public static final double MAX_CENTER_COORDINATE = 2.9999984E7D;
+-    private final List<BorderChangeListener> listeners = Lists.newArrayList();
++    private final List<BorderChangeListener> listeners = Lists.newArrayList(new com.domnian.paperdragon.DragonWorldBorderListener()); // PaperDragon - WorldBorderUpdateEvent
+     private double damagePerBlock = 0.2D;
+     private double damageSafeZone = 5.0D;
+     private int warningTime = 15;
