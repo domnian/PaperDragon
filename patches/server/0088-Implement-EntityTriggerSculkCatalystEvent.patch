@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Thu, 16 Jun 2022 09:13:17 -0500
+Subject: [PATCH] Implement EntityTriggerSculkCatalystEvent
+
+
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
+index dfcc141dec0ff6e7704af8852a65783558398a67..89b9e18df9cdb02fb75a8634b60590e573f03c6d 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
+@@ -91,6 +91,12 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
+ 
+                 if (entity instanceof LivingEntity) {
+                     LivingEntity entityliving = (LivingEntity) entity;
++                    // PaperDragon start
++                    net.minecraft.core.Position pos = this.positionSource.getPosition(world).orElse(null);
++                    if (pos != null && !(new com.domnian.paperdragon.events.EntityTriggerSculkCatalystEvent(entityliving.getBukkitLivingEntity(), org.bukkit.craftbukkit.block.CraftBlock.at(world, BlockPos.containing(pos))).callEvent())) {
++                        return false;
++                    }
++                    // PaperDragon end
+ 
+                     if (!entityliving.wasExperienceConsumed()) {
+                         int i = entityliving.getExperienceReward();

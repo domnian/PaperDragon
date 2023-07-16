@@ -1,0 +1,65 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Thu, 16 Jun 2022 09:12:25 -0500
+Subject: [PATCH] Add EntityTriggerSculkCatalystEvent
+
+
+diff --git a/src/main/java/com/domnian/paperdragon/events/EntityTriggerSculkCatalystEvent.java b/src/main/java/com/domnian/paperdragon/events/EntityTriggerSculkCatalystEvent.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..d0db75b7c500f5ca8964d0b75282582879d08572
+--- /dev/null
++++ b/src/main/java/com/domnian/paperdragon/events/EntityTriggerSculkCatalystEvent.java
+@@ -0,0 +1,53 @@
++package com.domnian.paperdragon.events;
++
++import org.bukkit.block.Block;
++import org.bukkit.entity.LivingEntity;
++import org.bukkit.event.Cancellable;
++import org.bukkit.event.HandlerList;
++import org.bukkit.event.entity.EntityEvent;
++import org.jetbrains.annotations.NotNull;
++
++public class EntityTriggerSculkCatalystEvent extends EntityEvent implements Cancellable {
++    private final Block sculkCatalyst;
++    private boolean cancelled = false;
++
++    public EntityTriggerSculkCatalystEvent(@NotNull LivingEntity entity, @NotNull Block sculkCatalyst) {
++        super(entity);
++        this.sculkCatalyst = sculkCatalyst;
++    }
++
++    @NotNull
++    @Override
++    public LivingEntity getEntity() {
++        return (LivingEntity) entity;
++    }
++
++    @NotNull
++    public Block getSculkCatalyst() {
++        return sculkCatalyst;
++    }
++
++    @Override
++    public boolean isCancelled() {
++        return cancelled;
++    }
++
++    @Override
++    public void setCancelled(boolean cancel) {
++        cancelled = cancel;
++    }
++
++    @NotNull
++    private static final HandlerList handlers = new HandlerList();
++
++    @NotNull
++    public HandlerList getHandlers() {
++        return handlers;
++    }
++
++    @NotNull
++    public static HandlerList getHandlerList() {
++        return handlers;
++    }
++
++}
