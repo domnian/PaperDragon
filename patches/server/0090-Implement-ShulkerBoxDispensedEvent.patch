@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Mon, 26 Jun 2023 18:41:34 -0500
+Subject: [PATCH] Implement ShulkerBoxDispensedEvent
+
+
+diff --git a/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java b/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java
+index 0159ed9cbc644c39fa79e62327f13375193fdc98..8b7dd533b0d703ce60ce342cb5c89d790c6f7c61 100644
+--- a/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java
++++ b/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java
+@@ -61,6 +61,11 @@ public class ShulkerBoxDispenseBehavior extends OptionalDispenseItemBehavior {
+             } catch (Exception exception) {
+                 ShulkerBoxDispenseBehavior.LOGGER.error("Error trying to place shulker box at {}", blockposition, exception);
+             }
++            // PaperDragon start
++            if (this.isSuccess()) {
++                (new com.domnian.paperdragon.events.ShulkerBoxDispensedEvent(bukkitBlock, craftItem.clone())).callEvent();
++            }
++            // PaperDragon end
+         }
+ 
+         return stack;
