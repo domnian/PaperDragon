@@ -5,10 +5,10 @@ Subject: [PATCH] Add getLocation() to OfflinePlayer
 
 
 diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
-index 72175dcae49f75b494ab70958053ed994a8828f4..19d3d17711cbe73e7c49aef210f0b1a272be65f4 100644
+index 08ae501e97ae2a3f22b1994c9616fc7134cfc0c3..fcf8bb1a5bb0abdcac40fd01bd6a2c7a809efe6d 100644
 --- a/src/main/java/org/bukkit/OfflinePlayer.java
 +++ b/src/main/java/org/bukkit/OfflinePlayer.java
-@@ -460,4 +460,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
+@@ -476,4 +476,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
       */
      @Nullable
      public Location getLastDeathLocation();

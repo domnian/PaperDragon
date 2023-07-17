@@ -177,19 +177,19 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index da0d71937f19cfc41e697de80af8fe3d4355940f..cc70587057a11d67eb2d452a065663cb5e3cd3ab 100644
+index 754afa62b0bf8a91863f40899fe22814134aea45..65a663bf4e93b751a3f35b977165d133288c3577 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -3,6 +3,8 @@ package org.bukkit.entity;
- import java.net.InetSocketAddress;
+@@ -5,6 +5,8 @@ import java.net.InetSocketAddress;
  import java.util.Collection;
+ import java.util.Date;
  import java.util.Map;
 +import java.util.Set; // PaperDragon
 +import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
+ import org.bukkit.BanEntry;
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
- import org.bukkit.GameMode;
-@@ -1639,6 +1641,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1720,6 +1722,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  
