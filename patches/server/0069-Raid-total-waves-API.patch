@@ -39,7 +39,7 @@ index 41457c9f27b18fa2734a6cca297ec5186470e82f..342061d52d2856902d64870c1e061eb8
                          this.raidMap.put(raid.getId(), raid);
                      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftRaid.java b/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
-index b86c330e2d5c3556f05ef21bcb5c5e144e6e9a47..14c59db2dd09996779e4c231150e2eb35be2a50e 100644
+index 92672558a64d5b7085a075dd2d274e0dc3d3ef4c..95e529869a51b804ffc1f94d1df2327ac0609b86 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
 @@ -80,6 +80,13 @@ public final class CraftRaid implements Raid {
@@ -57,10 +57,10 @@ index b86c330e2d5c3556f05ef21bcb5c5e144e6e9a47..14c59db2dd09996779e4c231150e2eb3
      public float getTotalHealth() {
          return this.handle.getHealthOfLivingRaiders();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index a60c20051f8b803e80251dbfbd164e4df94cdcde..86e89f157e3660440a6feb97bfab68fde952f36a 100644
+index 6c4c513ed04a444aee9907546d138f26fd770574..f45a166082bb0c691195e6c2f75491104f63bb36 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1896,7 +1896,7 @@ public class CraftEventFactory {
+@@ -1903,7 +1903,7 @@ public class CraftEventFactory {
       * Raid events
       */
      public static boolean callRaidTriggerEvent(Raid raid, ServerPlayer player) {

@@ -18,10 +18,10 @@ index a37434722c6fe6b64be5250674d0e239d345e53a..6478d0c4680cfd9d03392d89922330ae
                  return true;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 16e59438b6d76ec71e2aa423c91c4a96be4ec892..b739099766a4aef3082deb9c5fc0a1a9ee758098 100644
+index 7da70536099b3a07f935419f60fe08939c5b3233..2424bf1202cac5d26fc88122ba453590dcfcec6d 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -45,6 +45,7 @@ public class ItemEntity extends Entity implements TraceableEntity {
+@@ -46,6 +46,7 @@ public class ItemEntity extends Entity implements TraceableEntity {
      private static final int INFINITE_LIFETIME = -32768;
      public int age;
      public boolean canDespawn = true; // PaperDragon
@@ -74,10 +74,10 @@ index 9522e646529f3d849471931b4b3c0d133e7fcfc5..397250116c214c7ddc92741ee6a94eda
              }
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index d458b3036e493c03923a776466d8ff4530ee0d5b..04a00f44830da43ade3012aa04ac067ca9034908 100644
+index fda0fa81f55d86be533b22b442f1c671a39eb21a..7607fb126e79724229e10593111be464faae1767 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -13,6 +13,8 @@ import java.util.Map;
+@@ -14,6 +14,8 @@ import java.util.Map;
  import java.util.stream.Collectors;
  import java.util.stream.Stream;
  import javax.annotation.Nullable;
@@ -86,7 +86,7 @@ index d458b3036e493c03923a776466d8ff4530ee0d5b..04a00f44830da43ade3012aa04ac067c
  import net.minecraft.core.BlockPos;
  import net.minecraft.core.Direction;
  import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
-@@ -428,6 +430,16 @@ public class CraftEventFactory {
+@@ -434,6 +436,19 @@ public class CraftEventFactory {
          Bukkit.getPluginManager().callEvent(event);
  
          if (!event.isCancelled()) {
@@ -94,6 +94,9 @@ index d458b3036e493c03923a776466d8ff4530ee0d5b..04a00f44830da43ade3012aa04ac067c
 +            com.google.common.collect.Multimap<org.bukkit.Location, org.bukkit.entity.Item> drops = com.google.common.collect.ArrayListMultimap.create();
 +            for (Item item : list) {
 +                ItemEntity entityItem = (ItemEntity) ((CraftEntity) item).getHandle();
++                if (entityItem.droppedPosition == null) {
++                    entityItem.droppedPosition = new BlockPos(block.getX(), block.getY(), block.getZ());
++                }
 +                drops.put(MCUtil.toLocation(entityItem.level(), entityItem.droppedPosition), (org.bukkit.entity.Item) entityItem.getBukkitEntity());
 +            }
 +            for (org.bukkit.Location location : drops.keySet()) {

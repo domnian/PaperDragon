@@ -5,10 +5,10 @@ Subject: [PATCH] Wolf API
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Wolf.java b/src/main/java/net/minecraft/world/entity/animal/Wolf.java
-index 27c4dd3605373f08078048fe923a8f6f4d3ccf3b..ece15046c847bdcc0895c98e1ba7d5bcd2a2b560 100644
+index 57ceec70bb150afaa66962090b142048d5b50c2f..e39b259018787c9902db7f8783f1bccae964c6b4 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Wolf.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Wolf.java
-@@ -474,6 +474,14 @@ public class Wolf extends TamableAnimal implements NeutralMob {
+@@ -461,6 +461,14 @@ public class Wolf extends TamableAnimal implements NeutralMob {
          this.entityData.set(Wolf.DATA_REMAINING_ANGER_TIME, angerTime);
      }
  

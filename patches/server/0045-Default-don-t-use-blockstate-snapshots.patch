@@ -5,10 +5,10 @@ Subject: [PATCH] Default don't use blockstate snapshots
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-index 01b401f7d691ef451266bbc3a94980d613b96f21..d74df89194f25b021db5c6e9df3d0af15080313f 100644
+index 5401ab9f8f6ce12e1c5368dbc3acc78a250b3822..d45e25aef071429bf6424b246a14bef7f65495fc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlock.java
-@@ -330,7 +330,7 @@ public class CraftBlock implements Block {
+@@ -329,7 +329,7 @@ public class CraftBlock implements Block {
  
      @Override
      public BlockState getState() {

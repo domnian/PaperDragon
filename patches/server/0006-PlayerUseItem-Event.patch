@@ -6,14 +6,14 @@ Subject: [PATCH] PlayerUseItem Event
 This lets us control when an item is consumed and change the item.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
-index 1635fee928d64f4d2c336dca6675ed4641918830..5e380b28855f8a88540dbcc32c68e24b10f5b707 100644
+index baf3e79489e310f443788bc917c553ae7ea86c89..ef87c7f26f86c3357fcc3122f5da360fff169a59 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
  import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
  import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
  import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
-+import io.papermc.paper.util.MCUtil; // PaperDragon
++import io.papermc.paper.util.MCUtil;
  import net.minecraft.world.InteractionHand;
  import net.minecraft.world.InteractionResult;
  import net.minecraft.world.InteractionResultHolder;
@@ -71,7 +71,7 @@ index 1635fee928d64f4d2c336dca6675ed4641918830..5e380b28855f8a88540dbcc32c68e24b
 +                //}
  
 -                if (this.isCreative() && itemstack1 != ItemStack.EMPTY) {
-+                if (!event.shouldConsumeItem() || this.isCreative() && itemstack1 != ItemStack.EMPTY) { // Paper - add shouldConsumeItem
++                if ((!event.shouldConsumeItem() || this.isCreative()) && itemstack1 != ItemStack.EMPTY) { // Paper - add shouldConsumeItem
                      itemstack1.setCount(i);
                      if (itemstack1.isDamageableItem() && itemstack1.getDamageValue() != j) {
                          itemstack1.setDamageValue(j);
@@ -110,7 +110,7 @@ index 1635fee928d64f4d2c336dca6675ed4641918830..5e380b28855f8a88540dbcc32c68e24b
          BlockState iblockdata = world.getBlockState(blockposition);
          InteractionResult enuminteractionresult = InteractionResult.PASS;
          boolean cancelledBlock = false;
-@@ -587,17 +628,41 @@ public class ServerPlayerGameMode {
+@@ -588,17 +629,41 @@ public class ServerPlayerGameMode {
              }
  
              if (!stack.isEmpty() && enuminteractionresult != InteractionResult.SUCCESS && !this.interactResult) { // add !interactResult SPIGOT-764
@@ -137,16 +137,16 @@ index 1635fee928d64f4d2c336dca6675ed4641918830..5e380b28855f8a88540dbcc32c68e24b
 -                if (this.isCreative()) {
 -                    int i = stack.getCount();
 -
--                    enuminteractionresult1 = stack.useOn(itemactioncontext, hand);
+-                    enuminteractionresult1 = stack.useOn(itemactioncontext);
 +                // int i = stack.getCount(); // Paper - move up
-+                InteractionResult enuminteractionresult1 = stack.useOn(itemactioncontext, hand);
++                InteractionResult enuminteractionresult1 = stack.useOn(itemactioncontext);
 +                if (eventPlace.getTempItem() != null) {
 +                    player.setItemInHand(hand, stack = orig);
 +                }
 +                if (!eventPlace.getConsumeItem() || this.isCreative()) {
                      stack.setCount(i);
 -                } else {
--                    enuminteractionresult1 = stack.useOn(itemactioncontext, hand);
+-                    enuminteractionresult1 = stack.useOn(itemactioncontext);
                  }
 +                if (enuminteractionresult != InteractionResult.FAIL) {
 +                    com.destroystokyo.paper.event.player.PlayerPostPlaceItemAtEvent postUseItemEvent =

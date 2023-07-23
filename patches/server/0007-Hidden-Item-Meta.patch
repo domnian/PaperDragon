@@ -153,7 +153,7 @@ index 3ad05bbab726c59e7b67d9614af4b208d4520cb3..8dd910100e89ba51357d1df1b05d6f38
              this.count = count;
              this.tag = nbt;
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index adb7220be617d6d9f2cdd7fbe4fa2dd24cc7d142..998d1d71e808f5145b7d928295512cdecc79c286 100644
+index ae9b821d71d2868ba4eb3c73558fdcd6caf264e3..61279960c0dc99741a428df68f434a109a8fde05 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -34,6 +34,7 @@ import net.minecraft.core.registries.Registries;
@@ -164,7 +164,7 @@ index adb7220be617d6d9f2cdd7fbe4fa2dd24cc7d142..998d1d71e808f5145b7d928295512cde
  import net.minecraft.nbt.Tag;
  import net.minecraft.network.chat.CommonComponents;
  import net.minecraft.network.chat.Component;
-@@ -1286,8 +1287,26 @@ public final class ItemStack {
+@@ -1287,8 +1288,26 @@ public final class ItemStack {
          MutableComponent ichatmutablecomponent1 = ComponentUtils.wrapInSquareBrackets(ichatmutablecomponent);
  
          if (!this.isEmpty()) {
@@ -193,10 +193,10 @@ index adb7220be617d6d9f2cdd7fbe4fa2dd24cc7d142..998d1d71e808f5145b7d928295512cde
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-index b88a29623c280fcf2e3dd6d16646c23ca809efe1..3245cdb05de33a892691278dc8930ca9e1f1a94c 100644
+index b4850f4da500771e890247d9ed7f7d027460a718..48837a5aa26e59d55ee894780353c0ad9d3da6ff 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
-@@ -461,7 +461,8 @@ public final class CraftItemFactory implements ItemFactory {
+@@ -457,7 +457,8 @@ public final class CraftItemFactory implements ItemFactory {
  
      @Override
      public net.kyori.adventure.text.event.HoverEvent<net.kyori.adventure.text.event.HoverEvent.ShowItem> asHoverEvent(final ItemStack item, final java.util.function.UnaryOperator<net.kyori.adventure.text.event.HoverEvent.ShowItem> op) {

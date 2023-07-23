@@ -124,7 +124,7 @@ index 0000000000000000000000000000000000000000..7a6c17802f339db28671a704fff2d687
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
-index ba6f0ba00cd2635bcd19889dca0349b363b079fe..fe1b2725b3fcc68a305a9defd98919247e19b785 100644
+index f356196aaeb498a6d2c9ad2112329cef5a3103d6..decd7a60e4786751ca60ea1015fa6175cd886685 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SignBlockEntity.java
 @@ -1,5 +1,6 @@
@@ -142,7 +142,7 @@ index ba6f0ba00cd2635bcd19889dca0349b363b079fe..fe1b2725b3fcc68a305a9defd9891924
  import net.minecraft.world.level.Level;
  import net.minecraft.world.level.block.Block;
  import net.minecraft.world.level.block.SignBlock;
-@@ -106,15 +108,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -111,15 +113,19 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      protected void saveAdditional(CompoundTag nbt) {
@@ -165,7 +165,7 @@ index ba6f0ba00cd2635bcd19889dca0349b363b079fe..fe1b2725b3fcc68a305a9defd9891924
          logger = SignBlockEntity.LOGGER;
          Objects.requireNonNull(logger);
          dataresult.resultOrPartial(logger::error).ifPresent((nbtbase) -> {
-@@ -347,6 +353,18 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
+@@ -353,6 +359,18 @@ public class SignBlockEntity extends BlockEntity implements CommandSource { // C
  
      @Override
      public CompoundTag getUpdateTag() {

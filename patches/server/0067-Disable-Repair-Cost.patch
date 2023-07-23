@@ -6,7 +6,7 @@ Subject: [PATCH] Disable Repair Cost
 Handled on Plugin Level on a Per Player basis
 
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index f712e4995442abda6b1da75bcb54974526974ddf..ff0665513ba02503e43d19bac6d5c31f754e25f3 100644
+index b62d4fff30a698bffbb4cd9a54306e904ea461ca..fa19d6bd224b9480906037b08657bb9186ca7dce 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -269,6 +269,7 @@ public final class ItemStack {
@@ -17,7 +17,7 @@ index f712e4995442abda6b1da75bcb54974526974ddf..ff0665513ba02503e43d19bac6d5c31f
          }
  
      }
-@@ -1212,10 +1213,12 @@ public final class ItemStack {
+@@ -1213,10 +1214,12 @@ public final class ItemStack {
      }
  
      public int getBaseRepairCost() {
@@ -31,10 +31,10 @@ index f712e4995442abda6b1da75bcb54974526974ddf..ff0665513ba02503e43d19bac6d5c31f
          if (repairCost == 0) {
              this.removeTagKey("RepairCost");
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index d44ae8dd7adf2102e4d9777309b268f4cd40a76a..f1b0aa50923e0770de0a09dc783becc1e9057da3 100644
+index daf46a6dc272276b5f15a68be5368fa7f389a390..acdcd45e880a294afb529315a079831e0c600be5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -399,7 +399,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -398,7 +398,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
          this.enchantments = CraftMetaItem.buildEnchantments(tag, CraftMetaItem.ENCHANTMENTS);
          this.attributeModifiers = CraftMetaItem.buildModifiers(tag, CraftMetaItem.ATTRIBUTES);
  

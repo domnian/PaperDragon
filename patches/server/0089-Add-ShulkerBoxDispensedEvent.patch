@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: chickeneer <emcchickeneer@gmail.com>
 Date: Mon, 26 Jun 2023 18:41:34 -0500
-Subject: [PATCH] Implement ShulkerBoxDispensedEvent
+Subject: [PATCH] Add ShulkerBoxDispensedEvent
 
 
 diff --git a/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java b/src/main/java/net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior.java

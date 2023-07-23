@@ -5,10 +5,10 @@ Subject: [PATCH] Add Method to Send a Mojangson (JSON) Message to a Player
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index f12a6408cda36ca49d5a7ef1c8d09d3f550916e8..e302474b230da2d5dd644938c0c309d207daaee9 100644
+index 552c969dd4840cf573da7bf18aaa2be03a476a1f..05ef4833d30f293c669574f095e4f81c2fee4ac5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -3158,6 +3158,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -3191,6 +3191,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public <T> T getUserObject(@org.jetbrains.annotations.NotNull org.bukkit.NamespacedKey key) {
          return (T) userObjects.getOrDefault(key, null);
      }

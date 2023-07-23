@@ -5,7 +5,7 @@ Subject: [PATCH] Add methods to get a raid's id and to cancel it
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftRaid.java b/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
-index 14c59db2dd09996779e4c231150e2eb35be2a50e..0195230c1ca8a69e3663af4b50dc252238384436 100644
+index 95e529869a51b804ffc1f94d1df2327ac0609b86..670a3620d3af5a48a6ef69992fa577d30599e944 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftRaid.java
 @@ -86,6 +86,15 @@ public final class CraftRaid implements Raid {

@@ -5,10 +5,10 @@ Subject: [PATCH] Implement EntityTriggerSculkCatalystEvent
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index dfcc141dec0ff6e7704af8852a65783558398a67..89b9e18df9cdb02fb75a8634b60590e573f03c6d 100644
+index 8b2a02f85085c91c51b61760de967a859bf5e4de..5067a39757aec79ad6127fdc4ac043716601d56b 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-@@ -91,6 +91,12 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
+@@ -92,6 +92,12 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
  
                  if (entity instanceof LivingEntity) {
                      LivingEntity entityliving = (LivingEntity) entity;

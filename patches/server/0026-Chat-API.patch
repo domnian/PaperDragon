@@ -504,10 +504,10 @@ index 0000000000000000000000000000000000000000..afa76a5a3a3708a59852d88f99d3fc40
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3963fa12ac1a269f99157f6a3028929b6b1b522a..a61f6e2a18278f5fce9ef9d9c2c2525258fb5d5f 100644
+index aae99ec8e83fdc3f50d25c4ebb51c6b31e8c8bc4..d26543efd5d7a0736f7b1b1246998bf21bf44c2c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3970,7 +3970,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3966,7 +3966,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.getDirection();
      }
  
