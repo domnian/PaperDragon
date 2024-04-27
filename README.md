@@ -1,4 +1,4 @@
-PaperDragon ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.1-blue?style=for-the-badge)
+PaperDragon ![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20.5-red?style=for-the-badge)
 ===========
 PaperDragon is a fork of the Paper server software with patches from other forks, namely [EmpireCraft][empirecraft]. It is not meant for widespread use, and is primarily a side-project. You are free to use PaperDragon for your server, but support will be limited compared to that of Paper.
 
@@ -18,7 +18,7 @@ This will come with time. For now, you just need to build it locally.
 <dependency>
     <groupId>com.domnian.paperdragon</groupId>
     <artifactId>paperdragon-api</artifactId>
-    <version>1.20.1-R0.1-SNAPSHOT</version>
+    <version>1.20.5-R0.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
  ```
@@ -31,7 +31,7 @@ This will come with time. For now, you just need to build it locally.
 #### Artifact (API only):
 ```groovy
 dependencies {
-    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.20.1-R0.1-SNAPSHOT'
+    compileOnly 'com.domnian.paperdragon:paperdragon-api:1.20.5-R0.1-SNAPSHOT'
 }
 ```
 #### Paperweight UserDev Plugin (API + Server)
@@ -39,7 +39,7 @@ dependencies {
 dependencies {
     paperweightDevBundle(
         group = "com.domnian.paperdragon",
-        version = "1.20.1-R0.1-SNAPSHOT",
+        version = "1.20.5-R0.1-SNAPSHOT",
         ext = "zip"
     )
 }
@@ -49,7 +49,7 @@ How To (Compiling Jar From Source)
 ------
 *The instructions and requirements to compile are the same as [Paper][paper-build].*
 
-To compile PaperDragon, you need JDK 17 and an internet connection.
+To compile PaperDragon, you need JDK 21 and an internet connection.
 
 Clone this repo, run `./gradlew applyPatches`, then `./gradlew createReobfBundlerJar` from your terminal. You can find the compiled jar in the `PaperDragon-Server/build/libs` directory.
 
