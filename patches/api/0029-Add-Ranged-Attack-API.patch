@@ -5,7 +5,7 @@ Subject: [PATCH] Add Ranged Attack API
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/entity/RangedEntity.java b/src/main/java/com/destroystokyo/paper/entity/RangedEntity.java
-index f2e3233a3d1744e32fb76d3731b9858ef0067e30..e5b8cbaff161ca5969d6cc739fe13f1238ca0020 100644
+index a087a04c525ea14b197c65063b43ebf097ddc5c2..8270fe24a08805f47cbbd8f52854a989a5507a16 100644
 --- a/src/main/java/com/destroystokyo/paper/entity/RangedEntity.java
 +++ b/src/main/java/com/destroystokyo/paper/entity/RangedEntity.java
 @@ -3,6 +3,7 @@ package com.destroystokyo.paper.entity;
@@ -16,7 +16,7 @@ index f2e3233a3d1744e32fb76d3731b9858ef0067e30..e5b8cbaff161ca5969d6cc739fe13f12
  
  public interface RangedEntity extends Mob {
      /**
-@@ -28,4 +29,10 @@ public interface RangedEntity extends Mob {
+@@ -32,4 +33,10 @@ public interface RangedEntity extends Mob {
      default boolean isChargingAttack() {
          return isHandRaised();
      }

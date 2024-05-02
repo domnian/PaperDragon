@@ -60,7 +60,7 @@ index 0000000000000000000000000000000000000000..7a19c0f7bab0245ec4835e533c86d572
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
-index 52817b49ad1511d760b8bb095b1c84438e0e6e6d..71e145235b3856ad6c1357c288d9ca470d6b7038 100644
+index 5101cac043921b5dcfb69ba8ba6ae032a4d04462..3ccf1fe9900f367a21e0efe9bf76c176087ad115 100644
 --- a/src/main/java/org/bukkit/Chunk.java
 +++ b/src/main/java/org/bukkit/Chunk.java
 @@ -2,6 +2,7 @@ package org.bukkit;
@@ -71,7 +71,7 @@ index 52817b49ad1511d760b8bb095b1c84438e0e6e6d..71e145235b3856ad6c1357c288d9ca47
  import com.domnian.paperdragon.api.meta.PersistentMetaMap; // PaperDragon
  import com.domnian.paperdragon.api.meta.TempMetaMap; // PaperDragon
  import org.bukkit.block.Biome;
-@@ -26,6 +27,8 @@ public interface Chunk extends PersistentDataHolder {
+@@ -28,6 +29,8 @@ public interface Chunk extends PersistentDataHolder {
      TempMetaMap getTempMeta();
      @NotNull
      PersistentMetaMap getPersistentMeta();

@@ -5,17 +5,17 @@ Subject: [PATCH] Enhanced Player Death Event
 
 
 diff --git a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-index c7138d79a572a525c70b51b7c79d2c5dfb18f25c..ffae02576947b789186d6dde2345a4146fe21710 100644
+index 66e9d65a8dd05bed05d0ab46ec64206a6dae0507..879001a922c3ec4ac8bbdcc5df6ce28ca6c147c8 100644
 --- a/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/PlayerDeathEvent.java
-@@ -19,6 +19,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
+@@ -16,6 +16,7 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      private int newTotalExp = 0;
      private boolean keepLevel = false;
      private boolean keepInventory = false;
 +    private String sourceKey = "death.attack.generic"; // PaperDragon - Enhanced Player Death Event
-     // Paper start
-     private boolean doExpDrop;
- 
+     private boolean doExpDrop; // Paper - shouldDropExperience API
+     // Paper start - adventure
+     @org.jetbrains.annotations.ApiStatus.Internal
 @@ -291,4 +292,26 @@ public class PlayerDeathEvent extends EntityDeathEvent {
      public boolean getKeepInventory() {
          return keepInventory;

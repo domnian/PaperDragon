@@ -69,10 +69,10 @@ index 0000000000000000000000000000000000000000..843abce6e0da9ff308ddd33dc4d8034f
 +
 +}
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index b243db56756c67cd2c41d7768898d01539f9260a..dd66a827c71259e8da1a6a9dfdf86239adc0df28 100644
+index 687bd8f54c9bfb5f5ab1f7ad9d232daf2433cc76..aed4ce1e57610ea0be9b382fff46bfe4f8b559e5 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -2662,4 +2662,14 @@ public final class Bukkit {
+@@ -2907,4 +2907,14 @@ public final class Bukkit {
      public static Server.Spigot spigot() {
          return server.spigot();
      }
@@ -88,10 +88,10 @@ index b243db56756c67cd2c41d7768898d01539f9260a..dd66a827c71259e8da1a6a9dfdf86239
 +    // PaperDragon end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 8c842c2a4766871e95f56df612415f3c85bd7fc4..09e88a7045525e1a47c1cc6e5e25693122f18783 100644
+index 5e32c5c544005675ad48807a1a793307af1f0782..f921072426a4556a64daa4c9b49b6a8539fdec72 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2320,4 +2320,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2544,4 +2544,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
       */
      boolean isOwnedByCurrentRegion(@NotNull Entity entity);
      // Paper end - Folia region threading API

@@ -4,39 +4,6 @@ Date: Sat, 1 Apr 2023 11:41:51 -0500
 Subject: [PATCH] Add Blaze API
 
 
-diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-index 97a7d895c5665a85648b2553486bf8504694d057..d0c7aa01879c34c5568330dcbfb18d26d89ff05a 100644
---- a/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-+++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Entity.java
-@@ -183,16 +183,24 @@ public interface DAPI_Entity {
-     }
- 
-     @Deprecated
--    void setFireballs(@NotNull Blaze blaze, int num);
-+    default void setFireballs(@NotNull Blaze blaze, int num) {
-+        blaze.setFireballs(num);
-+    }
- 
-     @Deprecated
--    int getNumFireballs(@NotNull Blaze blaze);
-+    default int getNumFireballs(@NotNull Blaze blaze) {
-+        return blaze.getNumFireballs();
-+    }
- 
-     @Deprecated
--    int getTimeBetweenFireballs(@NotNull Blaze blaze);
-+    default int getTimeBetweenFireballs(@NotNull Blaze blaze) {
-+        return blaze.getTimeBetweenFireballs();
-+    }
- 
-     @Deprecated
--    void setTimeBetweenFireballs(@NotNull Blaze blaze, int timeBetweenFireballs);
-+    default void setTimeBetweenFireballs(@NotNull Blaze blaze, int timeBetweenFireballs) {
-+        blaze.setTimeBetweenFireballs(timeBetweenFireballs);
-+    }
- 
-     @Deprecated
-     int getFireballCooldown(@NotNull Ghast ghast);
 diff --git a/src/main/java/org/bukkit/entity/Blaze.java b/src/main/java/org/bukkit/entity/Blaze.java
 index 7a5505b7fa84629f81c152fb6da90bdb2392f9df..10602af6ebc4029c90c8ab60618873cb6461f1af 100644
 --- a/src/main/java/org/bukkit/entity/Blaze.java

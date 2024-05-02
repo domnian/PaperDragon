@@ -1,20 +1,19 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: willies952002 <admin@domnian.com>
-Date: Sun, 12 Jan 2020 19:49:00 -0500
-Subject: [PATCH] Add getLocation() to OfflinePlayer
+Date: Mon, 27 Jan 2020 00:56:34 -0500
+Subject: [PATCH] Add teleport() to OfflinePlayer
 
 
 diff --git a/src/main/java/org/bukkit/OfflinePlayer.java b/src/main/java/org/bukkit/OfflinePlayer.java
-index 08ae501e97ae2a3f22b1994c9616fc7134cfc0c3..fcf8bb1a5bb0abdcac40fd01bd6a2c7a809efe6d 100644
+index 30298a629b39bd43ce14b414fc697b2dfcbea89c..a4036ebe6fcf884d763632c2f7f65344996707fc 100644
 --- a/src/main/java/org/bukkit/OfflinePlayer.java
 +++ b/src/main/java/org/bukkit/OfflinePlayer.java
-@@ -476,4 +476,9 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
+@@ -557,4 +557,8 @@ public interface OfflinePlayer extends ServerOperator, AnimalTamer, Configuratio
       */
      @Nullable
-     public Location getLastDeathLocation();
+     public Location getLocation();
 +
 +    // PaperDragon start
-+    @NotNull
-+    public Location getLocation();
++    public boolean teleport(@NotNull Location location);
 +    // PaperDragon end
  }

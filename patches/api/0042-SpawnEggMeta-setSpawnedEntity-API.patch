@@ -8,20 +8,21 @@ Partial data is supported through a predicate, letting MC
 follow normal spawn behavior in the summon phase.
 
 diff --git a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
-index c190dff53e18994c93c35b6a9502cba38e6886ed..d48186c27b6bf2a8380237c2dbef2d149be1c68e 100644
+index 35deb3519f46047009b529d6a80517e25e6cf20a..251b4cfd859fcf7bc8455bab6790ad56357e8011 100644
 --- a/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/SpawnEggMeta.java
-@@ -1,14 +1,56 @@
+@@ -1,16 +1,59 @@
  package org.bukkit.inventory.meta;
  
+ import org.bukkit.entity.EntitySnapshot;
 +import org.bukkit.entity.Entity;
  import org.bukkit.entity.EntityType;
  import org.jetbrains.annotations.Contract;
  import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
-+
-+import java.util.function.Predicate;
+ import org.jetbrains.annotations.Nullable;
  
++import java.util.function.Predicate;
++
  /**
   * Represents a spawn egg and it's spawned type.
   */
@@ -34,6 +35,7 @@ index c190dff53e18994c93c35b6a9502cba38e6886ed..d48186c27b6bf2a8380237c2dbef2d14
 +     * All non positional data properties will be saved
 +     * @param entity
 +     */
++    @Deprecated
 +    default void setSpawnedEntity(@NotNull Entity entity) {
 +        setSpawnedEntity(entity, null);
 +    }
@@ -62,6 +64,7 @@ index c190dff53e18994c93c35b6a9502cba38e6886ed..d48186c27b6bf2a8380237c2dbef2d14
 +     * @param entity
 +     * @param keyFilter
 +     */
++    @Deprecated
 +    void setSpawnedEntity(@NotNull Entity entity, @Nullable Predicate<String> keyFilter);
 +    // Paper end
 +

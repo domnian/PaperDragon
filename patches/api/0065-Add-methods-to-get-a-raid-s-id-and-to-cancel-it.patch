@@ -5,10 +5,10 @@ Subject: [PATCH] Add methods to get a raid's id and to cancel it
 
 
 diff --git a/src/main/java/org/bukkit/Raid.java b/src/main/java/org/bukkit/Raid.java
-index 420f2e67bbd0896c542d16c4d666114926a482c4..c5ead8b035b8847c1473136e531525fd8bcb4aef 100644
+index a8cccd707a0c353cef14e8c5aabc0498f686d934..858ed6d289f1b97d5e114794a70e32dc4254ceb7 100644
 --- a/src/main/java/org/bukkit/Raid.java
 +++ b/src/main/java/org/bukkit/Raid.java
-@@ -110,6 +110,11 @@ public interface Raid {
+@@ -110,6 +110,11 @@ public interface Raid extends org.bukkit.persistence.PersistentDataHolder { // P
      @NotNull
      List<Raider> getRaiders();
  

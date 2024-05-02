@@ -6,17 +6,15 @@ Subject: [PATCH] amend ensureServerConversions
 pending paper merge, store data version on stacks
 
 diff --git a/src/main/java/org/bukkit/inventory/ItemFactory.java b/src/main/java/org/bukkit/inventory/ItemFactory.java
-index c066d877b5eec3578439c2de1ab9568381ccf7c5..c5c7b7241c19b10acc1e550b1a7faae333486efb 100644
+index 98a970a6582dca22e719a31559c7becea4725cb2..475f9fea44df7aac42850a5964c6e2be94dfb1bb 100644
 --- a/src/main/java/org/bukkit/inventory/ItemFactory.java
 +++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
-@@ -210,13 +210,20 @@ public interface ItemFactory {
+@@ -261,6 +261,18 @@ public interface ItemFactory {
      String getI18NDisplayName(@Nullable ItemStack item);
+     // Paper end - add getI18NDisplayName
  
-     /**
--     * Minecraft updates are converting simple item stacks into more complex NBT oriented Item Stacks.
--     *
--     * Use this method to ensure any desired data conversions are processed.
--     * The input itemstack will not be the same as the returned itemstack.
++    // PaperDragon start
++    /**
 +     * Ensure that this stack is represented by an Internal Item Stack
 +     * @param item The stack to ensure is internal
 +     * @return A CraftItemStack backed ItemStack with an internal representation
@@ -25,18 +23,13 @@ index c066d877b5eec3578439c2de1ab9568381ccf7c5..c5c7b7241c19b10acc1e550b1a7faae3
 +    @Deprecated
 +    @NotNull
 +    ItemStack _asServerItemStack(@NotNull ItemStack item);
++    // PaperDragon end
 +
-+    /**
-+     * Runs all Minecraft Data Fixer updates on this ItemStack that are needed.
-      *
-      * @param item The item to process conversions on
--     * @return A potentially Data Converted ItemStack
-+     * @return A new stack with Data Converted ItemStack
-      */
-     @NotNull
-     ItemStack ensureServerConversions(@NotNull ItemStack item);
+     // Paper start - ensure server conversions API
+     /**
+      * Minecraft's updates are converting simple item stacks into more complex NBT oriented Item Stacks.
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index e255c73f0107806b5f69719f2d0fb72113e27576..defc4adc9512933a9cdc7c8cf6a4d20b96bfb48f 100644
+index d871970163f1d21bd40398780ea8adfb8eb04eb0..0a447df93e72c3d3359ae2bc9dbd5896aaf6e756 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
 @@ -31,6 +31,31 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
@@ -71,7 +64,7 @@ index e255c73f0107806b5f69719f2d0fb72113e27576..defc4adc9512933a9cdc7c8cf6a4d20b
  
      @Utility
      protected ItemStack() {}
-@@ -532,7 +557,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
+@@ -571,7 +596,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
      public Map<String, Object> serialize() {
          Map<String, Object> result = new LinkedHashMap<String, Object>();
  
@@ -80,7 +73,7 @@ index e255c73f0107806b5f69719f2d0fb72113e27576..defc4adc9512933a9cdc7c8cf6a4d20b
          result.put("type", getType().name());
  
          if (getAmount() != 1) {
-@@ -584,6 +609,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
+@@ -623,6 +648,7 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
          }
  
          ItemStack result = new ItemStack(type, amount, damage);
@@ -88,7 +81,7 @@ index e255c73f0107806b5f69719f2d0fb72113e27576..defc4adc9512933a9cdc7c8cf6a4d20b
  
          if (args.containsKey("enchantments")) { // Backward compatiblity, @deprecated
              Object raw = args.get("enchantments");
-@@ -764,8 +790,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
+@@ -810,8 +836,9 @@ public class ItemStack implements Cloneable, ConfigurationSerializable, Translat
       *
       * Use this method to ensure any desired data conversions are processed.
       * The input itemstack will not be the same as the returned itemstack.

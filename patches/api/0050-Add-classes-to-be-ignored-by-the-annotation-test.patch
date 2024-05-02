@@ -7,25 +7,10 @@ I'll eventually get time to annotate them all, but some classes
 that are excluded do have issues that were not resolved.
 
 diff --git a/src/test/java/org/bukkit/AnnotationTest.java b/src/test/java/org/bukkit/AnnotationTest.java
-index 06e96e5c98f1a7a68c8b4b5e527314c1aa774e38..fa3df66b27b129fe9b7b1eabc19c619e0a29a80f 100644
+index 88f1ca89fa640a686231b8eec87e70419b2d73ef..f0f0dee2754005bea9b520433ff89baef1893de0 100644
 --- a/src/test/java/org/bukkit/AnnotationTest.java
 +++ b/src/test/java/org/bukkit/AnnotationTest.java
-@@ -5,12 +5,8 @@ import java.io.FileInputStream;
- import java.io.IOException;
- import java.net.URISyntaxException;
- import java.net.URL;
--import java.util.ArrayList;
--import java.util.Collection;
--import java.util.Collections;
--import java.util.HashMap;
--import java.util.List;
--import java.util.Map;
-+import java.util.*;
-+
- import org.jetbrains.annotations.NotNull;
- import org.jetbrains.annotations.Nullable;
- import org.junit.Assert;
-@@ -57,8 +53,68 @@ public class AnnotationTest {
+@@ -57,8 +57,68 @@ public class AnnotationTest {
          "co/aikar/timings/TimingHistory$2$1$2",
          "co/aikar/timings/TimingHistory$3",
          "co/aikar/timings/TimingHistory$4",

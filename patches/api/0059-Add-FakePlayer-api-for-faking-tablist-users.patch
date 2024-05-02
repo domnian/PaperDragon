@@ -5,10 +5,10 @@ Subject: [PATCH] Add FakePlayer api for faking tablist users
 
 
 diff --git a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-index 685472a6ea2389cab47202674b929858eb3c4d12..17847fbdf259989f0070942b19576327bdde2ed0 100644
+index 685472a6ea2389cab47202674b929858eb3c4d12..1eab3f16a9bde3b53f5052a7a400800e9b8476f9 100644
 --- a/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
 +++ b/src/main/java/com/domnian/paperdragon/api/DAPI_Server.java
-@@ -23,6 +23,22 @@
+@@ -23,6 +23,24 @@
  
  package com.domnian.paperdragon.api;
  
@@ -25,8 +25,10 @@ index 685472a6ea2389cab47202674b929858eb3c4d12..17847fbdf259989f0070942b19576327
  
 +    @Nullable
 +    FakePlayer getFakePlayer(@NotNull UUID uuid);
++
 +    @NotNull
 +    FakePlayer createFakePlayer(@NotNull PlayerProfile profile, int ping, @NotNull GameMode gameMode, @NotNull Component playerListName) throws IllegalArgumentException;
++
 +    @NotNull
 +    Set<FakePlayer> getJoinedFakePlayers();
 +
@@ -88,10 +90,10 @@ index 0000000000000000000000000000000000000000..d3e1c8f7c0a4bce0757e33fc254c2e6e
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..272f4bc9fd729b3c7a67d1ea3d9e34d9c9bca3b5
+index 0000000000000000000000000000000000000000..ee1c2a81676f1b491a2a4213dc69d8a5c032404a
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerEvent.java
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,28 @@
 +package com.domnian.paperdragon.events;
 +
 +import com.domnian.paperdragon.api.FakePlayer;
@@ -102,6 +104,7 @@ index 0000000000000000000000000000000000000000..272f4bc9fd729b3c7a67d1ea3d9e34d9
 + * Represents a fakeplayer related event
 + */
 +public abstract class FakePlayerEvent extends Event {
++
 +    protected FakePlayer fakePlayer;
 +
 +    public FakePlayerEvent(@NotNull final FakePlayer who) {
@@ -117,13 +120,14 @@ index 0000000000000000000000000000000000000000..272f4bc9fd729b3c7a67d1ea3d9e34d9
 +    public final FakePlayer getFakePlayer() {
 +        return fakePlayer;
 +    }
++
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7d3fc6797ee9205332f3820514ce7a64e07603cd
+index 0000000000000000000000000000000000000000..70426d1417cf9cc8aaa8bca36491e8f651f6b968
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerJoinEvent.java
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,25 @@
 +package com.domnian.paperdragon.events;
 +
 +import com.domnian.paperdragon.api.FakePlayer;
@@ -131,6 +135,7 @@ index 0000000000000000000000000000000000000000..7d3fc6797ee9205332f3820514ce7a64
 +import org.jetbrains.annotations.NotNull;
 +
 +public class FakePlayerJoinEvent extends FakePlayerEvent {
++
 +    public FakePlayerJoinEvent(@NotNull FakePlayer who) {
 +        super(who);
 +    }
@@ -146,13 +151,14 @@ index 0000000000000000000000000000000000000000..7d3fc6797ee9205332f3820514ce7a64
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}
 diff --git a/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java b/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834ec6c6d92
+index 0000000000000000000000000000000000000000..b60cf8f57920f5be7db65c120b330670391a1b42
 --- /dev/null
 +++ b/src/main/java/com/domnian/paperdragon/events/FakePlayerQuitEvent.java
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,25 @@
 +package com.domnian.paperdragon.events;
 +
 +import com.domnian.paperdragon.api.FakePlayer;
@@ -160,6 +166,7 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +import org.jetbrains.annotations.NotNull;
 +
 +public class FakePlayerQuitEvent extends FakePlayerEvent {
++
 +    public FakePlayerQuitEvent(@NotNull FakePlayer who) {
 +        super(who);
 +    }
@@ -175,21 +182,22 @@ index 0000000000000000000000000000000000000000..f957fb275aa426a71d9dd5e0e5a72834
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }
++
 +}
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 754afa62b0bf8a91863f40899fe22814134aea45..65a663bf4e93b751a3f35b977165d133288c3577 100644
+index 12ce15f598baa599a22317599f2fd4fee14c39e9..4efee9afb8646fcfe401b1f08a5ba9f18f8590cc 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -5,6 +5,8 @@ import java.net.InetSocketAddress;
- import java.util.Collection;
- import java.util.Date;
- import java.util.Map;
+@@ -10,6 +10,8 @@ import java.util.Map;
+ import java.util.UUID;
+ import java.util.concurrent.CompletableFuture;
+ import org.bukkit.BanEntry;
 +import java.util.Set; // PaperDragon
 +import com.domnian.paperdragon.api.FakePlayer; // PaperDragon
- import org.bukkit.BanEntry;
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
-@@ -1720,6 +1722,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+ import org.bukkit.GameMode;
+@@ -2045,6 +2047,43 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       */
      public boolean canSee(@NotNull Player player);
  

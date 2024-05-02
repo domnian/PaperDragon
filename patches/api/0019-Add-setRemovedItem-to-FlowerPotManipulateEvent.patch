@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sun, 4 Dec 2016 15:02:53 -0500
+Subject: [PATCH] Add setRemovedItem to FlowerPotManipulateEvent
+
+
+diff --git a/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java b/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
+index 373a6ec68fb575b82b06bf250768c1a6909efe38..1502a9b4e9ad2a8a4f6b7d9e31a7dee7a749a32e 100644
+--- a/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
++++ b/src/main/java/io/papermc/paper/event/player/PlayerFlowerPotManipulateEvent.java
+@@ -19,7 +19,7 @@ public class PlayerFlowerPotManipulateEvent extends PlayerEvent implements Cance
+     @NotNull
+     private final Block flowerpot;
+     @NotNull
+-    private final ItemStack item;
++    private ItemStack item; // PaperDragon
+     private final boolean placing;
+ 
+     private boolean cancelled;
+@@ -52,6 +52,16 @@ public class PlayerFlowerPotManipulateEvent extends PlayerEvent implements Cance
+     public ItemStack getItem() {
+         return this.item;
+     }
++    // PaperDragon start
++    /**
++     * Sets a different item to be taken from the flower pot
++     *
++     * @param item the ItemStack to be given when removed from the flowerpot
++     */
++    public void setRemovedItem(@NotNull ItemStack item) {
++        this.item = item;
++    }
++    // PaperDragon end
+ 
+     /**
+      * Gets if the item is being placed into the flowerpot.
