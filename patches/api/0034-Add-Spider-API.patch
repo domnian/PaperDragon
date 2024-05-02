@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sun, 2 Jul 2023 08:12:49 -0500
+Subject: [PATCH] Add Spider API
+
+
+diff --git a/src/main/java/org/bukkit/entity/Spider.java b/src/main/java/org/bukkit/entity/Spider.java
+index f9ee8cc75a6eae3c1fad58b57c70f64b71977c59..ab456bca2e8b010f721b4703618d4a5ce937a479 100644
+--- a/src/main/java/org/bukkit/entity/Spider.java
++++ b/src/main/java/org/bukkit/entity/Spider.java
+@@ -3,4 +3,6 @@ package org.bukkit.entity;
+ /**
+  * Represents a Spider.
+  */
+-public interface Spider extends Monster {}
++public interface Spider extends Monster {
++    void makeAggressiveDuringDay(boolean attack); // PaperDragon
++}

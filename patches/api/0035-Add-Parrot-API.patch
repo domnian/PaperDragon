@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Sat, 16 Mar 2024 17:27:20 -0500
+Subject: [PATCH] Add Parrot API
+
+
+diff --git a/src/main/java/org/bukkit/entity/Parrot.java b/src/main/java/org/bukkit/entity/Parrot.java
+index c545a025c2ff5d3a0a4fff4e379277f38acf5c06..3bb66c86d431c3e8a6e5ae853a181fb04b4c34ff 100644
+--- a/src/main/java/org/bukkit/entity/Parrot.java
++++ b/src/main/java/org/bukkit/entity/Parrot.java
+@@ -54,4 +54,7 @@ public interface Parrot extends Tameable, Sittable {
+          */
+         GRAY;
+     }
++    // PaperDragon start
++    void setCanSitOnShoulders(boolean canSitOnShoulders);
++    // PaperDragon end
+ }
